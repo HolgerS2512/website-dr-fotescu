@@ -20,6 +20,6 @@
 ROUTE -> {{  str_replace(config('app.url') . ':8000', '', url()->current()); }}
 <br>
 <hr>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed vero voluptates non nemo similique. Distinctio vitae eaque repudiandae sint totam et, nam quisquam labore perferendis architecto non nihil neque accusamus?</p>
+<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed vero voluptates non nemo similique. Distinctio vitae eaque repudiandae sint totam et, nam quisquam labore perferendis architecto non nihil neque accusamus? test</p>
 <h2>-------------HOME END-------------</h2>
 @endsection
