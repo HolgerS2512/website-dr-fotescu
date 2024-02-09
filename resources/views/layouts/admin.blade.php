@@ -12,6 +12,7 @@ $active_link = $path ?: '/';
         <meta name="msapplication-TileImage" content="{{ asset('assets/icons/mstile-70x70.png') }}">
         <meta name="theme-color" content="#ffffff" />
         <meta name="author" content="Holger Schatte">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/icons/favicon-32x32.ico') }}">
         <link rel="icon" type="image/x-icon" href="{{ asset('assets/icons/favicon-16x16.ico') }}" sizes="16x16">

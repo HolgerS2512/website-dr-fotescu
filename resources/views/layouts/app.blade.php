@@ -25,6 +25,7 @@ $active_link = $path ?: '/';
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Zahnarztpraxis Dr. Sebastian Fotescu" />
         <meta property="og:locale" content="de_DE" />
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/icons/favicon-32x32.ico') }}">
         <link rel="icon" type="image/x-icon" href="{{ asset('assets/icons/favicon-16x16.ico') }}" sizes="16x16">
