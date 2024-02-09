@@ -1,0 +1,95 @@
+$info-nav: 36px;
+$main-nav: 70px;
+
+header.main-navbar {
+  height: $info-nav + $main-nav;
+
+  ul {
+    list-style-type: none;
+    padding-left: unset;
+    margin-bottom: unset;
+  }
+
+  nav, ul, .info-strip, .info-contact {
+    display: flex;
+    align-items: center;
+  }
+
+  nav, .info-strip {
+    padding: 0 .5rem;
+  }
+
+  .info-title, .info-phone {
+    display: none;
+  }
+
+  .info-strip {
+    height: $info-nav;
+    background-color: $blue;
+    justify-content: space-evenly;
+
+    a {
+      color: white;
+
+      &:hover {
+        color: $shadow;
+      }
+    }
+  }
+
+  .info-title {
+    a {
+      text-decoration: none;
+      font-weight: 500;
+    }
+  }
+
+  .phone-img {
+    height: $info-nav;
+    padding: 6px 4px;
+  }
+
+  .lang-menu {
+    font-size: .95rem;
+
+    a {
+      text-decoration: none;
+      padding: 1px 4px;
+      margin: 0 2px;
+      transition: .2s;
+    }
+
+    a.active {
+      border-bottom: 1px solid white;
+
+      &:hover {
+        border-bottom: 1px solid $shadow;
+      }
+    }
+  }
+
+
+
+  @media(min-width:480px) {
+
+    .info-phone {
+      display: block;
+    }
+  }
+
+  @media(min-width:768px) {
+
+    nav, .info-strip {
+      padding: 0 1rem;
+    }
+
+    .info-strip {
+      padding-right: 5rem;
+      justify-content: space-between;
+    }
+
+    .info-title {
+      display: block;
+    }
+  }
+}

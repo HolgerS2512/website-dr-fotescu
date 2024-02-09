@@ -1,0 +1,30 @@
+.panel {
+  min-height: 93.75vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  form {
+    background-color: white;
+  }
+
+  .special-admin-header {
+    position: absolute;
+    top: 4vh;
+    left: 6vw;
+    font-size: max(12vw, 120px);
+    z-index: -1;
+    opacity: .05;
+  }
+}
+
+.link-placeholder {
+  display: none;
+}
+
+@media (min-width:991.998px) {
+  .link-placeholder {
+    display: block;
+  }
+}

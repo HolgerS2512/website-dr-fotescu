@@ -1,0 +1,27 @@
+{
+  "recommendations": [
+    "kamikillerto.vscode-colorize",
+    "sleistner.vscode-fileutils",
+    "bierner.github-markdown-preview",
+    "bradgashler.htmltagwrap",
+    "zhuangtongfa.material-theme",
+    "techer.open-in-browser",
+    "esbenp.prettier-vscode",
+    "pdconsec.vscode-print",
+    "vscode-icons-team.vscode-icons",
+    "formulahendry.auto-rename-tag",
+    "tomoki1207.pdf",
+    "mikestead.dotenv",
+    "porifa.laravel-intelephense",
+    "porifa.laraphense",
+    "onecentlin.laravel-blade",
+    "amiralizadeh9480.laravel-extra-intellisense",
+    "codingyu.laravel-goto-view",
+    "naoray.laravel-goto-components",
+    "pgl.laravel-jump-controller",
+    "christian-kohler.path-intellisense",
+    "bmewburn.vscode-intelephense-client",
+    "zobo.php-intellisense",
+    "mehedidracula.php-namespace-resolver"
+  ]
+}

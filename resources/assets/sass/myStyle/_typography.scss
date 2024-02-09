@@ -1,0 +1,18 @@
+h1, h2, h3, h4, h5, h6, p {
+  font-family: 'Open sans', sans-serif !important;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: calc(.25rem + 7vw);
+  letter-spacing: -3px;
+  text-shadow: 1px 1px 0 rgba(161, 191, 221, 0.3);
+  margin: 0;
+  color: $h1-text;
+  pointer-events: none;
+  line-height: 1.35;
+}
+
+h2, h3, h4, h5, h6 {
+  color: $h-text;
+}

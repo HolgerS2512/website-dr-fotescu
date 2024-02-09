@@ -1,0 +1,50 @@
+.invalid-feedback {
+  user-select: none;
+}
+.terms-fb {
+  position: relative;
+  left: -1.5rem;
+}
+
+.modal {
+  background-color: rgba(0, 0, 0, 0.25);
+  
+  .modal-dialog {
+    transition: .15s ease-in;
+    margin-top: 5rem;
+    position: relative;
+    right: -50rem;
+  }
+  @media (min-width: 767.9998px) {
+    .modal-dialog {
+      margin-right: 5rem;
+    }
+  }
+
+  .modal-body {
+    
+    .modal-bar {
+      height: 1rem;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      border-radius: 0 0 8px 8px;
+    }
+
+    .status-1 {
+      background-color: rgb(28, 240, 116);
+    }
+
+    .status-0 {
+      background-color: rgb(240, 28, 74);
+    }
+  }
+}
+
+.modal.vis-modal {
+  display: block;
+  
+  .modal-dialog {
+    right: 0;
+  }
+}
