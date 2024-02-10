@@ -67,6 +67,9 @@ Route::get('/kontakt', [App\Http\Controllers\ContactController::class, 'show']);
 Route::post('/kontakt', [App\Http\Controllers\ContactController::class, 'contactMail'])
   ->name('contact');
 
+
+# =====> Admin Routes (POST & GET METHOD) <===== #
+
 Auth::routes();
 
 Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('dashboard');

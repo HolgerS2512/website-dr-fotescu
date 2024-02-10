@@ -8,6 +8,6 @@
 {{--------------------> Content <--------------------}}
 @section('content')
 <div class='container py-5'>
-  <h1>Dashboard</h1>
+  <h1 class="special-admin-header">Dashboard</h1>
 </div>
 @endsection
