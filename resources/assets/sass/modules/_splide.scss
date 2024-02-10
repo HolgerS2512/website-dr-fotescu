@@ -1,0 +1,19 @@
+
+.splide__pagination {
+  bottom: unset;
+  top: .5rem;
+
+  button {
+    height: 12px;
+    width: 12px;
+    margin: 8px 5px;
+    border-radius: unset;
+    background-color: transparent;
+    border: 1px solid white;
+  }
+}
+
+.splide__progress__bar {
+  height: 3px;
+  background: $bluedark;
+}

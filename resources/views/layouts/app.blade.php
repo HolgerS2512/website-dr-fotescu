@@ -37,9 +37,9 @@ $active_link = $path ?: '/';
         <link rel="alternate" hreflang="en-GB" href="{{ 'https://www.meinzahnarztdresden.de/en' . $active_link }}" />
         <link rel="alternate" hreflang="ru-RU" href="{{ 'https://www.meinzahnarztdresden.de/ru' . $active_link }}" />
 
-        @yield('link')
-
         @yield('title')
+        
+        @yield('link')
         
         @vite('resources/assets/css/app.css')
 
@@ -59,5 +59,8 @@ $active_link = $path ?: '/';
         </main>
 
         <x-footer :content="$active_link" />
+
+@stack('scripts')
+<script>AOS.init();</script>
     </body>
 </html>

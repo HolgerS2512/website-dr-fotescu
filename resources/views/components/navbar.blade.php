@@ -1,5 +1,5 @@
-{{-- <header class="fixed-top main-navbar"> --}}
-<header class="main-navbar">
+{{-- <header class="fixed-top navigation"> --}}
+<header class="navigation">
     <ul class="info-strip">
         <li class="info-title">
             <a href="{{ url('/') }}" title="dr-fotescu-zahnarztpraxis-dresden">Dr. Sebastian Fotescu Zahnarztpraxis</a>

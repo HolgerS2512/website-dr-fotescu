@@ -5,4 +5,5 @@
         <li>{{ $content }}</li>
         <li>link</li>
     </ul>
+    &copy; {{ date('Y') }}
 </footer>
