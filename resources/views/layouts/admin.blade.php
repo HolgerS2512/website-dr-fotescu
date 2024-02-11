@@ -3,7 +3,7 @@ $path = str_replace(config('app.url'), '', url()->current());
 $active_link = $path ?: '/';
 @endphp
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,7 +31,7 @@ $active_link = $path ?: '/';
         <x-navbar-admin :active="$active_link" />
 
         <main class="panel">
-            @if(session('message'))
+            @if(Session::has('message'))
                 <x-modal :message="session('message')" :status="session('status')" />
             @endif
 

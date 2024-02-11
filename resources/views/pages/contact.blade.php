@@ -23,38 +23,38 @@
             <div>
                 <label for="name" class="form-label">Name*</label>
                 <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name" value="{{ old('name') }}" required>
-                <div class="invalid-feedback">
-                    @error('name')
+                @error('name')
+                    <div class="invalid-feedback">
                         {{ $message }}
-                    @enderror
-                </div>
+                    </div>
+                @enderror
             </div>           
             <div>
                 <label for="email" class="form-label">Email*</label>
                 <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="email" value="{{ old('email') }}" required>
-                <div class="invalid-feedback">
-                    @error('email')
+                @error('email')
+                    <div class="invalid-feedback">
                         {{ $message }}
-                    @enderror
-                </div>
+                    </div>
+                @enderror
             </div>           
             <div>
                 <label for="reference" class="form-label">Betreff*</label>
                 <input type="text" name="reference" class="form-control @error('reference') is-invalid @enderror" id="reference" value="{{ old('reference') }}" required>
-                <div class="invalid-feedback">
-                    @error('reference')
+                @error('reference')
+                    <div class="invalid-feedback">
                         {{ $message }}
-                    @enderror
-                </div>
+                    </div>
+                @enderror
             </div>
             <div>
                 <label for="msg" class="form-label">Nachricht*</label>
                 <textarea rows="6" class="form-control @error('msg') is-invalid @enderror" name="msg" id="msg" placeholder="Ihre Nachricht an uns" required>{{ old('msg') }}</textarea>
-                <div class="invalid-feedback">
-                    @error('msg')
+                @error('msg')
+                    <div class="invalid-feedback">
                         {{ $message }}
-                    @enderror
-                </div>
+                    </div>
+                @enderror
             </div>
             <div>
                 <div class="form-check">
@@ -62,11 +62,11 @@
                     <label class="form-check-label" for="terms">
                     Ich habe die Datenschutz-Richtlinien zur Kenntnis genommen und akzeptiere diese.*
                     </label>
-                    <div class="invalid-feedback terms-fb">
-                        @error('terms')
+                    @error('terms')
+                        <div class="invalid-feedback terms-fb">
                             {{ $message }}
-                        @enderror
-                    </div>
+                        </div>
+                    @enderror
                 </div>
             </div>
             <div>

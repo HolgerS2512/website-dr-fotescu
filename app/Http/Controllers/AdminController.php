@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HomeSlider;
 use Illuminate\Http\Request;
 use App\Traits\GetLangMessage;
 
@@ -18,17 +19,14 @@ class AdminController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Load the application dashboard & data.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
     {
-        return view('auth.dashboard');
+        $src = HomeSlider::all();
 
-        // , [
-        //     'status' => true,
-        //     'message' => GetLangMessage::languagePackage('en')->loginTrue,
-        // ]
+        return view('auth.dashboard', compact('src'));
     }
 }

@@ -6,7 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class LanguageFactory extends Model
 {
+    /**
+     * App locale language.
+     *
+     * @var string
+     */
     public $locale;
+
+    /**
+     * Language package for passed variable.
+     *
+     * @var iterable|string
+     */
     public $lang = [
         'de' => [
             'contactTrue' => 'Ihre Nachricht wurde erfolgreich gesendet',
@@ -16,7 +27,9 @@ class LanguageFactory extends Model
             'contactTrue' => 'Your message has been sent successfully',
             'contactFalse' => 'Unfortunately, a problem has occurred. Please try again later.',
             'loginTrue' => 'You are logged in!',
-            'loginFalse' => 'Login failed',
+            'loginFalse' => 'Login failed!',
+            'sliderTrue' => 'New image saved successfully.',
+            'sliderFalse' => 'Database error, save failed!',
         ],
         'ru' => [
             'contactTrue' => 'Ваше сообщение было отправлено успешно',
@@ -24,8 +37,26 @@ class LanguageFactory extends Model
         ],
     ];
 
+    /**
+     * This variable contains the appropriate output in the respective language.
+     *
+     * @var string
+     */
     public $contactTrue, $contactFalse;
+    
+    /**
+     * This variable contains the appropriate output in the respective language.
+     *
+     * @var string
+     */
     public $loginTrue, $loginFalse;
+    
+    /**
+     * This variable contains the appropriate output in the respective language.
+     *
+     * @var string
+     */
+    public $sliderTrue, $sliderFalse;
 
     /**
      * Method __construct - set the language of locale attribute

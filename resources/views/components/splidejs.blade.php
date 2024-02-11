@@ -3,10 +3,10 @@
     <ul class="splide__list">
 
     @foreach ($src as $link)
-    @php $alt = str_replace('assets/img/', '', $link) @endphp
+    @php $alt = str_replace('assets/img/', '', $link->image) @endphp
       <li class="splide__slide">
         <div class="img_box">
-          <img class="img-fluid" src="{{ asset($link) }}" alt="{{ $alt }}">
+          <img class="img-fluid" src="{{ asset($link->image) }}" alt="{{ $alt }}">
         </div>
       </li>
     @endforeach

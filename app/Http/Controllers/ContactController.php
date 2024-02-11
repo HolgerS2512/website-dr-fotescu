@@ -12,12 +12,12 @@ use App\Traits\GetLangMessage;
 
 class ContactController extends Controller
 {
-    public function show()
+    public function index()
     {
         return view('pages.contact');
     }
 
-    public function contactMail(Request $request)
+    public function store(Request $request)
     {
         try {
             $credentials = Validator::make($request->all(), [

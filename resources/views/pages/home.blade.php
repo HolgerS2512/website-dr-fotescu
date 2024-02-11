@@ -19,13 +19,8 @@
 {{--------------------> Content <--------------------}}
 @section('content')
 <section class="header">
-  @include('components.splidejs', [
-    'src' => [
-      'assets/img/splide-zahnarzt-dr-sebastian-fotescu-dresden.webp',
-      'assets/img/splide_2-zahnarzt-dr-sebastian-fotescu-dresden.webp',
-      'assets/img/splide_3-zahnarzt-dr-sebastian-fotescu-dresden.webp',
-    ]
-  ])
+  <x-splidejs :src="$src" />
+  
   <h1>Zahnarztpraxis<br/>Dr. Sebastian Fotescu</h1>
 </section>
 
