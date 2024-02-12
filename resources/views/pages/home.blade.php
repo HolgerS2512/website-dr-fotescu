@@ -8,7 +8,7 @@
 
 {{--------------------> Link <--------------------}}
 @section('link')
-<link rel="stylesheet" href="{{ asset('assets/css/splide.min.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('assets/css/splide.min.css') }}"> --}}
 @endsection
 
 {{--------------------> Title <--------------------}}
@@ -19,7 +19,7 @@
 {{--------------------> Content <--------------------}}
 @section('content')
 <section class="header">
-  <x-splidejs :src="$src" />
+  <x-slideshow :src="$src" />
   
   <h1>Zahnarztpraxis<br/>Dr. Sebastian Fotescu</h1>
 </section>

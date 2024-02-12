@@ -61,6 +61,6 @@ $active_link = $path ?: '/';
         <x-footer :content="$active_link" />
 
 @stack('scripts')
-<script>AOS.init();</script>
+{{-- <script>AOS.init();</script> --}}
     </body>
 </html>

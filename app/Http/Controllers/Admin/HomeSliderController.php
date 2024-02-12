@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 use App\Traits\GetLangMessage;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
-use Intervention\Image\ImageManager as Image;
+// use Intervention\Image\ImageManager;
+// use Intervention\Image\Drivers\Gd\Driver;
 use Exception;
 
 class HomeSliderController extends Controller
@@ -24,7 +25,7 @@ class HomeSliderController extends Controller
         try {
             $credentials = Validator::make($request->all(), [
                 'title' => 'required|string|min:3|max:255|unique:home_sliders',
-                'image' => 'required|mimes:jpg.jpeg,png,webp',
+                'image' => 'required|mimes:jpg,png,webp,jpeg',
             ]);
 
             if ($credentials->fails()) {
@@ -33,20 +34,25 @@ class HomeSliderController extends Controller
                     ->withInput();
             }
 
-            $image = $request->file('image');
+            $file = $request->file('image');
 
             $name = str_replace(' ', '-', strtolower($request->title)) . '-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden';
-            $image_ext = strtolower($image->getClientOriginalExtension());
-            $img_name = $name . '.' . $image_ext;
+            $extension = strtolower($file->getClientOriginalExtension());
+            $img_name = $name . '.' . $extension;
 
-            $up_location = 'assets/img/home_slider/';
-            $last_img = $up_location . $img_name;
+            $upload_location = 'uploads/home_slider/';
+            $save_url = $upload_location . $img_name;
 
-            $image->move($up_location, $img_name);
+            $file->move($upload_location, $img_name);
+
+            // $manager = new ImageManager(new Driver());
+            // $read_img = $manager->read($save_url);
+            // $resize_img = $read_img->resize(300, 200);
+            // $resize_img->toJpeg(85)->save(base_path($save_url));
 
             HomeSlider::insert([
                 'title' => trim($request->title),
-                'image' => $last_img,
+                'image' => $save_url,
                 'created_at' => Carbon::now(),
             ]);
 
