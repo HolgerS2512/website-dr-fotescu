@@ -3,8 +3,8 @@
 use App\Http\Controllers\Admin\HomeSliderController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,7 +24,10 @@ use Illuminate\Support\Facades\Route;
 
 # =====> Main Routes (GET METHODS) <===== #
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', function () {
+  $src = DB::table('home_sliders')->get();
+  return view('pages.home', compact('src'));
+});
 
 Route::get('/behandlungen', fn () => view('pages.home'));
 
@@ -80,4 +83,13 @@ Route::get('/dashboard', [AdminController::class, 'index'])
   ->name('dashboard');
 
 Route::post('/slider/home/store', [HomeSliderController::class, 'store'])
-  ->name('store.home.slider.image');
+  ->name('store.home.slide');
+
+Route::get('/slider/home/edit/{id}', function ($id) {
+  $slide = DB::table('home_sliders')->find($id);
+  return view('admin.home.edit_slide', compact('slide'));
+});
+
+Route::put('/slider/home/update/{id}', [HomeSliderController::class, 'update']);
+
+Route::get('slider/home/delete/{id}', [HomeSliderController::class, 'destroy']);

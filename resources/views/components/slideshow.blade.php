@@ -4,7 +4,7 @@
     @foreach ($src as $link)
     @php $alt = str_replace(' ', '-', strtolower($link->title)) . '-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden'; @endphp
       <div class="swiper-slide">
-        <div class="img_box">
+        <div class="img-box">
           <img class="img-fluid" src="{{ asset($link->image) }}" alt="{{ $alt }}">
         </div>
       </div>

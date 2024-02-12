@@ -31,7 +31,7 @@ $active_link = $path ?: '/';
         <x-navbar-admin :active="$active_link" />
 
         <main class="panel">
-            @if(Session::has('message'))
+            @if(session('status'))
                 <x-modal :message="session('message')" :status="session('status')" />
             @endif
 

@@ -28,8 +28,12 @@ class LanguageFactory extends Model
             'contactFalse' => 'Unfortunately, a problem has occurred. Please try again later.',
             'loginTrue' => 'You are logged in!',
             'loginFalse' => 'Login failed!',
-            'sliderTrue' => 'New image saved successfully.',
-            'sliderFalse' => 'Database error, save failed!',
+            'imageTrue' => 'Image upload & save successfully.',
+            'imageFalse' => 'Database error, save failed!',
+            'updateTrue' => 'Update successfully.',
+            'updateFalse' => 'Database error, update failed!',
+            'deleteTrue' => 'Delete successfully.',
+            'deleteFalse' => 'Database error, delete failed!',
         ],
         'ru' => [
             'contactTrue' => 'Ваше сообщение было отправлено успешно',
@@ -56,7 +60,21 @@ class LanguageFactory extends Model
      *
      * @var string
      */
-    public $sliderTrue, $sliderFalse;
+    public $imageTrue, $imageFalse;
+    
+    /**
+     * This variable contains the appropriate output in the respective language.
+     *
+     * @var string
+     */
+    public $updateTrue, $updateFalse;
+    
+    /**
+     * This variable contains the appropriate output in the respective language.
+     *
+     * @var string
+     */
+    public $deleteTrue, $deleteFalse;
 
     /**
      * Method __construct - set the language of locale attribute
@@ -119,7 +137,7 @@ class LanguageFactory extends Model
      *
      * @return self
      */
-    public function setAttributes(): self
+    public function setAttributes()
     {
         foreach ($this->lang as $keys => $values) {
 

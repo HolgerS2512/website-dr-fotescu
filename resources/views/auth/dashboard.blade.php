@@ -17,12 +17,12 @@
       <table class="table table-striped table-bordered shadow-lg mb-0">
         <thead>
           <tr>
-            <th scope="col" width="20" class="text-center">ID</th>
-            <th scope="col" width="200" class="text-center">Image</th>
-            <th scope="col" width="120" class="text-center">Title</th>
-            <th scope="col" width="120" class="text-center">Created at</th>
-            <th scope="col" width="120" class="text-center">Updated at</th>
-            <th scope="col" width="120" class="text-center">Action</th>
+            <th scope="col" width="5%" class="text-center">ID</th>
+            <th scope="col" width="10%" class="text-center">Image</th>
+            <th scope="col" width="15%" class="text-center">Title</th>
+            <th scope="col" width="10%" class="text-center">Created at</th>
+            <th scope="col" width="10%" class="text-center">Updated at</th>
+            <th scope="col" width="15%" class="text-center">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -74,7 +74,7 @@
     <div class="col-xl-4">
       <div class="row g-0">
         <form 
-          action="{{ route('store.home.slider.image') }}" 
+          action="{{ route('store.home.slide') }}" 
           method="POST" 
           enctype="multipart/form-data" 
           class="p-3 pb-0 border shadow-lg bg-body-tertiary"
@@ -82,7 +82,19 @@
           @csrf
           <div class="mb-4">
             <h3>Upload a new image</h3>
-            <small class="text-secondary">!!! NOTE:<br>Automatically adds it to the slider on page "home"!</small>
+            <small class="text-secondary">
+              !!! NOTE: !!!
+              <br>Automatically adds it to the slider on page "home"!
+              <br><a class="link" href="https://compress-or-die.com/webp">Optimize your image!</a>
+              <br>Instructions:
+              <ol>
+                <li>Select file</li>
+                <li>Preprocessing -> size -> 2000 x 904</li>
+                <li>Compression -> Lossy -> (min 82 | max 85)</li>
+                <li>Generate optimized image</li>
+                <li>download</li>
+              </ol>
+            </small>
           </div>
           <div class="mb-3">
             <label for="title" class="form-label">Title*</label>
