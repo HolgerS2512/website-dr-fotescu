@@ -29,9 +29,9 @@ class ContactController extends Controller
             ]);
 
             if ($credentials->fails()) {
-                return redirect()->back()->with([
-                    'errors' => $credentials->errors(),
-                ]);
+                return redirect()->back()
+                    ->withErrors($credentials->errors())
+                    ->withInput();
             }
 
             Mail::to(env('MAIL_FROM_ADDRESS'))->send(new ContactMail($request));

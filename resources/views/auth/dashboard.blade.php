@@ -28,6 +28,7 @@
         <tbody>
           @php $i = 1 @endphp
           @foreach ($src as $slider)
+          @php $alt = str_replace(' ', '-', strtolower($slider->title)) . '-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden'; @endphp
           <tr>
             <th scope="row">
               <div class="text-center">
@@ -36,7 +37,7 @@
             </th>
             <td>
               <div class="d-flex justify-content-center align-items-center">
-                <img width="200" src="{{ $slider->image }}">
+                <img width="200" src="{{ $slider->image }}" alt="{{ $alt }}">
               </div>
             </td>
             <td>
@@ -73,7 +74,7 @@
     <div class="col-xl-4">
       <div class="row g-0">
         <form 
-          action="/slider/home/store" 
+          action="{{ route('store.home.slider.image') }}" 
           method="POST" 
           enctype="multipart/form-data" 
           class="p-3 pb-0 border shadow-lg bg-body-tertiary"
@@ -81,7 +82,7 @@
           @csrf
           <div class="mb-4">
             <h3>Upload a new image</h3>
-            <small class="text-secondary">--- NOTE ---<br>Automatically adds it to the slider on page "home"!</small>
+            <small class="text-secondary">!!! NOTE:<br>Automatically adds it to the slider on page "home"!</small>
           </div>
           <div class="mb-3">
             <label for="title" class="form-label">Title*</label>

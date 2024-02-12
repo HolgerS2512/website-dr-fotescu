@@ -76,6 +76,8 @@ Route::post('/kontakt', [ContactController::class, 'store'])
 
 Auth::routes();
 
-Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+Route::get('/dashboard', [AdminController::class, 'index'])
+  ->name('dashboard');
 
-Route::post('/slider/home/store', [HomeSliderController::class, 'store']);
+Route::post('/slider/home/store', [HomeSliderController::class, 'store'])
+  ->name('store.home.slider.image');

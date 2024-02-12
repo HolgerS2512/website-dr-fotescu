@@ -23,19 +23,19 @@ class HomeSliderController extends Controller
     {
         try {
             $credentials = Validator::make($request->all(), [
-                'title' => 'required|string|min:3|max:255',
+                'title' => 'required|string|min:3|max:255|unique:home_sliders',
                 'image' => 'required|mimes:jpg.jpeg,png,webp',
             ]);
 
             if ($credentials->fails()) {
-                return redirect()->back()->with([
-                    'errors' => $credentials->errors(),
-                ]);
+                return redirect()->back()
+                    ->withErrors($credentials->errors())
+                    ->withInput();
             }
 
             $image = $request->file('image');
 
-            $name = hexdec(uniqid());
+            $name = str_replace(' ', '-', strtolower($request->title)) . '-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden';
             $image_ext = strtolower($image->getClientOriginalExtension());
             $img_name = $name . '.' . $image_ext;
 

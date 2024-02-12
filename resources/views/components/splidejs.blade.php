@@ -3,7 +3,7 @@
     <ul class="splide__list">
 
     @foreach ($src as $link)
-    @php $alt = str_replace('assets/img/', '', $link->image) @endphp
+    @php $alt = str_replace(' ', '-', strtolower($link->title)) . '-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden'; @endphp
       <li class="splide__slide">
         <div class="img_box">
           <img class="img-fluid" src="{{ asset($link->image) }}" alt="{{ $alt }}">
