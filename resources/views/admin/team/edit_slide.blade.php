@@ -2,19 +2,19 @@
 
 {{--------------------> Title <--------------------}}
 @section('title')
-<title>Edit Home Slide Administration</title>
+<title>Edit Team Slide Administration</title>
 @endsection
 
 {{--------------------> Content <--------------------}}
 @section('content')
 <div class='container py-5'>
-  <h1 class="special-admin-header">Edit Home Slide</h1>
+  <h1 class="special-admin-header">Edit Team Slide</h1>
 
   <div style="margin-top: 130px;" class="mb-5 pb-5 row">
     <div class="col-md-6">
       <div class="row g-0">
         <form 
-          action="{{ url('/slider/home/update/' . $slideHome->id) }}" 
+          action="{{ url('/slider/team/update/' . $slideTeam->id) }}" 
           method="POST" 
           enctype="multipart/form-data" 
           class="p-3 pb-0 border shadow-lg bg-body-tertiary"
@@ -26,7 +26,7 @@
           </div>
           <div class="mb-3">
             <div class="card p-2 img-box">
-              <img class="img-fluid" src="{{ asset($slideHome->image) }}">
+              <img class="img-fluid" src="{{ asset($slideTeam->image) }}">
             </div>
           </div> 
           <div class="mb-3">
@@ -36,7 +36,7 @@
               class="form-control @error('title') is-invalid @enderror" 
               id="title" 
               name="title" 
-              value="{{ $slideHome->title }}" 
+              value="{{ $slideTeam->title }}" 
               required
               minlength="3" 
               maxlength="255"
@@ -60,7 +60,7 @@
             <input 
               type="hidden" 
               name="old_image" 
-              value="{{ $slideHome->image }}" 
+              value="{{ $slideTeam->image }}" 
             >
             @error('image')
               <div class="invalid-feedback">

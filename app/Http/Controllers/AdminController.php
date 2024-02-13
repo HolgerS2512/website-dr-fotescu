@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\HomeSlider;
-use Illuminate\Http\Request;
 use App\Traits\GetLangMessage;
+use Exception;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -25,8 +25,29 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $src = HomeSlider::all();
+        try {
+            $srcHome = DB::table('home_sliders')->orderBy('ranking')->get();
+            $srcTeam = DB::table('team_sliders')->orderBy('ranking')->get();
 
-        return view('auth.dashboard', compact('src'));
+            $i = 1;
+            $homeSlideIds = []; 
+            $teamSlideIds = []; 
+
+            foreach ($srcHome as $slider) {
+              $homeSlideIds[$slider->ranking] = $slider->id;
+            }
+
+            foreach ($srcTeam as $slider) {
+              $teamSlideIds[$slider->ranking] = $slider->id;
+            }
+
+            return view('auth.dashboard', compact('i', 'homeSlideIds', 'teamSlideIds', 'srcHome', 'srcTeam'));
+        } catch (Exception $e) {
+            
+            return view('auth.dashboard', compact('e'));
+        }
+        $err = GetLangMessage::languagePackage('en')->databaseError;
+
+        return view('auth.dashboard', compact('err'));
     }
 }

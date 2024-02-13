@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('home_sliders', function (Blueprint $table) {
+        Schema::create('team_sliders', function (Blueprint $table) {
             $table->id();
             $table->tinyInteger('ranking');
             $table->string('title')->unique();
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('home_sliders');
+        Schema::dropIfExists('team_sliders');
     }
 };
