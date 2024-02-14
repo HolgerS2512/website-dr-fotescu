@@ -21,12 +21,47 @@
   }
 }
 
-.link-placeholder {
+.link-placeholder,
+.d-none-992 {
   display: none;
 }
 
 @media (min-width:991.998px) {
   .link-placeholder {
     display: block;
+  }
+
+  #admin-bar {
+    position: relative;
+    left: 0;
+    transition: .25s;
+  
+    #aside-nav {
+      border-radius: 6px 0 0 6px;
+    }
+  }
+  
+  #admin-bar.close-bar {
+    left: calc(-100% + 56px);
+  }
+
+  .d-none-992 {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+
+
+#aside-bar {
+  .accordion-button {
+    background-color: $blue;
+  }
+
+  .accordion-item {
+    background-color: $bluelight;
+  }
+  .accordion-button, .accordion-item {
+    color: white;
   }
 }

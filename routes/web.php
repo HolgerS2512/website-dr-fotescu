@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\HomeSliderController;
 use App\Http\Controllers\Admin\TeamSliderController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -25,10 +27,7 @@ use Illuminate\Support\Facades\Route;
 
 # =====> Main Routes (GET METHODS) <===== #
 
-Route::get('/', function () {
-  $src = DB::table('home_sliders')->orderBy('ranking')->get();
-  return view('pages.home', compact('src'));
-});
+Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/behandlungen', fn () => view('pages.home'));
 
@@ -36,10 +35,7 @@ Route::get('/blog', fn () => view('pages.home'));
 
 Route::get('/kosten', fn () => view('pages.home'));
 
-Route::get('/praxis_&_team', function() {
-  $src = DB::table('team_sliders')->get();
-  return view('pages.team', compact('src'));
-});
+Route::get('/praxis_&_team', [TeamController::class, 'index']);
 
 Route::get('/ueberweisung', fn () => view('pages.home'));
 
@@ -96,7 +92,7 @@ Route::post('/slider/home/store', [HomeSliderController::class, 'store'])
 
 Route::get('/slider/home/edit/{id}', function ($id) {
   $slideHome = DB::table('home_sliders')->find($id);
-  
+
   return view('admin.home.edit_slide', compact('slideHome'));
 });
 
@@ -115,7 +111,7 @@ Route::post('/slider/team/store', [TeamSliderController::class, 'store'])
 
 Route::get('/slider/team/edit/{id}', function ($id) {
   $slideTeam = DB::table('team_sliders')->find($id);
-  
+
   return view('admin.team.edit_slide', compact('slideTeam'));
 });
 

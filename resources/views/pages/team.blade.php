@@ -19,7 +19,11 @@
 {{--------------------> Content <--------------------}}
 @section('content')
 <section class="header">
-  <x-slideshow :src="$src" />
+  @if($public)
+    <x-slideshow :src="$src" />
+  @else
+    <p style="margin: 100px 0 0 0">Test</p>
+  @endif
   
   <h1>Praxis &amp; Team</h1>
 </section>

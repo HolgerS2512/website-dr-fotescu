@@ -30,13 +30,24 @@ $active_link = $path ?: '/';
     <body>
         <x-navbar-admin :active="$active_link" />
 
-        <main class="panel">
-            @if(session('status'))
-                <x-modal :message="session('message')" :status="session('status')" />
-            @endif
+        <div class="row g-0">
+            @auth
+                <div class="col-lg-2">
+                    <x-aside-admin />
+                </div>
+            @endauth
+            
+            <div class="col-lg-10 p-0">
 
-            @yield('content')
-        </main>
-
+                <main class="panel">
+                    @if(session('status'))
+                    <x-modal :message="session('message')" :status="session('status')" />
+                    @endif
+                    
+                    @yield('content')
+                </main>
+                
+            </div>
+        </div>
     </body>
 </html>
