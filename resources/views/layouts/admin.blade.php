@@ -1,6 +1,6 @@
 @php
-$path = str_replace(config('app.url'), '', url()->current());
-$active_link = $path ?: '/';
+    $path = str_replace(config('app.url'), '', url()->current());
+    $active_link = $path ?: '/';
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -32,12 +32,12 @@ $active_link = $path ?: '/';
 
         <div class="row g-0">
             @auth
-                <div class="col-lg-2">
+                <div class="special-col special-col-header">
                     <x-aside-admin />
                 </div>
             @endauth
             
-            <div class="col-lg-10 p-0">
+            <div class="special-col special-col-main">
 
                 <main class="panel">
                     @if(session('status'))
@@ -49,5 +49,78 @@ $active_link = $path ?: '/';
                 
             </div>
         </div>
+
+@auth
+    <script>
+        (() => {
+            const asideMenuBtn = document.querySelector('#aside-nav');
+            const asideNavbarEl = document.querySelector('.special-col-header');
+            const asideMainbarEl = document.querySelector('.special-col-main');
+            const collapseItem = Array.from(document.querySelectorAll('.accordion-collapse'));
+            const collapseBtnItem = Array.from(document.querySelectorAll('.accordion-button'));
+        
+            const init = () => {
+                checkStorage();
+                asideMenuBtn.addEventListener('click', toggleMenu);
+                collapseBtnItem.forEach(el => el.addEventListener('click', toggleAccordion));
+            }
+        
+            const checkStorage = () => {
+                const storeToggleMenu = localStorage.getItem("adminBar");
+                const storeCollapse = localStorage.getItem("collapseAccordion");
+            
+                if (storeToggleMenu !== null && Boolean(storeToggleMenu)) {
+                    asideNavbarEl.classList.add('close-bar');
+                    asideMainbarEl.classList.add('close-bar');
+                }
+            
+                if (storeCollapse !== null && Boolean(storeCollapse)) {
+                    collapseItem.forEach((el, i) => {
+                        if (storeCollapse === el.id) {
+                            el.classList.add('show');
+                        }
+                    });
+                }
+            }
+        
+            const toggleMenu = () => {
+                const position = getComputedStyle(asideNavbarEl).getPropertyValue('left');
+                const quest = Number(position.substring(0, position.length - 2)) === 0;
+                const quest2 = asideNavbarEl.classList.contains('close-bar');
+            
+                if (quest && !quest2) {
+                    asideNavbarEl.classList.add('close-bar');
+                    asideMainbarEl.classList.add('close-bar');
+                    localStorage.setItem("adminBar", true);
+                } else {
+                    asideNavbarEl.classList.remove('close-bar');
+                    asideMainbarEl.classList.remove('close-bar');
+                    localStorage.removeItem("adminBar");
+                }
+            }
+
+            const toggleAccordion = () => {
+                const checkArr = Array(collapseItem.length);
+
+                setTimeout(() => {
+                    collapseItem.forEach((el, i) => {
+                        checkArr.splice(i, i, false);
+                        
+                        if (el.classList.contains('show')) {
+                            localStorage.setItem("collapseAccordion", el.id);
+                            checkArr.splice(i, i, true);
+                        }
+                    });
+
+                    if (checkArr.every(el => !el)) {
+                        localStorage.removeItem("collapseAccordion");
+                    }
+                }, 500);
+            }
+        
+            init();
+        })()
+        </script>
+    @endauth
     </body>
 </html>
