@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+<nav class="fixed-top navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
   <div class="container-fluid d-flex justify-content-around">
     @auth
       <a class="navbar-brand" href="">Welcome {{ Auth::user()->name }}</a>

@@ -53,18 +53,18 @@ class TeamSliderController extends Controller
 
             return redirect()->back()->with([
                 'status' => true,
-                'message' => GetLangMessage::languagePackage('en')->imageTrue,
+                'message' => GetLangMessage::languagePackage('en')->uploadTrue,
             ]);
         } catch (Exception $e) {
             return redirect()->back()->with([
                 'status' => true,
-                'message' => GetLangMessage::languagePackage('en')->imageFalse,
+                'message' => GetLangMessage::languagePackage('en')->uploadFalse,
             ]);
         }
 
         return redirect()->back()->with([
             'status' => true,
-            'message' => GetLangMessage::languagePackage('en')->imageFalse,
+            'message' => GetLangMessage::languagePackage('en')->uploadFalse,
         ]);
     }
 

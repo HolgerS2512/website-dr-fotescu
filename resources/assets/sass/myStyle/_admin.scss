@@ -13,12 +13,26 @@
     position: absolute;
     top: 4vh;
     left: 6vw;
-    font-size: max(12vw, 120px);
+    font-size: max(10vw, 120px);
     z-index: -1;
     opacity: .05;
     user-select: none;
     pointer-events: none;
   }
+
+  .form-admin {
+    min-height: 2.5em;
+  }
+  .form-admin .admin-switch-input {
+    width: 4em;
+    height: 2em;
+    cursor: pointer;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+  
 }
 
 .link-placeholder,
@@ -45,7 +59,8 @@
   .special-col-header {
     height: 100%;
     width: 300px;
-    position: absolute;
+    position: fixed;
+    top: 56px;
     left: 0;
   }
 
@@ -71,7 +86,7 @@
 
   #admin-bar {
     height: 100%;
-  
+
     #aside-nav {
       border-radius: 6px 0 0 6px;
     }

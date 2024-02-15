@@ -82,8 +82,9 @@ Route::post('/kontakt', [ContactController::class, 'store'])
  */
 Auth::routes();
 
-Route::get('/dashboard', [AdminController::class, 'index'])
-  ->name('dashboard');
+Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+
+Route::get('/home/header', [HomeSliderController::class, 'index'])->name('home.header');
 
 // -----> Home Slider Routes (POST, GET & PUT METHODS) <----- //
 
@@ -97,6 +98,8 @@ Route::get('/slider/home/edit/{id}', function ($id) {
 });
 
 Route::put('slider/home/update/{id}', [HomeSliderController::class, 'update']);
+
+Route::patch('slider/home/visible', [HomeSliderController::class, 'visible']);
 
 Route::patch('slider/home/update/up/{id}', [HomeSliderController::class, 'up']);
 

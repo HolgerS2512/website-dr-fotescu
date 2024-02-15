@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\HomeSlider;
+use App\Models\Publish;
 use Illuminate\Http\Request;
 use App\Traits\GetLangMessage;
 use Illuminate\Support\Carbon;
@@ -12,9 +13,44 @@ use Illuminate\Support\Facades\Validator;
 // use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Facades\File;
 use Exception;
+use Illuminate\Support\Facades\DB;
+use App\Traits\GetBoolFromDb;
 
 class HomeSliderController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        try {
+            $src = DB::table('home_sliders')->orderBy('ranking')->get();
+            $publish = DB::table('publishes')->get();
+
+            $i = 1;
+            $slideIds = [];
+
+            foreach ($src as $slider) {
+                $slideIds[$slider->ranking] = $slider->id;
+            }
+
+            return view('admin.home.index', [
+                'i' => $i,
+                'src' => $src,
+                'public' => GetBoolFromDb::getBool($publish, 'home.slider'),
+                'slideIds' => $slideIds,
+            ]);
+        } catch (Exception $e) {
+
+            return view('admin.home.index', compact('e'));
+        }
+        $err = GetLangMessage::languagePackage('en')->databaseError;
+
+        return view('admin.home.index', compact('err'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -60,18 +96,18 @@ class HomeSliderController extends Controller
 
             return redirect()->back()->with([
                 'status' => true,
-                'message' => GetLangMessage::languagePackage('en')->imageTrue,
+                'message' => GetLangMessage::languagePackage('en')->uploadTrue,
             ]);
         } catch (Exception $e) {
             return redirect()->back()->with([
                 'status' => true,
-                'message' => GetLangMessage::languagePackage('en')->imageFalse,
+                'message' => GetLangMessage::languagePackage('en')->uploadFalse,
             ]);
         }
 
         return redirect()->back()->with([
             'status' => true,
-            'message' => GetLangMessage::languagePackage('en')->imageFalse,
+            'message' => GetLangMessage::languagePackage('en')->uploadFalse,
         ]);
     }
 
@@ -125,6 +161,45 @@ class HomeSliderController extends Controller
             return redirect()->back()->with([
                 'status' => true,
                 'message' => GetLangMessage::languagePackage('en')->updateFalse,
+            ]);
+        }
+
+        return redirect()->back()->with([
+            'status' => true,
+            'message' => GetLangMessage::languagePackage('en')->updateFalse,
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function visible(Request $request)
+    {
+        $credentials = Validator::make($request->all(), [
+            'slideshow' => 'required|numeric|min:0|max:1',
+        ]);
+
+        if ($credentials->fails()) {
+            return redirect()->back()->with([
+                'status' => true,
+                'message' => GetLangMessage::languagePackage('en')->updateFalse,
+            ]);
+        }
+
+        try {
+            Publish::where('name', 'home.slider')->update([
+                'public' => $request->slideshow,
+                'updated_at' => Carbon::now(),
+            ]);
+
+            return redirect()->back();
+        } catch (Exception $e) {
+            return redirect()->back()->with([
+                'status' => true,
+                'message' => $e,
             ]);
         }
 

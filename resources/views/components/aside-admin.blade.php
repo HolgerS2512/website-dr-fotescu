@@ -15,7 +15,7 @@
       </h2>
       <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#aside-bar">
         <div class="accordion-body">
-          <a href="" class="link-light link-underline-opacity-25 link-underline-opacity-100-hover acc-links">
+          <a href="{{ route('home.header') }}" class="link-light link-underline-opacity-25 link-underline-opacity-100-hover acc-links">
             <div>Section 1 : Head</div>
             <x-icons.image :size="24" :clr="'FFF'" />
           </a>

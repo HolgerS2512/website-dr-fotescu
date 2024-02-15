@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Traits\GetPublicValue as getPublic;
+use App\Traits\GetBoolFromDb;
 
 class TeamController extends Controller
 {
@@ -22,7 +22,7 @@ class TeamController extends Controller
 
         return view('pages.team', [
             'src' => $src,
-            'public' => getPublic::isPublic($publish, 'team.slider'),
+            'public' => GetBoolFromDb::getBool($publish, 'team.slider'),
         ]);
     }
 }

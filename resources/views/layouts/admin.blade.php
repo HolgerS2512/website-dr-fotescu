@@ -32,12 +32,12 @@
 
         <div class="row g-0">
             @auth
-                <div class="special-col special-col-header">
+                <div class="special-col special-col-header m-0 p-0">
                     <x-aside-admin />
                 </div>
             @endauth
             
-            <div class="special-col special-col-main">
+            <div class="special-col special-col-main m-0 p-0">
 
                 <main class="panel">
                     @if(session('status'))
@@ -53,6 +53,7 @@
 @auth
     <script>
         (() => {
+            'use strict'
             const asideMenuBtn = document.querySelector('#aside-nav');
             const asideNavbarEl = document.querySelector('.special-col-header');
             const asideMainbarEl = document.querySelector('.special-col-main');

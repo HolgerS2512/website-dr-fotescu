@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Traits\GetPublicValue as getPublic;
+use App\Traits\GetBoolFromDb;
 
 class HomeController extends Controller
 {
@@ -22,7 +22,7 @@ class HomeController extends Controller
 
         return view('pages.home', [
             'src' => $src,
-            'public' => getPublic::isPublic($publish, 'home.slider'),
+            'public' => GetBoolFromDb::getBool($publish, 'home.slider'),
         ]);
     }
 }

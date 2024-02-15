@@ -4,10 +4,10 @@ namespace App\Traits;
 
 /**
  *
- * @method static \App\Traits\GetPublicValue isPublic($dbData, $searchString)
+ * @method static \App\Traits\GetBoolFromDb getBool($dbData, $searchString)
  * 
  */
-trait GetPublicValue
+trait GetBoolFromDb
 {
   /**
    * Search the specified resource in DB data.
@@ -16,7 +16,7 @@ trait GetPublicValue
    * @param  $searchString
    * @return boolean
    */
-  public static function isPublic($dbData = [], $searchString = ''): bool
+  public static function getBool($dbData = [], $searchString = ''): bool
   {
     $result = [];
 

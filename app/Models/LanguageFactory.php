@@ -28,8 +28,8 @@ class LanguageFactory extends Model
             'contactFalse' => 'Unfortunately, a problem has occurred. Please try again later.',
             'loginTrue' => 'You are logged in!',
             'loginFalse' => 'Login failed!',
-            'imageTrue' => 'Image upload & save successfully.',
-            'imageFalse' => 'Database error, save failed!',
+            'uploadTrue' => 'Upload successfully.',
+            'uploadFalse' => 'Database error, upload failed!',
             'updateTrue' => 'Update successfully.',
             'updateFalse' => 'Database error, update failed!',
             'deleteTrue' => 'Delete successfully.',
@@ -48,35 +48,35 @@ class LanguageFactory extends Model
      * @var string
      */
     public $contactTrue, $contactFalse;
-    
+
     /**
      * This variable contains the appropriate output in the respective language.
      *
      * @var string
      */
     public $loginTrue, $loginFalse;
-    
+
     /**
      * This variable contains the appropriate output in the respective language.
      *
      * @var string
      */
-    public $imageTrue, $imageFalse;
-    
+    public $uploadTrue, $uploadFalse;
+
     /**
      * This variable contains the appropriate output in the respective language.
      *
      * @var string
      */
     public $updateTrue, $updateFalse;
-    
+
     /**
      * This variable contains the appropriate output in the respective language.
      *
      * @var string
      */
     public $deleteTrue, $deleteFalse;
-    
+
     /**
      * This variable contains the appropriate output in the respective language.
      *
