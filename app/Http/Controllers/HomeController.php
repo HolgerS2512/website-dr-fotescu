@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Traits\GetBoolFromDb;
+use App\Traits\GetBoolFromDB;
+use Exception;
 
 class HomeController extends Controller
 {
@@ -17,12 +18,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $src = DB::table('home_sliders')->orderBy('ranking')->get();
-        $publish = DB::table('publishes')->get();
+        try {
+            $src = DB::table('home_sliders')->orderBy('ranking')->get();
+            $publish = DB::table('publishes')->get();
+    
+            return view('pages.home', [
+                'src' => $src,
+                'public' => GetBoolFromDB::getBool($publish, 'home.slider'),
+            ]);
+        } catch (Exception $e) {
 
-        return view('pages.home', [
-            'src' => $src,
-            'public' => GetBoolFromDb::getBool($publish, 'home.slider'),
-        ]);
+            return view('errors.500', compact('e'));
+        }
+
+        return view('errors.500');
     }
 }

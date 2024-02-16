@@ -35,6 +35,7 @@ class LanguageFactory extends Model
             'deleteTrue' => 'Delete successfully.',
             'deleteFalse' => 'Database error, delete failed!',
             'databaseError' => 'Database error!',
+            'methodError' => 'This method is not allowed!',
         ],
         'ru' => [
             'contactTrue' => 'Ваше сообщение было отправлено успешно',
@@ -83,6 +84,13 @@ class LanguageFactory extends Model
      * @var string
      */
     public $databaseError;
+
+    /**
+     * This variable contains the appropriate output in the respective language.
+     *
+     * @var string
+     */
+    public $methodError;
 
     /**
      * Method __construct - set the language of locale attribute

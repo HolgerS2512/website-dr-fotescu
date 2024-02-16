@@ -1,13 +1,16 @@
 <?php
 
-use App\Http\Controllers\Admin\HomeSliderController;
-use App\Http\Controllers\Admin\TeamSliderController;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\Home\HomeFootController;
+use App\Http\Controllers\Admin\Home\HomeHeadController;
+use App\Http\Controllers\Admin\Home\HomeMainController;
+use App\Http\Controllers\Admin\Team\TeamFootController;
+use App\Http\Controllers\Admin\Team\TeamHeadController;
+use App\Http\Controllers\Admin\Team\TeamMainController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -77,51 +80,116 @@ Route::post('/kontakt', [ContactController::class, 'store'])
 
 /**
  *
- * # =====> Admin Routes (POST & GET METHOD) <===== #
+ *  ===================================================================================
+ *  ***********************************************************************************
+ * # --------------------------------> Admin Routes <-------------------------------- #
+ *  ***********************************************************************************
+ *  ===================================================================================
  *
  */
+
 Auth::routes();
 
-Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+Route::group(['middleware' => 'auth'], function () {
 
-Route::get('/home/header', [HomeSliderController::class, 'index'])->name('home.header');
+  /**
+   *
+   *  ===================================================================================
+   *  ***********************************************************************************
+   * # -----------------------------> Auth Routes Start <------------------------------ #
+   *  ***********************************************************************************
+   *  ===================================================================================
+   *
+   */
+    /**
+   *
+   *  ===================================================================================
+   * # ------------------> Dashboard Route (GET METHOD) <-------------------- #
+   *  ===================================================================================
+   *
+   */
+  Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-// -----> Home Slider Routes (POST, GET & PUT METHODS) <----- //
 
-Route::post('/slider/home/store', [HomeSliderController::class, 'store'])
-  ->name('store.home.slide');
+  /**
+   *
+   *  ===================================================================================
+   * # ------------------> Home Header Routes (RESSOURCE METHODS) <-------------------- #
+   *  ===================================================================================
+   *
+   */
+  Route::get('/home/header', [HomeHeadController::class, 'index'])
+    ->name('home.header');
 
-Route::get('/slider/home/edit/{id}', function ($id) {
-  $slideHome = DB::table('home_sliders')->find($id);
+  Route::post('/slider/home/store', [HomeHeadController::class, 'store'])
+    ->name('store.home.slide');
 
-  return view('admin.home.edit_slide', compact('slideHome'));
+  Route::get('/slider/home/edit/{id}', [HomeHeadController::class, 'edit']);
+
+  Route::put('slider/home/update/{id}', [HomeHeadController::class, 'update']);
+
+  Route::patch('slider/home/visible', [HomeHeadController::class, 'visible']);
+
+  Route::patch('slider/home/update/up/{id}', [HomeHeadController::class, 'up']);
+
+  Route::patch('slider/home/update/down/{id}', [HomeHeadController::class, 'down']);
+
+  Route::get('slider/home/delete/{id}', [HomeHeadController::class, 'destroy']);
+  /**
+   *
+   *  ===================================================================================
+   * # -------------------> Home Main Routes (RESSOURCE METHODS) <--------------------- #
+   *  ===================================================================================
+   *
+   */
+  Route::get('/home/content', [HomeMainController::class, 'index'])
+    ->name('home.content');
+
+
+  /**
+   *
+   *  ===================================================================================
+   * # ------------------> Team Header Routes (RESSOURCE METHODS) <-------------------- #
+   *  ===================================================================================
+   *
+   */
+  Route::get('/team/header', [TeamHeadController::class, 'index'])
+    ->name('team.header');
+
+  Route::post('/slider/team/store', [TeamHeadController::class, 'store'])
+    ->name('store.team.slide');
+
+  Route::get('/slider/team/edit/{id}', [TeamHeadController::class, 'edit']);
+
+  Route::put('slider/team/update/{id}', [TeamHeadController::class, 'update']);
+
+  Route::patch('slider/team/visible', [TeamHeadController::class, 'visible']);
+
+  Route::patch('slider/team/update/up/{id}', [TeamHeadController::class, 'up']);
+
+  Route::patch('slider/team/update/down/{id}', [TeamHeadController::class, 'down']);
+
+  Route::get('slider/team/delete/{id}', [TeamHeadController::class, 'destroy']);
+  
+  /**
+   *
+   *  ===================================================================================
+   * # -------------------> Team Main Routes (RESSOURCE METHODS) <--------------------- #
+   *  ===================================================================================
+   *
+   */
+  Route::get('/team/content', [TeamMainController::class, 'index'])
+    ->name('team.content');
+
+
+
+  /**
+   *
+   *  ===================================================================================
+   *  ***********************************************************************************
+   * # ------------------------------> Auth Routes End <------------------------------- #
+   *  ***********************************************************************************
+   *  ===================================================================================
+   *
+   */
 });
-
-Route::put('slider/home/update/{id}', [HomeSliderController::class, 'update']);
-
-Route::patch('slider/home/visible', [HomeSliderController::class, 'visible']);
-
-Route::patch('slider/home/update/up/{id}', [HomeSliderController::class, 'up']);
-
-Route::patch('slider/home/update/down/{id}', [HomeSliderController::class, 'down']);
-
-Route::get('slider/home/delete/{id}', [HomeSliderController::class, 'destroy']);
-
-// -----> Team Slider Routes (POST, GET & PUT METHODS) <----- //
-
-Route::post('/slider/team/store', [TeamSliderController::class, 'store'])
-  ->name('store.team.slide');
-
-Route::get('/slider/team/edit/{id}', function ($id) {
-  $slideTeam = DB::table('team_sliders')->find($id);
-
-  return view('admin.team.edit_slide', compact('slideTeam'));
-});
-
-Route::put('slider/team/update/{id}', [TeamSliderController::class, 'update']);
-
-Route::patch('slider/team/update/up/{id}', [TeamSliderController::class, 'up']);
-
-Route::patch('slider/team/update/down/{id}', [TeamSliderController::class, 'down']);
-
-Route::get('slider/team/delete/{id}', [TeamSliderController::class, 'destroy']);

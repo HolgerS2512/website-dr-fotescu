@@ -4,10 +4,10 @@ namespace App\Traits;
 
 /**
  *
- * @method static \App\Traits\GetBoolFromDb getBool($dbData, $searchString)
+ * @method static \App\Traits\GetBoolFromDB getBool($dbData, $searchString)
  * 
  */
-trait GetBoolFromDb
+trait GetBoolFromDB
 {
   /**
    * Search the specified resource in DB data.

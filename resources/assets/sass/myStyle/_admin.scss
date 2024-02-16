@@ -32,6 +32,28 @@
       box-shadow: none;
     }
   }
+
+  .online-screen {
+    height: 20px;
+    width: 20px;
+    border-radius: 100%;
+    border: 1px solid black;
+    position: absolute;
+    right: .5rem;
+    bottom: 4px;
+    z-index: 99;
+  }
+  .o-screen-green {
+    background-color: rgb(64, 240, 11);
+  }
+  .o-screen-red {
+    background-color: rgb(240, 11, 87);
+  }
+
+  .admin-card {
+    max-height: 160px;
+    object-fit: cover;
+  }
   
 }
 

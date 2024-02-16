@@ -28,20 +28,20 @@
     </head>
 
     <body>
-        <x-navbar-admin :active="$active_link" />
+        <x-admin.navbar :active="$active_link" />
 
         <div class="row g-0">
             @auth
                 <div class="special-col special-col-header m-0 p-0">
-                    <x-aside-admin />
+                    <x-admin.aside />
                 </div>
             @endauth
             
             <div class="special-col special-col-main m-0 p-0">
 
                 <main class="panel">
-                    @if(session('status'))
-                    <x-modal :message="session('message')" :status="session('status')" />
+                    @if(session('present'))
+                        <x-modal :message="session('message')" :status="session('status')" />
                     @endif
                     
                     @yield('content')

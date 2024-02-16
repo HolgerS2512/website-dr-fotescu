@@ -33,16 +33,16 @@
 
     <div class="col-12">
       <div class="border shadow-lg p-3 bg-white mb-5">
-        <h3>Slideshow visible : <b class="{{ $public ? 'text-success' : 'text-danger' }}">{{ $public ? 'TRUE' : 'FALSE' }}</b></h3>
+        <h3>Slideshow : <b class="{{ $public ? 'text-success' : 'text-danger' }}">{{ $public ? 'visible' : 'hidden' }}</b></h3>
         <div class="mb-3">
           <form action="/slider/home/visible" method="POST" id="change-slideshow">
             @method('PATCH')
             @csrf
             <input type="radio" class="btn-check" name="slideshow" value="0" id="danger-outlined" autocomplete="off"@if(!$public) checked @endif>
-            <label class="btn btn-outline-danger me-2" for="danger-outlined">Disabled</label>
+            <label class="btn btn-outline-danger me-2" for="danger-outlined">Hidden</label>
             
             <input type="radio" class="btn-check" name="slideshow" value="1" id="success-outlined" autocomplete="off"@if($public) checked @endif>
-            <label class="btn btn-outline-success" for="success-outlined">Activated</label>
+            <label class="btn btn-outline-success" for="success-outlined">Visible</label>
           </form>
         </div>
         <p>If slideshow not active, the first photo with ID 1 is automatically selected as the start image.</p>
@@ -91,12 +91,13 @@
           <tr>
             <th scope="row">
               <div class="text-center d-flex justify-content-center align-items-center mh-100" style="min-height: 110px">
-                {{ $i++ }}
+                {{ $loop->index + 1 }}
               </div>
             </th>
-            <td>
+            <td class="position-relative">
               <div class="d-flex justify-content-center align-items-center mh-100" style="min-height: 110px">
                 <img width="200" src="/{{ $slider->image }}" alt="{{ $alt }}">
+                <span class="online-screen{{ $public || $loop->index + 1 === 1 ? ' o-screen-green' : ' o-screen-red' }}"></span>
               </div>
             </td>
             <td>

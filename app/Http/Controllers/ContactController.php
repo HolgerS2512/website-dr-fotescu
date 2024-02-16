@@ -39,17 +39,20 @@ class ContactController extends Controller
             Mail::to($request['email'])->send(new ContactFeedbackMail);
 
             return redirect()->back()->with([
+                'present' => true,
                 'status' => true,
                 'message' => GetLangMessage::languagePackage()->contactTrue,
             ]);
         } catch (Exception $e) {
             return redirect()->back()->with([
+                'present' => true,
                 'status' => false,
                 'message' => GetLangMessage::languagePackage()->contactFalse,
             ]);
         }
 
         return redirect()->back()->with([
+            'present' => true,
             'status' => false,
             'message' => GetLangMessage::languagePackage()->contactFalse,
         ]);
