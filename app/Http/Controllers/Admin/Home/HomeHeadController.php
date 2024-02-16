@@ -35,18 +35,18 @@ class HomeHeadController extends Controller
                 $slideIds[$slider->ranking] = $slider->id;
             }
 
-            return view('admin.home.head.index', [
+            return view('admin.home.header.index', [
                 'src' => $src,
                 'public' => GetBoolFromDB::getBool($publish, 'home.slider'),
                 'slideIds' => $slideIds,
             ]);
         } catch (Exception $e) {
 
-            return view('admin.home.head.index', compact('e'));
+            return view('admin.home.header.index', compact('e'));
         }
         $err = GetLangMessage::languagePackage('en')->databaseError;
 
-        return view('admin.home.head.index', compact('err'));
+        return view('admin.home.header.index', compact('err'));
     }
 
     /**
@@ -120,7 +120,7 @@ class HomeHeadController extends Controller
         try {
             $slide = DB::table('home_sliders')->find($id);
 
-            return view('admin.home.head.edit_slide', compact('slide'));
+            return view('admin.home.header.edit_slide', compact('slide'));
         } catch (Exception $e) {
             return redirect()->back()->with([
                 'present' => true,
@@ -178,7 +178,7 @@ class HomeHeadController extends Controller
                 'updated_at' => Carbon::now(),
             ]);
 
-            return redirect('admin.home.head')->with([
+            return redirect('admin.home.header')->with([
                 'present' => true,
                 'status' => true,
                 'message' => GetLangMessage::languagePackage('en')->updateTrue,
@@ -212,8 +212,8 @@ class HomeHeadController extends Controller
 
         if ($credentials->fails()) {
             return redirect()->back()
-            ->withErrors($credentials->errors())
-            ->withInput();
+                ->withErrors($credentials->errors())
+                ->withInput();
         }
 
         try {

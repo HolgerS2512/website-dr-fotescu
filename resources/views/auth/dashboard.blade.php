@@ -18,10 +18,10 @@
         <div class="p-3">
           <div class="card w-100">
             <div class="card-body">
-              <h5 class="card-title">{{ $src->title }} Header {{ $loop->index + 1 }}</h5>
+              <h5 class="card-title">Edit {{ $src->title }}</h5>
               <img src="/{{ $src->image }}" class="card-img-top admin-card">
-              <a href="{{ route($src->route . '.header') }}" class="btn btn-primary mt-3 w-100">Header Edit</a>
-              <a href="{{ route($src->route . '.content') }}" class="btn btn-primary mt-3 w-100">Content Edit</a>
+              <a href="{{ route($src->route . '.header') }}" class="btn btn-primary mt-3 w-100">Header</a>
+              <a href="{{ route($src->route . '.content') }}" class="btn btn-primary mt-3 w-100">Content</a>
             </div>
           </div>
         </div>

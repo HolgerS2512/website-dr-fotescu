@@ -18,15 +18,11 @@
 
 {{--------------------> Content <--------------------}}
 @section('content')
-<section class="header">
-  @if($public)
-    <x-slideshow :src="$src" />
-  @else
-    <p style="margin: 100px 0 0 0">Test</p>
-  @endif
-  
-  <h1>Zahnarztpraxis<br/>Dr. Sebastian Fotescu</h1>
-</section>
+  <x-header 
+    :src="$src" 
+    :public="$public" 
+    :title="'Zahnarztpraxis<br/>Dr. Sebastian Fotescu'" 
+  />
 
 
 <h2>-------------HOME-------------</h2>

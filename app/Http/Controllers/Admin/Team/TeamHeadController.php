@@ -33,18 +33,18 @@ class TeamHeadController extends Controller
                 $slideIds[$slider->ranking] = $slider->id;
             }
 
-            return view('admin.team.head.index', [
+            return view('admin.team.header.index', [
                 'src' => $src,
                 'public' => GetBoolFromDB::getBool($publish, 'team.slider'),
                 'slideIds' => $slideIds,
             ]);
         } catch (Exception $e) {
 
-            return view('admin.team.head.index', compact('e'));
+            return view('admin.team.header.index', compact('e'));
         }
         $err = GetLangMessage::languagePackage('en')->databaseError;
 
-        return view('admin.team.head.index', compact('err'));
+        return view('admin.team.header.index', compact('err'));
     }
 
     /**
@@ -116,7 +116,7 @@ class TeamHeadController extends Controller
         try {
             $slide = DB::table('team_sliders')->find($id);
 
-            return view('admin.team.head.edit_slide', compact('slide'));
+            return view('admin.team.header.edit_slide', compact('slide'));
         } catch (Exception $e) {
             return redirect()->back()->with([
                 'present' => true,

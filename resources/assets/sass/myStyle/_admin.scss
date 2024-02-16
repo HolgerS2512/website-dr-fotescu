@@ -51,8 +51,9 @@
   }
 
   .admin-card {
-    max-height: 160px;
+    max-height: 150px;
     object-fit: cover;
+    border-radius: 6px;
   }
   
 }
@@ -135,6 +136,17 @@
 
   .accordion-item {
     background-color: $bluelight;
+
+    .acc-btn-two {
+      border-top: 1px solid black;
+      background-color: $dark;
+      padding-left: 1.5rem;
+
+      &::before {
+        content: '\2014';
+        padding-right: .5rem;
+      }
+    }
   }
 
   .accordion-button, .accordion-item {
@@ -142,4 +154,29 @@
   }
 
 
+}
+
+
+.accordion-important {
+  .accordion-item {
+    border: unset;
+  }
+
+  .accordion-button {
+    background-color: unset;
+
+    $acc-size: 2rem;
+
+    &::after {
+      width: $acc-size;
+      height: $acc-size;
+      background-size: $acc-size;
+      background-position: center;
+    }
+
+    &:focus {
+      border: unset;
+      box-shadow: unset;
+    }
+  }
 }

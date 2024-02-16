@@ -13,6 +13,17 @@
         'title' => 'Home',
       ],
       (object) [
+        'title' => 'Treatments',
+        'dropdown' => [
+          (object) [
+            'title' => 'Zahnbehandlung',
+          ],
+          (object) [
+            'title' => 'Regenschirm',
+          ],
+        ],
+      ],
+      (object) [
         'title' => 'Blog',
       ],
       (object) [
@@ -23,6 +34,7 @@
         'title' => 'Contact',
       ],
     ];
+    // $data = DB::table('home_sliders')->orderBy('ranking')->get();
   @endphp
 
   @foreach ($data as $item)

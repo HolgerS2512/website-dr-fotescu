@@ -13,20 +13,30 @@
   <div style="margin-top: 130px;" class="row">
     <div class="col-12">
       <div class="border shadow-lg p-3 bg-white mb-5">
-        <h2 class="d-inline text-warning bg-dark p-1">Important note!</h2>
-        <div class="mt-4">
-          <p>Automatically adds it to slider on page "team" (every language)!</p>
-          <a class="link" target="_blank" href="https://compress-or-die.com/webp">Optimize your image here! -> https://compress-or-die.com/webp</a>
-          <p class="mt-4">Follow this instructions:</p>
-          <ol>
-            <li>Click link</li>
-            <li>Select file</li>
-            <li>Preprocessing -> size -> 2000 x 904</li>
-            <li>Compression -> Lossy -> (min 82 | max 85)</li>
-            <li>Generate optimized image</li>
-            <li>download</li>
-            <li>than can you upload</li>
-          </ol>
+        <div class="accordion accordion-important" id="accordionImportantNote">
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <button class="accordion-button p-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseImportant" aria-expanded="true" aria-controls="collapseImportant">
+                <h2 class="d-inline text-warning bg-dark p-1">Important note!</h2>
+              </button>
+            </div>
+            <div id="collapseImportant" class="accordion-collapse collapse show" data-bs-parent="#accordionImportantNote">
+              <div class="accordion-body">
+                <p>Automatically adds it to slider on page "home" (every language)!</p>
+                <a class="link" target="_blank" href="https://compress-or-die.com/webp">Optimize your image here! -> https://compress-or-die.com/webp</a>
+                <p class="mt-4">Follow this instructions:</p>
+                <ol>
+                  <li>Click link</li>
+                  <li>Select file</li>
+                  <li>Preprocessing -> size -> 2000 x 904</li>
+                  <li>Compression -> Lossy -> (min 82 | max 85)</li>
+                  <li>Generate optimized image</li>
+                  <li>download</li>
+                  <li>than can you upload</li>
+                </ol>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -248,6 +258,38 @@
     }
 
     const onSubmit = () => visibleFormEl.submit();
+
+    init();
+  })()
+</script>
+<script>
+  (() => {
+    'use strict'
+    const importantAccEl = document.querySelector('#collapseImportant');
+    const importBtn = document.querySelector('.important-btn');
+
+    const init = () => {
+      checkStorage();
+      importBtn.addEventListener('click', toggleStore);
+    }
+
+    const checkStorage = () => {
+      const impStore = localStorage.getItem("important");
+
+      if (impStore !== null && Boolean(impStore)) {
+        importantAccEl.classList.add('close-bar');
+      }
+    }
+
+    const toggleStore = () => {
+      setTimeout(() => {
+        if (importantAccEl.classList.contains('show')) {
+          localStorage.setItem("important", 1);
+        } else {
+          localStorage.removeItem("important");
+        }
+      }, 500);
+    }
 
     init();
   })()
