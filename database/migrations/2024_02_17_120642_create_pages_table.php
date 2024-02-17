@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('home_sliders', function (Blueprint $table) {
+        Schema::create('pages', function (Blueprint $table) {
             $table->id();
             $table->tinyInteger('ranking');
-            $table->string('title')->unique();
-            $table->string('image')->nullable();
+            $table->string('name');
+            $table->string('link')->unique();
+            $table->string('route');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('home_sliders');
+        Schema::dropIfExists('pages');
     }
 };

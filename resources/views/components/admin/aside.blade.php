@@ -8,40 +8,14 @@
   <div class="accordion accordion-flush" id="aside-bar">
 
   @php
-    $data = [
-      (object) [
-        'title' => 'Home',
-      ],
-      (object) [
-        'title' => 'Treatments',
-        'dropdown' => [
-          (object) [
-            'title' => 'Zahnbehandlung',
-          ],
-          (object) [
-            'title' => 'Regenschirm',
-          ],
-        ],
-      ],
-      (object) [
-        'title' => 'Blog',
-      ],
-      (object) [
-        'title' => 'Practice & Team',
-        'link' => 'team',
-      ],
-      (object) [
-        'title' => 'Contact',
-      ],
-    ];
-    // $data = DB::table('home_sliders')->orderBy('ranking')->get();
+    $pages = DB::table('pages')->orderBy('ranking')->get();
   @endphp
 
-  @foreach ($data as $item)
+  @foreach ($pages as $page)
 
     @include('components.admin.accordion-item', [
-      'title' => $item->title,
-      'link' => $item->link ?? lcfirst($item->title),
+      'name' => $page->name,
+      'link' => $page->link,
     ])
 
   @endforeach

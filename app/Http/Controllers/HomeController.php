@@ -20,11 +20,11 @@ class HomeController extends Controller
     {
         try {
             $src = DB::table('home_sliders')->orderBy('ranking')->get();
-            $publish = DB::table('publishes')->get();
+            $public = DB::table('publishes')->get();
     
             return view('pages.home', [
                 'src' => $src,
-                'public' => GetBoolFromDB::getBool($publish, 'home.slider'),
+                'public' => GetBoolFromDB::getBool($public, 'home.slider'),
             ]);
         } catch (Exception $e) {
 

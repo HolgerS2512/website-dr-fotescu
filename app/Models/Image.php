@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Publish extends Model
+class Image extends Model
 {
     use HasFactory;
 
@@ -18,7 +18,7 @@ class Publish extends Model
     protected $guarded = [];
 
     /**
-     * Return the page for the publishes
+     * Return the page for the images
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo 
      */

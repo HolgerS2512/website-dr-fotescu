@@ -13,11 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('team_sliders', function (Blueprint $table) {
+        Schema::create('publishes', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('ranking');
-            $table->string('title')->unique();
-            $table->string('image')->nullable();
+            $table
+                ->foreignId('page_id')
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+            $table->string('name')->unique();
+            $table->boolean('public');
             $table->timestamps();
         });
     }
@@ -29,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('team_sliders');
+        Schema::dropIfExists('publishes');
     }
 };

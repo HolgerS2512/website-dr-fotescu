@@ -8,6 +8,7 @@
 
 .modal {
   pointer-events: none;
+  z-index: 999999999;
   
   .modal-dialog {
     transition: .15s ease-in;

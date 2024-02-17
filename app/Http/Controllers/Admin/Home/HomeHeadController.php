@@ -19,6 +19,23 @@ use App\Traits\GetBoolFromDB;
 class HomeHeadController extends Controller
 {
     /**
+     * Saves the associated id for the respective controller.
+     *
+     * @var int $pageId
+     */
+    public int $pageId;
+
+    /**
+     * Fills the variable with the associated id.
+     *
+     * @var int $pageId
+     */
+    public function __construct()
+    {
+        $this->pageId = 1;
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -26,7 +43,7 @@ class HomeHeadController extends Controller
     public function index()
     {
         try {
-            $src = DB::table('home_sliders')->orderBy('ranking')->get();
+            $src = DB::table('images')->where('page_id', '=', $this->pageId)->orderBy('ranking')->get();
             $publish = DB::table('publishes')->get();
 
             $slideIds = [];
@@ -75,7 +92,7 @@ class HomeHeadController extends Controller
             $extension = strtolower($file->getClientOriginalExtension());
             $img_name = $name . '.' . $extension;
 
-            $upload_location = 'uploads/home_slider/';
+            $upload_location = 'uploads/images/home/';
             $save_url = $upload_location . $img_name;
 
             $file->move($upload_location, $img_name);
@@ -86,25 +103,29 @@ class HomeHeadController extends Controller
             // $resize_img->toJpeg(85)->save(base_path($save_url));
 
             HomeSlider::insert([
+                'ranking' => $request->ranking,
+                'page_id' => $this->pageId,
                 'title' => mb_strtolower(str_replace(' ', '-', $request->title)),
                 'image' => $save_url,
-                'ranking' => $request->ranking,
                 'created_at' => Carbon::now(),
             ]);
 
             return redirect()->back()->with([
                 'present' => true,
+                'status' => true,
                 'message' => GetLangMessage::languagePackage('en')->uploadTrue,
             ]);
         } catch (Exception $e) {
             return redirect()->back()->with([
                 'present' => true,
+                'status' => false,
                 'message' => GetLangMessage::languagePackage('en')->uploadFalse,
             ]);
         }
 
         return redirect()->back()->with([
             'present' => true,
+            'status' => false,
             'message' => GetLangMessage::languagePackage('en')->uploadFalse,
         ]);
     }
@@ -163,7 +184,7 @@ class HomeHeadController extends Controller
             $extension = strtolower($file->getClientOriginalExtension());
             $img_name = $name . '.' . $extension;
 
-            $upload_location = 'uploads/home_slider/';
+            $upload_location = 'uploads/images/home/';
             $save_url = $upload_location . $img_name;
 
             if (File::exists($request->old_image)) {
@@ -335,9 +356,9 @@ class HomeHeadController extends Controller
     public function destroy($id)
     {
         try {
-            $check = HomeSlider::all();
+            $check = DB::table('home_slider')->count();
 
-            if (count($check) === 1) {
+            if ($check === 1) {
                 return redirect()->back()->with([
                     'present' => true,
                     'status' => false,
@@ -347,6 +368,15 @@ class HomeHeadController extends Controller
 
             $slide = HomeSlider::findOrFail($id);
             $slide->delete();
+
+            $data = DB::table('home_sliders')->orderBy('ranking')->get();
+
+            for ($i = 0; $i < count($data); $i++) {
+                HomeSlider::whereId($data[$i]->id)->update([
+                    'ranking' => ($i + 1),
+                    'updated_at' => Carbon::now(),
+                ]);
+            }
 
             if (File::exists($slide->image)) {
                 File::delete($slide->image);

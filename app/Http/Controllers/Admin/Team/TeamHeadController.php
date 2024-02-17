@@ -17,6 +17,23 @@ use App\Traits\GetBoolFromDB;
 class TeamHeadController extends Controller
 {
     /**
+     * Saves the associated id for the respective controller.
+     *
+     * @var int
+     */
+    public int $pageId;
+
+    /**
+     * Fills the variable with the associated id.
+     *
+     * @var int $pageId
+     */
+    public function __construct()
+    {
+        $this->pageId = 5;
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -24,7 +41,7 @@ class TeamHeadController extends Controller
     public function index()
     {
         try {
-            $src = DB::table('team_sliders')->orderBy('ranking')->get();
+            $src = DB::table('images')->where('page_id', '=', $this->pageId)->orderBy('ranking')->get();
             $publish = DB::table('publishes')->get();
 
             $slideIds = [];
@@ -73,7 +90,7 @@ class TeamHeadController extends Controller
             $extension = strtolower($file->getClientOriginalExtension());
             $img_name = $name . '.' . $extension;
 
-            $upload_location = 'uploads/team_slider/';
+            $upload_location = 'uploads/images/team/';
             $save_url = $upload_location . $img_name;
 
             $file->move($upload_location, $img_name);
@@ -159,7 +176,7 @@ class TeamHeadController extends Controller
             $extension = strtolower($file->getClientOriginalExtension());
             $img_name = $name . '.' . $extension;
 
-            $upload_location = 'uploads/team_slider/';
+            $upload_location = 'uploads/images/team/';
             $save_url = $upload_location . $img_name;
 
             if (File::exists($request->old_image)) {
@@ -325,15 +342,16 @@ class TeamHeadController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Illuminate\Http\Request  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         try {
-            $check = TeamSlider::all();
+            $check = DB::table('team_sliders')->count();
 
-            if (count($check) === 1) {
+            if ($check === 1) {
                 return redirect()->back()->with([
                     'present' => true,
                     'status' => false,
@@ -343,6 +361,15 @@ class TeamHeadController extends Controller
 
             $slide = TeamSlider::findOrFail($id);
             $slide->delete();
+
+            $data = DB::table('team_sliders')->orderBy('ranking')->get();
+
+            for ($i = 0; $i < count($data); $i++) {
+                TeamSlider::whereId($data[$i]->id)->update([
+                    'ranking' => ($i + 1),
+                    'updated_at' => Carbon::now(),
+                ]);
+            }
 
             if (File::exists($slide->image)) {
                 File::delete($slide->image);
