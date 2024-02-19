@@ -25,8 +25,14 @@
               @else
                 <img src="/{{ $page->image ?? '' }}" class="card-img-top admin-card">
               @endif
-              {{-- <a href="{{ route($page->link . '.header') }}" class="btn btn-primary mt-3 w-100">Header</a> --}}
-              {{-- <a href="{{ route($page->link . '.content') }}" class="btn btn-primary mt-3 w-100">Content</a> --}}
+
+              @if ($page->link === 'imprint' || $page->link === 'privacy')
+                <button type="button" disabled class="btn btn-secondary mt-3 w-100">Header</button>
+              @else
+                <a href="{{ url('/'.'header/' . $page->link) }}" class="btn btn-primary mt-3 w-100">Header</a>
+              @endif
+
+              <a href="{{ url('/' . 'content/' . $page->link) }}" class="btn btn-primary mt-3 w-100">Content</a>
             </div>
           </div>
         </div>

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Team;
+namespace App\Http\Controllers\Admin\Imprint;
 
 use App\Http\Controllers\Controller;
 use App\Traits\HeadControllerRepository;
+use Illuminate\Http\Request;
 
-class TeamHeadController extends Controller
+class ImprintHeadController extends Controller
 {
     use HeadControllerRepository;
 
@@ -14,5 +15,5 @@ class TeamHeadController extends Controller
      *
      * @var int $pageID
      */
-    public int $pageID = 5;
+    public int $pageID = 9;
 }

@@ -12,7 +12,7 @@ class HomeHeadController extends Controller
     /**
      * Stores the associated ID for the respective page.
      *
-     * @var int $page
+     * @var int $pageID
      */
-    public int $pageId = 1;
+    public int $pageID = 1;
 }

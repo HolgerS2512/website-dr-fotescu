@@ -52,9 +52,9 @@ trait HeadControllerRepository
   public function __construct()
   {
     try {
-      $this->page = Page::find($this->pageId);
-      $this->images = Image::where('page_id', $this->pageId)->orderBy('ranking')->get();
-      $this->publishes = Publish::where('page_id', $this->pageId)->get();
+      $this->page = Page::find($this->pageID);
+      $this->images = Image::where('page_id', $this->pageID)->orderBy('ranking')->get();
+      $this->publishes = Publish::where('page_id', $this->pageID)->get();
     } catch (Exception $e) {
       redirect()->back()->with([
         'present' => true,
@@ -131,7 +131,7 @@ trait HeadControllerRepository
 
       Image::insert([
         'ranking' => $request->ranking,
-        'page_id' => $this->pageId,
+        'page_id' => $this->pageID,
         'title' => mb_strtolower(str_replace(' ', '-', $request->title)),
         'image' => $save_url,
         'created_at' => Carbon::now(),
@@ -166,10 +166,14 @@ trait HeadControllerRepository
   public function edit($id)
   {
     try {
-      $image = DB::table('images')->find($id);
-      $page = $this->page;
-
-      return view('admin.header.edit_image', compact('image', 'page'));
+      foreach ($this->images as $image) {
+        if ($image->id === (int) $id) {
+          return view('admin.header.edit_image', [
+            'image' => $image,
+            'page' => $this->page,
+          ]);
+        }
+      }
     } catch (Exception $e) {
       return redirect()->back()->with([
         'present' => true,
@@ -196,8 +200,8 @@ trait HeadControllerRepository
   {
     try {
       $credentials = Validator::make($request->all(), [
-        'title' => 'required|min:3|max:255',
-        'image' => 'required|mimes:jpg,png,webp,jpeg',
+        'title' => 'min:3|max:255',
+        'image' => 'mimes:jpg,png,webp,jpeg',
       ]);
 
       if ($credentials->fails()) {
@@ -206,26 +210,43 @@ trait HeadControllerRepository
           ->withInput();
       }
 
-      $file = $request->file('image');
+      if (!empty($request->file('image'))) {
 
-      $name = str_replace(' ', '-', strtolower($request->title)) . '-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden';
-      $extension = strtolower($file->getClientOriginalExtension());
-      $img_name = $name . '.' . $extension;
+        $file = $request->file('image');
 
-      $upload_location = 'uploads/images/' . $this->page->link . '/';
-      $save_url = $upload_location . $img_name;
+        $name = str_replace(' ', '-', strtolower($request->title)) . '-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden';
+        $extension = strtolower($file->getClientOriginalExtension());
+        $img_name = $name . '.' . $extension;
 
-      if (File::exists($request->old_image)) {
-        File::delete($request->old_image);
+        $upload_location = 'uploads/images/' . $this->page->link . '/';
+        $save_url = $upload_location . $img_name;
+
+        if (File::exists($request->old_image)) {
+          File::delete($request->old_image);
+        }
+
+        $file->move($upload_location, $img_name);
+
+        foreach ($this->images as $image) {
+          if ($image->id === (int) $id) {
+            $image->update([
+              'title' => mb_strtolower(str_replace(' ', '-', $request->title)),
+              'image' => $save_url,
+              'updated_at' => Carbon::now(),
+            ]);
+          }
+        }
+      } else {
+
+        foreach ($this->images as $image) {
+          if ($image->id === (int) $id) {
+            $image->update([
+              'title' => mb_strtolower(str_replace(' ', '-', $request->title)),
+              'updated_at' => Carbon::now(),
+            ]);
+          }
+        }
       }
-
-      $file->move($upload_location, $img_name);
-
-      Image::whereId($id)->update([
-        'title' => mb_strtolower(str_replace(' ', '-', $request->title)),
-        'image' => $save_url,
-        'updated_at' => Carbon::now(),
-      ]);
 
       return redirect($this->page->link . '/header')->with([
         'present' => true,
@@ -255,21 +276,25 @@ trait HeadControllerRepository
    */
   public function visible(Request $request)
   {
-    $credentials = Validator::make($request->all(), [
-      'slideshow' => 'required|numeric|min:0|max:1',
-    ]);
-
-    if ($credentials->fails()) {
-      return redirect()->back()
-        ->withErrors($credentials->errors())
-        ->withInput();
-    }
-
     try {
-      Publish::where('name', $this->page->link . '.slider')->update([
-        'public' => $request->slideshow,
-        'updated_at' => Carbon::now(),
+      $credentials = Validator::make($request->all(), [
+        'slideshow' => 'required|numeric|min:0|max:1',
       ]);
+
+      if ($credentials->fails()) {
+        return redirect()->back()
+          ->withErrors($credentials->errors())
+          ->withInput();
+      }
+
+      foreach ($this->publishes as $is_public) {
+        if ($is_public->name ===  $this->page->link . '.slider') {
+          $is_public->update([
+            'public' => $request->slideshow,
+            'updated_at' => Carbon::now(),
+          ]);
+        }
+      }
 
       return redirect()->back();
     } catch (Exception $e) {
@@ -297,23 +322,22 @@ trait HeadControllerRepository
   public function up(Request $request, $id)
   {
     try {
-      Image::whereId($request->previous_id)->update([
-        'ranking' => $request->ranking + 1,
-        'updated_at' => Carbon::now(),
-      ]);
-    } catch (Exception $e) {
-      return redirect()->back()->with([
-        'present' => true,
-        'status' => false,
-        'message' => $e,
-      ]);
-    }
+      foreach ($this->images as $image) {
 
-    try {
-      Image::whereId($id)->update([
-        'ranking' => intval($request->ranking),
-        'updated_at' => Carbon::now(),
-      ]);
+        if ($image->id === (int) $request->previous_id) {
+          $image->update([
+            'ranking' => $request->ranking + 1,
+            'updated_at' => Carbon::now(),
+          ]);
+        }
+
+        if ($image->id === (int) $id) {
+          $image->update([
+            'ranking' => intval($request->ranking),
+            'updated_at' => Carbon::now(),
+          ]);
+        }
+      }
 
       return redirect()->back();
     } catch (Exception $e) {
@@ -341,23 +365,22 @@ trait HeadControllerRepository
   public function down(Request $request, $id)
   {
     try {
-      Image::whereId($request->next_id)->update([
-        'ranking' => $request->ranking - 1,
-        'updated_at' => Carbon::now(),
-      ]);
-    } catch (Exception $e) {
-      return redirect()->back()->with([
-        'present' => true,
-        'status' => false,
-        'message' => $e,
-      ]);
-    }
+      foreach ($this->images as $image) {
 
-    try {
-      Image::whereId($id)->update([
-        'ranking' => intval($request->ranking),
-        'updated_at' => Carbon::now(),
-      ]);
+        if ($image->id === (int) $request->next_id) {
+          $image->update([
+            'ranking' => $request->ranking - 1,
+            'updated_at' => Carbon::now(),
+          ]);
+        }
+
+        if ($image->id === (int) $id) {
+          $image->update([
+            'ranking' => intval($request->ranking),
+            'updated_at' => Carbon::now(),
+          ]);
+        }
+      }
 
       return redirect()->back();
     } catch (Exception $e) {
@@ -384,30 +407,30 @@ trait HeadControllerRepository
   public function destroy($id)
   {
     try {
-      $check = Image::where('page_id', $this->pageId)->get()->count();
-
-      if ($check === 1) {
+      if (count($this->images) === 1) {
         return redirect()->back()->with([
           'present' => true,
           'status' => false,
-          'message' => GetLangMessage::languagePackage('en')->methodError . ' At least 1 photo must be available.',
+          'message' => GetLangMessage::languagePackage('en')->methodError . ' At least 1 image must be available.',
         ]);
       }
 
-      $slide = Image::findOrFail($id);
-      $slide->delete();
+      foreach ($this->images as $image) {
+        if ($image->id === (int) $id) {
+          if (File::exists($image->image)) {
+            File::delete($image->image);
+          }
+          $image->delete();
+        }
+      }
 
-      $data = Image::where('page_id', $this->pageId)->orderBy('ranking')->get();
+      $data = $this->images;
 
-      for ($i = 0; $i < count($data); $i++) {
+      for ($i = 0; $i < count($this->images); $i++) {
         Image::whereId($data[$i]->id)->update([
           'ranking' => ($i + 1),
           'updated_at' => Carbon::now(),
         ]);
-      }
-
-      if (File::exists($slide->image)) {
-        File::delete($slide->image);
       }
 
       return redirect()->back()->with([
