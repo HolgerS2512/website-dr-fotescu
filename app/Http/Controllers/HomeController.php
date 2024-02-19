@@ -10,6 +10,13 @@ use Exception;
 class HomeController extends Controller
 {
     /**
+     * Saves the associated id for the respective controller.
+     *
+     * @var int $pageId
+     */
+    public int $pageId = 1;
+
+    /**
      * Display a listing of the resource.
      *
      * @var Illuminate\Support\Facades\DB $src
@@ -19,16 +26,16 @@ class HomeController extends Controller
     public function index()
     {
         try {
-            $src = DB::table('home_sliders')->orderBy('ranking')->get();
+            $src = DB::table('images')->where('page_id', '=', $this->pageId)->orderBy('ranking')->get();
             $public = DB::table('publishes')->get();
-    
+
             return view('pages.home', [
                 'src' => $src,
                 'public' => GetBoolFromDB::getBool($public, 'home.slider'),
             ]);
         } catch (Exception $e) {
 
-            return view('errors.500', compact('e'));
+            return view('errors.500');
         }
 
         return view('errors.500');

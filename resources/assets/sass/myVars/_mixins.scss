@@ -1,0 +1,4 @@
+@mixin h-w-100( $h : 100%, $w : 100% ) {
+  width: $w;
+  height: $h;
+}

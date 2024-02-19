@@ -2,9 +2,9 @@
   @if($public)
     <x-slideshow :src="$src" />
   @else
-    <div class="img-box">
+    <div class="img-box-header">
       <img 
-        class="img-fluid" 
+        class="slideshow-img" 
         src="{{ asset($src[0]->image) }}" 
         alt="{{ str_replace(' ', '-', strtolower($src[0]->title)) . '-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden' }}"
       >

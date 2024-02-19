@@ -10,6 +10,13 @@ use Exception;
 class TeamController extends Controller
 {
     /**
+     * Saves the associated id for the respective controller.
+     *
+     * @var int
+     */
+    public int $pageId = 5;
+
+    /**
      * Display a listing of the resource.
      *
      * @var Illuminate\Support\Facades\DB $src
@@ -19,12 +26,12 @@ class TeamController extends Controller
     public function index()
     {
         try {
-            $src = DB::table('team_sliders')->orderBy('ranking')->get();
-            $publish = DB::table('publishes')->get();
+            $src = DB::table('images')->where('page_id', '=', $this->pageId)->orderBy('ranking')->get();
+            $public = DB::table('publishes')->get();
     
             return view('pages.team', [
                 'src' => $src,
-                'public' => GetBoolFromDB::getBool($publish, 'team.slider'),
+                'public' => GetBoolFromDB::getBool($public, 'team.slider'),
             ]);
         } catch (Exception $e) {
 

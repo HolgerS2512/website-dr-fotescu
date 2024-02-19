@@ -2,13 +2,13 @@
 
 {{--------------------> Title <--------------------}}
 @section('title')
-<title>Edit Homepage</title>
+<title>Edit {{ $page->name }} Header</title>
 @endsection
 
 {{--------------------> Content <--------------------}}
 @section('content')
 <div class='container py-5'>
-  <h1 class="special-admin-header">Home</h1>
+  <h1 class="special-admin-header">Edit {{ $page->name }} Header</h1>
 
   <div style="margin-top: 130px;" class="row">
     <div class="col-12">
@@ -22,7 +22,7 @@
             </div>
             <div id="collapseImportant" class="accordion-collapse collapse" data-bs-parent="#accordionImportantNote">
               <div class="accordion-body">
-                <p>Automatically adds it to slider on page "home" (every language)!</p>
+                <p>Automatically adds it to slider on page "{{ $page->name }}" (every language)!</p>
                 <a class="link" target="_blank" href="https://compress-or-die.com/webp">Optimize your image here! -> https://compress-or-die.com/webp</a>
                 <p class="mt-4">Follow this instructions:</p>
                 <ol>
@@ -45,7 +45,7 @@
       <div class="border shadow-lg p-3 bg-white mb-5">
         <h3>Slideshow : <b class="{{ $public ? 'text-success' : 'text-danger' }}">{{ $public ? 'visible' : 'hidden' }}</b></h3>
         <div class="mb-3">
-          <form action="/slider/home/visible" method="POST" id="change-slideshow">
+          <form action="{{ '/' . $page->link . '/header/image/visible' }}" method="POST" id="change-slideshow">
             @method('PATCH')
             @csrf
             <input type="radio" class="btn-check" name="slideshow" value="0" id="danger-outlined" autocomplete="off" @if(!$public) checked @endif>
@@ -127,37 +127,37 @@
             </td>
             <td>
               <div class="d-flex justify-content-center">
-                <form action="{{ url('/slider/home/update/up/' . $slider->id) }}" method="POST">
+                <form action="{{ url('/' . $page->link . '/header/image/update/up/' . $slider->id) }}" method="POST">
                   @method('PATCH')
                   @csrf
                   @if (! $loop->first)
                   <input type="hidden" name="ranking" value="{{ $slider->ranking - 1 }}">
-                  <input type="hidden" name="previous_id" value="{{ isset($slideIds[$slider->ranking - 1]) ? $slideIds[$slider->ranking - 1] : 1 }}">
+                  <input type="hidden" name="previous_id" value="{{ isset($imageIds[$slider->ranking - 1]) ? $imageIds[$slider->ranking - 1] : 1 }}">
                   @endif
                   <button type="@if ($loop->first) button @else submit @endif" title="Image up" class="btn btn-dark me-2" @if ($loop->first) disabled @endif>
                     <x-icons.up :size="35" :clr="'FFF'" />
                   </button>
                 </form>
 
-                <a href="{{ url('/slider/home/edit/' . $slider->id) }}" class="btn btn-warning" title="Edit image">
+                <a href="{{ url('/' . $page->link . '/header/image/edit/' . $slider->id) }}" class="btn btn-warning" title="Edit image">
                   <x-icons.edit :size="35" :clr="'FFF'" />
                 </a>
               </div>
 
               <div class="mt-2 d-flex justify-content-center">
-                <form action="{{ url('/slider/home/update/down/' . $slider->id) }}" method="POST">
+                <form action="{{ url('/' . $page->link . '/header/image/update/down/' . $slider->id) }}" method="POST">
                   @method('PATCH')
                   @csrf
                   @if (! $loop->last)
                   <input type="hidden" name="ranking" value="{{ $slider->ranking + 1 }}">
-                  <input type="hidden" name="next_id" value="{{ isset($slideIds[$slider->ranking + 1]) ? $slideIds[$slider->ranking + 1] : 0 }}">
+                  <input type="hidden" name="next_id" value="{{ isset($imageIds[$slider->ranking + 1]) ? $imageIds[$slider->ranking + 1] : 0 }}">
                   @endif
                   <button type="@if ($loop->last) button @else submit @endif" title="Image down" class="btn btn-dark me-2" @if ($loop->last) disabled @endif>
                     <x-icons.down :size="35" :clr="'FFF'" />
                   </button>
                 </form>
 
-                <a href="{{ url('/slider/home/delete/' . $slider->id) }}" class="btn btn-danger" title="Delete image" onclick="return confirm('Are you sure to delete slide : {{ $slider->title }}?')">
+                <a href="{{ url('/' . $page->link . '/header/image/delete/' . $slider->id) }}" class="btn btn-danger" title="Delete image" onclick="return confirm('Are you sure to delete slide : {{ $slider->title }}?')">
                   <x-icons.trash :size="35" :clr="'FFF'" />
                 </a>
               </div>
@@ -171,18 +171,19 @@
 
     <div class="col-xl-4">
       <div class="row g-0">
-        <form action="{{ route('store.home.slide') }}" method="POST" enctype="multipart/form-data" class="p-3 pb-0 border shadow-lg bg-body-tertiary">
+        <form action="{{ url('/' . $page->link . '/header/image/store') }}" method="POST" enctype="multipart/form-data" class="p-3 pb-0 border shadow-lg bg-body-tertiary">
           @csrf
 
           <div class="mb-4">
             <h3>Upload a new image</h3>
           </div>
           @if (isset($src))
-          @if ( ! empty($src) && count($src) < 1 ) <input type="hidden" name="ranking" value="1">
+          @if ( ! empty($src) && count($src) < 1 )
+              <input type="hidden" name="ranking" value="1">
             @else
             @foreach ($src as $slider)
             @if ($loop->last)
-            <input type="hidden" name="ranking" value="{{ $slider->ranking + 1 }}">
+              <input type="hidden" name="ranking" value="{{ $slider->ranking + 1 }}">
             @endif
             @endforeach
             @endif

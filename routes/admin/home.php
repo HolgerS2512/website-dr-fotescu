@@ -12,23 +12,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/home/header', [HomeHeadController::class, 'index'])
-  ->name('home.header');
+Route::get('home/header', [HomeHeadController::class, 'index']);
 
-Route::post('/slider/home/store', [HomeHeadController::class, 'store'])
-  ->name('store.home.slide');
+Route::post('home/header/image/store', [HomeHeadController::class, 'store']);
 
-Route::get('/slider/home/edit/{id}', [HomeHeadController::class, 'edit']);
+Route::get('home/header/image/edit/{id}', [HomeHeadController::class, 'edit']);
 
-Route::put('slider/home/update/{id}', [HomeHeadController::class, 'update']);
+Route::put('home/header/image/update/{id}', [HomeHeadController::class, 'update']);
 
-Route::patch('slider/home/visible', [HomeHeadController::class, 'visible']);
+Route::patch('home/header/image/visible', [HomeHeadController::class, 'visible']);
 
-Route::patch('slider/home/update/up/{id}', [HomeHeadController::class, 'up']);
+Route::patch('home/header/image/update/up/{id}', [HomeHeadController::class, 'up']);
 
-Route::patch('slider/home/update/down/{id}', [HomeHeadController::class, 'down']);
+Route::patch('home/header/image/update/down/{id}', [HomeHeadController::class, 'down']);
 
-Route::get('slider/home/delete/{id}', [HomeHeadController::class, 'destroy']);
+Route::get('home/header/image/delete/{id}', [HomeHeadController::class, 'destroy']);
 
 /*
 |
@@ -38,8 +36,4 @@ Route::get('slider/home/delete/{id}', [HomeHeadController::class, 'destroy']);
 |
 */
 
-Route::get('/home/content', [HomeMainController::class, 'index'])
-  ->name('home.content');
-
-
-
+Route::get('home/content', [HomeMainController::class, 'index']);

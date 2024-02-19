@@ -1,10 +1,43 @@
 .header {
   position: relative;
+  max-height: $header-max-height;
+  @include h-w-100($header-min500-height);
+  overflow: hidden;
+  z-index: 9;
 
   h1 {
     position: absolute;
     left: 0;
     bottom: 0;
     z-index: 99;
+  }
+
+
+  .img-box-header {
+    @include h-w-100($header-min500-height);
+  
+    .slideshow-img {
+      @include h-w-100($header-min500-height);
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+
+
+}
+
+@media(min-width:767.9999998px) {
+  .header {
+    @include h-w-100;
+
+    .img-box-header {
+      @include h-w-100;
+    
+      .slideshow-img {
+        @include h-w-100;
+        object-fit: cover;
+        object-position: center;
+      }
+    }
   }
 }

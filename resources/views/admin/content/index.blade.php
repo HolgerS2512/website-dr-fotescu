@@ -2,13 +2,13 @@
 
 {{--------------------> Title <--------------------}}
 @section('title')
-<title>Edit Practice- & Teampage</title>
+<title>Edit {{ $page->name }} Header</title>
 @endsection
 
 {{--------------------> Content <--------------------}}
 @section('content')
 <div class='container py-5'>
-  <h1 class="special-admin-header">Practice & Team</h1>
+  <h1 class="special-admin-header">Edit {{ $page->name }} Header</h1>
 
   <div style="margin-top: 130px;" class="row">
     <div class="col-12">
@@ -16,13 +16,13 @@
         <div class="accordion accordion-important" id="accordionImportantNote">
           <div class="accordion-item">
             <div class="accordion-header">
-              <button class="accordion-button p-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseImportant" aria-expanded="true" aria-controls="collapseImportant">
+              <button class="accordion-button important-btn p-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseImportant" aria-expanded="true" aria-controls="collapseImportant">
                 <h2 class="d-inline text-warning bg-dark p-1">Important note!</h2>
               </button>
             </div>
-            <div id="collapseImportant" class="accordion-collapse collapse show" data-bs-parent="#accordionImportantNote">
+            <div id="collapseImportant" class="accordion-collapse collapse" data-bs-parent="#accordionImportantNote">
               <div class="accordion-body">
-                <p>Automatically adds it to slider on page "home" (every language)!</p>
+                <p>Automatically adds it to slider on page "{{ $page->name }}" (every language)!</p>
                 <a class="link" target="_blank" href="https://compress-or-die.com/webp">Optimize your image here! -> https://compress-or-die.com/webp</a>
                 <p class="mt-4">Follow this instructions:</p>
                 <ol>
@@ -45,13 +45,13 @@
       <div class="border shadow-lg p-3 bg-white mb-5">
         <h3>Slideshow : <b class="{{ $public ? 'text-success' : 'text-danger' }}">{{ $public ? 'visible' : 'hidden' }}</b></h3>
         <div class="mb-3">
-          <form action="/slider/team/visible" method="POST" id="change-slideshow">
+          <form action="{{ '/' . $page->link . '/header/image/visible' }}" method="POST" id="change-slideshow">
             @method('PATCH')
             @csrf
-            <input type="radio" class="btn-check" name="slideshow" value="0" id="danger-outlined" autocomplete="off"@if(!$public) checked @endif>
+            <input type="radio" class="btn-check" name="slideshow" value="0" id="danger-outlined" autocomplete="off" @if(!$public) checked @endif>
             <label class="btn btn-outline-danger me-2" for="danger-outlined">Hidden</label>
-            
-            <input type="radio" class="btn-check" name="slideshow" value="1" id="success-outlined" autocomplete="off"@if($public) checked @endif>
+
+            <input type="radio" class="btn-check" name="slideshow" value="1" id="success-outlined" autocomplete="off" @if($public) checked @endif>
             <label class="btn btn-outline-success" for="success-outlined">Visible</label>
           </form>
         </div>
@@ -73,30 +73,30 @@
         </thead>
         <tbody>
           @if ( ! isset($src) && empty($src) )
-            <tr>
-              <td>
-                <p class="text-danger">{{ $err }}</p>
-              </td>
-              <td>
-                <p class="text-danger">{{ $err }}</p>
-              </td>
-              <td>
-                <p class="text-danger">{{ $err }}</p>
-              </td>
-              <td>
-                <p class="text-danger">{{ $err }}</p>
-              </td>
-              <td>
-                <p class="text-danger">{{ $err }}</p>
-              </td>
-              <td>
-                <p class="text-danger">{{ $err }}</p>
-              </td>
-            </tr>
+          <tr>
+            <td>
+              <p class="text-danger">{{ $err }}</p>
+            </td>
+            <td>
+              <p class="text-danger">{{ $err }}</p>
+            </td>
+            <td>
+              <p class="text-danger">{{ $err }}</p>
+            </td>
+            <td>
+              <p class="text-danger">{{ $err }}</p>
+            </td>
+            <td>
+              <p class="text-danger">{{ $err }}</p>
+            </td>
+            <td>
+              <p class="text-danger">{{ $err }}</p>
+            </td>
+          </tr>
           @else
           @foreach ($src as $slider)
-          @php 
-            $alt = str_replace(' ', '-', strtolower($slider->title)) . '-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden'; 
+          @php
+          $alt = str_replace(' ', '-', strtolower($slider->title)) . '-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden';
           @endphp
           <tr>
             <th scope="row">
@@ -127,37 +127,37 @@
             </td>
             <td>
               <div class="d-flex justify-content-center">
-                <form action="{{ url('/slider/team/update/up/' . $slider->id) }}" method="POST">
+                <form action="{{ url('/' . $page->link . '/header/image/update/up/' . $slider->id) }}" method="POST">
                   @method('PATCH')
                   @csrf
                   @if (! $loop->first)
-                    <input type="hidden" name="ranking" value="{{ $slider->ranking - 1 }}">
-                    <input type="hidden" name="previous_id" value="{{ isset($slideIds[$slider->ranking - 1]) ? $slideIds[$slider->ranking - 1] : 1 }}">
+                  <input type="hidden" name="ranking" value="{{ $slider->ranking - 1 }}">
+                  <input type="hidden" name="previous_id" value="{{ isset($imageIds[$slider->ranking - 1]) ? $imageIds[$slider->ranking - 1] : 1 }}">
                   @endif
-                  <button type="@if ($loop->first) button @else submit @endif" title="Image up" class="btn btn-dark me-2"@if ($loop->first) disabled @endif>
+                  <button type="@if ($loop->first) button @else submit @endif" title="Image up" class="btn btn-dark me-2" @if ($loop->first) disabled @endif>
                     <x-icons.up :size="35" :clr="'FFF'" />
                   </button>
                 </form>
 
-                <a href="{{ url('/slider/team/edit/' . $slider->id) }}" class="btn btn-warning" title="Edit image">
+                <a href="{{ url('/' . $page->link . '/header/image/edit/' . $slider->id) }}" class="btn btn-warning" title="Edit image">
                   <x-icons.edit :size="35" :clr="'FFF'" />
                 </a>
               </div>
 
               <div class="mt-2 d-flex justify-content-center">
-                <form action="{{ url('/slider/team/update/down/' . $slider->id) }}" method="POST">
+                <form action="{{ url('/' . $page->link . '/header/image/update/down/' . $slider->id) }}" method="POST">
                   @method('PATCH')
                   @csrf
                   @if (! $loop->last)
-                    <input type="hidden" name="ranking" value="{{ $slider->ranking + 1 }}">
-                    <input type="hidden" name="next_id" value="{{ isset($slideIds[$slider->ranking + 1]) ? $slideIds[$slider->ranking + 1] : 0 }}">
+                  <input type="hidden" name="ranking" value="{{ $slider->ranking + 1 }}">
+                  <input type="hidden" name="next_id" value="{{ isset($imageIds[$slider->ranking + 1]) ? $imageIds[$slider->ranking + 1] : 0 }}">
                   @endif
-                  <button type="@if ($loop->last) button @else submit @endif" title="Image down" class="btn btn-dark me-2"@if ($loop->last) disabled @endif>
+                  <button type="@if ($loop->last) button @else submit @endif" title="Image down" class="btn btn-dark me-2" @if ($loop->last) disabled @endif>
                     <x-icons.down :size="35" :clr="'FFF'" />
                   </button>
                 </form>
 
-                <a href="{{ url('/slider/team/delete/' . $slider->id) }}" class="btn btn-danger" title="Delete image" onclick="return confirm('Are you sure to delete slide : {{ $slider->title }}?')">
+                <a href="{{ url('/' . $page->link . '/header/image/delete/' . $slider->id) }}" class="btn btn-danger" title="Delete image" onclick="return confirm('Are you sure to delete slide : {{ $slider->title }}?')">
                   <x-icons.trash :size="35" :clr="'FFF'" />
                 </a>
               </div>
@@ -171,75 +171,47 @@
 
     <div class="col-xl-4">
       <div class="row g-0">
-        <form 
-          action="{{ route('store.team.slide') }}" 
-          method="POST" 
-          enctype="multipart/form-data" 
-          class="p-3 pb-0 border shadow-lg bg-body-tertiary"
-        >
-        @csrf
+        <form action="{{ route('store.' . $page->link . '.image') }}" method="POST" enctype="multipart/form-data" class="p-3 pb-0 border shadow-lg bg-body-tertiary">
+          @csrf
 
           <div class="mb-4">
             <h3>Upload a new image</h3>
           </div>
-        @if (isset($src))
-          @if ( ! empty($src) && count($src) < 1 )
-            <input 
-            type="hidden" 
-            name="ranking" 
-            value="1" 
-            >
-          @else
+          @if (isset($src))
+          @if ( ! empty($src) && count($src) < 1 ) <input type="hidden" name="ranking" value="1">
+            @else
             @foreach ($src as $slider)
-              @if ($loop->last)
-                <input 
-                type="hidden" 
-                name="ranking" 
-                value="{{ $slider->ranking + 1 }}" 
-                >
-              @endif
+            @if ($loop->last)
+            <input type="hidden" name="ranking" value="{{ $slider->ranking + 1 }}">
+            @endif
             @endforeach
-          @endif
-        @endif
-          <div class="mb-3">
-            <label for="title" class="form-label">Title*</label>
-            <input 
-              type="text" 
-              class="form-control @error('title') is-invalid @enderror" 
-              id="title" 
-              name="title" 
-              value="{{ old('title') }}" 
-              required
-              minlength="3" 
-              maxlength="255"
-            >
-            @error('title')
+            @endif
+            @endif
+            <div class="mb-3">
+              <label for="title" class="form-label">Title*</label>
+              <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}" required minlength="3" maxlength="255">
+              @error('title')
               <div class="invalid-feedback">
                 {{ $message }}
               </div>
-            @enderror
-          </div>      
-          <div class="mb-3">
-            <label for="image" class="form-label">Image*</label>
-            <input 
-              type="file" 
-              class="form-control @error('image') is-invalid @enderror" 
-              id="image" 
-              name="image" 
-              value="{{ old('image') }}" 
-              required
-            >
-            @error('image')
+              @enderror
+            </div>
+            <div class="mb-3">
+              <label for="image" class="form-label">Image*</label>
+              <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" value="{{ old('image') }}" required>
+              @error('image')
               <div class="invalid-feedback">
                 {{ $message }}
               </div>
-            @enderror
-          </div>
-          <div class="mb-4">
+              @enderror
+            </div>
+            <div class="mb-4">
               <button type="submit" class="mt-3 btn btn-success">
-                <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" fill="#FFF" /></svg> Add Slide
+                <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20">
+                  <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" fill="#FFF" />
+                </svg> Add Slide
               </button>
-          </div>
+            </div>
         </form>
       </div>
     </div>

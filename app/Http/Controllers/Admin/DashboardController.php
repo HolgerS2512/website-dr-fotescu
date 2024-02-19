@@ -31,6 +31,7 @@ class DashboardController extends Controller
 
             return view('auth.dashboard', compact('e'));
         }
+        
         $err = GetLangMessage::languagePackage('en')->databaseError;
 
         return view('auth.dashboard', compact('err'));

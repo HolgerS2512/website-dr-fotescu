@@ -7,39 +7,36 @@ use Illuminate\Support\Facades\Route;
 /*
 |
 |--------------------------------------------------------------------------
-| Home Header Routes
+| Team Header Routes
 |--------------------------------------------------------------------------
 |
 */
 
-Route::get('/team/header', [TeamHeadController::class, 'index'])
-  ->name('team.header');
+Route::get('team/header', [TeamHeadController::class, 'index']);
 
-Route::post('/slider/team/store', [TeamHeadController::class, 'store'])
-  ->name('store.team.slide');
+Route::post('team/header/image/store', [TeamHeadController::class, 'store']);
 
-Route::get('/slider/team/edit/{id}', [TeamHeadController::class, 'edit']);
+Route::get('team/header/image/edit/{id}', [TeamHeadController::class, 'edit']);
 
-Route::put('slider/team/update/{id}', [TeamHeadController::class, 'update']);
+Route::put('team/header/image/update/{id}', [TeamHeadController::class, 'update']);
 
-Route::patch('slider/team/visible', [TeamHeadController::class, 'visible']);
+Route::patch('team/header/image/visible', [TeamHeadController::class, 'visible']);
 
-Route::patch('slider/team/update/up/{id}', [TeamHeadController::class, 'up']);
+Route::patch('team/header/image/update/up/{id}', [TeamHeadController::class, 'up']);
 
-Route::patch('slider/team/update/down/{id}', [TeamHeadController::class, 'down']);
+Route::patch('team/header/image/update/down/{id}', [TeamHeadController::class, 'down']);
 
-Route::get('slider/team/delete/{id}', [TeamHeadController::class, 'destroy']);
+Route::get('team/header/image/delete/{id}', [TeamHeadController::class, 'destroy']);
 
 /*
 |
 |--------------------------------------------------------------------------
-| Home Content Routes
+| Team Content Routes
 |--------------------------------------------------------------------------
 |
 */
 
-Route::get('/team/content', [TeamMainController::class, 'index'])
-  ->name('team.content');
+Route::get('team/content', [TeamMainController::class, 'index']);
 
 
 

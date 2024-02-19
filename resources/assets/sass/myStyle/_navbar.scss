@@ -1,8 +1,7 @@
-$info-nav: 36px;
-$main-nav: 70px;
+
 
 .navigation {
-  height: $info-nav + $main-nav;
+  height: $total-nav;
 
   ul {
     list-style-type: none;
