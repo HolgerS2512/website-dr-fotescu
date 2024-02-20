@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Repositories\Head\HeadAdminRepository;
-use App\Repositories\Head\HeadAdminImageInterface;
+use App\Repositories\AdminDataRepository;
+use App\Repositories\HeadAdminInterface;
 use App\Traits\PageHeadMethods\DestroyImageTrait;
 use App\Traits\PageHeadMethods\EditImageTrait;
 use App\Traits\PageHeadMethods\GetImageIndexTrait;
@@ -14,7 +14,6 @@ use App\Traits\PageHeadMethods\SetImageRankingUpTrait;
 use App\Traits\PageHeadMethods\SetImageVisibleTrait;
 use App\Traits\PageHeadMethods\StoreImageTrait;
 use App\Traits\PageHeadMethods\UpdateImageTrait;
-use Exception;
 
 /**
  * Contains this methods and variables.
@@ -33,7 +32,7 @@ use Exception;
  * @method destroy($id)
  * 
  */
-final class HeadController extends Controller implements HeadAdminImageInterface
+final class HeadController extends Controller implements HeadAdminInterface
 {
     use GetImageIndexTrait;
     use StoreImageTrait;
@@ -58,17 +57,17 @@ final class HeadController extends Controller implements HeadAdminImageInterface
      * 
      * @method __construct()
      *
-     * @param \App\Repositories\Head\HeadAdminRepository $headAdminRepo
+     * @param \App\Repositories\AdminDataRepository $AdminData
      * @var   \App\Models\Page $page,
      * @var   \App\Models\Image $images,
      * @var   \App\Models\Publish $publishes
      */
-    public function __construct(HeadAdminRepository $headAdminRepo)
+    public function __construct(AdminDataRepository $AdminData)
     {
         try {
-            $this->page = $headAdminRepo->page;
-            $this->images = $headAdminRepo->images;
-            $this->publishes = $headAdminRepo->publishes;
+            $this->page = $AdminData->page;
+            $this->images = $AdminData->images;
+            $this->publishes = $AdminData->publishes;
         } catch (\Throwable $th) {
             throw $th;
         }

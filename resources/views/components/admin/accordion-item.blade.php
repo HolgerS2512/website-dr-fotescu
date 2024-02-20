@@ -5,12 +5,12 @@
     </button>
   </h2>
   <div id="{{ $link }}" class="accordion-collapse collapse" data-bs-parent="#aside-bar">
-    @if (isset($page->dropdown) && $page->dropdown)
-      @foreach ($page->dropdown as $dropdown)
+    @if (isset($subpages) && $id === $subpages->page_id)
+      @foreach ($subpages as $subpage)
 
-      @include('components.admin.accordion-item-special', [
-        'name' => $dropdown->name,
-        'link' => $dropdown->link ?? lcfirst($dropdown->name),
+      @include('components.admin.accordion-item-subpage', [
+        'name' => $subpage->name,
+        'link' => $subpage->link,
       ])
 
       @endforeach
@@ -18,7 +18,6 @@
     @if ($page->link === 'imprint' || $page->link === 'privacy')
     @else
       <div class="accordion-body">
-        <a href="" class="link-light link-underline-opacity-25 link-underline-opacity-100-hover acc-links"> 
         <a href="{{ url('/'.'header/' . $page->link) }}" class="link-light link-underline-opacity-25 link-underline-opacity-100-hover acc-links"> 
           <div>Section 1 : Header</div>
           <x-icons.image :size="24" :clr="'FFF'" />
@@ -26,7 +25,6 @@
       </div>
     @endif
     <div class="accordion-body">
-      <a href="" class="link-light link-underline-opacity-25 link-underline-opacity-100-hover acc-links">
       <a href="{{ url('/'.'content/' . $page->link) }}" class="link-light link-underline-opacity-25 link-underline-opacity-100-hover acc-links">
         <div>Section 2 : Content</div>
         <x-icons.segment :size="24" :clr="'FFF'" />

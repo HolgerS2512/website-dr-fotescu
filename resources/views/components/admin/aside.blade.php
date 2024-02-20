@@ -7,15 +7,13 @@
   </div>
   <div class="accordion accordion-flush" id="aside-bar">
 
-  @php
-    $pages = DB::table('pages')->orderBy('ranking')->get();
-  @endphp
-
   @foreach ($pages as $page)
 
     @include('components.admin.accordion-item', [
       'name' => $page->name,
       'link' => $page->link,
+      'id' => $page->id,
+      // 'subpages' => $subpages,
     ])
 
   @endforeach

@@ -1,21 +1,22 @@
 <?php
 
-namespace App\Repositories\Head;
+namespace App\Repositories;
 
 use Illuminate\Http\Request;
 
-interface HeadAdminImageInterface
+interface ContentAdminInterface
 {
   /**
    * Store db data in the variables.
    *
-   * @param  int $pageID
-   * @var \App\Models\Page $page,
-   * @var \App\Models\Image $images,
+   * @param \App\Repositories\AdminDataRepository $AdminData
+   * @var \App\Models\Page $page
+   * @var \App\Models\Image $images
+   * @var \App\Models\Content $content
    * @var \App\Models\Publish $publishes
    * @return void
    */
-  public function __construct(HeadAdminRepository $headAdminRepo);
+  public function __construct();
 
   /**
    * Display a listing of the resource.

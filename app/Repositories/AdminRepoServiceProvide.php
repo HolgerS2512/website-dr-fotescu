@@ -25,6 +25,8 @@ class HeadRepoServiceProvide extends ServiceProvider
    */
   public function register()
   {
-    $this->app->bind('App\Repositories\Head\HeadAdminInterface', 'App\Repositories\Head\HeadAdminInterface');
+    $this->app->bind('App\Repositories\AdminInterface', 'App\Repositories\AdminInterface');
+    $this->app->bind('App\Repositories\HeadAdminInterface', 'App\Repositories\HeadAdminInterface');
+    $this->app->bind('App\Repositories\ContentAdminInterface', 'App\Repositories\ContentAdminInterface');
   }
 }

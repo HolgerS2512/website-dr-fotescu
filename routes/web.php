@@ -49,21 +49,17 @@ Route::group(['middleware' => 'auth'], function () {
   |
   */
 
-  Route::get('header/{pageID}', [HeadController::class, 'index']);
+  require __DIR__ . '/admin/header.php';
+  /*
+  |
+  |--------------------------------------------------------------------------
+  | Content Routes
+  |--------------------------------------------------------------------------
+  |
+  */
 
-  Route::post('header/{pageID}/image/store', [HeadController::class, 'store']);
+  require __DIR__ . '/admin/content.php';
 
-  Route::get('header/{pageID}/image/edit/{id}', [HeadController::class, 'edit']);
-
-  Route::put('header/{pageID}/image/update/{id}', [HeadController::class, 'update']);
-
-  Route::patch('header/{pageID}/image/visible', [HeadController::class, 'visible']);
-
-  Route::patch('header/{pageID}/image/update/up/{id}', [HeadController::class, 'up']);
-
-  Route::patch('header/{pageID}/image/update/down/{id}', [HeadController::class, 'down']);
-
-  Route::get('header/{pageID}/image/delete/{id}', [HeadController::class, 'destroy']);
 });
 /**
  *
