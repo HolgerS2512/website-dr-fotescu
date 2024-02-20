@@ -1,10 +1,10 @@
 <div id="aside-bar-main" class="accordion-item">
   <h2 class="accordion-header">
-    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{ $link }}" aria-expanded="false" aria-controls="flush-collapse{{ $link }}">
+    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{ $link }}" aria-expanded="false" aria-controls="{{ $link }}">
       {{ $name }}
     </button>
   </h2>
-  <div id="flush-collapse{{ $link }}" class="accordion-collapse collapse" data-bs-parent="#aside-bar">
+  <div id="{{ $link }}" class="accordion-collapse collapse" data-bs-parent="#aside-bar">
     @if (isset($page->dropdown) && $page->dropdown)
       @foreach ($page->dropdown as $dropdown)
 

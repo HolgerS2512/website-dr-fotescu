@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\ImageMethods\Head;
+namespace App\Traits\PageHeadMethods;
 
 use Illuminate\Http\Request;
 use App\Models\Image;
@@ -58,7 +58,7 @@ trait StoreImageTrait
 
       Image::insert([
         'ranking' => $request->ranking,
-        'page_id' => $this->pageID,
+        'page_id' => $this->page->id,
         'title' => mb_strtolower(str_replace(' ', '-', $request->title)),
         'image' => $save_url,
         'created_at' => Carbon::now(),

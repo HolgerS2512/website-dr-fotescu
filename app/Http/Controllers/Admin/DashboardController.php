@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Page;
-use Exception;
 use App\Traits\GetLangMessage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Query\JoinClause;
+use Exception;
 
 class DashboardController extends Controller
 {
@@ -28,10 +27,10 @@ class DashboardController extends Controller
 
             return view('auth.dashboard', compact('pages'));
         } catch (Exception $e) {
-
-            return view('auth.dashboard', compact('e'));
+            // $e
+        } finally {
+            return view('auth.dashboard', compact('pages'));
         }
-        
         $err = GetLangMessage::languagePackage('en')->databaseError;
 
         return view('auth.dashboard', compact('err'));

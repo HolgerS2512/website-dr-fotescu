@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Traits\ImageMethods\Head;
+namespace App\Traits\PageHeadMethods;
 
 use Illuminate\Http\Request;
 use App\Traits\GetLangMessage;
 use Illuminate\Support\Carbon;
 use Exception;
 
-trait SetImageRankingUpTrait
+trait SetImageRankingDownTrait
 {
   /**
-   * Update the ranking of an image up in db.
+   * Update the ranking of an image down in db.
    * 
-   * @method up(Request $request, $id)
+   * @method down(Request $request, $id)
    * 
    * @param  \Illuminate\Http\Request $request
    * @param  \Illuminate\Http\Request $id
@@ -22,7 +22,7 @@ trait SetImageRankingUpTrait
    * @return \Illuminate\Http\Response
    * 
    */
-  public function up(Request $request, $id)
+  public function down(Request $request, $id)
   {
     try {
       foreach ($this->images as $image) {

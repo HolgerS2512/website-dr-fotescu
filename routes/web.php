@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\HeadController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -43,93 +44,26 @@ Route::group(['middleware' => 'auth'], function () {
   /*
   |
   |--------------------------------------------------------------------------
-  | Home Routes
+  | Head Routes
   |--------------------------------------------------------------------------
   |
   */
-  require __DIR__ . '/admin/home.php';
 
-  /*
-  |
-  |--------------------------------------------------------------------------
-  | Treatments Routes
-  |--------------------------------------------------------------------------
-  |
-  */
-  require __DIR__ . '/admin/treatments.php';
+  Route::get('header/{pageID}', [HeadController::class, 'index']);
 
-  /*
-  |
-  |--------------------------------------------------------------------------
-  | Subpages Routes
-  |--------------------------------------------------------------------------
-  |
-  */
-  require __DIR__ . '/admin/subpages.php';
+  Route::post('header/{pageID}/image/store', [HeadController::class, 'store']);
 
-  /*
-  |
-  |--------------------------------------------------------------------------
-  | Blog Routes
-  |--------------------------------------------------------------------------
-  |
-  */
-  require __DIR__ . '/admin/blog.php';
+  Route::get('header/{pageID}/image/edit/{id}', [HeadController::class, 'edit']);
 
-  /*
-  |
-  |--------------------------------------------------------------------------
-  | Cost Routes
-  |--------------------------------------------------------------------------
-  |
-  */
-  require __DIR__ . '/admin/cost.php';
+  Route::put('header/{pageID}/image/update/{id}', [HeadController::class, 'update']);
 
-  /*
-  |
-  |--------------------------------------------------------------------------
-  | Team Routes
-  |--------------------------------------------------------------------------
-  |
-  */
-  require __DIR__ . '/admin/team.php';
+  Route::patch('header/{pageID}/image/visible', [HeadController::class, 'visible']);
 
-  /*
-  |
-  |--------------------------------------------------------------------------
-  | Transfer Routes
-  |--------------------------------------------------------------------------
-  |
-  */
-  require __DIR__ . '/admin/transfer.php';
+  Route::patch('header/{pageID}/image/update/up/{id}', [HeadController::class, 'up']);
 
-  /*
-  |
-  |--------------------------------------------------------------------------
-  | Contact Routes
-  |--------------------------------------------------------------------------
-  |
-  */
-  require __DIR__ . '/admin/contact.php';
+  Route::patch('header/{pageID}/image/update/down/{id}', [HeadController::class, 'down']);
 
-  /*
-  |
-  |--------------------------------------------------------------------------
-  | Privacy Policy Routes
-  |--------------------------------------------------------------------------
-  |
-  */
-  require __DIR__ . '/admin/privacy.php';
-
-  /*
-  |
-  |--------------------------------------------------------------------------
-  | Imprint Routes
-  |--------------------------------------------------------------------------
-  |
-  */
-  require __DIR__ . '/admin/imprint.php';
-
+  Route::get('header/{pageID}/image/delete/{id}', [HeadController::class, 'destroy']);
 });
 /**
  *

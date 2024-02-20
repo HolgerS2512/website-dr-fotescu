@@ -65,7 +65,7 @@
                 asideMenuBtn.addEventListener('click', toggleMenu);
                 collapseBtnItem.forEach(el => el.addEventListener('click', toggleAccordion));
             }
-        
+            
             const checkStorage = () => {
                 const storeToggleMenu = localStorage.getItem("adminBar");
                 const storeCollapse = localStorage.getItem("collapseAccordion");
@@ -77,6 +77,7 @@
             
                 if (storeCollapse !== null && Boolean(storeCollapse)) {
                     collapseItem.forEach((el, i) => {
+                        // comparePages(el);
                         if (storeCollapse === el.id) {
                             el.classList.add('show');
                         }
@@ -118,6 +119,25 @@
                     }
                 }, 500);
             }
+
+            // const comparePages = (el) => {
+            //     if (el.id !== 'collapseImportant') {
+            //         const http = window.location.pathname.replace('/header/', '');
+
+            //         if (http !== el.id && http.indexOf('/') === -1) {
+                                                
+            //             collapseItem.forEach((el, i) => {
+            //                 if (http === el.id) {
+            //                     el.classList.add('show');
+            //                     localStorage.setItem("collapseAccordion", el.id);
+            //                 } else {
+            //                      el.classList.remove('show');
+            //                 }
+            //             });
+
+            //         }
+            //     }
+            // }
         
             init();
         })()

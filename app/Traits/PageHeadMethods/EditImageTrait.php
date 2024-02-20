@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\ImageMethods\Head;
+namespace App\Traits\PageHeadMethods;
 
 use App\Traits\GetLangMessage;
 use Exception;
