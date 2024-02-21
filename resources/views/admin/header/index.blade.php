@@ -33,7 +33,7 @@
                   <li>Compression -> Lossy -> (min 82 | max 85)</li>
                   <li>Generate optimized image</li>
                   <li>download</li>
-                  <li>than can you upload</li>
+                  <li>than can you upload - the web likes .webp format</li>
                 </ol>
               </div>
             </div>

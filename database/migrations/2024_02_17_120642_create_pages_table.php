@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
             $table->tinyInteger('ranking');
+            $table->tinyInteger('subpage')->default(0);
+            $table->tinyInteger('page_id');
             $table->string('name');
             $table->string('link')->unique();
             $table->string('route');

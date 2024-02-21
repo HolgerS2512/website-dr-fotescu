@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('ranking');
+            $table->smallInteger('ranking');
             $table
                 ->foreignId('page_id')
                 ->constrained()

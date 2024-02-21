@@ -2,7 +2,6 @@
     $path = str_replace(config('app.url'), '', url()->current());
     $active_link = $path ?: '/';
     $pages = DB::table('pages')->orderBy('ranking')->get();
-    // $subpages = DB::table('subpages')->orderBy('ranking')->get();
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +38,8 @@
                         'name' => $page->name,
                         'link' => $page->link,
                         'id' => $page->id,
-                        // 'subpages' => $subpages,
+                        // 'subpage' => $subpage,
+                        // 'page_id' => $page_id,
                       ])
                 </div>
             @endauth

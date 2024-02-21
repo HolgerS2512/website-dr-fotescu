@@ -16,7 +16,8 @@ class PageSeeder extends Seeder
     public function run()
     {
         $page = DB::table('pages');
-        
+
+        // Main pages
         $page->insert([
             'ranking' => 1,
             'name' => 'Home',
@@ -70,6 +71,81 @@ class PageSeeder extends Seeder
             'name' => 'Impressum',
             'link' => 'imprint',
             'route' => '/impressum',
+        ]);
+
+        // Subpages
+
+        $page->insert([
+            'ranking' => 1,
+            'subpage' => 1,
+            'page_id' => 2,
+            'name' => 'Notfallversorgung',
+            'link' => 'emergency',
+            'route' => '/' . 'behandlungen/notfallversorgung',
+        ]);
+        $page->insert([
+            'ranking' => 2,
+            'subpage' => 1,
+            'page_id' => 2,
+            'name' => 'Familientermine',
+            'link' => 'family',
+            'route' => '/' . 'behandlungen/familientermine',
+        ]);
+        $page->insert([
+            'ranking' => 3,
+            'subpage' => 1,
+            'page_id' => 2,
+            'name' => 'Prophylaxe/Mundhygiene',
+            'link' => 'prophylaxis',
+            'route' => '/' . 'behandlungen/prophylaxe',
+        ]);
+        $page->insert([
+            'ranking' => 4,
+            'subpage' => 1,
+            'page_id' => 2,
+            'name' => 'Allgemeine Zahnheilkunde',
+            'link' => 'dentistry',
+            'route' => '/' . 'behandlungen/allgemeine_zahnheilkunde',
+        ]);
+        $page->insert([
+            'ranking' => 5,
+            'subpage' => 1,
+            'page_id' => 2,
+            'name' => 'Zahnfleischbehandlung',
+            'link' => 'periodontology',
+            'route' => '/' . 'behandlungen/parodontologie',
+        ]);
+        $page->insert([
+            'ranking' => 6,
+            'subpage' => 1,
+            'page_id' => 2,
+            'name' => 'Zahnaufhellung (Bleaching)',
+            'link' => 'bleaching',
+            'route' => '/' . 'behandlungen/bleaching',
+        ]);
+        $page->insert([
+            'ranking' => 7,
+            'subpage' => 1,
+            'page_id' => 2,
+            'name' => 'Restaurative Zahnheilkunde',
+            'link' => 'restorative',
+            'route' => '/' . 'behandlungen/restaurative_zahnheilkunde',
+        ]);
+        $page->insert([
+            'ranking' => 8,
+            'subpage' => 1,
+            'page_id' => 2,
+            'name' => 'Zahnimplantate',
+            'link' => 'implants',
+            'route' => '/' . 'behandlungen/zahnimplantate',
+        ]);
+        $page->insert([
+            'ranking' => 9,
+            'subpage' => 1,
+            'page_id' => 2,
+            'name' => 'Zahnersatz',
+            'link' => 'dentures',
+            'route' => '/' . 'behandlungen/zahnersatz',
         ]);
     }
 }
