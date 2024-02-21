@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->tinyInteger('ranking');
             $table->tinyInteger('subpage')->default(0);
-            $table->tinyInteger('page_id');
+            $table->tinyInteger('page_id')->nullable();
             $table->string('name');
             $table->string('link')->unique();
             $table->string('route');

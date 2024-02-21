@@ -22,15 +22,15 @@ return new class extends Migration
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
             $table->tinyInteger('format')->default(0);
-            $table->string('title')->nullable();
-            $table->text('content');
-            $table->integer('image_id');
-            $table->tinyInteger('button');
-            $table->string('url_link');
+            $table->string('title');
+            $table->text('content')->nullable();
+            $table->integer('image_id')->nullable();
+            $table->tinyInteger('button')->nullable();
+            $table->string('url_link')->nullable();
             $table->string('en_title');
-            $table->text('en_content');
+            $table->text('en_content')->nullable();
             $table->string('ru_title');
-            $table->text('ru_content');
+            $table->text('ru_content')->nullable();
             $table->timestamps();
         });
     }
