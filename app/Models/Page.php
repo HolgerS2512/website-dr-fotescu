@@ -26,6 +26,7 @@ class Page extends Model
     {
         return $this->hasMany(Image::class);
     }
+
     /**
      * Get the publish for this page.
      * 
@@ -34,5 +35,15 @@ class Page extends Model
     public function publishes(): HasMany
     {
         return $this->hasMany(Publish::class);
+    }
+    
+    /**
+     * Get the publish for this page.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany 
+     */
+    public function contents(): HasMany
+    {
+        return $this->hasMany(Content::class);
     }
 }

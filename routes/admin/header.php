@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\HeadController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,18 +11,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('header/{pageID}', [HeadController::class, 'index']);
+Route::get('header/{link}', [HeadController::class, 'index']);
 
-Route::post('header/{pageID}/image/store', [HeadController::class, 'store']);
+Route::post('header/{link}/image/store', [HeadController::class, 'store']);
 
-Route::get('header/{pageID}/image/edit/{id}', [HeadController::class, 'edit']);
+Route::get('header/{link}/image/edit/{id}', [HeadController::class, 'edit']);
 
-Route::put('header/{pageID}/image/update/{id}', [HeadController::class, 'update']);
+Route::put('header/{link}/image/update/{id}', [HeadController::class, 'update']);
 
-Route::patch('header/{pageID}/image/visible', [HeadController::class, 'visible']);
+Route::patch('header/{link}/image/visible', [HeadController::class, 'visible']);
 
-Route::patch('header/{pageID}/image/update/up/{id}', [HeadController::class, 'up']);
+Route::patch('header/{link}/image/update/up/{id}', [HeadController::class, 'up']);
 
-Route::patch('header/{pageID}/image/update/down/{id}', [HeadController::class, 'down']);
+Route::patch('header/{link}/image/update/down/{id}', [HeadController::class, 'down']);
 
-Route::get('header/{pageID}/image/delete/{id}', [HeadController::class, 'destroy']);
+Route::get('header/{link}/image/delete/{id}', [HeadController::class, 'destroy']);

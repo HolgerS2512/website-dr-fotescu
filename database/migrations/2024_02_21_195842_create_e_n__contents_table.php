@@ -13,18 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('contents', function (Blueprint $table) {
+        Schema::create('en_contents', function (Blueprint $table) {
             $table->id();
-            $table->smallInteger('ranking');
             $table
-                ->foreignId('page_id')
+                ->foreignId('content_id')
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            $table->tinyInteger('format')->default(1);
-            $table->integer('image_id')->default(0);
-            $table->tinyInteger('btn')->default(0);
-            $table->string('url_link')->default(0);
+            $table->string('title')->unique();
+            $table->text('content')->nullable();
             $table->timestamps();
         });
     }
@@ -36,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contents');
+        Schema::dropIfExists('en_contents');
     }
 };

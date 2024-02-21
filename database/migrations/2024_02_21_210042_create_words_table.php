@@ -13,15 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pages', function (Blueprint $table) {
+        Schema::create('words', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('ranking');
-            $table->tinyInteger('subpage')->default(0);
-            $table->tinyInteger('page_id')->nullable();
-            $table->string('link')->unique();
-            $table->string('name');
-            $table->string('en_name')->nullable();
-            $table->string('ru_name')->nullable();
+            $table->string('name')->unique();
+            $table->string('de')->nullable();
+            $table->string('en')->nullable();
+            $table->string('ru')->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pages');
+        Schema::dropIfExists('words');
     }
 };

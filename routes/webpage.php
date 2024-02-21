@@ -39,8 +39,7 @@ Route::get('/impressum', fn () => view('pages.home'));
 |
 */
 
-Route::post('/kontakt', [ContactController::class, 'store'])
-  ->name('contact');
+Route::post('/kontakt', [ContactController::class, 'store'])->name('contact');
 
 /*
 |

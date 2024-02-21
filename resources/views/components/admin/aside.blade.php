@@ -7,15 +7,17 @@
   </div>
   <div class="accordion accordion-flush" id="aside-bar">
 
+    <x-admin.accordion-item-translation :name="'Translation'" :link="'translation'" />
+
   @foreach ($pages as $page)
 
     @include('components.admin.accordion-item', [
       'name' => $page->name,
       'link' => $page->link,
       'id' => $page->id,
-      // 'subpage' => $subpage,
-      // 'page_id' => $page_id,
-      // 'pages' => $pages,
+      'subpage' => $page->subpage,
+      'page_id' => $page->page_id,
+      'pages' => $pages,
     ])
 
   @endforeach

@@ -34,13 +34,7 @@
         <div class="row g-0">
             @auth
                 <div class="special-col special-col-header m-0 p-0">
-                    @include('components.admin.aside', [
-                        'name' => $page->name,
-                        'link' => $page->link,
-                        'id' => $page->id,
-                        // 'subpage' => $subpage,
-                        // 'page_id' => $page_id,
-                      ])
+                    <x-admin.aside :pages="$pages" />
                 </div>
             @endauth
             

@@ -127,6 +127,7 @@
 
   .accordion-button {
     background-color: $blue;
+    font-size: .95rem;
 
     &:focus {
       border: unset;
@@ -156,7 +157,11 @@
 
 }
 
-
+.accordion-body {
+  a {
+    font-size: 1rem !important;
+  }
+}
 .accordion-important {
   .accordion-item {
     border: unset;

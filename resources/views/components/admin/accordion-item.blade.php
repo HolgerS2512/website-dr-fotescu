@@ -1,4 +1,4 @@
-{{-- @if ( isset($subpage) && ! $subpage ) --}}
+@if ( ! $subpage )
 <div id="aside-bar-main" class="accordion-item">
   <h2 class="accordion-header">
     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{ $link }}" aria-expanded="false" aria-controls="{{ $link }}">
@@ -6,20 +6,6 @@
     </button>
   </h2>
   <div id="{{ $link }}" class="accordion-collapse collapse" data-bs-parent="#aside-bar">
-
-
-    @foreach ($pages as $page)
-      @if ( isset($page->subpage) && $page->subpage && $id === $page->page_id )
-
-        @include('components.admin.accordion-item-subpage', [
-          'parent_name' => $name,
-          'name' => $page->name,
-          'link' => $page->link,
-        ])
-
-      @endif
-    @endforeach
-
 
       @if ($link === 'imprint' || $link === 'privacy')
       @else
@@ -38,6 +24,18 @@
       </a>
     </div>
 
+    @foreach ($pages as $page)
+    @if ( $page->subpage && $id === $page->page_id )
+
+      @include('components.admin.accordion-item-subpage', [
+        'parent_name' => $name,
+        'name' => $page->name,
+        'link' => $page->link,
+      ])
+
+    @endif
+  @endforeach
+
   </div>
 </div>
-{{-- @endif --}}
+@endif
