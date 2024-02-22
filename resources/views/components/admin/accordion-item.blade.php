@@ -29,7 +29,7 @@
 
       @include('components.admin.accordion-item-subpage', [
         'parent_name' => $name,
-        'name' => $page->name,
+        'name' => $page->en_name,
         'link' => $page->link,
       ])
 

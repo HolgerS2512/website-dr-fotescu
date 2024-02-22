@@ -68,8 +68,7 @@ class WordSeeder extends Seeder
 
         $publish->insert([
             'name' => 'copyright',
-            'context' => '© Copyright 2024 Dr. Sebastian Fotescu
-            logo-grey-zahnarzt-dr-fotescu-dresden-barrierefreier-zahnarzt-svg',
+            'context' => '© Copyright 2024 Dr. Sebastian Fotescu',
             'de' => 'copyright',
             'en' => 'copyright',
         ]);

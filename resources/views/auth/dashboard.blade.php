@@ -10,6 +10,14 @@
 @php
   $parent = [];
 @endphp
+
+{{-- @if (($percent->words + $percent->title) / 2 < 100)
+<x-modal 
+  :message="'Please complete the translation and the title first to be able to use the full scope of this application.'" 
+  :status="false" 
+/>
+@endif --}}
+
 <div class='container pt-5'>
   <h1 class="special-admin-header">Dashboard</h1>
 
@@ -57,14 +65,14 @@
     <hr>
     @foreach ($pages as $page)
     @php
-      $parent[ $page->id ] = $page->name;
+      $parent[ $page->id ] = $page->en_name;
     @endphp
     @if ( ! $page->subpage )
       <div class="col-lg-6 col-xl-4">
         <div class="p-3 mb-3">
           <div class="card w-100">
             <div class="card-body">
-              <h5 class="card-title">{{ $page->name }}</h5>
+              <h5 class="card-title">{{ $page->en_name }}</h5>
               @if ( $page->image === null )
                 <div class="d-flex justify-content-center align-items-center" style="height: 150px; border-radius: 6px;">
                   <small style="height: min-content; color: red;">No Image Available</small>         
@@ -99,9 +107,8 @@
           <div class="card w-100">
             <div class="card-body">
               <h5 class="card-title">
-                {{ $page->name }}
+                {{ $page->en_name }}
                 <br>
-                {{-- <small class="text-body-tertiary">Subpage</small> --}}
                 <small class="text-body-tertiary">{{ 'Subpage' . ' : ' . $parent[ $page->page_id ] }}</small>
               </h5>
               @if ( $page->image === null )

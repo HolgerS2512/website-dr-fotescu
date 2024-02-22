@@ -12,7 +12,7 @@
   @foreach ($pages as $page)
 
     @include('components.admin.accordion-item', [
-      'name' => $page->name,
+      'name' => $page->en_name,
       'link' => $page->link,
       'id' => $page->id,
       'subpage' => $page->subpage,

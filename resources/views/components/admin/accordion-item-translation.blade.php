@@ -8,7 +8,7 @@
 
     <div class="accordion-body">
       <a href="" class="link-light link-underline-opacity-25 link-underline-opacity-100-hover acc-links">
-        <div>Section 1 : Titel</div>
+        <div>Section 1 : Title</div>
         <x-icons.segment :size="24" :clr="'FFF'" />
       </a>
     </div>
