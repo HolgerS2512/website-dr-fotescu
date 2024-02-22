@@ -22,8 +22,27 @@
         <div class="card w-100">
           <div class="card-body position-relative">
             <h5 class="card-title">Pages</h5>
-            <a href="" class="btn btn-danger mt-3 w-100">Title | 0%</a>
-            <a href="" class="btn btn-danger mt-3 w-100">Words | 0%</a>
+            <h6 class="mt-3">Completed : {{ ($percent->words + $percent->title) / 2 }} %</h6>
+            <a 
+              href="{{ url('translation/title') }}" 
+              class="btn mt-3 w-100 text-white
+              @if ($percent->words < 100)
+              btn-danger
+              @else
+              btn-success
+              @endif"
+            >Title | {{ $percent->words }} %
+            </a>
+            <a 
+              href="{{ url('translation/words') }}" 
+              class="btn mt-3 w-100 text-white
+              @if ($percent->words < 100)
+              btn-danger
+              @else
+              btn-success
+              @endif"
+            >Words | {{ $percent->title }} %
+            </a>
           </div>
         </div>
       </div>

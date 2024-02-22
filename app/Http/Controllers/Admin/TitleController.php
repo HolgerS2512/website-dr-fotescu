@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Page;
+use Exception;
 use Illuminate\Http\Request;
+use App\Traits\GetLangMessage;
 
 final class TitleController extends Controller
 {
@@ -15,7 +17,23 @@ final class TitleController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $editable = Page::all();
+            $name = 'Title';
+
+            return view('admin.translation.index', compact('name', 'editable'));
+        } catch (Exception $e) {
+            return redirect()->back()->with([
+                'present' => true,
+                'status' => false,
+                'message' => GetLangMessage::languagePackage('en')->databaseError,
+            ]);
+        }
+        return redirect()->back()->with([
+            'present' => true,
+            'status' => false,
+            'message' => GetLangMessage::languagePackage('en')->databaseError,
+        ]);
     }
 
     /**

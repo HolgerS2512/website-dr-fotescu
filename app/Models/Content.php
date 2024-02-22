@@ -60,4 +60,14 @@ class Content extends Model
     {
         return $this->hasMany(RU_Content::class);
     }
+
+    /**
+     * Get the translation for this content.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function list(): HasMany
+    {
+        return $this->hasMany(ContentList::class);
+    }
 }
