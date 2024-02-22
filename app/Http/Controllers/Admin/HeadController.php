@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Repositories\AdminDataRepository;
-use App\Repositories\HeadAdminInterface;
+use App\Repositories\Admin\DbDataRepository;
+use App\Repositories\Admin\HeadInterface;
 use App\Traits\PageHeadMethods\DestroyImageTrait;
 use App\Traits\PageHeadMethods\EditImageTrait;
 use App\Traits\PageHeadMethods\GetImageIndexTrait;
@@ -32,7 +32,7 @@ use App\Traits\PageHeadMethods\UpdateImageTrait;
  * @method destroy($id)
  * 
  */
-final class HeadController extends Controller implements HeadAdminInterface
+final class HeadController extends Controller implements HeadInterface
 {
     use GetImageIndexTrait;
     use StoreImageTrait;
@@ -57,17 +57,17 @@ final class HeadController extends Controller implements HeadAdminInterface
      * 
      * @method __construct()
      *
-     * @param \App\Repositories\AdminDataRepository $AdminData
+     * @param \App\Repositories\Admin\DbDataRepository $AdminData
      * @var   \App\Models\Page $page,
      * @var   \App\Models\Image $images,
      * @var   \App\Models\Publish $publishes
      */
-    public function __construct(AdminDataRepository $AdminData)
+    public function __construct(DbDataRepository $dbData)
     {
         try {
-            $this->page = $AdminData->page;
-            $this->images = $AdminData->images;
-            $this->publishes = $AdminData->publishes;
+            $this->page = $dbData->page;
+            $this->images = $dbData->images;
+            $this->publishes = $dbData->publishes;
         } catch (\Throwable $th) {
             throw $th;
         }

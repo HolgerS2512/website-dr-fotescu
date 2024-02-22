@@ -11,13 +11,6 @@
   $parent = [];
 @endphp
 
-{{-- @if (($percent->words + $percent->title) / 2 < 100)
-<x-modal 
-  :message="'Please complete the translation and the title first to be able to use the full scope of this application.'" 
-  :status="false" 
-/>
-@endif --}}
-
 <div class='container pt-5'>
   <h1 class="special-admin-header">Dashboard</h1>
 
@@ -27,10 +20,10 @@
 
     <div class="col-lg-6 col-xl-4">
       <div class="p-3 mb-3">
-        <div class="card w-100">
+        <div class="card w-100" style="min-height: 220px">
           <div class="card-body position-relative">
             <h5 class="card-title">Pages</h5>
-            <h6 class="mt-3">Completed : {{ ($percent->words + $percent->title) / 2 }} %</h6>
+            <h6 class="mt-3">Total completed : {{ ($percent->words + $percent->title) / 2 }} %</h6>
             <a 
               href="{{ url('translation/title') }}" 
               class="btn mt-3 w-100 text-white
@@ -56,6 +49,30 @@
       </div>
     </div>
 
+    <div class="col-lg-6 col-xl-4">
+      <div class="p-3 mb-3">
+        <div class="card w-100" style="min-height: 220px">
+          <div class="card-body position-relative">
+            <h5 class="card-title">Page content</h5>
+            <h6 class="mt-3">Already completed : 0 %</h6>
+            {{-- <h6 class="mt-3">Total completed : {{ ($percent->words + $percent->title) / 2 }} %</h6> --}}
+            <a 
+              href="{{ url('translation/title') }}" 
+              class="btn mt-5 w-100 text-white
+              @if ($percent->words < 100)
+              btn-danger
+              @else
+              btn-success
+              @endif"
+            >
+              Content | 0 %
+              {{-- Content | {{ $percent->words }} % --}}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 
@@ -70,7 +87,7 @@
     @if ( ! $page->subpage )
       <div class="col-lg-6 col-xl-4">
         <div class="p-3 mb-3">
-          <div class="card w-100">
+          <div class="card w-100" style="min-height: 220px">
             <div class="card-body">
               <h5 class="card-title">{{ $page->en_name }}</h5>
               @if ( $page->image === null )

@@ -75,7 +75,7 @@ class WordSeeder extends Seeder
 
         $publish->insert([
             'name' => 'h1_subtitle',
-            'context' => '(Page title) MEIN ZAHNARZT DRESDEN',
+            'context' => '(Page subtitle) MEIN ZAHNARZT DRESDEN',
             'de' => 'MEIN ZAHNARZT DRESDEN',
             'en' => 'MY DENTIST DRESDEN',
         ]);

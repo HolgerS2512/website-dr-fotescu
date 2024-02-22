@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\AdminDataRepository;
-use App\Repositories\ContentAdminInterface;
+use App\Repositories\Admin\DbDataRepository;
+use App\Repositories\Admin\ContentInterface;
 use Illuminate\Http\Request;
 
 /**
@@ -25,7 +25,7 @@ use Illuminate\Http\Request;
  * @method destroy($id)
  * 
  */
-final class ContentController extends Controller implements ContentAdminInterface
+final class ContentController extends Controller implements ContentInterface
 {
     /**
      * Saves the associated db data for the respective variable.
@@ -42,19 +42,19 @@ final class ContentController extends Controller implements ContentAdminInterfac
      * 
      * @method __construct()
      *
-     * @param \App\Repositories\AdminDataRepository $AdminData
+     * @param \App\Repositories\Admin\DbDataRepository $dbData
      * @var   \App\Models\Page $page,
      * @var   \App\Models\Image $images,
      * @var   \App\Models\Content $content
      * @var   \App\Models\Publish $publishes
      */
-    public function __construct(AdminDataRepository $AdminData)
+    public function __construct(DbDataRepository $dbData)
     {
         try {
-            $this->page = $AdminData->page;
-            $this->images = $AdminData->images;
-            $this->content = $AdminData->content;
-            $this->publishes = $AdminData->publishes;
+            $this->page = $dbData->page;
+            $this->images = $dbData->images;
+            $this->content = $dbData->content;
+            $this->publishes = $dbData->publishes;
         } catch (\Throwable $th) {
             throw $th;
         }

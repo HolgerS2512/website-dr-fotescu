@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Admin;
 
 use App\Models\Content;
-use App\Repositories\AdminInterface;
+use App\Repositories\Admin\DbDataInterface;
 use Illuminate\Http\Request;
 use App\Models\Page;
 use App\Models\Image;
@@ -21,7 +21,7 @@ use App\Models\Publish;
  * @method getLinkCode(Request $request): string
  * 
  */
-class AdminDataRepository implements AdminInterface
+class DbDataRepository implements DbDataInterface
 {
   /**
    * Saves the associated db data for the respective variable.

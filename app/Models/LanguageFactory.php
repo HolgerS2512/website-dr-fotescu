@@ -93,7 +93,7 @@ class LanguageFactory extends Model
     public $methodError;
 
     /**
-     * Method __construct - set the language of locale attribute
+     * Set the language of locale attribute
      *
      * @return self
      */
@@ -113,7 +113,7 @@ class LanguageFactory extends Model
     }
 
     /**
-     * Method __set - set the value of all attributes
+     * Set the value of all attributes.
      *
      * @param string $name, $value
      *
@@ -127,29 +127,29 @@ class LanguageFactory extends Model
     }
 
     /**
-     * Method __call - check if a method exists
+     * Check if a method exists.
      * 
-     * @param string $methodeName, $arguments
+     * @param string $methodName, $arguments
      *
      * @return self an error message if method does not exist
      *
      */
-    public function __call($methodeName, $arguments)
+    public function __call($methodName, $arguments)
     {
-        if (str_starts_with($methodeName, 'set')) {
+        if (str_starts_with($methodName, 'set')) {
 
-            $attributeName = lcfirst(substr($methodeName, 3));
+            $attributeName = lcfirst(substr($methodName, 3));
 
             if (property_exists($this, $attributeName)) $this->$attributeName = $arguments[0];
 
             return $this;
         } else {
-            die("Fatal error - method $methodeName does not exist!");
+            die("Fatal error - method $methodName does not exist!");
         }
     }
 
     /**
-     * Method setAttributes - set the value to the associated language
+     * Set the value to the associated language
      *
      * @return self
      */

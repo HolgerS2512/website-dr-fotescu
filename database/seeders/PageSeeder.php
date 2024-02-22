@@ -21,46 +21,55 @@ class PageSeeder extends Seeder
         $page->insert([
             'ranking' => 1,
             'name' => 'Home',
+            'en_name' => 'Home',
             'link' => 'home',
         ]);
         $page->insert([
             'ranking' => 2,
-            'name' => 'Treatments',
+            'name' => 'Behandlungen',
+            'en_name' => 'Treatments',
             'link' => 'treatments',
         ]);
         $page->insert([
             'ranking' => 3,
             'name' => 'Blog',
+            'en_name' => 'Blog',
             'link' => 'blog',
         ]);
         $page->insert([
             'ranking' => 4,
-            'name' => 'Cost',
+            'name' => 'Kosten',
+            'en_name' => 'Cost',
             'link' => 'cost',
         ]);
         $page->insert([
             'ranking' => 5,
-            'name' => 'Practice & Team',
+            'name' => 'Praxis & Team',
+            'en_name' => 'Practice & Team',
             'link' => 'team',
         ]);
         $page->insert([
             'ranking' => 6,
-            'name' => 'Transfer',
+            'name' => 'Überweisung',
+            'en_name' => 'Transfer',
             'link' => 'transfer',
         ]);
         $page->insert([
             'ranking' => 7,
-            'name' => 'Contact',
+            'name' => 'Kontakt',
+            'en_name' => 'Contact',
             'link' => 'contact',
         ]);
         $page->insert([
             'ranking' => 8,
-            'name' => 'Privacy Policy',
+            'name' => 'Datenschutz',
+            'en_name' => 'Privacy Policy',
             'link' => 'privacy',
         ]);
         $page->insert([
             'ranking' => 9,
             'name' => 'Impressum',
+            'en_name' => 'Imprint',
             'link' => 'imprint',
         ]);
 
@@ -71,6 +80,7 @@ class PageSeeder extends Seeder
             'subpage' => 1,
             'page_id' => 2,
             'name' => 'Notfallversorgung',
+            'en_name' => 'Emergency care',
             'link' => 'emergency',
         ]);
         $page->insert([
@@ -78,6 +88,7 @@ class PageSeeder extends Seeder
             'subpage' => 1,
             'page_id' => 2,
             'name' => 'Familientermine',
+            'en_name' => 'Family appointments',
             'link' => 'family',
         ]);
         $page->insert([
@@ -85,6 +96,7 @@ class PageSeeder extends Seeder
             'subpage' => 1,
             'page_id' => 2,
             'name' => 'Prophylaxe/Mundhygiene',
+            'en_name' => 'Prophylaxis/Oral hygiene',
             'link' => 'prophylaxis',
         ]);
         $page->insert([
@@ -92,6 +104,7 @@ class PageSeeder extends Seeder
             'subpage' => 1,
             'page_id' => 2,
             'name' => 'Allgemeine Zahnheilkunde',
+            'en_name' => 'General dentistry',
             'link' => 'dentistry',
         ]);
         $page->insert([
@@ -99,6 +112,7 @@ class PageSeeder extends Seeder
             'subpage' => 1,
             'page_id' => 2,
             'name' => 'Zahnfleischbehandlung',
+            'en_name' => 'Gum treatment',
             'link' => 'periodontology',
         ]);
         $page->insert([
@@ -106,6 +120,7 @@ class PageSeeder extends Seeder
             'subpage' => 1,
             'page_id' => 2,
             'name' => 'Zahnaufhellung (Bleaching)',
+            'en_name' => 'Bleaching',
             'link' => 'bleaching',
         ]);
         $page->insert([
@@ -113,6 +128,7 @@ class PageSeeder extends Seeder
             'subpage' => 1,
             'page_id' => 2,
             'name' => 'Restaurative Zahnheilkunde',
+            'en_name' => 'Restorative dentistry',
             'link' => 'restorative',
         ]);
         $page->insert([
@@ -120,6 +136,7 @@ class PageSeeder extends Seeder
             'subpage' => 1,
             'page_id' => 2,
             'name' => 'Zahnimplantate',
+            'en_name' => 'Dental implants',
             'link' => 'implants',
         ]);
         $page->insert([
@@ -127,6 +144,7 @@ class PageSeeder extends Seeder
             'subpage' => 1,
             'page_id' => 2,
             'name' => 'Zahnersatz',
+            'en_name' => 'Dentures',
             'link' => 'dentures',
         ]);
     }

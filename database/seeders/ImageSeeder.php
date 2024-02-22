@@ -21,6 +21,7 @@ class ImageSeeder extends Seeder
         $images->insert([
             'ranking' => 1,
             'page_id' => 1,
+            'slide' => 1,
             'title' => 'home-slide',
             'image' => 'uploads/images/home/home-slide-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden.webp',
             'created_at' => Carbon::now(),
@@ -28,6 +29,7 @@ class ImageSeeder extends Seeder
         $images->insert([
             'ranking' => 2,
             'page_id' => 1,
+            'slide' => 1,
             'title' => 'home-slide-2',
             'image' => 'uploads/images/home/home-slide-2-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden.webp',
             'created_at' => Carbon::now(),
@@ -35,6 +37,7 @@ class ImageSeeder extends Seeder
         $images->insert([
             'ranking' => 3,
             'page_id' => 1,
+            'slide' => 1,
             'title' => 'home-slide-3',
             'image' => 'uploads/images/home/home-slide-3-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden.webp',
             'created_at' => Carbon::now(),
@@ -43,6 +46,7 @@ class ImageSeeder extends Seeder
         $images->insert([
             'ranking' => 1,
             'page_id' => 5,
+            'slide' => 1,
             'title' => 'team-slide',
             'image' => 'uploads/images/team/team-slide-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden.webp',
             'created_at' => Carbon::now(),
@@ -50,6 +54,7 @@ class ImageSeeder extends Seeder
         $images->insert([
             'ranking' => 2,
             'page_id' => 5,
+            'slide' => 1,
             'title' => 'team-slide-2',
             'image' => 'uploads/images/team/team-slide-2-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden.webp',
             'created_at' => Carbon::now(),
@@ -57,6 +62,7 @@ class ImageSeeder extends Seeder
         $images->insert([
             'ranking' => 3,
             'page_id' => 5,
+            'slide' => 1,
             'title' => 'team-slide-3',
             'image' => 'uploads/images/team/team-slide-3-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden.webp',
             'created_at' => Carbon::now(),

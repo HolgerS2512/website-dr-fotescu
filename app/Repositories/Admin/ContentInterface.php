@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Admin;
 
 use Illuminate\Http\Request;
 
-interface ContentAdminInterface
+interface ContentInterface
 {
   /**
    * Store db data in the variables.
    *
-   * @param \App\Repositories\AdminDataRepository $AdminData
+   * @param \App\Repositories\Admin\DbDataRepository $dbData
    * @var \App\Models\Page $page
    * @var \App\Models\Image $images
    * @var \App\Models\Content $content

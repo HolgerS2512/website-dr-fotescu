@@ -21,6 +21,7 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
+            $table->tinyInteger('slide');
             $table->string('title');
             $table->string('image');
             $table->timestamps();

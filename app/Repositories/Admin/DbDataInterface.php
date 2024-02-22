@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Admin;
 
 use Illuminate\Http\Request;
 
-interface AdminInterface
+interface DbDataInterface
 {
   /**
    * Store db data in the variables.
