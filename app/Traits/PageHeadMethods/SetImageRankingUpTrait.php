@@ -22,7 +22,7 @@ trait SetImageRankingUpTrait
    * @return \Illuminate\Http\Response
    * 
    */
-  public function up(Request $request, $link, $id)
+  public function up(Request $request, $_, $id)
   {
     try {
       foreach ($this->images as $image) {

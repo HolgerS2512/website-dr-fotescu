@@ -16,7 +16,7 @@ interface ContentInterface
    * @var \App\Models\Publish $publishes
    * @return void
    */
-  public function __construct();
+  public function __construct(DbDataRepository $dbData);
 
   /**
    * Display a listing of the resource.

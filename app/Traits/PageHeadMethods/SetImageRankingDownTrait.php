@@ -22,7 +22,7 @@ trait SetImageRankingDownTrait
    * @return \Illuminate\Http\Response
    * 
    */
-  public function down(Request $request, $link, $id)
+  public function down(Request $request, $_, $id)
   {
     try {
       foreach ($this->images as $image) {

@@ -67,6 +67,7 @@ final class ContentController extends Controller implements ContentInterface
      */
     public function index()
     {
+        //
     }
 
     /**

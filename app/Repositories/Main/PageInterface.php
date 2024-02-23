@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Main;
 
+use App\Repositories\Http\GetPageLinkRepository;
 use Illuminate\Http\Request;
 
 interface PageInterface
@@ -19,7 +20,7 @@ interface PageInterface
    * @var \App\Models\Lang\RU_content $ruContents
    * @return void
    */
-  public function __construct();
+  public function __construct(GetPageLinkRepository $url);
 
   /**
    * Display a listing of the resource.

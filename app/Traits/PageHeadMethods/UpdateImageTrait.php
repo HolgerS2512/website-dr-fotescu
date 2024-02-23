@@ -25,7 +25,7 @@ trait UpdateImageTrait
    * @return \Illuminate\Http\Response
    * 
    */
-  public function update(Request $request, $link, $id)
+  public function update(Request $request, $_, $id)
   {
     try {
       $credentials = Validator::make($request->all(), [

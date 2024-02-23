@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Mail\ContactFeedbackMail;
 use App\Mail\ContactMail;
 use App\Models\Publish;
+use App\Repositories\Http\GetPageLinkRepository;
 use App\Repositories\Main\PageInterface;
 use Exception;
 use Illuminate\Support\Facades\Mail;
@@ -32,15 +33,17 @@ use App\Traits\GetBoolFromDB;
  */
 final class PageController extends Controller implements PageInterface
 {
-    private $currentPage = 'home';
+    private $currentPageLink;
     private $pageValues;
 
     private array $imageValues;
     private $publicValues;
 
-    public function __construct()
+    public function __construct(GetPageLinkRepository $url)
     {
-        $this->pageValues = Page::all()->where('link', "$this->currentPage")[0];
+        $this->currentPageLink = $url->currentPageLink;
+
+        $this->pageValues = Page::all()->where('link', "$this->currentPageLink")[0];
 
         $images = $this->pageValues->images()->where('slide', true)->orderBy('ranking')->get();
 
@@ -48,7 +51,7 @@ final class PageController extends Controller implements PageInterface
             $this->imageValues[$key] = (object) $image->only(['title', 'image']);
         }
 
-        $this->publicValues = GetBoolFromDB::getBool(Publish::all(), "$this->currentPage.slider");
+        $this->publicValues = GetBoolFromDB::getBool(Publish::all(), "$this->currentPageLink.slider");
     }
 
     public function __set($name, $value)
@@ -65,7 +68,7 @@ final class PageController extends Controller implements PageInterface
      */
     public function index()
     {
-        return view("pages.$this->currentPage", [
+        return view("pages.$this->currentPageLink", [
             'src' => $this->imageValues,
             'public' => $this->publicValues,
         ]);

@@ -10,13 +10,12 @@ interface DbDataInterface
   /**
    * Store db data in the variables.
    *
-   * @param \Illuminate\Http\Request $request
-   * @param \IApp\Repositories\Http\GetPageLinkRepository $adminRoute
+   * @param \IApp\Repositories\Http\GetPageLinkRepository $adminURL
    * @var \App\Models\Page $page
    * @var \App\Models\Image $images
    * @var \App\Models\Content $content
    * @var \App\Models\Publish $publishes
    * @return void
    */
-  public function __construct(Request $request, GetPageLinkRepository $adminRoute);
+  public function __construct(GetPageLinkRepository $adminURL);
 }

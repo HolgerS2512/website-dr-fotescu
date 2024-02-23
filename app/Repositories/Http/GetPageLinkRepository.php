@@ -4,6 +4,7 @@ namespace App\Repositories\Http;
 
 use Illuminate\Http\Request;
 use App\Models\Page;
+use Illuminate\Support\Facades\App;
 use Illuminate\Database\Eloquent\Collection;
 use App\Repositories\Http\GetPageLinkInterface;
 
@@ -16,14 +17,23 @@ use App\Repositories\Http\GetPageLinkInterface;
  * @method setAttributes
  * @method setPages
  * @method setLinks
- * @method setAdminPageLink
- * @method setDePageLink
- * @method setEnPageLink
- * @method setRuPageLink
+ * @method setUrlValues
+ * @method setcurrentPageLink
+ * @method static getLanguage: string
+ * @method static isHeadMethod: bool
  * 
  */
 final class GetPageLinkRepository implements GetPageLinkInterface
 {
+  /**
+   * Contains the request path.
+   *
+   * @param \Illuminate\Http\Request $request->path()
+   * @var string
+   * 
+   */
+  private static string $requestPath;
+
   /**
    * Contains strings in an array from the request path.
    *
@@ -31,7 +41,7 @@ final class GetPageLinkRepository implements GetPageLinkInterface
    * @var array
    * 
    */
-  private array $urlValues;
+  private static array $urlValues;
 
   /**
    * Contains the value that is returned from the URL.
@@ -49,10 +59,7 @@ final class GetPageLinkRepository implements GetPageLinkInterface
    * @var array
    * 
    */
-  private array $adminLinks;
-  private array $deLinks;
-  private array $enLinks;
-  private array $ruLinks;
+  private array $pageLinks;
 
   /**
    * Contains value that is returned from the URL.
@@ -62,22 +69,28 @@ final class GetPageLinkRepository implements GetPageLinkInterface
    * @var string
    * 
    */
-  public string $adminPageLink;
-  public string $dePageLink;
-  public string $enPageLink;
-  public string $ruPageLink;
+  public string $currentPageLink;
+
+  /**
+   * Contains the current language value.
+   *
+   * @param array $urlValues;
+   * @var string
+   * 
+   */
+  public static string $lang;
 
   /**
    * Set the variable $urlValues and executes the setAttributes method.
    *
    * @param \Illuminate\Http\Request $request
-   * @var \App\Models\Page $pages
+   * @var string $requestPath
    * @return void
    * 
    */
   public function __construct(Request $request)
   {
-    $this->urlValues = explode('/', $request->path());
+    self::$requestPath = $request->path();
 
     $this->setAttributes();
   }
@@ -94,13 +107,11 @@ final class GetPageLinkRepository implements GetPageLinkInterface
 
     $this->setLinks();
 
-    $this->setAdminPageLink();
+    $this->setUrlValues();
 
-    $this->setDePageLink();
+    GetPageLinkRepository::getLanguage();
 
-    $this->setEnPageLink();
-
-    $this->setRuPageLink();
+    $this->setCurrentPageLink();
   }
 
   /**
@@ -120,7 +131,6 @@ final class GetPageLinkRepository implements GetPageLinkInterface
    * Sets the variable links to the value present in variable pages.
    *
    * @param \App\Models\Page $pages
-   * @param string $param
    * @var array $links
    * @return void
    * 
@@ -128,106 +138,91 @@ final class GetPageLinkRepository implements GetPageLinkInterface
   public function setLinks()
   {
     foreach ($this->pages as $page) {
-      $this->adminLinks[] = $page->only(['link'])['link'];
-    }
-
-    foreach ($this->pages as $page) {
-      $this->deLinks[] = $page->only(['name'])['name'];
-    }
-
-    foreach ($this->pages as $page) {
-      $this->enLinks[] = $page->only(['en_name'])['en_name'];
-    }
-
-    foreach ($this->pages as $page) {
-      $this->ruLinks[] = $page->only(['ru_name'])['ru_name'];
+      $this->pageLinks[] = $page->only(['link'])['link'];
     }
   }
 
   /**
-   * Set the URL values to the $adminPageLink variable.
+   * Converts the request string path into an array.
    *
-   * @param array $adminLinks
-   * @param array $urlValues
-   * @var string $adminPageLink
+   * @param static $requestPath
+   * @var array $urlValues
    * @return void
    * 
    */
-  public function setAdminPageLink()
+  public function setUrlValues()
   {
-    $values = [];
-
-    foreach ($this->adminLinks as $link) {
-      foreach ($this->urlValues as $urlString) {
-        if ($link === $urlString) $values = $urlString;
-      }
-    }
-
-    $this->adminPageLink = is_array($values) ? implode('/', $values) : $values;
+    self::$urlValues = self::$requestPath === '/' ? [0 => 'home'] : explode('/', self::$requestPath);
   }
 
   /**
-   * Set the URL values to the $dePageLink variable.
+   * Set the URL values to the $currentPageLink variable.
    *
-   * @param array $deLinks
+   * @param array $pageLinks
    * @param array $urlValues
-   * @var string $dePageLink
+   * @var string $currentPageLink
    * @return void
    * 
    */
-  public function setDePageLink()
+  public function setCurrentPageLink()
   {
     $values = [];
 
-    foreach ($this->deLinks as $link) {
-      foreach ($this->urlValues as $urlString) {
+    // foreach ($this->{self::$lang . 'Links'} as $link) {
+    foreach ($this->pageLinks as $link) {
+      $link = str_replace(' ', '_', mb_strtolower($link));
+      $link = str_replace(['(', ')'], '', $link);
+
+      foreach (self::$urlValues as $urlString) {
+        $urlString = strlen($urlString) > 2 ? $urlString : 'home';
+
         if ($link === $urlString) $values = $urlString;
       }
     }
 
-    $this->dePageLink = is_array($values) ? implode('/', $values) : $values;
+    $this->currentPageLink = is_array($values) ? implode('/', $values) : $values;
   }
 
   /**
-   * Set the URL values to the $enPageLink variable.
+   * Set the language for APP, variable $lang & return lang string.
    *
-   * @param array $enLinks
    * @param array $urlValues
-   * @var string $enPageLink
+   * @var string $lang
+   * @return string
    * 
    */
-  public function setEnPageLink()
+  public static function getLanguage(): string
   {
-    $values = [];
-
-    foreach ($this->enLinks as $link) {
-      foreach ($this->urlValues as $urlString) {
-        if ($link === $urlString) $values = $urlString;
-      }
+    if (in_array('en', self::$urlValues)) {
+      self::$lang = 'en';
+      App::setLocale('en');
+      return 'en';
+    } else {
+      self::$lang = 'de';
+      App::setLocale('de');
+      return 'de';
     }
 
-    $this->enPageLink = is_array($values) ? implode('/', $values) : $values;
+    if (in_array('ru', self::$urlValues)) {
+      self::$lang = 'ru';
+      App::setLocale('ru');
+      return 'ru';
+    } else {
+      self::$lang = 'de';
+      App::setLocale('de');
+      return 'de';
+    }
   }
 
   /**
-   * Set the URL values to the $ruPageLink variable.
+   * Static method to check is a HEAD or CONTENT method.
    *
-   * @param array $ruLinks
-   * @param array $urlValues
-   * @var string $ruPageLink
-   * @return void
+   * @param static $requestPath
+   * @return bool
    * 
    */
-  public function setRuPageLink()
+  public static function isHeadMethod(): bool
   {
-    $values = [];
-
-    foreach ($this->ruLinks as $link) {
-      foreach ($this->urlValues as $urlString) {
-        if ($link === $urlString) $values = $urlString;
-      }
-    }
-
-    $this->ruPageLink = is_array($values) ? implode('/', $values) : $values;
+    return str_contains(self::$requestPath, 'content');
   }
 }

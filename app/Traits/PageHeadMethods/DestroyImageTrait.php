@@ -22,7 +22,7 @@ trait DestroyImageTrait
    * @return \Illuminate\Http\Response
    * 
    */
-  public function destroy($link, $id)
+  public function destroy($_, $id)
   {
     try {
       if (count($this->images) === 1) {

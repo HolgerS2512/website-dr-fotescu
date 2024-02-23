@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [PageController::class, 'index']);
+Route::get('en', [PageController::class, 'index']);
 
 Route::get('/behandlungen', fn () => view('pages.home'));
 

@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Http;
 
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 /**
  * Should contains this methods.
@@ -11,14 +11,22 @@ use Illuminate\Support\Facades\Request;
  * @method setAttributes
  * @method setPages
  * @method setLinks
- * @method setAdminPageLink
- * @method setDePageLink
- * @method setEnPageLink
- * @method setRuPageLink
+ * @method setUrlValues
+ * @method setcurrentPageLink
+ * @method static getLanguage: string
+ * @method static isHeadMethod: bool
  * 
  */
 interface GetPageLinkInterface
 {
+  /**
+   * Set the variable $urlValues and executes the setAttributes method.
+   *
+   * @param \Illuminate\Http\Request $request
+   * @var string $requestPath
+   * @return void
+   * 
+   */
   public function __construct(Request $request);
 
   /**
@@ -43,7 +51,6 @@ interface GetPageLinkInterface
    * Sets the variable links to the value present in variable pages.
    *
    * @param \App\Models\Page $pages
-   * @param string $param
    * @var array $links
    * @return void
    * 
@@ -51,45 +58,42 @@ interface GetPageLinkInterface
   public function setLinks();
 
   /**
-   * Set the URL values to the $adminPageLink variable.
+   * Converts the request string path into an array.
    *
-   * @param array $adminLinks
-   * @param array $urlValues
-   * @var string $adminPageLink
+   * @param static $requestPath
+   * @var array $urlValues
    * @return void
    * 
    */
-  public function setAdminPageLink();
+  public function setUrlValues();
 
   /**
-   * Set the URL values to the $dePageLink variable.
+   * Set the URL values to the $currentPageLink variable.
    *
-   * @param array $deLinks
+   * @param array $pageLinks
    * @param array $urlValues
-   * @var string $dePageLink
+   * @var string $currentPageLink
    * @return void
    * 
    */
-  public function setDePageLink();
+  public function setCurrentPageLink();
 
   /**
-   * Set the URL values to the $enPageLink variable.
+   * Set the language for APP, variable $lang & return lang string.
    *
-   * @param array $enLinks
    * @param array $urlValues
-   * @var string $enPageLink
+   * @var string $lang
+   * @return string
    * 
    */
-  public function setEnPageLink();
+  public static function getLanguage(): string;
 
   /**
-   * Set the URL values to the $ruPageLink variable.
+   * Static method to check is a HEAD or CONTENT method.
    *
-   * @param array $ruLinks
-   * @param array $urlValues
-   * @var string $ruPageLink
-   * @return void
+   * @param static $requestPath
+   * @return bool
    * 
    */
-  public function setRuPageLink();
+  public static function isHeadMethod(): bool;
 }

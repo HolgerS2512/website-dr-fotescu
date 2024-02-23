@@ -4,7 +4,6 @@ namespace App\Repositories\Admin;
 
 use App\Models\Content;
 use App\Repositories\Admin\DbDataInterface;
-use Illuminate\Http\Request;
 use App\Models\Page;
 use App\Models\Image;
 use App\Models\Publish;
@@ -13,12 +12,11 @@ use App\Repositories\Http\GetPageLinkRepository;
 /**
  * Contains this methods and variables.
  * 
- * @param \Illuminate\Http\Request $request
  * @var \App\Models\Page $page
  * @var \App\Models\Image $images
  * @var \App\Models\Content $content
  * @var \App\Models\Publish $publishes
- * @method construct(Request $request, GetPageLinkRepository $adminRoute)
+ * @method construct(Request $request, GetPageLinkRepository $adminURL)
  * 
  */
 class DbDataRepository implements DbDataInterface
@@ -37,22 +35,20 @@ class DbDataRepository implements DbDataInterface
    * Store db data in this variables $page, $images, $publishes.
    * 
    * @param \Illuminate\Http\Request $request
-   * @param \App\Repositories\Http\GetPageLinkRepository $adminRoute
+   * @param \App\Repositories\Http\GetPageLinkRepository $adminURL
    * @var   \App\Models\Page $page
    * @var   \App\Models\Image $images
    * @var   \App\Models\Content $content
    * @var   \App\Models\Publish $publishes
    */
-  public function __construct(Request $request, GetPageLinkRepository $adminRoute)
+  public function __construct(GetPageLinkRepository $adminURL)
   {
-    $is_head_Method = str_contains($request->path(), 'content');
-
-    $page = Page::where('link', $adminRoute->adminPageLink)->limit(1)->get();
+    $page = Page::where('link', $adminURL->currentPageLink)->limit(1)->get();
     $this->page = ($page)[0];
 
     $this->images = Image::where('page_id', $this->page->id)->orderBy('ranking')->get();
 
-    if ($is_head_Method) {
+    if ($adminURL::isHeadMethod()) {
       $this->content = Content::where('page_id', $this->page->id)->orderBy('ranking')->get();
     }
 

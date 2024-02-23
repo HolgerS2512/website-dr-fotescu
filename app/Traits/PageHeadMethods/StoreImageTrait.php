@@ -17,12 +17,9 @@ trait StoreImageTrait
    * Store a newly created image in storage.
    * 
    * @method store(Request $request)
-   * 
    * @param  \Illuminate\Http\Request $request
-   * 
    * @var \App\Models\Page $page
    * @var int $pageID
-   * 
    * @return \Illuminate\Http\Response
    * 
    */
