@@ -17,7 +17,6 @@ interface PageInterface
    * @var \App\Models\Lang\DE_content $deContents
    * @var \App\Models\Lang\EN_content $enContents
    * @var \App\Models\Lang\RU_content $ruContents
-   * @var \App\Models\Lang\Word $words
    * @return void
    */
   public function __construct();

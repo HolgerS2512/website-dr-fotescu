@@ -5,6 +5,10 @@
         <li>{{ $content }}</li>
         <li>link</li>
     </ul>
-    &copy; {{ date('Y') }} Dr. Sebastian Fotescu
+
+    <p>
+        
+    </p>
+    &copy; {{ __('messages.copyright') }} {{ date('Y') }} Dr. Sebastian Fotescu
 
 </footer>

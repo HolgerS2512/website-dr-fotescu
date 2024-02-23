@@ -59,6 +59,7 @@ trait StoreImageTrait
       Image::insert([
         'ranking' => $request->ranking,
         'page_id' => $this->page->id,
+        'slide' => 1,
         'title' => mb_strtolower(str_replace(' ', '-', $request->title)),
         'image' => $save_url,
         'created_at' => Carbon::now(),

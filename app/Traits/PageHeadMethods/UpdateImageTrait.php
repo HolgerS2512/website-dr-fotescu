@@ -25,7 +25,7 @@ trait UpdateImageTrait
    * @return \Illuminate\Http\Response
    * 
    */
-  public function update(Request $request, $id)
+  public function update(Request $request, $link, $id)
   {
     try {
       $credentials = Validator::make($request->all(), [
@@ -77,7 +77,7 @@ trait UpdateImageTrait
         }
       }
 
-      return redirect($this->page->link . '/header')->with([
+      return redirect('/'.'header/'.$this->page->link)->with([
         'present' => true,
         'status' => true,
         'message' => GetLangMessage::languagePackage('en')->updateTrue,

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\ContactFeedbackMail;
 use App\Mail\ContactMail;
+use App\Models\Publish;
 use App\Repositories\Main\PageInterface;
 use Exception;
 use Illuminate\Support\Facades\Mail;
@@ -25,18 +26,29 @@ use App\Traits\GetBoolFromDB;
  * @var \App\Models\Lang\DE_content $deContents
  * @var \App\Models\Lang\EN_content $enContents
  * @var \App\Models\Lang\RU_content $ruContents
- * @var \App\Models\Lang\Word $words
  * @method index
  * @method store(Request $request)
  * 
  */
 final class PageController extends Controller implements PageInterface
 {
-    public static $epithets = 5;
+    private $currentPage = 'home';
+    private $pageValues;
+
+    private array $imageValues;
+    private $publicValues;
 
     public function __construct()
     {
-        //
+        $this->pageValues = Page::all()->where('link', "$this->currentPage")[0];
+
+        $images = $this->pageValues->images()->where('slide', true)->orderBy('ranking')->get();
+
+        foreach ($images as $key => $image) {
+            $this->imageValues[$key] = (object) $image->only(['title', 'image']);
+        }
+
+        $this->publicValues = GetBoolFromDB::getBool(Publish::all(), "$this->currentPage.slider");
     }
 
     public function __set($name, $value)
@@ -53,12 +65,9 @@ final class PageController extends Controller implements PageInterface
      */
     public function index()
     {
-        $src = DB::table('images')->where('page_id', 1)->where('slide', true)->orderBy('ranking')->get();
-        $public = DB::table('publishes')->get();
-
-        return view('pages.home', [
-            'src' => $src,
-            'public' => GetBoolFromDB::getBool($public, 'home.slider'),
+        return view("pages.$this->currentPage", [
+            'src' => $this->imageValues,
+            'public' => $this->publicValues,
         ]);
     }
 

@@ -14,7 +14,7 @@
     <div class="col-md-6">
       <div class="row g-0">
         <form 
-          action="{{ url('/' . $page->link . '/header/image/update/' . $image->id) }}" 
+          action="{{ url('/' . 'header/' . $page->link . '/image/update/' . $image->id) }}" 
           method="POST" 
           enctype="multipart/form-data" 
           class="p-3 pb-0 border shadow-lg bg-body-tertiary"
@@ -67,7 +67,7 @@
             @enderror
           </div>
           <div class="mb-4">
-            <a href="{{ url('/' . $page->link . '/header') }}" class="mt-3 px-4 me-2 btn btn-danger">Cancel</a>
+            <a href="{{ url('/' . 'header/' . $page->link) }}" class="mt-3 px-4 me-2 btn btn-danger">Cancel</a>
             <button type="submit" class="mt-3 px-4 btn btn-dark">Submit</button>
           </div>
         </form>

@@ -38,7 +38,7 @@ interface HeadInterface
    * @param  \Illuminate\Http\Request $id
    * @return \Illuminate\Http\Response
    */
-  public function edit($id);
+  public function edit($link, $id);
 
   /**
    * Update the specified resource in storage.
@@ -47,7 +47,7 @@ interface HeadInterface
    * @param  \Illuminate\Http\Request $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id);
+  public function update(Request $request, $link, $id);
 
   /**
    * Update the specified resource in storage.
@@ -64,7 +64,7 @@ interface HeadInterface
    * @param  \Illuminate\Http\Request $id
    * @return \Illuminate\Http\Response
    */
-  public function up(Request $request, $id);
+  public function up(Request $request, $link, $id);
 
   /**
    * Update the specified resource in storage.
@@ -73,7 +73,7 @@ interface HeadInterface
    * @param  \Illuminate\Http\Request $id
    * @return \Illuminate\Http\Response
    */
-  public function down(Request $request, $id);
+  public function down(Request $request, $link, $id);
 
   /**
    * Remove the specified resource from storage.
@@ -81,5 +81,5 @@ interface HeadInterface
    * @param  \Illuminate\Http\Request  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id);
+  public function destroy($link, $id);
 }

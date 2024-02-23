@@ -6,7 +6,7 @@ namespace App\Repositories\Admin;
 use Illuminate\Support\ServiceProvider;
 
 
-class HeadRepoServiceProvide extends ServiceProvider
+class DbDataRepoServiceProvide extends ServiceProvider
 {
   /**
    * Bootstrap the application services.

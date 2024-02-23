@@ -2,7 +2,7 @@
 <header class="navigation">
     <ul class="info-strip">
         <li class="info-title">
-            <a href="{{ url('/') }}" title="dr-fotescu-zahnarztpraxis-dresden">Dr. Sebastian Fotescu Zahnarztpraxis</a>
+            <a href="{{ url('/') }}" title="dr-fotescu-zahnarztpraxis-dresden">{{ __('messages.nav_title') }}</a>
         </li>
         <li class="info-contact">
             <img class="phone-img" src="{{ asset('assets/svg/phone.svg') }}" alt="zahnarzt-dr-fotescu-dresden-telefonsymbol">

@@ -128,7 +128,7 @@
             </td>
             <td>
               <div class="d-flex justify-content-center">
-                <form action="{{ url('/' . $page->link . '/header/image/update/up/' . $slider->id) }}" method="POST">
+                <form action="{{ url('/' . 'header/' . $page->link . '/image/update/up/' . $slider->id) }}" method="POST">
                   @method('PATCH')
                   @csrf
                   @if (! $loop->first)

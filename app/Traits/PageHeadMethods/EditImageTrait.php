@@ -20,7 +20,7 @@ trait EditImageTrait
    * @return \Illuminate\Http\Response
    * 
    */
-  public function edit($id)
+  public function edit($link, $id)
   {
     try {
       foreach ($this->images as $image) {
