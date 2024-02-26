@@ -268,8 +268,10 @@ class WriteLanguageFiles extends Controller
 
         foreach ($this->fileData as $data) {
 
-            foreach ($data as $key => $_) {
-                $this->fileKeyWord = $key;
+            foreach ($data as $key => $value) {
+                if (array_key_exists($this->fileKey, $value)) {
+                    $this->fileKeyWord = $key;
+                }
             }
         }
     }

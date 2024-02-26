@@ -15,7 +15,7 @@ return [
   */
 
   'words' => [
-  'nav_title' => 'Dr. Sebastian Fotescu Zahnarztpraxis',
+  'nav_title' => 'Доктор Стоматологическая практика Себастьяна Фетеску',
   'copyright' => 'Copyright',
 	],
 

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Traits\GetLangMessage;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\File\WriteLanguageFiles;
 
 final class WordController extends Controller
 {
@@ -60,12 +61,23 @@ final class WordController extends Controller
                     ->withInput();
             }
 
-            Word::whereId($id)->update([
+            $word = Word::whereId($id);
+
+            $data = [
                 'de' => $request->de,
                 'en' => $request->en,
                 'ru' => $request->ru,
                 'updated_at' => Carbon::now(),
-            ]);
+            ];
+            
+            $word->update($data);
+
+            unset($data['updated_at']);
+
+            $key = $word->get()[0]->name;
+
+            $file = new WriteLanguageFiles($key, $data);
+            $file->save();
 
             return redirect('translation/words#' . $id)->with([
                 'present' => true,
