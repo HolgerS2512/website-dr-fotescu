@@ -210,16 +210,20 @@ final class GetPageLinkRepository implements GetPageLinkInterface
    */
   public static function getLanguage(): string
   {
+    $setCheck = true;
     foreach (self::$hasLanguages['options'] as $hasLang) {
       if (in_array($hasLang, self::$urlValues)) {
+        $setCheck = false;
         self::$lang = $hasLang;
         App::setLocale($hasLang);
         return $hasLang;
-      } else {
-        self::$lang = self::$hasLanguages['base'];
-        App::setLocale(self::$hasLanguages['base']);
-        return self::$hasLanguages['base'];
       }
+    }
+
+    if ($setCheck) {
+      self::$lang = self::$hasLanguages['base'];
+      App::setLocale(self::$hasLanguages['base']);
+      return self::$hasLanguages['base'];
     }
   }
 
