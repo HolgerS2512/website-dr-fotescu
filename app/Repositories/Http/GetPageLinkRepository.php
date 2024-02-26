@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Http;
 
+use App\Http\Controllers\StaticData\StoreLangController;
 use Illuminate\Http\Request;
 use App\Models\Page;
 use Illuminate\Support\Facades\App;
@@ -81,6 +82,20 @@ final class GetPageLinkRepository implements GetPageLinkInterface
   public static string $lang;
 
   /**
+   * Contains the current languages for this webpage.
+   *
+   * @var array
+   * 
+   */
+  public static array $hasLanguages = [
+    'base' => 'de',
+    'options' => [
+      'en',
+      'ru',
+    ]
+  ];
+
+  /**
    * Set the variable $urlValues and executes the setAttributes method.
    *
    * @param \Illuminate\Http\Request $request
@@ -91,6 +106,8 @@ final class GetPageLinkRepository implements GetPageLinkInterface
   public function __construct(Request $request)
   {
     self::$requestPath = $request->path();
+
+    self::$hasLanguages['base'] = config('app.locale');
 
     $this->setAttributes();
   }
@@ -193,24 +210,16 @@ final class GetPageLinkRepository implements GetPageLinkInterface
    */
   public static function getLanguage(): string
   {
-    if (in_array('en', self::$urlValues)) {
-      self::$lang = 'en';
-      App::setLocale('en');
-      return 'en';
-    } else {
-      self::$lang = 'de';
-      App::setLocale('de');
-      return 'de';
-    }
-
-    if (in_array('ru', self::$urlValues)) {
-      self::$lang = 'ru';
-      App::setLocale('ru');
-      return 'ru';
-    } else {
-      self::$lang = 'de';
-      App::setLocale('de');
-      return 'de';
+    foreach (self::$hasLanguages['options'] as $hasLang) {
+      if (in_array($hasLang, self::$urlValues)) {
+        self::$lang = $hasLang;
+        App::setLocale($hasLang);
+        return $hasLang;
+      } else {
+        self::$lang = self::$hasLanguages['base'];
+        App::setLocale(self::$hasLanguages['base']);
+        return self::$hasLanguages['base'];
+      }
     }
   }
 
@@ -224,5 +233,16 @@ final class GetPageLinkRepository implements GetPageLinkInterface
   public static function isHeadMethod(): bool
   {
     return str_contains(self::$requestPath, 'content');
+  }
+
+  /**
+   * Static method return Languages.
+   *
+   * @return array
+   * 
+   */
+  public static function hasLanguages(): array
+  {
+    return GetPageLinkRepository::$hasLanguages;
   }
 }

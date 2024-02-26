@@ -96,4 +96,12 @@ interface GetPageLinkInterface
    * 
    */
   public static function isHeadMethod(): bool;
+
+    /**
+   * Static method return Languages.
+   *
+   * @return array
+   * 
+   */
+  public static function hasLanguages(): array;
 }

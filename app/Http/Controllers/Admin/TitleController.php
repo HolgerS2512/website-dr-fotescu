@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\File\WriteLanguageFiles;
 use App\Models\Page;
+use App\Repositories\Http\GetPageLinkRepository;
 use Exception;
 use Illuminate\Http\Request;
 use App\Traits\GetLangMessage;
@@ -60,12 +62,25 @@ final class TitleController extends Controller
                     ->withInput();
             }
 
-            Page::whereId($id)->update([
+            $page = Page::whereId($id);
+
+            $page->update([
                 'name' => $request->name,
                 'en_name' => $request->en_name,
                 'ru_name' => $request->ru_name,
                 'updated_at' => Carbon::now(),
             ]);
+
+            $key = $page->get()[0]->link;
+
+            $writeInLangMsg = [
+                'de' => $request->name,
+                'en' => $request->en_name,
+                'ru' => $request->ru_name,
+            ];
+
+            $file = new WriteLanguageFiles($key, $writeInLangMsg);
+            $file->save();
 
             return redirect('translation/title#' . $id)->with([
                 'present' => true,

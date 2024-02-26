@@ -15,7 +15,7 @@ return [
   */
 
   'words' => [
-  'nav_title' => 'Dr. Sebastian Fotescu dental practice',
+  'nav_title' => 'Dr. Sebastian Fotescu Zahnarztpraxis',
   'copyright' => 'Copyright',
 	],
 
@@ -32,9 +32,9 @@ return [
   */
 
   'title' => [
-  'home' => 'HomeTestHome',
-  'cost' => 'Cost',
-  'prophylaxis' => 'Prophylaxis/Oral hygiene',
+  'home' => 'xxxTestHomexxx',
+  'cost' => 'test write language file : translator::class',
+  'prophylaxis' => 'test',
 	],
 
 ];
