@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\File\WriteLanguageFiles;
+use App\Http\Controllers\File\OverwriteLangMsgFiles;
 use App\Models\Page;
 use Exception;
 use Illuminate\Http\Request;
@@ -78,7 +78,7 @@ final class TitleController extends Controller
                 'ru' => $request->ru_name,
             ];
 
-            $file = new WriteLanguageFiles($key, $writeInLangMsg);
+            $file = new OverwriteLangMsgFiles($key, $writeInLangMsg);
             $file->save();
 
             return redirect('translation/title#' . $id)->with([

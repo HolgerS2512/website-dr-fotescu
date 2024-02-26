@@ -4,6 +4,7 @@ namespace App\Http\Controllers\File;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HandleHttp\GetPageUrlVars;
+use App\Repositories\File\LanguageMessageFiles;
 
 /**
  * Contains this methods and variables.
@@ -33,7 +34,7 @@ use App\Http\Controllers\HandleHttp\GetPageUrlVars;
  * @method save(): void
  * 
  */
-class WriteLanguageFiles extends Controller
+final class OverwriteLangMsgFiles extends Controller implements LanguageMessageFiles
 {
     /**
      * Save the base language.

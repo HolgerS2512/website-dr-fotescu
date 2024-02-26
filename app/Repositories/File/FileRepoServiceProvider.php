@@ -25,6 +25,6 @@ class FileRepoServiceProvider extends ServiceProvider
    */
   public function register()
   {
-    // $this->app->bind('App\Repositories\File\UrlVariablesRepository', 'App\Repositories\File\UrlVariablesRepository');
+    $this->app->bind('App\Repositories\File\LanguageMessageFiles', 'App\Repositories\File\LanguageMessageFiles');
   }
 }

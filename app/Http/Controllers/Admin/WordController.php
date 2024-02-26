@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Traits\GetLangMessage;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Controllers\File\WriteLanguageFiles;
+use App\Http\Controllers\File\OverwriteLangMsgFiles;
 
 final class WordController extends Controller
 {
@@ -69,14 +69,14 @@ final class WordController extends Controller
                 'ru' => $request->ru,
                 'updated_at' => Carbon::now(),
             ];
-            
+
             $word->update($data);
 
             unset($data['updated_at']);
 
             $key = $word->get()[0]->name;
 
-            $file = new WriteLanguageFiles($key, $data);
+            $file = new OverwriteLangMsgFiles($key, $data);
             $file->save();
 
             return redirect('translation/words#' . $id)->with([
