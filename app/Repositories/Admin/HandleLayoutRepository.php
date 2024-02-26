@@ -2,20 +2,31 @@
 
 namespace App\Repositories\Admin;
 
+use App\Http\Controllers\HandleDB\SetAdminDatabaseData;
 use Illuminate\Http\Request;
 
-interface HeadInterface
+/**
+ * Contains this methods.
+ * 
+ * @method construct
+ * @method index
+ * @method store(Request $request)
+ * @method edit($id)
+ * @method update(Request $request, $id)
+ * @method visible(Request $request)
+ * @method up(Request $request, $id)
+ * @method down(Request $request, $id)
+ * @method destroy($id)
+ * 
+ */
+interface HandleLayoutRepository
 {
   /**
    * Store db data in the variables.
    *
-   * @param \App\Repositories\Admin\DbDataRepository $dbData
-   * @var \App\Models\Page $page,
-   * @var \App\Models\Image $images,
-   * @var \App\Models\Publish $publishes
    * @return void
    */
-  public function __construct(DbDataRepository $dbData);
+  public function __construct(SetAdminDatabaseData $dbData);
 
   /**
    * Display a listing of the resource.

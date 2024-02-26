@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Repositories\Admin\DbDataRepository;
-use App\Repositories\Admin\HeadInterface;
+use App\Http\Controllers\HandleDB\SetAdminDatabaseData;
+use App\Repositories\Admin\HandleLayoutRepository;
 use App\Traits\PageHeadMethods\DestroyImageTrait;
 use App\Traits\PageHeadMethods\EditImageTrait;
 use App\Traits\PageHeadMethods\GetImageIndexTrait;
@@ -32,7 +32,7 @@ use App\Traits\PageHeadMethods\UpdateImageTrait;
  * @method destroy($id)
  * 
  */
-final class HeadController extends Controller implements HeadInterface
+final class HeadController extends Controller implements HandleLayoutRepository
 {
     use GetImageIndexTrait;
     use StoreImageTrait;
@@ -52,17 +52,17 @@ final class HeadController extends Controller implements HeadInterface
      */
     public $page, $images, $publishes;
 
-    /**
+   /**
      * Store db data in this variables $page, $images, $publishes.
      * 
-     * @method __construct()
-     *
-     * @param \App\Repositories\Admin\DbDataRepository $AdminData
+     * @param \App\Repositories\Admin\DbDataRepository $dbData
      * @var   \App\Models\Page $page,
      * @var   \App\Models\Image $images,
      * @var   \App\Models\Publish $publishes
+     * @method __construct($dbData)
+     * 
      */
-    public function __construct(DbDataRepository $dbData)
+    public function __construct(SetAdminDatabaseData $dbData)
     {
         try {
             $this->page = $dbData->page;

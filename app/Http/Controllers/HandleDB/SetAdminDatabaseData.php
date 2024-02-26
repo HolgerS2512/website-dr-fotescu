@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repositories\Admin;
+namespace App\Http\Controllers\HandleDB;
 
+use App\Http\Controllers\HandleHttp\GetPageUrlVars;
 use App\Models\Content;
-use App\Repositories\Admin\DbDataInterface;
+use App\Repositories\Admin\SetDbDataRepository;
 use App\Models\Page;
 use App\Models\Image;
 use App\Models\Publish;
-use App\Repositories\Http\GetPageLinkRepository;
 
 /**
  * Contains this methods and variables.
@@ -16,10 +16,10 @@ use App\Repositories\Http\GetPageLinkRepository;
  * @var \App\Models\Image $images
  * @var \App\Models\Content $content
  * @var \App\Models\Publish $publishes
- * @method construct(Request $request, GetPageLinkRepository $adminURL)
+ * @method __construct(GetPageUrlVars $urlVars)
  * 
  */
-class DbDataRepository implements DbDataInterface
+class SetAdminDatabaseData implements SetDbDataRepository
 {
   /**
    * Saves the associated db data for the respective variable.
@@ -32,23 +32,24 @@ class DbDataRepository implements DbDataInterface
   public $page, $images, $content, $publishes;
 
   /**
-   * Store db data in this variables $page, $images, $publishes.
+   * Store db data in this variables.
    * 
-   * @param \Illuminate\Http\Request $request
-   * @param \App\Repositories\Http\GetPageLinkRepository $adminURL
+   * @param \App\Http\Controllers\HandleHttp\GetPageUrlVars
    * @var   \App\Models\Page $page
    * @var   \App\Models\Image $images
    * @var   \App\Models\Content $content
    * @var   \App\Models\Publish $publishes
+   * @return void
+   * 
    */
-  public function __construct(GetPageLinkRepository $adminURL)
+  public function __construct(GetPageUrlVars $urlVars)
   {
-    $page = Page::where('link', $adminURL->currentPageLink)->limit(1)->get();
+    $page = Page::where('link', $urlVars->currentPageLink)->limit(1)->get();
     $this->page = ($page)[0];
 
     $this->images = Image::where('page_id', $this->page->id)->orderBy('ranking')->get();
 
-    if ($adminURL::isHeadMethod()) {
+    if ($urlVars::isHeadMethod()) {
       $this->content = Content::where('page_id', $this->page->id)->orderBy('ranking')->get();
     }
 

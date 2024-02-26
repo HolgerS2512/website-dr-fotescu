@@ -10,10 +10,38 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Query\JoinClause;
 use Exception;
 
+/**
+ * Contains this methods and variables.
+ * 
+ * @var float $wordsPercent
+ * @var float $titlePercent
+ * @method construct
+ * @method index
+ * @method setWordsPercent: void
+ * @method setTitlePercent: void
+ * 
+ */
 final class DashboardController extends Controller
 {
-    public float $wordsPercent, $titlePercent;
+    /**
+     * Stores the percentage of translation.
+     *
+     * @var float $wordsPercent
+     */
+    public float $wordsPercent;
 
+    /**
+     * Stores the percentage of translation.
+     *
+     * @var float $titlePercent
+     */
+    public float $titlePercent;
+
+    /**
+     * Calls the methods and set value for this object vars.
+     * 
+     * @return \Illuminate\Http\Response
+     */
     public function __construct()
     {
         $this->setWordsPercent();
@@ -52,6 +80,7 @@ final class DashboardController extends Controller
      * Set value for $wordsPercent.
      *
      * @var float $wordsPercent
+     * @return void
      */
     public function setWordsPercent(): void
     {
@@ -83,6 +112,7 @@ final class DashboardController extends Controller
      * Set value for $titlePercent.
      *
      * @var float $titlePercent
+     * @return void
      */
     public function setTitlePercent(): void
     {

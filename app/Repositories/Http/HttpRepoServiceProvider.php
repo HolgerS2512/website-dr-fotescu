@@ -6,7 +6,7 @@ namespace App\Repositories\Http;
 use Illuminate\Support\ServiceProvider;
 
 
-class HttpLinkServiceProvide extends ServiceProvider
+class HttpRepoServiceProvider extends ServiceProvider
 {
   /**
    * Bootstrap the application services.
@@ -25,6 +25,6 @@ class HttpLinkServiceProvide extends ServiceProvider
    */
   public function register()
   {
-    $this->app->bind('App\Repositories\Http\GetPageLinkInterface', 'App\Repositories\Http\GetPageLinkInterface');
+    $this->app->bind('App\Repositories\Http\UrlVariablesRepository', 'App\Repositories\Http\UrlVariablesRepository');
   }
 }

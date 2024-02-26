@@ -1,30 +1,37 @@
 <?php
 
-namespace App\Repositories\Http;
+namespace App\Http\Controllers\HandleHttp;
 
-use App\Http\Controllers\StaticData\StoreLangController;
 use Illuminate\Http\Request;
 use App\Models\Page;
+use App\Repositories\Http\UrlVariablesRepository;
 use Illuminate\Support\Facades\App;
 use Illuminate\Database\Eloquent\Collection;
-use App\Repositories\Http\GetPageLinkInterface;
 
 /**
  * Contains this methods and variables.
  * 
  * @param \Illuminate\Http\Request $request
  * @var \App\Models\Page $page
- * @method construct(Request $request)
+ * @var static string $requestPath
+ * @var static array $urlValues
+ * @var Collection $pages
+ * @var array $pageLinks
+ * @var string $currentPageLink
+ * @var static string $lang
+ * @var static array $hasLanguages
+ * @method __construct(Request $request)
  * @method setAttributes
  * @method setPages
  * @method setLinks
  * @method setUrlValues
- * @method setcurrentPageLink
- * @method static getLanguage: string
- * @method static isHeadMethod: bool
+ * @method setCurrentPageLink
+ * @method static getLanguage(): string
+ * @method static isHeadMethod(): bool
+ * @method static hasLanguages(): array
  * 
  */
-final class GetPageLinkRepository implements GetPageLinkInterface
+final class GetPageUrlVars implements UrlVariablesRepository
 {
   /**
    * Contains the request path.
@@ -42,7 +49,7 @@ final class GetPageLinkRepository implements GetPageLinkInterface
    * @var array
    * 
    */
-  private static array $urlValues;
+  public static array $urlValues;
 
   /**
    * Contains the value that is returned from the URL.
@@ -126,7 +133,7 @@ final class GetPageLinkRepository implements GetPageLinkInterface
 
     $this->setUrlValues();
 
-    GetPageLinkRepository::getLanguage();
+    self::getLanguage();
 
     $this->setCurrentPageLink();
   }
@@ -247,6 +254,6 @@ final class GetPageLinkRepository implements GetPageLinkInterface
    */
   public static function hasLanguages(): array
   {
-    return GetPageLinkRepository::$hasLanguages;
+    return self::$hasLanguages;
   }
 }

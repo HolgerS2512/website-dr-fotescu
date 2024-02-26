@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Repositories\Main;
+namespace App\Repositories\Page;
 
-use App\Repositories\Http\GetPageLinkRepository;
+use App\Http\Controllers\HandleHttp\GetPageUrlVars;
 use Illuminate\Http\Request;
 
-interface PageInterface
+interface PageRepository
 {
   /**
    * Store db data in the variables.
@@ -20,7 +20,7 @@ interface PageInterface
    * @var \App\Models\Lang\RU_content $ruContents
    * @return void
    */
-  public function __construct(GetPageLinkRepository $url);
+  public function __construct(GetPageUrlVars $urlVars);
 
   /**
    * Display a listing of the resource.

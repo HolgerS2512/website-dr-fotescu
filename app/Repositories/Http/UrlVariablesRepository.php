@@ -5,19 +5,20 @@ namespace App\Repositories\Http;
 use Illuminate\Http\Request;
 
 /**
- * Should contains this methods.
+ * Contains this methods.
  * 
- * @method construct(Request $request)
+ * @method __construct(Request $request)
  * @method setAttributes
  * @method setPages
  * @method setLinks
  * @method setUrlValues
- * @method setcurrentPageLink
- * @method static getLanguage: string
- * @method static isHeadMethod: bool
+ * @method setCurrentPageLink
+ * @method static getLanguage(): string
+ * @method static isHeadMethod(): bool
+ * @method static hasLanguages(): array
  * 
  */
-interface GetPageLinkInterface
+interface UrlVariablesRepository
 {
   /**
    * Set the variable $urlValues and executes the setAttributes method.
@@ -97,7 +98,7 @@ interface GetPageLinkInterface
    */
   public static function isHeadMethod(): bool;
 
-    /**
+  /**
    * Static method return Languages.
    *
    * @return array

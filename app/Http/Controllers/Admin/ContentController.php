@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\Admin\DbDataRepository;
-use App\Repositories\Admin\ContentInterface;
+use App\Http\Controllers\HandleDB\SetAdminDatabaseData;
+use App\Repositories\Admin\HandleLayoutRepository;
 use Illuminate\Http\Request;
 
 /**
@@ -25,7 +25,7 @@ use Illuminate\Http\Request;
  * @method destroy($id)
  * 
  */
-final class ContentController extends Controller implements ContentInterface
+final class ContentController extends Controller implements HandleLayoutRepository
 {
     /**
      * Saves the associated db data for the respective variable.
@@ -40,15 +40,15 @@ final class ContentController extends Controller implements ContentInterface
     /**
      * Store db data in this variables $page, $images, $publishes.
      * 
-     * @method __construct()
-     *
      * @param \App\Repositories\Admin\DbDataRepository $dbData
      * @var   \App\Models\Page $page,
      * @var   \App\Models\Image $images,
      * @var   \App\Models\Content $content
      * @var   \App\Models\Publish $publishes
+     * @method __construct($dbData)
+     * 
      */
-    public function __construct(DbDataRepository $dbData)
+    public function __construct(SetAdminDatabaseData $dbData)
     {
         try {
             $this->page = $dbData->page;
@@ -86,7 +86,7 @@ final class ContentController extends Controller implements ContentInterface
      * @param  \Illuminate\Http\Request $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($_, $id)
     {
     }
 
@@ -97,7 +97,7 @@ final class ContentController extends Controller implements ContentInterface
      * @param  \Illuminate\Http\Request $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $_, $id)
     {
     }
 
@@ -118,7 +118,7 @@ final class ContentController extends Controller implements ContentInterface
      * @param  \Illuminate\Http\Request $id
      * @return \Illuminate\Http\Response
      */
-    public function up(Request $request, $id)
+    public function up(Request $request, $_, $id)
     {
     }
 
@@ -129,7 +129,7 @@ final class ContentController extends Controller implements ContentInterface
      * @param  \Illuminate\Http\Request $id
      * @return \Illuminate\Http\Response
      */
-    public function down(Request $request, $id)
+    public function down(Request $request, $_, $id)
     {
     }
 
@@ -139,7 +139,7 @@ final class ContentController extends Controller implements ContentInterface
      * @param  \Illuminate\Http\Request  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($_, $id)
     {
     }
 }

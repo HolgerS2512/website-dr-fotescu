@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\HandleHttp\GetPageUrlVars;
 use App\Models\Page;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\ContactFeedbackMail;
 use App\Mail\ContactMail;
 use App\Models\Publish;
-use App\Repositories\Http\GetPageLinkRepository;
-use App\Repositories\Main\PageInterface;
+use App\Repositories\Page\PageRepository;
 use Exception;
 use Illuminate\Support\Facades\Mail;
 use App\Traits\GetLangMessage;
@@ -31,7 +31,7 @@ use App\Traits\GetBoolFromDB;
  * @method store(Request $request)
  * 
  */
-final class PageController extends Controller implements PageInterface
+final class PageController extends Controller implements PageRepository
 {
     private $currentPageLink;
     private $pageValues;
@@ -39,9 +39,9 @@ final class PageController extends Controller implements PageInterface
     private array $imageValues;
     private $publicValues;
 
-    public function __construct(GetPageLinkRepository $url)
+    public function __construct(GetPageUrlVars $urlVars)
     {
-        $this->currentPageLink = $url->currentPageLink;
+        $this->currentPageLink = $urlVars->currentPageLink;
 
         $this->pageValues = Page::all()->where('link', "$this->currentPageLink")[0];
 

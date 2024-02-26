@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\File;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\Http\GetPageLinkRepository;
+use App\Http\Controllers\HandleHttp\GetPageUrlVars;
 
 /**
  * Contains this methods and variables.
@@ -163,7 +163,7 @@ class WriteLanguageFiles extends Controller
                 'fileKey' => $fileKey
             ]);
 
-            $this->setLanguages(GetPageLinkRepository::$hasLanguages);
+            $this->setLanguages(GetPageUrlVars::$hasLanguages);
 
             $this->setFileData();
 
