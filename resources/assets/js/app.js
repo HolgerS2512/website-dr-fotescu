@@ -1,6 +1,7 @@
-import './bootstrap';
+import "./bootstrap";
 
-import './modules/bootstrap.bundle.min';
+// import "./modules/jquery.min";
 
-import '../sass/app.scss';
+import "./modules/bootstrap.bundle.min";
 
+import "../sass/app.scss";

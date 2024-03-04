@@ -86,6 +86,13 @@ final class OverwriteLangMsgFiles extends Controller implements LanguageMessageF
     public string $fileKeyWord;
 
     /**
+     * Saves the category key word.
+     *
+     * @var string $categoryKey
+     */
+    public string $categoryKey;
+
+    /**
      * Saves the passed data.
      *
      * @var array $data
@@ -150,6 +157,7 @@ final class OverwriteLangMsgFiles extends Controller implements LanguageMessageF
      * @return void
      */
     public function __construct(
+        string $categoryKey,
         string $fileKey,
         array $data,
         string $path = 'lang/',
@@ -158,10 +166,11 @@ final class OverwriteLangMsgFiles extends Controller implements LanguageMessageF
         if (!empty($fileKey) && is_array($data)) {
 
             $this->setAttributes([
+                'categoryKey' => $categoryKey,
+                'fileKey' => $fileKey,
+                'data' => $data,
                 'path' => $path,
                 'file' => $file,
-                'data' => $data,
-                'fileKey' => $fileKey
             ]);
 
             $this->setLanguages(GetPageUrlVars::$hasLanguages);
@@ -192,7 +201,7 @@ final class OverwriteLangMsgFiles extends Controller implements LanguageMessageF
 
             return $this;
         } else {
-            die("Fataler Fehler - Methode $methodeName existiert nicht!!!!");
+            die("Fatale Error - Method $methodeName does not exist!");
         }
     }
 
@@ -326,6 +335,7 @@ final class OverwriteLangMsgFiles extends Controller implements LanguageMessageF
      * 
      * @param string $lang
      * @param string $fileKeyWord
+     * @param string $categoryKey
      * @param bool $try
      * @param bool $last
      * @var string $fileKeyWord
@@ -347,12 +357,16 @@ final class OverwriteLangMsgFiles extends Controller implements LanguageMessageF
 
         $msgLine = "\n\t| " . ucfirst($fileKeyWord) . " Message Language Lines\n";
 
-        if (!isset($this->fileKeyWord)) {
-            die('Fatal Error: variable obj::fileKeyWord = "' . $this->fileKeyWord . '" doesn\'t exists, please contact your developer!');
-        }
+        if (isset($this->fileKeyWord)) {
 
-        if ($this->fileKeyWord === $fileKeyWord) {
-            $this->fileData[$lang][$fileKeyWord][$this->fileKey] = $this->data[$lang];
+            if ($this->fileKeyWord === $fileKeyWord) {
+                $this->fileData[$lang][$fileKeyWord][$this->fileKey] = $this->data[$lang];
+            }
+        } else {
+
+            if ($this->categoryKey === $fileKeyWord) {
+                $this->fileData[$lang][$this->categoryKey][$this->fileKey] = $this->data[$lang];
+            }
         }
 
         $exportVar = str_replace('array (', '[', var_export($this->fileData[$lang][$fileKeyWord], true));

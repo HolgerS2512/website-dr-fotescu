@@ -23,13 +23,14 @@ interface LanguageMessageFiles
   /**
    * Passes the data to the setters.
    * 
+   * @param string $categoryKey,
    * @param string $fileKey
    * @param array $data
    * @param string $path
    * @param string $file
    * @return void
    */
-  public function __construct(string $fileKey, array $data, string $path, string $file);
+  public function __construct(string $categoryKey, string $fileKey, array $data, string $path, string $file);
 
   /**
    * Checks whether methods and attributes exist.
@@ -100,6 +101,7 @@ interface LanguageMessageFiles
    * 
    * @param string $lang
    * @param string $fileKeyWord
+   * @param string $categoryKey
    * @param bool $try
    * @param bool $last
    * @var string $fileKeyWord

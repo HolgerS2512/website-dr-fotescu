@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Http\Request;
 use App\Traits\GetLangMessage;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 final class TitleController extends Controller
@@ -61,40 +62,39 @@ final class TitleController extends Controller
                     ->withInput();
             }
 
-            $page = Page::whereId($id);
-
-            $page->update([
+            Page::whereId($id)->update([
                 'name' => $request->name,
                 'en_name' => $request->en_name,
                 'ru_name' => $request->ru_name,
                 'updated_at' => Carbon::now(),
             ]);
 
-            $key = $page->get()[0]->link;
-
-            $writeInLangMsg = [
-                'de' => $request->name,
-                'en' => $request->en_name,
-                'ru' => $request->ru_name,
-            ];
-
-            $file = new OverwriteLangMsgFiles($key, $writeInLangMsg);
-            $file->save();
-
-            return redirect('translation/title#' . $id)->with([
+            return response()->json([
                 'present' => true,
                 'status' => true,
                 'message' => GetLangMessage::languagePackage('en')->updateTrue,
             ]);
+
+            // return redirect('translation/title#' . $id)->with([
+            //     'present' => true,
+            //     'status' => true,
+            //     'message' => GetLangMessage::languagePackage('en')->updateTrue,
+            // ]);
         } catch (Exception $e) {
-            return redirect()->back()->with([
+            return response()->json([
                 'present' => true,
                 'status' => false,
                 'message' => GetLangMessage::languagePackage('en')->updateFalse,
             ]);
+            
+            // return redirect('translation/title#' . $id)->with([
+            //     'present' => true,
+            //     'status' => false,
+            //     'message' => GetLangMessage::languagePackage('en')->updateFalse,
+            // ]);
         }
 
-        return redirect()->back()->with([
+        return response()->json([
             'present' => true,
             'status' => false,
             'message' => GetLangMessage::languagePackage('en')->updateFalse,

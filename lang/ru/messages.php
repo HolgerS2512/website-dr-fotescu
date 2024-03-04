@@ -1,5 +1,21 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
+
+$title = [];
+$dbTitle = DB::table('pages')->select('link', 'ru_name')->get();
+
+foreach ($dbTitle as $value) {
+  $title[$value->link] = $value->ru_name;
+}
+
+$words = [];
+$dbWords = DB::table('words')->select('name', 'ru')->get();
+
+foreach ($dbWords as $value) {
+  $words[$value->name] = $value->ru;
+}
+
 return [
 
 
@@ -14,10 +30,7 @@ return [
   |
   */
 
-  'words' => [
-  'nav_title' => 'Доктор Стоматологическая практика Себастьяна Фетеску',
-  'copyright' => 'Copyright',
-	],
+  'words' => $words,
 
 
   /*
@@ -31,10 +44,6 @@ return [
   |
   */
 
-  'title' => [
-  'home' => 'xxxTestHomexxx',
-  'cost' => 'test write language file : translator::class',
-  'prophylaxis' => 'test',
-	],
+  'title' => $title,
 
 ];

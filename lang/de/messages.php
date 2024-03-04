@@ -1,5 +1,21 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
+
+$title = [];
+$dbTitle = DB::table('pages')->select('link', 'name')->get();
+
+foreach ($dbTitle as $value) {
+  $title[$value->link] = $value->name;
+}
+
+$words = [];
+$dbWords = DB::table('words')->select('name', 'de')->get();
+
+foreach ($dbWords as $value) {
+  $words[$value->name] = $value->de;
+}
+
 return [
 
 
@@ -14,10 +30,7 @@ return [
   |
   */
 
-  'words' => [
-  'nav_title' => 'Dr. Sebastian Fotescu Zahnarztpraxis',
-  'copyright' => 'Copyright',
-	],
+  'words' => $words,
 
 
   /*
@@ -31,10 +44,6 @@ return [
   |
   */
 
-  'title' => [
-  'home' => 'Home',
-  'cost' => 'Kosten',
-  'prophylaxis' => 'Prophylaxe/Mundhygiene',
-	],
+  'title' => $title,
 
 ];

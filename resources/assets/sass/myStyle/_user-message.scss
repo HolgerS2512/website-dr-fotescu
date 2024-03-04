@@ -1,0 +1,35 @@
+.user-message {
+  $size: 4rem;
+
+  width: $size / 2;
+  height: $size / 2;
+  z-index: 5;
+  visibility: hidden;
+  opacity: 0;
+  transition: .15s;
+  line-height: 1.5;
+  margin-left: 1.5rem;
+  position: relative;
+  display: inline-block;
+
+  svg {
+    width: $size;
+    height: $size;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  #error,
+  #success {
+    display: block !important;
+  }
+}
+
+.user-message.response {
+  opacity: 1;
+  visibility: visible;
+}
+
+

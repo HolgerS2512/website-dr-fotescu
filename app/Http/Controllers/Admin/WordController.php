@@ -61,38 +61,27 @@ final class WordController extends Controller
                     ->withInput();
             }
 
-            $word = Word::whereId($id);
-
-            $data = [
+            Word::whereId($id)->update([
                 'de' => $request->de,
                 'en' => $request->en,
                 'ru' => $request->ru,
                 'updated_at' => Carbon::now(),
-            ];
+            ]);
 
-            $word->update($data);
-
-            unset($data['updated_at']);
-
-            $key = $word->get()[0]->name;
-
-            $file = new OverwriteLangMsgFiles($key, $data);
-            $file->save();
-
-            return redirect('translation/words#' . $id)->with([
+            return response()->json([
                 'present' => true,
                 'status' => true,
                 'message' => GetLangMessage::languagePackage('en')->updateTrue,
             ]);
         } catch (Exception $e) {
-            return redirect()->back()->with([
+            return response()->json([
                 'present' => true,
                 'status' => false,
                 'message' => GetLangMessage::languagePackage('en')->updateFalse,
             ]);
         }
 
-        return redirect()->back()->with([
+        return response()->json([
             'present' => true,
             'status' => false,
             'message' => GetLangMessage::languagePackage('en')->updateFalse,

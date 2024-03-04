@@ -3,6 +3,12 @@
 {{--------------------> Title <--------------------}}
 @section('title')
 <title>Edit / Update {{ $name }}</title>
+<style>
+  #error,
+  #success {
+    display: none;
+  }
+</style>
 @endsection
 
 {{--------------------> Content <--------------------}}
@@ -24,7 +30,7 @@
             id="{{ $edit->id }}"
             action="{{ url('/translation/words/update/' . $edit->id) }}" 
             method="GET" 
-            class="p-3 pb-0 border shadow-lg bg-body-tertiary"
+            class="form-item p-3 pb-0 border shadow-lg bg-body-tertiary"
           >
           @method('PUT')
           @csrf
@@ -92,6 +98,7 @@
               <div class="mb-4">
                 <button type="reset" class="mt-3 px-4 me-2 btn btn-danger" style="min-width: 100px">Reset</button>
                 <button type="submit" class="mt-3 px-4 btn btn-dark" style="min-width: 100px">Save</button>
+                <span class="user-message"></span>
               </div>
             </div>
           </form>
@@ -107,5 +114,80 @@
     </div>
   </div>
 
+  <svg id="error" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="m336-280 144-144 144 144 56-56-144-144 144-144-56-56-144 144-144-144-56 56 144 144-144 144 56 56ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" fill="#fe0000"></path></svg>
+
+  <svg id="success" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" fill="#0ef046"></path></svg>
+
 </div>
+
+<script defer>
+  (() => {
+    'use strict'
+    const formItem = Array.from(document.querySelectorAll('.form-item'));
+
+    const init = () => {
+      formItem.forEach((form) => form.addEventListener('submit', setAjax));
+    };
+
+    const setAjax = (e) => {
+      const formEl = e.currentTarget;
+      const userMsgEl = formEl.querySelector('.user-message');
+
+      postAjax(formEl.action, {
+        '_token' : "{{ csrf_token() }}",
+        'de' : formEl.querySelector("input[name='de']").value,
+        'en' : formEl.querySelector("input[name='en']").value,
+        'ru' : formEl.querySelector("input[name='ru']").value,
+      }, (resp) => {
+        userMessage(userMsgEl, (resp && resp.length < 100) && JSON.parse(resp).status);
+      });
+      e.preventDefault();
+    };
+
+    const postAjax = (url, data, response) => {
+      let params = typeof data == 'string' ? data : Object.keys(data).map((k) => { 
+        return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) 
+      }).join('&');
+
+      let xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+      xhr.open('POST', url, true);
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState > 3) response(xhr.responseText)
+      };
+      xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.send(params);
+
+      return xhr;
+    };
+
+    const userMessage = (el, isSuccess) => {
+      buildIcon(el, isSuccess);
+      el.classList.add('response');
+
+      if(el.classList.contains('response')) {
+        delay(el, 4, isSuccess)
+      };
+    };
+
+    const delay = (el, counter, isSuccess) => {
+      if (counter === 0) {
+        const child = el.querySelector(`#${isSuccess ? 'success' : 'error'}`) || false;
+
+        el.classList.remove('response');
+        if (child) el.removeChild(child);
+      };
+      setTimeout(() => delay(el, --counter, isSuccess), 1000);
+    };
+
+    const buildIcon = (el, isSuccess) => {
+      const cloneEl = document.querySelector(`#${isSuccess ? 'success' : 'error'}`).cloneNode(true);
+      const checkItem = Array.from(el.querySelectorAll('svg'));
+
+      if (checkItem.length === 0) el.appendChild(cloneEl);
+    };
+
+    init();
+  })()
+</script>
 @endsection
