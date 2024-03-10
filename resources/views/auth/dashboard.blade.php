@@ -126,7 +126,7 @@
               <h5 class="card-title">
                 {{ $page->en_name }}
                 <br>
-                <small class="text-body-tertiary">{{ 'Subpage' . ' : ' . $parent[ $page->page_id ] }}</small>
+                <small class="h6 fw-lighter text-body-tertiary">{{ 'Subpage' . ' : ' . $parent[ $page->page_id ] }}</small>
               </h5>
               @if ( $page->image === null )
                 <div class="d-flex justify-content-center align-items-center" style="height: 150px; border-radius: 6px;">

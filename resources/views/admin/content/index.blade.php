@@ -8,58 +8,11 @@
 {{--------------------> Content <--------------------}}
 @section('content')
 <div class='container py-5'>
-  <h1 class="special-admin-header">Edit {{ $page->name }} Header</h1>
+  <h1 class="special-admin-header">Edit {{ $page->name }} Content</h1>
 
   <div style="margin-top: 130px;" class="row">
-    <div class="col-12">
-      <div class="border shadow-lg p-3 bg-white mb-5">
-        <div class="accordion accordion-important" id="accordionImportantNote">
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <button class="accordion-button important-btn p-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseImportant" aria-expanded="true" aria-controls="collapseImportant">
-                <h2 class="d-inline text-warning bg-dark p-1">Important note!</h2>
-              </button>
-            </div>
-            <div id="collapseImportant" class="accordion-collapse collapse" data-bs-parent="#accordionImportantNote">
-              <div class="accordion-body">
-                <p>Automatically adds it to slider on page "{{ $page->name }}" (every language)!</p>
-                <a class="link" target="_blank" href="https://compress-or-die.com/webp">Optimize your image here! -> https://compress-or-die.com/webp</a>
-                <p class="mt-4">Follow this instructions:</p>
-                <ol>
-                  <li>Click link</li>
-                  <li>Select file</li>
-                  <li>Preprocessing -> size -> 2000 x 904</li>
-                  <li>Compression -> Lossy -> (min 82 | max 85)</li>
-                  <li>Generate optimized image</li>
-                  <li>download</li>
-                  <li>than can you upload</li>
-                </ol>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <div class="col-12">
-      <div class="border shadow-lg p-3 bg-white mb-5">
-        <h3>Slideshow : <b class="{{ $public ? 'text-success' : 'text-danger' }}">{{ $public ? 'visible' : 'hidden' }}</b></h3>
-        <div class="mb-3">
-          <form action="{{ '/' . 'header/' . $page->link . '/image/visible' }}" method="POST" id="change-slideshow">
-            @method('PATCH')
-            @csrf
-            <input type="radio" class="btn-check" name="slideshow" value="0" id="danger-outlined" autocomplete="off" @if(!$public) checked @endif>
-            <label class="btn btn-outline-danger me-2" for="danger-outlined">Hidden</label>
-
-            <input type="radio" class="btn-check" name="slideshow" value="1" id="success-outlined" autocomplete="off" @if($public) checked @endif>
-            <label class="btn btn-outline-success" for="success-outlined">Visible</label>
-          </form>
-        </div>
-        <p>If slideshow not active, the first photo with ID 1 is automatically selected as the start image.</p>
-      </div>
-    </div>
-
-    <div class="col-xl-8">
       <table class="table table-striped table-bordered shadow-lg mb-0">
         <thead>
           <tr>
@@ -169,71 +122,10 @@
       </table>
     </div>
 
-    <div class="col-xl-4">
-      <div class="row g-0">
-        <form action="" method="POST" enctype="multipart/form-data" class="p-3 pb-0 border shadow-lg bg-body-tertiary">
-          @csrf
-
-          <div class="mb-4">
-            <h3>Upload a new image</h3>
-          </div>
-          @if (isset($src))
-          @if ( ! empty($src) && count($src) < 1 ) <input type="hidden" name="ranking" value="1">
-            @else
-            @foreach ($src as $slider)
-            @if ($loop->last)
-            <input type="hidden" name="ranking" value="{{ $slider->ranking + 1 }}">
-            @endif
-            @endforeach
-            @endif
-            @endif
-            <div class="mb-3">
-              <label for="title" class="form-label">Title*</label>
-              <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}" required minlength="3" maxlength="255">
-              @error('title')
-              <div class="invalid-feedback">
-                {{ $message }}
-              </div>
-              @enderror
-            </div>
-            <div class="mb-3">
-              <label for="image" class="form-label">Image*</label>
-              <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" value="{{ old('image') }}" required>
-              @error('image')
-              <div class="invalid-feedback">
-                {{ $message }}
-              </div>
-              @enderror
-            </div>
-            <div class="mb-4">
-              <button type="submit" class="mt-3 btn btn-success">
-                <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20">
-                  <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" fill="#FFF" />
-                </svg> Add Slide
-              </button>
-            </div>
-        </form>
-      </div>
-    </div>
   </div>
 
 </div>
 
-<script>
-  (() => {
-    'use strict';
-    const visibleFormEl = document.querySelector('#change-slideshow');
-    const slideshowItem = document.querySelectorAll(`input[name='slideshow']`);
-
-    const init = () => {
-      slideshowItem.forEach(el => el.addEventListener('click', onSubmit));
-    }
-
-    const onSubmit = () => visibleFormEl.submit();
-
-    init();
-  })()
-</script>
 <script>
   (() => {
     'use strict'

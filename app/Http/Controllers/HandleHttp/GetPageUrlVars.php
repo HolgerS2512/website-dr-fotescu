@@ -67,7 +67,7 @@ final class GetPageUrlVars implements UrlVariablesRepository
    * @var array
    * 
    */
-  private array $pageLinks;
+  private array $pageLinks, $webpageLinks;
 
   /**
    * Contains value that is returned from the URL.
@@ -163,6 +163,7 @@ final class GetPageUrlVars implements UrlVariablesRepository
   {
     foreach ($this->pages as $page) {
       $this->pageLinks[] = $page->only(['link'])['link'];
+      $this->webpageLinks[] = $page->only(['weblink'])['weblink'];
     }
   }
 
@@ -182,6 +183,7 @@ final class GetPageUrlVars implements UrlVariablesRepository
   /**
    * Set the URL values to the $currentPageLink variable.
    *
+   * @param array $webpageLinks
    * @param array $pageLinks
    * @param array $urlValues
    * @var string $currentPageLink
@@ -190,21 +192,31 @@ final class GetPageUrlVars implements UrlVariablesRepository
    */
   public function setCurrentPageLink()
   {
-    $values = [];
+    $values = '';
 
-    // foreach ($this->{self::$lang . 'Links'} as $link) {
-    foreach ($this->pageLinks as $link) {
-      $link = str_replace(' ', '_', mb_strtolower($link));
-      $link = str_replace(['(', ')'], '', $link);
+    if (in_array('header', self::$urlValues) || in_array('content', self::$urlValues)) {
+      foreach ($this->pageLinks as $link) {
 
-      foreach (self::$urlValues as $urlString) {
-        $urlString = strlen($urlString) > 2 ? $urlString : 'home';
+        foreach (self::$urlValues as $urlString) {
+          if ($link === $urlString) $values = $urlString;
+        }
+      }
+    }
+
+    if (!in_array('header', self::$urlValues) || !in_array('content', self::$urlValues)) {
+      foreach ($this->webpageLinks as $link) {
+
+        if (count(self::$urlValues) === 1) {
+          $urlString = strlen(self::$urlValues[0]) > 1 ? self::$urlValues[0] : 'home';
+        } else {
+          $urlString = implode('/', self::$urlValues);
+        }
 
         if ($link === $urlString) $values = $urlString;
       }
     }
 
-    $this->currentPageLink = is_array($values) ? implode('/', $values) : $values;
+    $this->currentPageLink = $values;
   }
 
   /**

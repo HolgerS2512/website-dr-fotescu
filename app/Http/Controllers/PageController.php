@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\ContactFeedbackMail;
 use App\Mail\ContactMail;
+use App\Models\Content;
 use App\Models\Publish;
 use App\Repositories\Page\PageRepository;
 use Exception;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Traits\GetLangMessage;
 use Illuminate\Support\Facades\DB;
 use App\Traits\GetBoolFromDB;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Contains this methods and variables.
@@ -27,8 +29,9 @@ use App\Traits\GetBoolFromDB;
  * @var \App\Models\Lang\DE_content $deContents
  * @var \App\Models\Lang\EN_content $enContents
  * @var \App\Models\Lang\RU_content $ruContents
+ * @method construct(GetPageUrlVars $urlVars, Request $request)
  * @method index
- * @method store(Request $request)
+ * @method contact(Request $request)
  * 
  */
 final class PageController extends Controller implements PageRepository
@@ -36,29 +39,25 @@ final class PageController extends Controller implements PageRepository
     private $currentPageLink;
     private $pageValues;
 
-    private array $imageValues;
-    private $publicValues;
+    private Collection $contentItem;
+    private array $slideImages;
+    private $isSlideshow;
 
-    public function __construct(GetPageUrlVars $urlVars)
+    public function __construct(GetPageUrlVars $urlVars, Request $request)
     {
         $this->currentPageLink = $urlVars->currentPageLink;
 
-        $this->pageValues = Page::all()->where('link', "$this->currentPageLink")[0];
+        $this->pageValues = Page::where('link', "$this->currentPageLink")->get()->first();
+
+        $this->contentItem = $this->pageValues->contents()->orderBy('ranking')->get()->load([$urlVars::getLanguage(), 'list']);
 
         $images = $this->pageValues->images()->where('slide', true)->orderBy('ranking')->get();
 
         foreach ($images as $key => $image) {
-            $this->imageValues[$key] = (object) $image->only(['title', 'image']);
+            $this->slideImages[$key] = (object) $image->only(['title', 'image']);
         }
 
-        $this->publicValues = GetBoolFromDB::getBool(Publish::all(), "$this->currentPageLink.slider");
-    }
-
-    public function __set($name, $value)
-    {
-        if (property_exists($this, $name)) {
-            $this->$name = $value;
-        }
+        $this->isSlideshow = GetBoolFromDB::getBool(Publish::all(), "$this->currentPageLink.slider");
     }
 
     /**
@@ -68,19 +67,20 @@ final class PageController extends Controller implements PageRepository
      */
     public function index()
     {
-        return view("pages.$this->currentPageLink", [
-            'src' => $this->imageValues,
-            'public' => $this->publicValues,
+        return view('pages.index', [
+            'contentItem' => $this->contentItem,
+            'slideSrc' => $this->slideImages,
+            'isSlideshow' => $this->isSlideshow,
         ]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Sends a contact email to the recipient and a confirmation to the email sender.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function contact(Request $request)
     {
         try {
             $credentials = Validator::make($request->all(), [

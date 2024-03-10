@@ -15,24 +15,25 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [PageController::class, 'index']);
-Route::get('en', [PageController::class, 'index']);
-Route::get('ru', [PageController::class, 'index']);
+// Route::get('/{link}/{link2}', [PageController::class, 'index']);
+// Route::get('en', [PageController::class, 'index']);
+// Route::get('ru', [PageController::class, 'index']);
 
-Route::get('/behandlungen', fn () => view('pages.home'));
+Route::get('/behandlungen', [PageController::class, 'index']);
 
-Route::get('/blog', fn () => view('pages.home'));
+Route::get('/blog', [PageController::class, 'index']);
 
-Route::get('/kosten', fn () => view('pages.home'));
+Route::get('/kosten', [PageController::class, 'index']);
 
-Route::get('/praxis_&_team', [TeamController::class, 'index']);
+Route::get('/praxis_&_team', [PageController::class, 'index']);
 
-Route::get('/ueberweisung', fn () => view('pages.home'));
+Route::get('/ueberweisung', [PageController::class, 'index']);
 
-Route::get('/kontakt', [ContactController::class, 'index']);
+Route::get('/kontakt', [PageController::class, 'index']);
 
-Route::get('/datenschutz', fn () => view('pages.home'));
+Route::get('/datenschutz', [PageController::class, 'index']);
 
-Route::get('/impressum', fn () => view('pages.home'));
+Route::get('/impressum', [PageController::class, 'index']);
 
 /*
 |
@@ -42,7 +43,7 @@ Route::get('/impressum', fn () => view('pages.home'));
 |
 */
 
-Route::post('/kontakt', [ContactController::class, 'store'])->name('contact');
+Route::post('/kontakt', [PageController::class, 'contact'])->name('contact');
 
 /*
 |
@@ -52,20 +53,20 @@ Route::post('/kontakt', [ContactController::class, 'store'])->name('contact');
 |
 */
 
-Route::get('/behandlungen/notfallversorgung', fn () => view('pages.home'));
+Route::get('/behandlungen/notfallversorgung', [PageController::class, 'index']);
 
-Route::get('/behandlungen/familientermine', fn () => view('pages.home'));
+Route::get('/behandlungen/familientermine', [PageController::class, 'index']);
 
-Route::get('/behandlungen/prophylaxe', fn () => view('pages.home'));
+Route::get('/behandlungen/prophylaxe', [PageController::class, 'index']);
 
-Route::get('/behandlungen/allgemeine_zahnheilkunde', fn () => view('pages.home'));
+Route::get('/behandlungen/allgemeine_zahnheilkunde', [PageController::class, 'index']);
 
-Route::get('/behandlungen/parodontologie', fn () => view('pages.home'));
+Route::get('/behandlungen/parodontologie', [PageController::class, 'index']);
 
-Route::get('/behandlungen/bleaching', fn () => view('pages.home'));
+Route::get('/behandlungen/bleaching', [PageController::class, 'index']);
 
-Route::get('/behandlungen/restaurative_zahnheilkunde', fn () => view('pages.home'));
+Route::get('/behandlungen/restaurative_zahnheilkunde', [PageController::class, 'index']);
 
-Route::get('/behandlungen/implantate', fn () => view('pages.home'));
+Route::get('/behandlungen/implantate', [PageController::class, 'index']);
 
-Route::get('/behandlungen/zahnersatz', fn () => view('pages.home'));
+Route::get('/behandlungen/zahnersatz', [PageController::class, 'index']);

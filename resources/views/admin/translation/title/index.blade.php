@@ -22,7 +22,8 @@
         <div class="p-3 pb-0 border shadow-lg bg-body-tertiary">
           <div class="mb-4">
             <h3>Edit or update page {{ mb_strtolower($name) }}</h3>
-            <p>Don't forget to save and pay attention to upper and lower case!</p>
+            <p class="mb-1">Don't forget to save and pay attention to upper and lower case!</p>
+            <p>Changes will only take effect after the page has been updated.</p>
           </div>
 
           @foreach ($editable as $edit)

@@ -6,6 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\HandleDB\SetAdminDatabaseData;
 use App\Repositories\Admin\HandleLayoutRepository;
 use Illuminate\Http\Request;
+use Exception;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Image;
+use App\Traits\GetLangMessage;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\File;
+use App\Traits\GetBoolFromDB;
 
 /**
  * Contains this methods and variables.
@@ -67,7 +74,20 @@ final class ContentController extends Controller implements HandleLayoutReposito
      */
     public function index()
     {
-        //
+        try {
+            return view('admin.content.index', [
+                'page' => $this->page,
+                'content' => $this->content,
+                'src' => $this->images->where('slide', 0),
+                'public' => GetBoolFromDB::getBool($this->publishes, $this->page->link . '.content'),
+            ]);
+        } catch (Exception $e) {
+
+            return view('admin.content.index', compact('e'));
+        }
+        $err = GetLangMessage::languagePackage('en')->databaseError;
+
+        return view('admin.content.index', compact('err'));
     }
 
     /**

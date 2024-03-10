@@ -1,7 +1,7 @@
 <section class="header">
-  @if($public)
+  @if($isSlideshow)
     <x-slideshow :src="$src" />
-  @elseif (!$public)
+  @elseif (!$isSlideshow)
     <div class="img-box-header">
       <img 
         class="slideshow-img" 

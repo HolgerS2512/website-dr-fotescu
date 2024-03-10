@@ -5,22 +5,24 @@ namespace App\Repositories\Page;
 use App\Http\Controllers\HandleHttp\GetPageUrlVars;
 use Illuminate\Http\Request;
 
+/**
+ * Contains this methods and variables.
+ * 
+ * @method construct(GetPageUrlVars $urlVars)
+ * @method index
+ * @method contact(Request $request)
+ * 
+ */
 interface PageRepository
 {
   /**
    * Store db data in the variables.
    *
-   * @var \App\Models\Page $page
-   * @var \App\Models\Image $images,
-   * @var \App\Models\Publish $publishes
-   * @var \App\Models\Content $contents
-   * @var \App\Models\ContentList $contentLists
-   * @var \App\Models\Lang\DE_content $deContents
-   * @var \App\Models\Lang\EN_content $enContents
-   * @var \App\Models\Lang\RU_content $ruContents
-   * @return void
+ * @method index
+ * @method contact(Request $request)
+   *
    */
-  public function __construct(GetPageUrlVars $urlVars);
+  public function __construct(GetPageUrlVars $urlVars, Request $request);
 
   /**
    * Display a listing of the resource.
@@ -30,10 +32,10 @@ interface PageRepository
   public function index();
 
   /**
-   * Store a newly created resource in storage.
+   * Sends a contact email to the recipient and a confirmation to the email sender.
    *
    * @param  \Illuminate\Http\Request $request
    * @return \Illuminate\Http\Response
    */
-  public function store(Request $request);
+  public function contact(Request $request);
 }

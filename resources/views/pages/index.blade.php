@@ -18,30 +18,26 @@
 
 {{--------------------> Content <--------------------}}
 @section('content')
-@isset($page)
-@php
-dump($page);
-@endphp
-@endisset
-@isset($image)
-@php
-dump($image);
-@endphp
-@endisset
-@isset($src)
-@php
-dump($src);
-@endphp
-@endisset
 
-  <x-header 
-    :src="$src" 
-    :public="$public" 
-    :title="'Zahnarztpraxis<br/>Dr. Sebastian Fotescu'" 
-  />
+  @isset($slideSrc, $isSlideshow)
+    <x-header 
+      :src="$slideSrc" 
+      :isSlideshow="$isSlideshow" 
+      :title="'Zahnarztpraxis<br/>Dr. Sebastian Fotescu'" 
+    />
+  @endisset
 
+  @isset($contentItem)
+    @php
+      foreach ($contentItem as $content) {
+        dump($content);
+      }
 
-<h2>-------------HOME-------------</h2>
+    dump('DUMP2', $contentItem);
+    @endphp
+  @endisset
+
+<h2>-------------INDEX-------------</h2>
 <h2>Eingefügter Inhalt aus HOME</h2>
 <h2>lang: {{ substr(app()->getLocale(), 0, 2); }}</h2>
 <hr>

@@ -1,0 +1,1 @@
+{{-- simple image (600 x 400) [ right-aligned | center-align | left-aligned ] --}}

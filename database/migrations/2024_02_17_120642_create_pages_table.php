@@ -19,6 +19,7 @@ return new class extends Migration
             $table->tinyInteger('subpage')->default(0);
             $table->tinyInteger('page_id')->nullable();
             $table->string('link')->unique();
+            $table->string('weblink');
             $table->string('name');
             $table->string('en_name')->nullable();
             $table->string('ru_name')->nullable();

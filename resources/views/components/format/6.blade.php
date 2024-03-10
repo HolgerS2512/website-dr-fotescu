@@ -1,0 +1,1 @@
+{{-- two image sections that overlap --}}
