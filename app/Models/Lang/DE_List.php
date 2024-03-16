@@ -2,13 +2,12 @@
 
 namespace App\Models\Lang;
 
-use App\Models\Content;
+use App\Models\Page;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 
-class DE_Content extends Model
+class DE_List extends Model
 {
     use HasFactory;
 
@@ -17,7 +16,7 @@ class DE_Content extends Model
      *
      * @var string
      */
-    protected $table = 'de_contents';
+    protected $table = 'de_lists';
 
     /**
      * The attributes that aren't mass assignable.
@@ -31,8 +30,8 @@ class DE_Content extends Model
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo 
      */
-    public function content(): BelongsTo
+    public function page(): BelongsTo
     {
-        return $this->belongsTo(Content::class);
+        return $this->belongsTo(Page::class);
     }
 }

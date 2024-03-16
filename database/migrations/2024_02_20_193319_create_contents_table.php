@@ -21,10 +21,10 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            $table->tinyInteger('format')->default(1);
-            $table->integer('image_id')->default(0);
-            $table->tinyInteger('btn')->default(0);
-            $table->string('url_link')->default(0);
+            $table->string('format')->nullable();
+            $table->integer('image_id')->nullable();
+            $table->string('btn')->nullable();
+            $table->string('url_link')->nullable();
             $table->timestamps();
         });
     }

@@ -1,14 +1,22 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Lang;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Page;
 
-class ContentList extends Model
+class EN_List extends Model
 {
     use HasFactory;
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'en_lists';
 
     /**
      * The attributes that aren't mass assignable.

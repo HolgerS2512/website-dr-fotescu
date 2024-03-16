@@ -20,7 +20,7 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            $table->string('title')->unique();
+            $table->string('title')->nullable();
             $table->text('content')->nullable();
             $table->timestamps();
         });

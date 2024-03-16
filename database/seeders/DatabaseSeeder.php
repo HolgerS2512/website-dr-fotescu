@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             ImageSeeder::class,
             PublicSeeder::class,
             WordSeeder::class,
+            ContentSeeder::class,
+            DeContentSeeder::class,
         ]);
     }
 }

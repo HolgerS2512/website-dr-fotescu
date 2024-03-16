@@ -41,23 +41,40 @@ final class PageController extends Controller implements PageRepository
 
     private Collection $contentItem;
     private array $slideImages;
+    private array $images;
     private $isSlideshow;
 
+    /**
+     * Sets the class variables.
+     *
+     * @return void
+     */
     public function __construct(GetPageUrlVars $urlVars, Request $request)
     {
         $this->currentPageLink = $urlVars->currentPageLink;
 
-        $this->pageValues = Page::where('link', "$this->currentPageLink")->get()->first();
+        $this->pageValues = Page::where('weblink', "$this->currentPageLink")->get()->first();
 
-        $this->contentItem = $this->pageValues->contents()->orderBy('ranking')->get()->load([$urlVars::getLanguage(), 'list']);
+        if (is_null($this->pageValues)) dd('url values =>', $this->pageValues);
+        if (!is_null($this->pageValues)) {
+            $lang = $urlVars::getLanguage();
 
-        $images = $this->pageValues->images()->where('slide', true)->orderBy('ranking')->get();
+            $this->contentItem = $this->pageValues->contents()->orderBy('ranking')->get()->load([$lang, "{$lang}List"]);
 
-        foreach ($images as $key => $image) {
-            $this->slideImages[$key] = (object) $image->only(['title', 'image']);
+            $imageExpression = $this->pageValues->images()->where('slide', false)->orderBy('ranking')->get();
+
+            if ($imageExpression->count() !== 0) {
+                $this->images =  $imageExpression;
+            }
+
+            $slideImages = $this->pageValues->images()->where('slide', true)->orderBy('ranking')->get();
+
+            foreach ($slideImages as $key => $image) {
+                $this->slideImages[$key] = (object) $image->only(['title', 'image']);
+            }
+
+            $this->isSlideshow = GetBoolFromDB::getBool(Publish::all(), "$this->currentPageLink.slider");
         }
-
-        $this->isSlideshow = GetBoolFromDB::getBool(Publish::all(), "$this->currentPageLink.slider");
     }
 
     /**
@@ -67,6 +84,10 @@ final class PageController extends Controller implements PageRepository
      */
     public function index()
     {
+        if (is_null($this->pageValues)) {
+            return view('errors.500');
+        }
+
         return view('pages.index', [
             'contentItem' => $this->contentItem,
             'slideSrc' => $this->slideImages,

@@ -36,7 +36,7 @@ class Page extends Model
     {
         return $this->hasMany(Publish::class);
     }
-    
+
     /**
      * Get the publish for this page.
      * 

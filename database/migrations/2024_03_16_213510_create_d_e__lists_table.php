@@ -13,13 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('content_lists', function (Blueprint $table) {
+        Schema::create('de_lists', function (Blueprint $table) {
             $table->id();
             $table
                 ->foreignId('content_id')
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
+            $table->tinyInteger('ranking')->default(1);
+            $table->string('title')->nullable();
             $table->string('item_1')->nullable();
             $table->string('item_2')->nullable();
             $table->string('item_3')->nullable();
@@ -51,6 +53,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('content_lists');
+        Schema::dropIfExists('de_lists');
     }
 };
