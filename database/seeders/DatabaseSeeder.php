@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             WordSeeder::class,
             ContentSeeder::class,
             DeContentSeeder::class,
+            InfoSeeder::class,
+            OpeningHoursSeeder::class,
         ]);
     }
 }

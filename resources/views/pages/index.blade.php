@@ -32,7 +32,6 @@
       foreach ($contentItem as $content) {
         dump($content);
       }
-    // dump('DUMP2', $contentItem);
     @endphp
 
     @foreach ($contentItem as $content)

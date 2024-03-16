@@ -100,5 +100,47 @@ class WordSeeder extends Seeder
             'de' => 'Ihre Zähne liegen uns am Herzen.',
             'en' => 'Your teeth are important to us.',
         ]);
+
+        $publish->insert([
+            'name' => 'monday',
+            'context' => 'kontakt info',
+            'de' => 'Montag',
+            'en' => 'Monday',
+        ]);
+
+        $publish->insert([
+            'name' => 'tuesday',
+            'context' => 'kontakt info',
+            'de' => 'Dienstag',
+            'en' => 'Tuesday',
+        ]);
+
+        $publish->insert([
+            'name' => 'wednesday',
+            'context' => 'kontakt info',
+            'de' => 'Mittwoch',
+            'en' => 'Wednesday',
+        ]);
+
+        $publish->insert([
+            'name' => 'thursday',
+            'context' => 'kontakt info',
+            'de' => 'Donnerstag',
+            'en' => 'Thursday',
+        ]);
+
+        $publish->insert([
+            'name' => 'friday',
+            'context' => 'kontakt info',
+            'de' => 'Freitag',
+            'en' => 'Friday',
+        ]);
+
+        $publish->insert([
+            'name' => 'opening_hours_additional',
+            'context' => 'kontakt info',
+            'de' => 'und nach Vereinbarung!',
+            'en' => 'and by appointment!',
+        ]);
     }
 }
