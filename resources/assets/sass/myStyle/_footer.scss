@@ -1,0 +1,13 @@
+$footer-sec-two-height: 60px;
+
+footer {
+  
+  .footer-sec-two {
+    // height: $footer-sec-two-height;
+
+    .brand {
+      height: $footer-sec-two-height;
+      padding: 10px 0 6px 0;
+    }
+  }
+}

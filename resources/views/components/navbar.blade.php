@@ -1,32 +1,50 @@
 {{-- <header class="fixed-top navigation"> --}}
 <header class="navigation">
-    <ul class="info-strip">
-        <li class="info-title">
-            <a href="{{ url('/') }}" title="dr-fotescu-zahnarztpraxis-dresden">{{ __('messages.words.nav_title') }}</a>
-            @php
-                // dump(__("messages[words].nav_title"));
-            @endphp
-        </li>
-        <li class="info-contact">
-            <img class="phone-img" src="{{ asset('assets/svg/phone.svg') }}" alt="zahnarzt-dr-fotescu-dresden-telefonsymbol">
-            <a class="info-phone" href="tel:+493514117383" title="telefonnummer-dr-fotescu-zahnarztpraxis-dresden">
-                &nbsp;+ 49 351 411 73 83
-            </a>
-        </li>
-        <li>
-            <ul class="lang-menu">
-                <li>
-                    <a class="active" href="{{ url('/') }}" title="startseite-deutsch-dr-fotescu-zahnarztpraxis-dresden">DE</a>
+    <section class="bg-blue">
+        <div class="wrapper">
+            <ul class="info-strip">
+                <li class="info-title">
+                    <a href="{{ $path }}" title="{{ __('messages.words.nav_title') }}">{{ __('messages.words.nav_title') }}</a>
+                </li>
+                <li class="info-contact">
+                    <a 
+                        class="d-flex"
+                        href="tel:+493514117383" 
+                        title="telefonnummer-dr-fotescu-zahnarztpraxis-dresden"
+                    >
+                        <img class="phone-img" src="{{ asset('assets/svg/phone.svg') }}" alt="zahnarzt-dr-fotescu-dresden-telefonsymbol">
+                        <span class="info-phone">&nbsp;+ 49 351 411 73 83</span>
+                    </a>
                 </li>
                 <li>
-                    <a href="{{ url('/en') }}" title="startseite-englisch-dr-fotescu-zahnarztpraxis-dresden">EN</a>
-                </li>
-                <li>
-                    <a href="{{ url('/ru') }}" title="startseite-russisch-dr-fotescu-zahnarztpraxis-dresden">RU</a>
+                    <ul class="lang-menu">
+                        <li>
+                            <a {{ app()->getLocale() === 'de' ? 'class=active' : '' }} 
+                                href="{{ url('/') }}"
+                                hreflang="de-DE"
+                                title="DE"
+                            >DE</a>
+                        </li>
+                        <li>
+                            <a {{ app()->getLocale() === 'en' ? 'class=active' : '' }}
+                                href="{{ url('/en') }}" 
+                                hreflang="en-GB"
+                                title="EN"
+                            >EN</a>
+                        </li>
+                        <li>
+                            <a {{ app()->getLocale() === 'ru' ? 'class=active' : '' }}
+                                href="{{ url('/ru') }}"
+                                hreflang="ru-RU"
+                                title="RU"
+                            >RU</a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
-        </li>
-    </ul>
+        </div>
+    </section>
+
     <nav>
         SVG-LOGO
         <ul>

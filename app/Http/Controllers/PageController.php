@@ -55,7 +55,7 @@ final class PageController extends Controller implements PageRepository
 
         $this->pageValues = Page::where('weblink', "$this->currentPageLink")->get()->first();
 
-        if (is_null($this->pageValues)) dd('url values =>', $this->pageValues);
+        if (is_null($this->pageValues)) dd('url values test =>', $this->pageValues);
         if (!is_null($this->pageValues)) {
             $lang = $urlVars::getLanguage();
 

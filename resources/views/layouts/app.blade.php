@@ -1,6 +1,11 @@
 @php
 $path = str_replace(config('app.url'), '', url()->current());
 $active_link = $path ?: '/';
+
+$homePath = '/';
+if (app()->getLocale() !== 'de') {
+    $homePath = config('app.url') . '/' . app()->getLocale();
+}
 @endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -15,12 +20,12 @@ $active_link = $path ?: '/';
         <meta name="theme-color" content="#ffffff" />
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Zahnarztpraxis Dr. Sebastian Fotescu">
-        <meta name="twitter:image" content="{{ asset('assets/img/github.png') }}">
+        <meta name="twitter:image" content="{{ asset('assets/img/logo.png') }}">
         <meta name="author" content="Holger Schatte">
         
         <meta property="og:title" content="Zahnarzt Dr. Sebastian Fotescu | Zahnarztpraxis in Dresden" />
         <meta property="og:description" content="Herzlich willkommen bei Zahnarztpraxis Dr. Fotescu in Dresden | Ihr Zahnarzt für nette, kompetente und profesionelle Zahnmedizin | Zahnheilkunde auf dem höhsten Niveau." />
-        <meta property="og:image" content="{{ asset('assets/img/github.png') }}" />
+        <meta property="og:image" content="{{ asset('assets/img/logo.png') }}" />
         <meta property="og:url" content="https://www.meinzahnarztdresden.de" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Zahnarztpraxis Dr. Sebastian Fotescu" />
@@ -48,7 +53,7 @@ $active_link = $path ?: '/';
     </head>
 
     <body>
-        <x-navbar :active="$active_link" />
+        <x-navbar :active="$active_link" :path="$homePath" />
 
         <main>
             @if(session('present'))
@@ -58,7 +63,7 @@ $active_link = $path ?: '/';
             @yield('content')
         </main>
 
-        <x-footer :content="$active_link" />
+        <x-footer :content="$active_link" :path="$homePath" />
 
 @stack('scripts')
 {{-- <script>AOS.init();</script> --}}

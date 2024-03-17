@@ -14,9 +14,9 @@
     align-items: center;
   }
 
-  nav, .info-strip {
-    padding: 0 .5rem;
-  }
+  // nav, .info-strip {
+  //   padding: 0 .5rem;
+  // }
 
   .info-title, .info-phone {
     display: none;
@@ -24,7 +24,6 @@
 
   .info-strip {
     height: $info-nav;
-    background-color: $blue;
     justify-content: space-evenly;
 
     a {
@@ -69,21 +68,24 @@
 
 
 
+
   @media(min-width:480px) {
 
     .info-phone {
       display: block;
+      position: relative;
+      top: 5px;
     }
   }
 
   @media(min-width:768px) {
 
-    nav, .info-strip {
-      padding: 0 1rem;
-    }
+    // nav, .info-strip {
+    //   padding: 0 1rem;
+    // }
 
     .info-strip {
-      padding-right: 5rem;
+      // padding-right: 5rem;
       justify-content: space-between;
     }
 

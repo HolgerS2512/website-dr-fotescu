@@ -28,11 +28,11 @@
   @endisset
 
   @isset($contentItem)
-    @php
+    {{-- @php
       foreach ($contentItem as $content) {
         dump($content);
       }
-    @endphp
+    @endphp --}}
 
     @foreach ($contentItem as $content)
       @switch($content->format)
@@ -94,14 +94,13 @@
 
 <h2>-------------INDEX-------------</h2>
 <h2>Eingefügter Inhalt aus HOME</h2>
-<h2>lang: {{ substr(app()->getLocale(), 0, 2); }}</h2>
+<h2>lang: {{ app()->getLocale() }}</h2>
+<h2>url: {{ config('app.url') }}</h2>
+<h2>url current: {{ url()->current() }}</h2>
 <hr>
 ROUTE -> {{  str_replace(config('app.url') . ':8000', '', url()->current()); }}
 <br>
 <hr>
-
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed vero voluptates non nemo similique. Distinctio vitae eaque repudiandae sint totam et, nam quisquam labore perferendis architecto non nihil neque accusamus? test</p>
-<h2>-------------HOME END-------------</h2>
 @endsection
 
 {{--------------------> Script <--------------------}}
