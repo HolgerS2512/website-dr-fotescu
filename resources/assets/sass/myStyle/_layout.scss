@@ -1,0 +1,42 @@
+$wrapper: 1rem;
+$wrapper-width: 1750px;
+
+.wrapper {
+  width: 100%;
+  padding-left: $wrapper;
+  padding-right: $wrapper;
+  margin: 0 auto;
+
+  // --- BUTTONS --- //
+
+
+  // --- LINKS --- //
+  .link-logo,
+  .link-hover:hover {
+    opacity: .75;
+  }
+
+}
+
+@media (min-width:998px) {
+  $wrapper: 10vw;
+
+  .wrapper {
+    max-width: $wrapper-width;
+    padding-left: $wrapper;
+    padding-right: $wrapper;
+  }
+}
+
+.gradient-blue {
+  background-color: rgba($blue, .4);
+
+  position: relative;
+}
+.gradient-blue::after {
+  content: '';
+  @include h-w-100;
+  @include absolute;
+  background-image: linear-gradient(to top, $blueextralight 0%, white 85%);
+  z-index: -1;
+}

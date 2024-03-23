@@ -28,11 +28,11 @@
   @endisset
 
   @isset($contentItem)
-    {{-- @php
+    @php
       foreach ($contentItem as $content) {
-        dump($content);
+        // dump($content->{config('app.locale') . 'List'});
       }
-    @endphp --}}
+    @endphp
 
     @foreach ($contentItem as $content)
       @switch($content->format)
@@ -79,7 +79,7 @@
             <x-format.image_small :content="$content->{config('app.locale')}" />
           @break
         @case('subheading')
-            <x-format.subheading :content="$content->{config('app.locale')}" />
+            <x-format.subheading :content="$content->{config('app.locale') . 'List'}" />
           @break
         @case('form')
             <x-format.form :content="$content->{config('app.locale')}" />

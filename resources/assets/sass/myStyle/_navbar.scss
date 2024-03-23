@@ -1,8 +1,7 @@
-
-
 .navigation {
   height: $total-nav;
 
+  // --------- info --------- 
   ul {
     list-style-type: none;
     padding-left: unset;
@@ -14,16 +13,13 @@
     align-items: center;
   }
 
-  // nav, .info-strip {
-  //   padding: 0 .5rem;
-  // }
-
-  .info-title, .info-phone {
-    display: none;
+  // wrapper
+  nav, .info-strip {
+    padding: 0 .5rem;
   }
 
   .info-strip {
-    height: $info-nav;
+    @include h-w-100($info-nav);
     justify-content: space-evenly;
 
     a {
@@ -33,6 +29,10 @@
         color: $shadow;
       }
     }
+  }
+
+  .info-title, .info-phone {
+    display: none;
   }
 
   .info-title {
@@ -66,7 +66,10 @@
     }
   }
 
-
+  // ------ navigation ------ 
+  nav {
+    @include h-w-100($main-nav);
+  }
 
 
   @media(min-width:480px) {
@@ -79,18 +82,35 @@
   }
 
   @media(min-width:768px) {
+    // --------- info --------- 
 
-    // nav, .info-strip {
-    //   padding: 0 1rem;
-    // }
+    // wrapper
+    nav, .info-strip {
+      padding: 0 6rem;
+    }
 
     .info-strip {
-      // padding-right: 5rem;
+      padding-right: 5rem;
       justify-content: space-between;
     }
 
     .info-title {
       display: block;
+      min-width: $brand-width;
+    }
+  }
+  
+  @media(min-width:998px) {
+    // --------- info --------- 
+    .lang-stretch {
+      padding-left: calc(1.5vw + 6rem);
+      padding-right: 6rem;
+    }
+
+    // ------ navigation ------ 
+    .brand {
+      @include d-center;
+      @include h-w-100(100%, $brand-width);
     }
   }
 }

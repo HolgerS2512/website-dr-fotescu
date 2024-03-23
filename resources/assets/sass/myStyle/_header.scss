@@ -1,15 +1,17 @@
 .header {
   position: relative;
-  max-height: $header-max-height;
+  // max-height: $header-max-height;
   @include h-w-100($header-min500-height);
-  overflow: hidden;
   z-index: 9;
 
   h1 {
     position: absolute;
     left: 0;
-    bottom: 0;
+    // bottom: -2.15vw;
+    bottom: -1rem;
+    // bottom: 0;
     z-index: 99;
+    padding-left: .5rem;
   }
 
 
@@ -26,7 +28,15 @@
 
 }
 
-@media(min-width:767.9999998px) {
+// @media(min-width:576px) {
+//   .header {
+//     h1 {
+//       padding-left: 14vw;
+//     }
+//   }
+// }
+
+@media(min-width:768px) {
   .header {
     @include h-w-100;
 
@@ -38,6 +48,15 @@
         object-fit: cover;
         object-position: center;
       }
+    }
+  }
+}
+
+@media(min-width:576px) {
+  .header {
+    h1 {
+      bottom: -2.15vw;
+      padding-left: 14vw;
     }
   }
 }

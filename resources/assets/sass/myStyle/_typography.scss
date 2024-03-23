@@ -4,7 +4,8 @@ h1, h2, h3, h4, h5, h6, p {
 
 h1 {
   font-weight: 700;
-  font-size: calc(.25rem + 7vw);
+  // font-size: calc(.25rem + 7vw);
+  font-size: 2.25rem;
   letter-spacing: -3px;
   text-shadow: 1px 1px 0 rgba(161, 191, 221, 0.3);
   margin: 0;
@@ -15,4 +16,10 @@ h1 {
 
 h2, h3, h4, h5, h6 {
   color: $h-text;
+}
+
+@media (min-width:768px) {
+  h1 {
+    font-size: 5vw;
+  }
 }

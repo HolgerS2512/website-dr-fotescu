@@ -21,6 +21,13 @@ class ContentSeeder extends Seeder
         $content->insert([
             'ranking' => 1,
             'page_id' => 1,
+            'format' => 'subheading',
+            'created_at' => Carbon::now(),
+        ]);
+        
+        $content->insert([
+            'ranking' => 2,
+            'page_id' => 1,
             'format' => 'text',
             'created_at' => Carbon::now(),
         ]);
