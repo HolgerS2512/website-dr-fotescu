@@ -2,3 +2,7 @@ main {
   position: relative;
 }
 
+main:not(.panel) {
+  padding-top: $total-nav;
+}
+

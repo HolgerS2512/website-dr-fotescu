@@ -1,6 +1,10 @@
 .navigation {
   height: $total-nav;
 
+  background-color: white;
+  box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+
   // --------- info --------- 
   ul {
     list-style-type: none;

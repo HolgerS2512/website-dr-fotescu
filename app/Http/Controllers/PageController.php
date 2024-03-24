@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Mail\ContactFeedbackMail;
 use App\Mail\ContactMail;
 use App\Models\Content;
+use App\Models\Info;
 use App\Models\Publish;
 use App\Repositories\Page\PageRepository;
 use Exception;
@@ -39,6 +40,7 @@ final class PageController extends Controller implements PageRepository
     private $currentPageLink;
     private $pageValues;
 
+    private Collection $pages;
     private Collection $contentItem;
     private array $slideImages;
     private array $images;
@@ -53,7 +55,9 @@ final class PageController extends Controller implements PageRepository
     {
         $this->currentPageLink = $urlVars->currentPageLink;
 
-        $this->pageValues = Page::where('weblink', "$this->currentPageLink")->get()->first();
+        $this->pages = Page::all()->sortBy('ranking');
+
+        $this->pageValues = $this->pages->where('weblink', "$this->currentPageLink")->first();
 
         if (is_null($this->pageValues)) dd('url values test =>', $this->pageValues);
         if (!is_null($this->pageValues)) {
@@ -92,6 +96,8 @@ final class PageController extends Controller implements PageRepository
             'contentItem' => $this->contentItem,
             'slideSrc' => $this->slideImages,
             'isSlideshow' => $this->isSlideshow,
+            'pages' => $this->pages,
+            'infos' => Info::all()->first(),
         ]);
     }
 

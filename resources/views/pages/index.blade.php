@@ -1,3 +1,6 @@
+@php
+  $locale = app()->getLocale();
+@endphp
 @extends('layouts.app')
 
 {{--------------------> Metadata <--------------------}}
@@ -30,62 +33,62 @@
   @isset($contentItem)
     @php
       foreach ($contentItem as $content) {
-        // dump($content->{config('app.locale') . 'List'});
+        // dump(app()->getLocale());
       }
     @endphp
 
     @foreach ($contentItem as $content)
       @switch($content->format)
         @case('text')
-            <x-format.text :content="$content->{config('app.locale')}" />
+            <x-format.text :content="$content->{$locale}" />
           @break
         @case('buttons')
-            <x-format.buttons :content="$content->{config('app.locale')}" />
+            <x-format.buttons :content="$content->{$locale}" />
           @break
         @case('cards')
-            <x-format.cards :content="$content->{config('app.locale')}" />
+            <x-format.cards :content="$content->{$locale}" />
           @break
         @case('headline_list')
-            <x-format.headline_list :content="$content->{config('app.locale')}" />
+            <x-format.headline_list :content="$content->{$locale}" />
           @break
         @case('headline_text')
-            <x-format.headline_text :content="$content->{config('app.locale')}" />
+            <x-format.headline_text :content="$content->{$locale}" />
           @break
         @case('two_images_overlap')
-            <x-format.two_images_overlap :content="$content->{config('app.locale')}" />
+            <x-format.two_images_overlap :content="$content->{$locale}" />
           @break
         @case('extra_link')
-            <x-format.extra_link :content="$content->{config('app.locale')}" />
+            <x-format.extra_link :content="$content->{$locale}" />
           @break
         @case('download')
-            <x-format.download :content="$content->{config('app.locale')}" />
+            <x-format.download :content="$content->{$locale}" />
           @break
         @case('address')
-            <x-format.address :content="$content->{config('app.locale')}" />
+            <x-format.address :content="$content->{$locale}" />
           @break
         @case('office_hours')
-            <x-format.office_hours :content="$content->{config('app.locale')}" />
+            <x-format.office_hours :content="$content->{$locale}" />
           @break
         @case('cross_list')
-            <x-format.cross_list :content="$content->{config('app.locale')}" />
+            <x-format.cross_list :content="$content->{$locale}" />
           @break
         @case('map')
-            <x-format.map :content="$content->{config('app.locale')}" />
+            <x-format.map :content="$content->{$locale}" />
           @break
         @case('headline_image')
-            <x-format.headline_image :content="$content->{config('app.locale')}" />
+            <x-format.headline_image :content="$content->{$locale}" />
           @break
         @case('image_small')
-            <x-format.image_small :content="$content->{config('app.locale')}" />
+            <x-format.image_small :content="$content->{$locale}" />
           @break
         @case('subheading')
-            <x-format.subheading :content="$content->{config('app.locale') . 'List'}" />
+            <x-format.subheading :content="$content->{$locale . 'List'}" />
           @break
         @case('form')
-            <x-format.form :content="$content->{config('app.locale')}" />
+            <x-format.form :content="$content->{$locale}" />
           @break
         @case('blog_post')
-            <x-format.blog_post :content="$content->{config('app.locale')}" />
+            <x-format.blog_post :content="$content->{$locale}" />
           @break
         @default
       @endswitch

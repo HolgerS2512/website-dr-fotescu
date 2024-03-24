@@ -1,5 +1,4 @@
-{{-- <header class="fixed-top navigation"> --}}
-<header class="navigation">
+<header class="fixed-top navigation">
     <ul class="info-strip bg-blue">
         <li class="info-title">
             <a href="{{ $path }}" title="{{ __('messages.words.nav_title') }}">{{ __('messages.words.nav_title') }}</a>

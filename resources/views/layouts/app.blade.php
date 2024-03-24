@@ -1,6 +1,6 @@
 @php
 $path = str_replace(config('app.url'), '', url()->current());
-$active_link = $path ?: '/';
+$active_link = $path ?: 'home';
 
 $homePath = '/';
 if (app()->getLocale() !== 'de') {
@@ -53,7 +53,7 @@ if (app()->getLocale() !== 'de') {
     </head>
 
     <body>
-        <x-navbar :active="$active_link" :path="$homePath" />
+        <x-navbar :active="$active_link" :path="$homePath" :locale="$locale" />
 
         <main>
             @if(session('present'))
@@ -63,7 +63,13 @@ if (app()->getLocale() !== 'de') {
             @yield('content')
         </main>
 
-        <x-footer :content="$active_link" :path="$homePath" />
+        <x-footer 
+            :active="$active_link" 
+            :path="$homePath" 
+            :locale="$locale" 
+            :pages="$pages" 
+            :infos="$infos"
+        />
 
 @stack('scripts')
 {{-- <script>AOS.init();</script> --}}
