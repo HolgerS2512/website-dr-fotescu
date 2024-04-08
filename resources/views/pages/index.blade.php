@@ -10,9 +10,9 @@
 @endsection
 
 {{--------------------> Link <--------------------}}
-@section('link')
+{{-- @section('link') --}}
 {{-- <link rel="stylesheet" href="{{ asset('assets/css/splide.min.css') }}"> --}}
-@endsection
+{{-- @endsection --}}
 
 {{--------------------> Title <--------------------}}
 @section('title')
@@ -26,16 +26,17 @@
     <x-header 
       :src="$slideSrc" 
       :isSlideshow="$isSlideshow" 
-      :title="'Zahnarztpraxis<br/>Dr. Sebastian Fotescu'" 
+      :currPageValues="$currPageValues"
     />
   @endisset
 
   @isset($contentItem)
-    @php
+    {{-- @php
       foreach ($contentItem as $content) {
-        // dump(app()->getLocale());
+        dump(app()->getLocale());
       }
-    @endphp
+      dd($currPageValues)
+    @endphp --}}
 
     @foreach ($contentItem as $content)
       @switch($content->format)

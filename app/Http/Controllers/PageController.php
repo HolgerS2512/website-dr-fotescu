@@ -93,6 +93,7 @@ final class PageController extends Controller implements PageRepository
         }
 
         return view('pages.index', [
+            'currPageValues' => $this->pageValues,
             'contentItem' => $this->contentItem,
             'slideSrc' => $this->slideImages,
             'isSlideshow' => $this->isSlideshow,

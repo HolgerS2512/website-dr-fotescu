@@ -19,7 +19,7 @@ class WordSeeder extends Seeder
 
         $publish->insert([
             'name' => 'nav_title',
-            'context' => 'Main title navigation',
+            'context' => 'Logo title navigation and Startpage main title (reverse dental practice)',
             'de' => 'Dr. Sebastian Fotescu Zahnarztpraxis',
             'en' => 'Dr. Sebastian Fotescu dental practice',
         ]);
@@ -141,6 +141,13 @@ class WordSeeder extends Seeder
             'context' => 'kontakt info',
             'de' => 'und nach Vereinbarung!',
             'en' => 'and by appointment!',
+        ]);
+
+        $publish->insert([
+            'name' => 'page_title_blog',
+            'context' => 'Page title Blog',
+            'de' => 'Unser Blog',
+            'en' => 'Our Blog',
         ]);
     }
 }
