@@ -1,5 +1,6 @@
 @php
 $path = str_replace(config('app.url'), '', url()->current());
+$path = str_replace(['/de', '/en', '/ru'], '', $path);
 $active_link = $path ?: 'home';
 
 $homePath = '/';

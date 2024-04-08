@@ -177,6 +177,7 @@ final class GetPageUrlVars implements UrlVariablesRepository
    */
   public function setUrlValues()
   {
+    // dump(self::$requestPath === '/' ? [0 => 'home'] : explode('/', self::$requestPath));
     self::$urlValues = self::$requestPath === '/' ? [0 => 'home'] : explode('/', self::$requestPath);
   }
 
@@ -193,10 +194,10 @@ final class GetPageUrlVars implements UrlVariablesRepository
   public function setCurrentPageLink()
   {
     $values = '';
+    $collectValues = [];
 
     if (in_array('header', self::$urlValues) || in_array('content', self::$urlValues)) {
       foreach ($this->pageLinks as $link) {
-
         foreach (self::$urlValues as $urlString) {
           if ($link === $urlString) $values = $urlString;
         }
@@ -207,11 +208,28 @@ final class GetPageUrlVars implements UrlVariablesRepository
       foreach ($this->webpageLinks as $link) {
 
         if (count(self::$urlValues) === 1) {
-          $urlString = strlen(self::$urlValues[0]) > 1 ? self::$urlValues[0] : 'home';
+          $urlString = 'home';
         } else {
-          $urlString = implode('/', self::$urlValues);
+
+          for ($i = 0; $i < count(self::$urlValues); $i++) {
+
+            if (strlen(self::$urlValues[$i]) > 2) {
+
+              if (count($collectValues)) {
+
+                foreach ($collectValues as $val) {
+                  if ($val === self::$urlValues[$i]) break;
+                  $collectValues[] = self::$urlValues[$i];
+                }
+              } else {
+                $collectValues[] = self::$urlValues[$i];
+              }
+            }
+          }
+          $urlString = implode('/', $collectValues);
         }
 
+        // dump($urlString);
         if ($link === $urlString) $values = $urlString;
       }
     }

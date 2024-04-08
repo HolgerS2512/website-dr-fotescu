@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PageController::class, 'index']);
 // Route::get('/{link}/{link2}', [PageController::class, 'index']);
 Route::get('en', [PageController::class, 'index']);
+Route::get('en/praxis_&_team', [PageController::class, 'index']);
 Route::get('ru', [PageController::class, 'index']);
 
 Route::get('/behandlungen', [PageController::class, 'index']);

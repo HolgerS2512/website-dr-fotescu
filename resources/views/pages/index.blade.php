@@ -35,7 +35,6 @@
       foreach ($contentItem as $content) {
         dump(app()->getLocale());
       }
-      dd($currPageValues)
     @endphp --}}
 
     @foreach ($contentItem as $content)
