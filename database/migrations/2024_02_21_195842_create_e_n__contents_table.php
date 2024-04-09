@@ -20,8 +20,10 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
+            $table->smallInteger('ranking');
             $table->string('title')->nullable();
             $table->text('content')->nullable();
+            $table->integer('image_id')->nullable();
             $table->timestamps();
         });
     }

@@ -10,6 +10,7 @@ use App\Mail\ContactFeedbackMail;
 use App\Mail\ContactMail;
 use App\Models\Content;
 use App\Models\Info;
+use App\Models\OpeningHours;
 use App\Models\Publish;
 use App\Repositories\Page\PageRepository;
 use Exception;
@@ -42,8 +43,8 @@ final class PageController extends Controller implements PageRepository
 
     private Collection $pages;
     private Collection $contentItem;
+    private Collection $images;
     private array $slideImages;
-    private array $images;
     private $isSlideshow;
 
     /**
@@ -97,8 +98,10 @@ final class PageController extends Controller implements PageRepository
             'contentItem' => $this->contentItem,
             'slideSrc' => $this->slideImages,
             'isSlideshow' => $this->isSlideshow,
+            'images' => $this->images,
             'pages' => $this->pages,
-            'infos' => Info::all()->first(),
+            'infos' => Info::all()->firstOrFail(),
+            'opening' => OpeningHours::all()->sortBy('ranking'),
         ]);
     }
 

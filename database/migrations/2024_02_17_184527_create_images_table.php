@@ -21,7 +21,9 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            $table->tinyInteger('slide');
+            $table->integer('content_id')->nullable();
+            $table->integer('lang_id')->nullable();
+            $table->tinyInteger('slide')->default(0);
             $table->string('title');
             $table->string('image');
             $table->timestamps();

@@ -31,5 +31,19 @@ class ContentSeeder extends Seeder
             'format' => 'text',
             'created_at' => Carbon::now(),
         ]);
+        
+        $content->insert([
+            'ranking' => 3,
+            'page_id' => 1,
+            'format' => 'cards',
+            'created_at' => Carbon::now(),
+        ]);
+        
+        $content->insert([
+            'ranking' => 4,
+            'page_id' => 1,
+            'format' => 'buttons',
+            'created_at' => Carbon::now(),
+        ]);
     }
 }

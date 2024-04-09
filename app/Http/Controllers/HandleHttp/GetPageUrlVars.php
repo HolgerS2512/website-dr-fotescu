@@ -196,7 +196,7 @@ final class GetPageUrlVars implements UrlVariablesRepository
     $values = '';
     $collectValues = [];
 
-    if (in_array('header', self::$urlValues) || in_array('content', self::$urlValues)) {
+    if (in_array('header', self::$urlValues) || in_array('content', self::$urlValues) || in_array('translation', self::$urlValues)) {
       foreach ($this->pageLinks as $link) {
         foreach (self::$urlValues as $urlString) {
           if ($link === $urlString) $values = $urlString;
@@ -204,7 +204,7 @@ final class GetPageUrlVars implements UrlVariablesRepository
       }
     }
 
-    if (!in_array('header', self::$urlValues) || !in_array('content', self::$urlValues)) {
+    if (!in_array('header', self::$urlValues) || !in_array('content', self::$urlValues) || !in_array('translation', self::$urlValues)) {
       foreach ($this->webpageLinks as $link) {
 
         if (count(self::$urlValues) === 1) {

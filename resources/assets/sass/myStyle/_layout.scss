@@ -1,5 +1,5 @@
 $wrapper: 1rem;
-$wrapper-width: 1750px;
+$wrapper-width: 1950px;
 
 .wrapper {
   width: 100%;
@@ -19,10 +19,19 @@ $wrapper-width: 1750px;
 }
 
 @media (min-width:998px) {
-  $wrapper: 10vw;
+  $wrapper: 8vw;
 
   .wrapper {
     max-width: $wrapper-width;
+    padding-left: $wrapper;
+    padding-right: $wrapper;
+  }
+}
+
+@media (min-width:1950px) {
+  $wrapper: 9.75rem;
+
+  .wrapper {
     padding-left: $wrapper;
     padding-right: $wrapper;
   }

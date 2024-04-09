@@ -33,7 +33,8 @@
   @isset($contentItem)
     {{-- @php
       foreach ($contentItem as $content) {
-        dump(app()->getLocale());
+        dump($content);
+        // dump(app()->getLocale());
       }
     @endphp --}}
 
@@ -46,7 +47,13 @@
             <x-format.buttons :content="$content->{$locale}" />
           @break
         @case('cards')
-            <x-format.cards :content="$content->{$locale}" />
+            <x-format.cards 
+              :content="$content->{$locale}" 
+              :list="$content->{$locale . 'List'}" 
+              :images="$images" 
+              :infos="$infos"
+              :opening="$opening"
+            />
           @break
         @case('headline_list')
             <x-format.headline_list :content="$content->{$locale}" />
@@ -95,15 +102,6 @@
     @endforeach
   @endisset
 
-<h2>-------------INDEX-------------</h2>
-<h2>Eingefügter Inhalt aus HOME</h2>
-<h2>lang: {{ app()->getLocale() }}</h2>
-<h2>url: {{ config('app.url') }}</h2>
-<h2>url current: {{ url()->current() }}</h2>
-<hr>
-ROUTE -> {{  str_replace(config('app.url') . ':8000', '', url()->current()); }}
-<br>
-<hr>
 @endsection
 
 {{--------------------> Script <--------------------}}

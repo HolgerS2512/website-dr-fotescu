@@ -67,6 +67,27 @@ class WordSeeder extends Seeder
         ]);
 
         $publish->insert([
+            'name' => 'tel',
+            'context' => 'on page home card section contact',
+            'de' => 'Tel',
+            'en' => 'Phone',
+        ]);
+
+        $publish->insert([
+            'name' => 'mail',
+            'context' => 'on page home card section contact',
+            'de' => 'E-Mail',
+            'en' => 'E-Mail',
+        ]);
+
+        $publish->insert([
+            'name' => 'time',
+            'context' => 'on page home card section office hours',
+            'de' => 'Uhr',
+            'en' => 'Clock',
+        ]);
+
+        $publish->insert([
             'name' => 'copyright',
             'context' => '© Copyright 2024 Dr. Sebastian Fotescu',
             'de' => 'copyright',

@@ -46,6 +46,7 @@
                   value="{{ $edit->name }}" 
                   minlength="3" 
                   maxlength="255"
+                  required
                 >
                 @error("name")
                   <div class="invalid-feedback">
@@ -63,6 +64,7 @@
                   value="{{ $edit->en_name }}" 
                   minlength="3" 
                   maxlength="255"
+                  required
                 >
                 @error("en_name")
                   <div class="invalid-feedback">
@@ -80,6 +82,7 @@
                   value="{{ $edit->ru_name }}" 
                   minlength="3" 
                   maxlength="255"
+                  required
                 >
                 @error("ru_name")
                   <div class="invalid-feedback">

@@ -22,6 +22,7 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->tinyInteger('ranking')->default(1);
             $table->string('title')->nullable();
+            $table->string('list_image')->nullable();
             $table->string('item_1')->nullable();
             $table->string('item_2')->nullable();
             $table->string('item_3')->nullable();

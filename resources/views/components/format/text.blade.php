@@ -10,7 +10,7 @@
         </div>
       </div>
       
-      <div class="col-lg-10">
+      <div class="col-lg-10" style="max-width: 1175px;">
         <p>{{ $model->content }}</p>
       </div>
     </div>

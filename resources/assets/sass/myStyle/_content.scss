@@ -39,4 +39,75 @@
   }
 }
 
+//--- cards ---//
+$font-size: 15px;
 
+.info-card {
+  min-height: 310px;
+  position: relative;
+  padding: 30px 30px 20px 30px;
+  background-color: #fff;
+  color: #525252;
+  border-bottom: 10px solid $bluedark;
+  box-shadow: 0 0 1px 0 rgba(0,0,0,.75);
+  width: 100%;
+  z-index: 5;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% + 10px);
+    box-shadow: 0 0 8px 2px rgba(0,0,0,.1),0 0 16px 3px rgba(0,0,0,.1);
+    z-index: -1;
+  }
+}
+
+@media (max-width:419.998px) {
+  // Important! Only for card distance to the border!
+  .wrapper-480-box {
+    padding: unset;
+  }
+}
+@media (min-width:420px) {
+  .info-card {
+    width: 320px;
+    padding: 30px 20px 20px 20px;
+  }
+}
+// !Warning influence! .wrapper min-width 1950 -> padding 0 9.75rem
+// @media (min-width:1950px) {
+//   // Important! Only for card distance to the border!
+//   .wrapper-480-box {
+//     padding: unset;
+//   }
+// }
+
+
+.opening-card {
+  display: flex;
+  justify-content: space-between;
+  font-size: $font-size;
+  margin-bottom: 1rem;
+
+  > span {
+    min-width: 160px;
+  }
+}
+
+.card-list {
+  list-style: none;
+  
+  li {
+    line-height: 1.5;
+    font-size: $font-size;
+    margin-bottom: .5rem;
+    display: flex;
+
+    img {
+      margin: 1px 8px 0 0;
+    }
+  }
+}
