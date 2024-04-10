@@ -15,17 +15,16 @@ return new class extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->smallInteger('ranking');
+            $table->integer('ranking')->default(0);
             $table
                 ->foreignId('page_id')
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            $table->integer('content_id')->nullable();
-            $table->integer('lang_id')->nullable();
             $table->tinyInteger('slide')->default(0);
-            $table->string('title');
-            $table->string('image');
+            $table->string('title')->unique();
+            $table->string('src');
+            $table->string('ext', 4);
             $table->timestamps();
         });
     }

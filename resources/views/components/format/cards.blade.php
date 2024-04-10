@@ -1,21 +1,20 @@
 {{-- card section --}}
 
-<div class="wrapper wrapper-480-box">
+<div class="wrapper">
   <div class="mb-3 py-5">
     <div class="row justify-content-center">
       @for ($i = 0; $i < $content->count(); $i++)
-        @foreach ($images as $image)
-          @php
-            if ($image->id === $content[$i]->image_id) $src = $image->image
-          @endphp
-        @endforeach
         
         <div class="info-card">
           <div>
 
             <div class="d-flex mb-4">
-              @isset ($src)
-                <img src="{{ $src }}" width="48" height="auto" alt="">
+              @isset ($content[$i]->image()->src)
+              @php
+                $alt = $content[$i]->image()->title . '-' . __("messages.words.nav_title") . '-' . $infos->city . '-' . $content[$i]->image()->ext;
+                $alt = preg_replace('/[. ( -)]+/', '-', mb_strtolower($alt));
+              @endphp
+                <img src="{{ $content[$i]->image()->src }}" width="48" height="auto" alt="{{ $alt }}">
               @endif
               <span class="ms-2">
                 {{ $content[$i]->title }}
@@ -28,9 +27,9 @@
               @else
 
                 @php
-                  foreach ($list as $model) {
-                    if ($model->ranking === $content[$i]->ranking) {
-                      $listEl = $model;
+                  foreach ($list as $attr) {
+                    if ($attr->ranking === $content[$i]->ranking) {
+                      $listEl = $attr;
                     }
                   }
                 @endphp
@@ -42,7 +41,13 @@
                       @for ($idx = 1; $idx <= 20; $idx++)
                         @if($listEl->{'item_' . $idx})
                           <li>
-                            <img width="18" height="18" src="{{ url($listEl->list_image) }}" alt="">
+                            @isset($listEl->image()->src)
+                              @php
+                                $alt = $content[$i]->image()->title . '-' . __("messages.words.nav_title") . '-' . $infos->city . '-' . $content[$i]->image()->ext;
+                                $alt = preg_replace('/[. ( -)]+/', '-', mb_strtolower($alt));
+                              @endphp
+                              <img width="18" height="18" src="{{ url($listEl->image()->src) }}" alt="{{ $alt }}">
+                            @endisset
                             {{ $listEl->{'item_' . $idx} }}
                           </li>
                         @endif

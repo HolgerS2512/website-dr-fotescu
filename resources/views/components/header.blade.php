@@ -1,12 +1,17 @@
 <section class="header">
   @if($isSlideshow)
-    <x-slideshow :src="$src" />
-  @elseif (!$isSlideshow)
+    <x-slideshow :src="$src" :infos="$infos" />
+  @else
+    @php
+      $alt = $src[0]->title . '-' . __("messages.words.nav_title") . '-' . $infos->city . '-' . $src[0]->ext;
+      $alt = preg_replace('/[. ( -)]+/', '-', mb_strtolower($alt));
+    @endphp
+  {{-- @elseif (!$isSlideshow) --}}
     <div class="img-box-header">
       <img 
         class="slideshow-img" 
-        src="{{ asset($src[0]->image) }}" 
-        alt="{{ str_replace(' ', '-', strtolower($src[0]->title)) . '-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden' }}"
+        src="{{ asset($src[0]->src) }}" 
+        alt="{{ $alt }}"
       >
     </div>
   @endif
@@ -17,8 +22,24 @@
     switch ($currPageValues->link) {
       case 'home':
         $splitArr = explode(' ', (__('messages.words.nav_title')));
-        $title = array_reverse($splitArr)[0] . '<br/>';
-        for($i = 0; $i < count($splitArr) - 1; $i++) {
+        $revArr = array_reverse($splitArr);
+
+        $counter = 1;
+        switch ($locale) {
+          case 'de':
+            $title = $revArr[0] . '<br/>';
+            break;
+          case 'en':
+            $title = $revArr[1] . ' ' . $revArr[0] . '<br/>';
+            $counter = 2;
+            break;
+          case 'ru':
+            $title = $revArr[1] . ' ' . $revArr[0] . '<br/>';
+            $counter = 2;
+            break;
+        }
+
+        for($i = 0; $i < count($splitArr) - $counter; $i++) {
           $title .= ($i === 0 ? '' : ' ') . $splitArr[$i];
         }
         break;

@@ -2,8 +2,8 @@
     <div class="f-nav">
         <div class="wrapper">
             <div class="row">
-                <div class="col-lg-3 col-sm-6 order-sm-3 order-lg-1">
-                    <div class="d-lg-flex justify-content-center mb-5">
+                <div class="col-xl-3 col-sm-6 order-sm-3 order-xl-1">
+                    <div class="d-xl-flex justify-content-between mb-5">
 
                         <ul class="d-inline">
                             <span>Standort Dresden</span>
@@ -30,8 +30,8 @@
         
 
 
-                <div class="col-lg-3 col-sm-6 order-sm-1 order-lg-2">
-                    <div class="d-lg-flex justify-content-center mb-5">
+                <div class="col-xl-3 col-sm-6 order-sm-1 order-xl-2">
+                    <div class="d-xl-flex justify-content-between mb-5">
                         <ul class="d-inline">
                             <span>Sitemap</span>
                             <hr>
@@ -50,8 +50,8 @@
                     </div>
                 </div>
         
-                <div class="col-lg-3 col-sm-6 order-sm-2 order-lg-3">
-                    <div class="d-lg-flex justify-content-center mb-5">
+                <div class="col-xl-3 col-sm-6 order-sm-2 order-xl-3">
+                    <div class="d-xl-flex justify-content-between mb-5">
                         <ul class="d-inline">
                             <span>{{ __('messages.words.zfatreatments') }}</span>
                             <hr>
@@ -70,15 +70,14 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-sm-6 order-4">
-                    <div class="d-lg-flex justify-content-center mb-5">
-                        <ul class="d-inline">
+                <div class="col-xl-3 col-sm-6 order-4">
+                    <div class="d-xl-flex justify-content-between mb-5">
+                        <ul class="d-inline" style="width: 100%">
                             <span>Anfahrt</span>
                             <hr>
                             <iframe
                                 class="my-1 mw-100"
-                                src="{{ $infos->iframe }}"
-                                width="280" height="220" style="border:0;" allowfullscreen loading="lazy"
+                                src="{{ $infos->iframe }}" width="300" height="240" style="border:0;" allowfullscreen loading="lazy"
                                 referrerpolicy="no-referrer-when-downgrade" alt="google-maps-link-zahnarzt-dr-fotescu-dresden" title="Google Maps">
                             </iframe>
                         </ul>

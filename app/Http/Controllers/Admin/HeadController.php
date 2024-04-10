@@ -127,7 +127,7 @@ final class HeadController extends Controller implements HandleLayoutRepository
 
             $file = $request->file('image');
 
-            $name = str_replace(' ', '-', strtolower($request->title)) . '-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden';
+            $name = str_replace(' ', '-', strtolower($request->title));
             $extension = strtolower($file->getClientOriginalExtension());
             $img_name = $name . '.' . $extension;
 
@@ -146,7 +146,8 @@ final class HeadController extends Controller implements HandleLayoutRepository
                 'page_id' => $this->page->id,
                 'slide' => 1,
                 'title' => mb_strtolower(str_replace(' ', '-', $request->title)),
-                'image' => $save_url,
+                'src' => $save_url,
+                'ext' => $extension,
                 'created_at' => Carbon::now(),
             ]);
 
@@ -241,7 +242,7 @@ final class HeadController extends Controller implements HandleLayoutRepository
 
                 $file = $request->file('image');
 
-                $name = str_replace(' ', '-', strtolower($request->title)) . '-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden';
+                $name = str_replace(' ', '-', strtolower($request->title));
                 $extension = strtolower($file->getClientOriginalExtension());
                 $img_name = $name . '.' . $extension;
 
@@ -258,7 +259,8 @@ final class HeadController extends Controller implements HandleLayoutRepository
                     if ($image->id === (int) $id) {
                         $image->update([
                             'title' => mb_strtolower(str_replace(' ', '-', $request->title)),
-                            'image' => $save_url,
+                            'src' => $save_url,
+                            'ext' => $extension,
                             'updated_at' => Carbon::now(),
                         ]);
                     }

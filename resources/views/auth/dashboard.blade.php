@@ -90,12 +90,12 @@
           <div class="card w-100" style="min-height: 220px">
             <div class="card-body">
               <h5 class="card-title">{{ $page->en_name }}</h5>
-              @if ( $page->image === null )
+              @if ( $page->src === null )
                 <div class="d-flex justify-content-center align-items-center" style="height: 150px; border-radius: 6px;">
                   <small style="height: min-content; color: red;">No Image Available</small>         
                 </div>
               @else
-                <img src="/{{ $page->image ?? '' }}" class="card-img-top admin-card">
+                <img src="/{{ $page->src ?? '' }}" class="card-img-top admin-card">
               @endif
 
               @if ($page->link === 'imprint' || $page->link === 'privacy')
@@ -128,12 +128,12 @@
                 <br>
                 <small class="h6 fw-lighter text-body-tertiary">{{ 'Subpage' . ' : ' . $parent[ $page->page_id ] }}</small>
               </h5>
-              @if ( $page->image === null )
+              @if ( $page->src === null )
                 <div class="d-flex justify-content-center align-items-center" style="height: 150px; border-radius: 6px;">
                   <small style="height: min-content; color: red;">No Image Available</small>  
                 </div>
               @else
-                <img src="/{{ $page->image ?? '' }}" class="card-img-top admin-card">
+                <img src="/{{ $page->src ?? '' }}" class="card-img-top admin-card">
               @endif
 
               @if ($page->link === 'imprint' || $page->link === 'privacy')

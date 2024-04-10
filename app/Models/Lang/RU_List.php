@@ -2,6 +2,7 @@
 
 namespace App\Models\Lang;
 
+use App\Models\Image;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -33,5 +34,15 @@ class RU_List extends Model
     public function page(): BelongsTo
     {
         return $this->belongsTo(Page::class);
+    }
+
+    /**
+     * Called image for this instance
+     * 
+     * @return \App\Models\Image
+     */
+    public function image()
+    {
+        return Image::all()->where('id', $this->image_id)->first();
     }
 }

@@ -43,7 +43,6 @@ final class PageController extends Controller implements PageRepository
 
     private Collection $pages;
     private Collection $contentItem;
-    private Collection $images;
     private array $slideImages;
     private $isSlideshow;
 
@@ -66,19 +65,13 @@ final class PageController extends Controller implements PageRepository
 
             $this->contentItem = $this->pageValues->contents()->orderBy('ranking')->get()->load([$lang, "{$lang}List"]);
 
-            $imageExpression = $this->pageValues->images()->where('slide', false)->orderBy('ranking')->get();
-
-            if ($imageExpression->count() !== 0) {
-                $this->images =  $imageExpression;
-            }
-
             $slideImages = $this->pageValues->images()->where('slide', true)->orderBy('ranking')->get();
 
             foreach ($slideImages as $key => $image) {
-                $this->slideImages[$key] = (object) $image->only(['title', 'image']);
+                $this->slideImages[$key] = (object) $image->only(['title', 'src', 'ext']);
             }
 
-            $this->isSlideshow = GetBoolFromDB::getBool(Publish::all(), "$this->currentPageLink.slider");
+            $this->isSlideshow = (Publish::all()->where('name', $this->pageValues->link . '.slider')->first()->only(['public']))['public'];
         }
     }
 
@@ -98,7 +91,6 @@ final class PageController extends Controller implements PageRepository
             'contentItem' => $this->contentItem,
             'slideSrc' => $this->slideImages,
             'isSlideshow' => $this->isSlideshow,
-            'images' => $this->images,
             'pages' => $this->pages,
             'infos' => Info::all()->firstOrFail(),
             'opening' => OpeningHours::all()->sortBy('ranking'),

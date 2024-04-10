@@ -39,7 +39,7 @@ class DeListSeeder extends Seeder
             'content_id' => 3,
             'ranking' => 4,
             'title' => 'list',
-            'list_image' => '/uploads/images/svg/checkbox.svg',
+            'image_id' => 12,
             'item_1' => 'Bis zu 3 Stunden kostenloses Parken.',
             'item_2' => 'Stellplatz direkt vor unserer Zahnarztpraxis (Ebene 3)',
             'item_3' => 'Auf mehreren Ebenen Standplätze verfügbar.',
@@ -50,6 +50,23 @@ class DeListSeeder extends Seeder
             'content_id' => 3,
             'ranking' => 5,
             'title' => 'infos', // select via infos
+            'created_at' => Carbon::now(),
+        ]);
+
+        // buttons
+        $deList->insert([
+            'content_id' => 4,
+            'ranking' => 1,
+            'title' => 'Zahnarzt Behandlungen',
+            'item_1' => 'emergency',
+            'item_2' => 'family',
+            'item_3' => 'prophylaxis',
+            'item_4' => 'dentistry',
+            'item_5' => 'periodontology',
+            'item_6' => 'bleaching',
+            'item_7' => 'restorative',
+            'item_8' => 'implants',
+            'item_9' => 'dentures',
             'created_at' => Carbon::now(),
         ]);
     }

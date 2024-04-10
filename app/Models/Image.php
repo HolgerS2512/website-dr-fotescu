@@ -18,6 +18,15 @@ class Image extends Model
     protected $guarded = [];
 
     /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<bool>
+     */
+    protected $casts = [
+        'slide' => 'boolean',
+    ];
+
+    /**
      * Return the page for the images
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo 

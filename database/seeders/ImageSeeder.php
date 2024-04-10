@@ -24,7 +24,8 @@ class ImageSeeder extends Seeder
             'page_id' => 1,
             'slide' => 1,
             'title' => 'home-slide',
-            'image' => 'uploads/images/home/home-slide-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden.webp',
+            'src' => 'uploads/images/home/home-slide-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden.webp',
+            'ext' => 'webp',
             'created_at' => Carbon::now(),
         ]); 
         $images->insert([
@@ -32,7 +33,8 @@ class ImageSeeder extends Seeder
             'page_id' => 1,
             'slide' => 1,
             'title' => 'home-slide-2',
-            'image' => 'uploads/images/home/home-slide-2-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden.webp',
+            'src' => 'uploads/images/home/home-slide-2-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden.webp',
+            'ext' => 'webp',
             'created_at' => Carbon::now(),
         ]);
         $images->insert([
@@ -40,7 +42,8 @@ class ImageSeeder extends Seeder
             'page_id' => 1,
             'slide' => 1,
             'title' => 'home-slide-3',
-            'image' => 'uploads/images/home/home-slide-3-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden.webp',
+            'src' => 'uploads/images/home/home-slide-3-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden.webp',
+            'ext' => 'webp',
             'created_at' => Carbon::now(),
         ]);
 
@@ -50,7 +53,8 @@ class ImageSeeder extends Seeder
             'page_id' => 5,
             'slide' => 1,
             'title' => 'team-slide',
-            'image' => 'uploads/images/team/team-slide-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden.webp',
+            'src' => 'uploads/images/team/team-slide-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden.webp',
+            'ext' => 'webp',
             'created_at' => Carbon::now(),
         ]); 
         $images->insert([
@@ -58,7 +62,8 @@ class ImageSeeder extends Seeder
             'page_id' => 5,
             'slide' => 1,
             'title' => 'team-slide-2',
-            'image' => 'uploads/images/team/team-slide-2-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden.webp',
+            'src' => 'uploads/images/team/team-slide-2-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden.webp',
+            'ext' => 'webp',
             'created_at' => Carbon::now(),
         ]);
         $images->insert([
@@ -66,7 +71,8 @@ class ImageSeeder extends Seeder
             'page_id' => 5,
             'slide' => 1,
             'title' => 'team-slide-3',
-            'image' => 'uploads/images/team/team-slide-3-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden.webp',
+            'src' => 'uploads/images/team/team-slide-3-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden.webp',
+            'ext' => 'webp',
             'created_at' => Carbon::now(),
         ]); 
 
@@ -74,46 +80,124 @@ class ImageSeeder extends Seeder
         $images->insert([
             'ranking' => 1,
             'page_id' => 1,
-            'content_id' => 4,
-            'lang_id' => 2,
             'title' => 'calendar',
-            'image' => 'uploads/images/svg/calendar.svg',
+            'src' => 'uploads/images/svg/calendar.svg',
+            'ext' => 'svg',
             'created_at' => Carbon::now(),
         ]); 
         $images->insert([
             'ranking' => 2,
             'page_id' => 1,
-            'content_id' => 4,
-            'lang_id' => 3,
             'title' => 'wlan',
-            'image' => 'uploads/images/svg/wlan.svg',
+            'src' => 'uploads/images/svg/wlan.svg',
+            'ext' => 'svg',
             'created_at' => Carbon::now(),
         ]); 
         $images->insert([
             'ranking' => 3,
             'page_id' => 1,
-            'content_id' => 4,
-            'lang_id' => 4,
             'title' => 'wheelchair',
-            'image' => 'uploads/images/svg/wheelchair.svg',
+            'src' => 'uploads/images/svg/wheelchair.svg',
+            'ext' => 'svg',
             'created_at' => Carbon::now(),
         ]); 
         $images->insert([
             'ranking' => 4,
             'page_id' => 1,
-            'content_id' => 4,
-            'lang_id' => 5,
             'title' => 'parking',
-            'image' => 'uploads/images/svg/parking.svg',
+            'src' => 'uploads/images/svg/parking.svg',
+            'ext' => 'svg',
             'created_at' => Carbon::now(),
         ]); 
         $images->insert([
             'ranking' => 5,
             'page_id' => 1,
-            'content_id' => 4,
-            'lang_id' => 6,
             'title' => 'phone',
-            'image' => 'uploads/images/svg/phone.svg',
+            'src' => 'uploads/images/svg/phone.svg',
+            'ext' => 'svg',
+            'created_at' => Carbon::now(),
+        ]);  
+
+        // list item
+        $images->insert([
+            'page_id' => 1,
+            'title' => 'blue checkbox',
+            'src' => 'uploads/images/svg/checkbox.svg',
+            'ext' => 'svg',
+            'created_at' => Carbon::now(),
+        ]);   
+
+        // buttons
+        $images->insert([
+            'page_id' => 1,
+            'ranking' => 1,
+            'title' => 'emergency.format.button',
+            'src' => 'uploads/images/button/emergency.format.button.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]); 
+        $images->insert([
+            'page_id' => 1,
+            'ranking' => 1,
+            'title' => 'family.format.button',
+            'src' => 'uploads/images/button/family.format.button.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]); 
+        $images->insert([
+            'page_id' => 1,
+            'ranking' => 1,
+            'title' => 'prophylaxis.format.button',
+            'src' => 'uploads/images/button/prophylaxis.format.button.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]);  
+        $images->insert([
+            'page_id' => 1,
+            'ranking' => 1,
+            'title' => 'dentistry.format.button',
+            'src' => 'uploads/images/button/dentistry.format.button.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]);  
+        $images->insert([
+            'page_id' => 1,
+            'ranking' => 1,
+            'title' => 'periodontology.format.button',
+            'src' => 'uploads/images/button/periodontology.format.button.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]);  
+        $images->insert([
+            'page_id' => 1,
+            'ranking' => 1,
+            'title' => 'bleaching.format.button',
+            'src' => 'uploads/images/button/bleaching.format.button.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]);  
+        $images->insert([
+            'page_id' => 1,
+            'ranking' => 1,
+            'title' => 'restorative.format.button',
+            'src' => 'uploads/images/button/restorative.format.button.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]);  
+        $images->insert([
+            'page_id' => 1,
+            'ranking' => 1,
+            'title' => 'implants.format.button',
+            'src' => 'uploads/images/button/implants.format.button.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]);  
+        $images->insert([
+            'page_id' => 1,
+            'ranking' => 1,
+            'title' => 'dentures.format.button',
+            'src' => 'uploads/images/button/dentures.format.button.webp',
+            'ext' => 'webp',
             'created_at' => Carbon::now(),
         ]);  
     }

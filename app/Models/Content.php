@@ -93,4 +93,14 @@ class Content extends Model
     {
         return $this->hasMany(RU_List::class);
     }
+
+    /**
+     * Called image for this instance
+     * 
+     * @return \App\Models\Image
+     */
+    public function image()
+    {
+        return Image::all()->where('id', $this->image_id)->first();
+    }
 }

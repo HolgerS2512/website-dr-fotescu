@@ -18,6 +18,15 @@ class Publish extends Model
     protected $guarded = [];
 
     /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<bool>
+     */
+    protected $casts = [
+        'public' => 'boolean',
+    ];
+
+    /**
      * Return the page for the publishes
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo 

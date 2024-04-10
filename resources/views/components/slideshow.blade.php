@@ -2,10 +2,13 @@
   <div class="swiper-wrapper">
 
     @foreach ($src as $link)
-    @php $alt = str_replace(' ', '-', strtolower($link->title)) . '-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden'; @endphp
+      @php
+        $alt = $link->title . '-' . __("messages.words.nav_title") . '-' . $infos->city . '-' . $link->ext;
+        $alt = preg_replace('/[. ( -)]+/', '-', mb_strtolower($alt));
+      @endphp
       <div class="swiper-slide">
         <div class="img-box-header">
-          <img class="slideshow-img" src="{{ asset($link->image) }}" alt="{{ $alt }}">
+          <img class="slideshow-img" src="{{ asset($link->src) }}" alt="{{ $alt }}">
         </div>
       </div>
     @endforeach

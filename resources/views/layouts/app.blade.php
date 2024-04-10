@@ -54,7 +54,12 @@ if (app()->getLocale() !== 'de') {
     </head>
 
     <body>
-        <x-navbar :active="$active_link" :path="$homePath" :locale="$locale" />
+        <x-navbar 
+            :active="$active_link" 
+            :path="$homePath" 
+            :locale="$locale" 
+            :infos="$infos"
+        />
 
         <main>
             @if(session('present'))

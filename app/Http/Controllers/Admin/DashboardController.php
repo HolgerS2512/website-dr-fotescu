@@ -60,9 +60,10 @@ final class DashboardController extends Controller
                 ->leftJoin('images', function (JoinClause $join) {
                     $join->on('pages.id', '=', 'images.page_id')
                         ->where('images.ranking', '=', 1)
+                        ->where('slide', true)
                         ->limit(1);
                 })
-                ->get(['pages.*', 'images.image']);
+                ->get(['pages.*', 'images.src']);
 
             $percent = (object) [
                 'title' => $this->titlePercent,

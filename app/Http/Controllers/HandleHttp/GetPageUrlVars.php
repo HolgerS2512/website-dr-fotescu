@@ -177,7 +177,7 @@ final class GetPageUrlVars implements UrlVariablesRepository
    */
   public function setUrlValues()
   {
-    // dump(self::$requestPath === '/' ? [0 => 'home'] : explode('/', self::$requestPath));
+    if (strlen(self::$requestPath) <= 2) self::$requestPath .= '/home';
     self::$urlValues = self::$requestPath === '/' ? [0 => 'home'] : explode('/', self::$requestPath);
   }
 
@@ -207,27 +207,37 @@ final class GetPageUrlVars implements UrlVariablesRepository
     if (!in_array('header', self::$urlValues) || !in_array('content', self::$urlValues) || !in_array('translation', self::$urlValues)) {
       foreach ($this->webpageLinks as $link) {
 
-        if (count(self::$urlValues) === 1) {
-          $urlString = 'home';
-        } else {
+        // dd(self::$urlValues);
 
-          for ($i = 0; $i < count(self::$urlValues); $i++) {
+        // $base = in_array($this->hasLanguages['base'], self::$urlValues);
+        // $option = false;
 
-            if (strlen(self::$urlValues[$i]) > 2) {
+        // foreach($this->hasLanguages['options'] as $opt) {
+        //   $test = in_array($opt, self::$urlValues);
+        //   if ($test) $option = $test;
+        // }
 
-              if (count($collectValues)) {
+        // dump(in_array('en', self::$urlValues));
+        // dd(self::$urlValues);
 
-                foreach ($collectValues as $val) {
-                  if ($val === self::$urlValues[$i]) break;
-                  $collectValues[] = self::$urlValues[$i];
-                }
-              } else {
+        // if ($base || $option) self::$urlValues[] = 'home';
+
+        for ($i = 0; $i < count(self::$urlValues); $i++) {
+
+          if (strlen(self::$urlValues[$i]) > 2) {
+
+            if (count($collectValues)) {
+
+              foreach ($collectValues as $val) {
+                if ($val === self::$urlValues[$i]) break;
                 $collectValues[] = self::$urlValues[$i];
               }
+            } else {
+              $collectValues[] = self::$urlValues[$i];
             }
           }
-          $urlString = implode('/', $collectValues);
         }
+        $urlString = implode('/', $collectValues);
 
         // dump($urlString);
         if ($link === $urlString) $values = $urlString;

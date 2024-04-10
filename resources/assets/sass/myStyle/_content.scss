@@ -65,12 +65,13 @@ $font-size: 15px;
   }
 }
 
-@media (max-width:419.998px) {
-  // Important! Only for card distance to the border!
-  .wrapper-480-box {
-    padding: unset;
-  }
-}
+// No wrapper distance
+// @media (max-width:419.998px) {
+//   // Important! Only for card distance to the border!
+//   .wrapper-480-box {
+//     padding: unset;
+//   }
+// }
 @media (min-width:420px) {
   .info-card {
     width: 320px;
@@ -108,6 +109,96 @@ $font-size: 15px;
 
     img {
       margin: 1px 8px 0 0;
+    }
+  }
+}
+
+// buttons
+.buttons {
+  $trans: .25s;
+
+  margin: 4.5rem 0;
+  padding-bottom: 1rem;
+
+  > h2 {
+    color: black;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+
+  > .btn-flex {
+    width: 100%;
+    margin: 3rem 0 0 0;
+    display: block;
+
+    figure {
+      width: 100%;
+      padding: 35px 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      img {
+        transition: $trans;
+        position: relative;
+        top: 0;
+      }
+
+      figcaption {
+        h3 {
+          margin: .75rem 0 1.5rem 0;
+          font-size: 1.3rem;
+          font-weight: 400;
+          color: black;
+        }
+      }
+
+      a {
+        width: 194px;
+        height: min-content;
+        white-space: nowrap;
+        padding: 1.3rem 3rem;
+        font-weight: 700;
+        font-size: 18px;
+        text-decoration: none;
+        background-color: $bluelight;
+        color: #fff;
+        border: 2px solid $bluelight;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        -webkit-transition: $trans;
+        -moz-transition: $trans;
+        -o-transition: $trans;
+        transition: $trans;
+      }
+    }
+  }
+
+  @media(min-width:620px) {
+    > .btn-flex {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+  
+      figure {
+        width: 300px;
+
+        &:hover {
+          img {
+            transition: $trans;
+            transform: scale(1.1);
+            top: -25px;
+          }
+    
+          a {
+            background-color: white;
+            color: $bluelight;
+            border: 2px solid $bluelight;
+          }
+        }
+      }
     }
   }
 }

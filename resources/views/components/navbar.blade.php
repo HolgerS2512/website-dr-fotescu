@@ -8,11 +8,11 @@
                 <li class="info-contact">
                     <a 
                         class="d-flex"
-                        href="tel:+493514117383" 
-                        title="telefonnummer-dr-fotescu-zahnarztpraxis-dresden"
+                        href="tel:{{ str_replace(' ', '', $infos->phone) }}" 
+                        title="{{ __("messages.title.contact") }}"
                     >
-                        <img class="phone-img" src="{{ asset('assets/svg/phone.svg') }}" alt="zahnarzt-dr-fotescu-dresden-telefonsymbol">
-                        <span class="info-phone">&nbsp;+ 49 351 411 73 83</span>
+                        <img class="phone-img" src="{{ asset('assets/svg/phone.svg') }}" alt="{{ 'mobile-' . __("messages.words.nav_title") . '-' . $infos->city . '-svg' }}">
+                        <span class="info-phone">&nbsp;{{ $infos->phone }}</span>
                     </a>
                 </li>
                 <li class="lang-stretch">
@@ -45,8 +45,12 @@
     </div>
     <nav>
         <div class="wrapper">
-            <div class="brand p-1">
-                <img src="{{ asset('assets/img/logo.png') }}" alt="zahnarzt-dr-fotescu-dresden-zahnarztpraxis" width="61" height="60">
+            <div class="brand py-1 pe-1">
+                <img 
+                    src="{{ asset('assets/img/logo.png') }}" 
+                    alt="{{ 'logo-' . __("messages.words.nav_title") . '-' . $infos->city . '-png' }}" 
+                    width="61" height="60"
+                >
             </div>
             
             <ul>

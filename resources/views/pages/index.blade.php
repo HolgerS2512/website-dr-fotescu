@@ -27,6 +27,8 @@
       :src="$slideSrc" 
       :isSlideshow="$isSlideshow" 
       :currPageValues="$currPageValues"
+      :infos="$infos"
+      :locale="$locale"
     />
   @endisset
 
@@ -37,6 +39,7 @@
         // dump(app()->getLocale());
       }
     @endphp --}}
+    
 
     @foreach ($contentItem as $content)
       @switch($content->format)
@@ -44,13 +47,17 @@
             <x-format.text :content="$content->{$locale}" />
           @break
         @case('buttons')
-            <x-format.buttons :content="$content->{$locale}" />
+            <x-format.buttons 
+              :list="$content->{$locale . 'List'}" 
+              :locale="$locale" 
+              :pages="$pages"
+              :infos="$infos"
+            />
           @break
         @case('cards')
             <x-format.cards 
               :content="$content->{$locale}" 
               :list="$content->{$locale . 'List'}" 
-              :images="$images" 
               :infos="$infos"
               :opening="$opening"
             />
@@ -89,7 +96,7 @@
             <x-format.image_small :content="$content->{$locale}" />
           @break
         @case('subheading')
-            <x-format.subheading :content="$content->{$locale . 'List'}" />
+            <x-format.subheading :list="$content->{$locale . 'List'}" />
           @break
         @case('form')
             <x-format.form :content="$content->{$locale}" />
