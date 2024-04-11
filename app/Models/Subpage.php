@@ -5,10 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Page extends Model
+class Subpage extends Model
 {
     use HasFactory;
+
+    /**
+     * Return the page for this subpages
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo 
+     */
+    public function page(): BelongsTo
+    {
+        return $this->belongsTo(Page::class);
+    }
 
     /**
      * The attributes that aren't mass assignable.
@@ -16,45 +27,6 @@ class Page extends Model
      * @var array
      */
     protected $guarded = [];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<bool>
-     */
-    protected $casts = [
-        'subpages' => 'boolean',
-        'created_at' => 'datetime',
-    ];
-
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
-    protected $appends = [
-        'subpages'
-    ];
-
-    /**
-     * Get a subpage collection for this page.
-     * 
-     * @return Collection|null
-     */
-    public function getSubpagesAttribute()
-    {
-        return $this->subpages()->orderBy('ranking')->get();
-    }
-
-    /**
-     * Get the subpages for this page.
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function subpages(): HasMany
-    {
-        return $this->hasMany(Subpage::class);
-    }
 
     /**
      * Get the images for this page.

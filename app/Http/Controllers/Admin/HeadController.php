@@ -58,7 +58,7 @@ final class HeadController extends Controller implements HandleLayoutRepository
     {
         try {
             $this->page = $dbData->page;
-            $this->images = $dbData->images;
+            $this->images = $dbData->images->where('slide', true);
             $this->publishes = $dbData->publishes;
         } catch (\Throwable $th) {
             throw $th;
@@ -89,7 +89,7 @@ final class HeadController extends Controller implements HandleLayoutRepository
             return view('admin.header.index', [
                 'page' => $this->page,
                 'src' => $this->images,
-                'public' => GetBoolFromDB::getBool($this->publishes, $this->page->link . '.slider'),
+                'public' => $this->publishes,
                 'imageIds' => $imageIds,
             ]);
         } catch (Exception $e) {

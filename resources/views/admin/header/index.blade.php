@@ -24,7 +24,7 @@
             <div id="collapseImportant" class="accordion-collapse collapse" data-bs-parent="#accordionImportantNote">
               <div class="accordion-body">
                 <p>Automatically adds it to slider on page "{{ $page->name }}" (every language)!</p>
-                <a class="link" target="_blank" href="https://compress-or-die.com/webp">Optimize your image here! -> https://compress-or-die.com/webp</a>
+                <a class="link" rel="noopener noreferrer" target="_blank" href="https://compress-or-die.com/webp">Optimize your image here! -> https://compress-or-die.com/webp</a>
                 <p class="mt-4">Follow this instructions:</p>
                 <ol>
                   <li>Click link</li>
@@ -96,9 +96,6 @@
           </tr>
           @else
           @foreach ($src as $slider)
-          @php
-          $alt = str_replace(' ', '-', strtolower($slider->title)) . '-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden';
-          @endphp
           <tr>
             <th scope="row">
               <div class="text-center d-flex justify-content-center align-items-center mh-100" style="min-height: 110px">
@@ -107,7 +104,7 @@
             </th>
             <td class="position-relative">
               <div class="d-flex justify-content-center align-items-center mh-100" style="min-height: 110px">
-                <img width="200" src="/{{ $slider->image }}" alt="{{ $alt }}">
+                <img width="200" src="/{{ $slider->src }}" alt="{{ $slider->title }}">
                 <span class="online-screen{{ $public || $loop->index + 1 === 1 ? ' o-screen-green' : ' o-screen-red' }}"></span>
               </div>
             </td>

@@ -48,9 +48,6 @@
           </tr>
           @else
           @foreach ($src as $slider)
-          @php
-          $alt = str_replace(' ', '-', strtolower($slider->title)) . '-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden';
-          @endphp
           <tr>
             <th scope="row">
               <div class="text-center d-flex justify-content-center align-items-center mh-100" style="min-height: 110px">
@@ -59,7 +56,7 @@
             </th>
             <td class="position-relative">
               <div class="d-flex justify-content-center align-items-center mh-100" style="min-height: 110px">
-                <img width="200" src="/{{ $slider->image }}" alt="{{ $alt }}">
+                <img width="200" src="/{{ $slider->src }}" alt="{{ $slider->title }}">
                 <span class="online-screen{{ $public || $loop->index + 1 === 1 ? ' o-screen-green' : ' o-screen-red' }}"></span>
               </div>
             </td>

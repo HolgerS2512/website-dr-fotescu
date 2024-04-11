@@ -45,7 +45,7 @@ $wrapper-width: 1950px;
 .gradient-blue::after {
   content: '';
   @include h-w-100;
-  @include absolute;
+  @include position;
   background-image: linear-gradient(to top, $blueextralight 0%, white 85%);
   z-index: -1;
 }

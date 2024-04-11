@@ -5,7 +5,7 @@
   <div class="mb-3 py-5">
     <div class="row">
       <div class="col-lg-2">
-        <div class="mb-3 text-black">
+        <div class="mb-3 textblack">
           <b>{{ mb_strtoupper($attr->title) }}</b>
         </div>
       </div>

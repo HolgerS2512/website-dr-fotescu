@@ -9,17 +9,20 @@
                             <span>Standort Dresden</span>
                             <hr>
                             <li>
-                                <a href="{{ $infos->maps }}" target="_blank" rel="noopener noreferrer">
+                                <a href="{{ $infos->maps }}" target="_blank" rel="noopener noreferrer"
+                                    title="{{ str_replace(['(', ')'], '', $infos->location) }}">
                                     {{ str_replace(['(', ')'], '', $infos->location) }}
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ $infos->maps }}" target="_blank" rel="noopener noreferrer">
+                                <a href="{{ $infos->maps }}" target="_blank" rel="noopener noreferrer"
+                                    title="{{ $infos->address }}">
                                     {{ $infos->address }}
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ $infos->maps }}" target="_blank" rel="noopener noreferrer">
+                                <a href="{{ $infos->maps }}" target="_blank" rel="noopener noreferrer"
+                                    title="{{ $infos->zip . ' ' . $infos->city }}">
                                     {{ $infos->zip . ' ' . $infos->city }}
                                 </a>
                             </li>
@@ -36,15 +39,14 @@
                             <span>Sitemap</span>
                             <hr>
                             @foreach ($pages as $page)
-                                @if ( ! $page->subpage )
-                                    <li>
-                                        <a 
-                                            href="{{ $path . $page->weblink }}" 
-                                            class="{{ $active === $page->weblink ? 'f-active' : '' }}">
-                                            {{ $locale === 'de' ? $page->name : $page->{$locale . '_name'} }}
-                                        </a>
-                                    </li>
-                                @endif
+                                <li>
+                                    <a 
+                                        href="{{ url((strlen($path) > 1 ? "$path/" : $path) . ($page->weblink === 'home' ? '' : $page->weblink)) }}"
+                                        title="{{ $page->{$locale} }}" 
+                                        class="{{ $active === $page->weblink ? 'menu-active' : '' }}">
+                                        {{ $page->{$locale} }}
+                                    </a>
+                                </li>
                             @endforeach
                         </ul>
                     </div>
@@ -55,13 +57,14 @@
                         <ul class="d-inline">
                             <span>{{ __('messages.words.zfatreatments') }}</span>
                             <hr>
-                            @foreach ($pages as $page)
-                                @if ( $page->subpage )
+                            @foreach ($subpages as $subpage)
+                                @if ( $subpage->page_id === 2 )
                                     <li>
                                         <a 
-                                            href="{{ $path . $page->weblink }}" 
-                                            class="{{ $active === $page->weblink ? 'f-active' : '' }}">
-                                            {{ $locale === 'de' ? $page->name : $page->{$locale . '_name'} }}
+                                            href="{{ url((strlen($path) > 1 ? "$path/" : $path) . $subpage->weblink) }}"
+                                            title="{{ $subpage->{$locale} }}" 
+                                            class="{{ $active === $subpage->weblink ? 'menu-active' : '' }}">
+                                            {{ $subpage->{$locale} }}
                                         </a>
                                     </li>
                                 @endif
@@ -73,7 +76,7 @@
                 <div class="col-xl-3 col-sm-6 order-4">
                     <div class="d-xl-flex justify-content-between mb-5">
                         <ul class="d-inline" style="width: 100%">
-                            <span>Anfahrt</span>
+                            <span>{{ __('messages.words.approach') }}</span>
                             <hr>
                             <iframe
                                 class="my-1 mw-100"
@@ -92,12 +95,12 @@
             <div class="row flex-row-reverse align-items-center h-100">
                 <div class="col-md-4 text-center text-md-end my-3 m-md-0">
                     <a 
-                        href="{{ $path === '/' ? $path . 'impressum' : $path . '/impressum' }}"
+                        href="{{ url($path === '/' ? $path . 'impressum' : $path . '/impressum') }}"
                         title="{{ __('messages.title.imprint') }}"
                         class="me-1 link-hover link-light link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover"
                     >{{ __('messages.title.imprint') }}
                     </a> &VerticalLine; <a 
-                        href="{{ $path === '/' ? $path . 'datenschutz' : $path . '/datenschutz' }}"
+                        href="{{ url($path === '/' ? $path . 'datenschutz' : $path . '/datenschutz') }}"
                         title="{{ __('messages.title.privacy') }}"
                         class="ms-1 link-hover link-light link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover"
                     >{{ __('messages.title.privacy') }}</a>
@@ -105,7 +108,7 @@
 
                 <div class="col-md-4 d-flex justify-content-center mb-3 m-md-0">
                     <a 
-                        href="{{ $path }}"
+                        href="{{ url($path) }}"
                         title="{{ __('messages.title.home') }}"
                         class="link-logo"
                     >

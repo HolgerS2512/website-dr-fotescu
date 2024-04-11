@@ -194,6 +194,7 @@ final class GetPageUrlVars implements UrlVariablesRepository
   public function setCurrentPageLink()
   {
     $values = '';
+    $urlString = '';
     $collectValues = [];
 
     if (in_array('header', self::$urlValues) || in_array('content', self::$urlValues) || in_array('translation', self::$urlValues)) {
@@ -205,41 +206,25 @@ final class GetPageUrlVars implements UrlVariablesRepository
     }
 
     if (!in_array('header', self::$urlValues) || !in_array('content', self::$urlValues) || !in_array('translation', self::$urlValues)) {
-      foreach ($this->webpageLinks as $link) {
+      
+      for ($i = 0; $i < count(self::$urlValues); $i++) {
 
-        // dd(self::$urlValues);
+        if (strlen(self::$urlValues[$i]) > 2) {
 
-        // $base = in_array($this->hasLanguages['base'], self::$urlValues);
-        // $option = false;
+          if (count($collectValues)) {
 
-        // foreach($this->hasLanguages['options'] as $opt) {
-        //   $test = in_array($opt, self::$urlValues);
-        //   if ($test) $option = $test;
-        // }
-
-        // dump(in_array('en', self::$urlValues));
-        // dd(self::$urlValues);
-
-        // if ($base || $option) self::$urlValues[] = 'home';
-
-        for ($i = 0; $i < count(self::$urlValues); $i++) {
-
-          if (strlen(self::$urlValues[$i]) > 2) {
-
-            if (count($collectValues)) {
-
-              foreach ($collectValues as $val) {
-                if ($val === self::$urlValues[$i]) break;
-                $collectValues[] = self::$urlValues[$i];
-              }
-            } else {
+            foreach ($collectValues as $val) {
+              if ($val === self::$urlValues[$i]) break;
               $collectValues[] = self::$urlValues[$i];
             }
+          } else {
+            $collectValues[] = self::$urlValues[$i];
           }
         }
-        $urlString = implode('/', $collectValues);
+      }
+      $urlString = implode('/', $collectValues);
 
-        // dump($urlString);
+      foreach ($this->webpageLinks as $link) {
         if ($link === $urlString) $values = $urlString;
       }
     }

@@ -13,10 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pages', function (Blueprint $table) {
+        Schema::create('subpages', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('ranking');
-            $table->tinyInteger('any_pages')->default(0);
+            $table->integer('ranking');
+            $table
+                ->foreignId('page_id')
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
             $table->string('link')->unique();
             $table->string('weblink');
             $table->string('de');
@@ -33,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pages');
+        Schema::dropIfExists('subpages');
     }
 };

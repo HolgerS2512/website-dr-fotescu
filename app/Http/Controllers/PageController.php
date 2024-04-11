@@ -12,6 +12,7 @@ use App\Models\Content;
 use App\Models\Info;
 use App\Models\OpeningHours;
 use App\Models\Publish;
+use App\Models\Subpage;
 use App\Repositories\Page\PageRepository;
 use Exception;
 use Illuminate\Support\Facades\Mail;
@@ -40,14 +41,16 @@ final class PageController extends Controller implements PageRepository
 {
     private $currentPageLink;
     private $pageValues;
+    private $subpageValues;
 
     private Collection $pages;
+    private Collection $subpages;
     private Collection $contentItem;
     private array $slideImages;
     private $isSlideshow;
 
     /**
-     * Sets the class variables.
+     * Set the var $currentPageLink.
      *
      * @return void
      */
@@ -55,9 +58,15 @@ final class PageController extends Controller implements PageRepository
     {
         $this->currentPageLink = $urlVars->currentPageLink;
 
+        // ab hier setAttributes()
         $this->pages = Page::all()->sortBy('ranking');
 
+        $this->subpages = Subpage::all()->sortBy('ranking');
+
         $this->pageValues = $this->pages->where('weblink', "$this->currentPageLink")->first();
+        // $this->subpageValues = $this->subpages->where('weblink', "$this->currentPageLink")->first();
+
+        // Füge allPages hinzu (join) und lagere aus in setAttributes()
 
         if (is_null($this->pageValues)) dd('url values test =>', $this->pageValues);
         if (!is_null($this->pageValues)) {
@@ -71,7 +80,10 @@ final class PageController extends Controller implements PageRepository
                 $this->slideImages[$key] = (object) $image->only(['title', 'src', 'ext']);
             }
 
-            $this->isSlideshow = (Publish::all()->where('name', $this->pageValues->link . '.slider')->first()->only(['public']))['public'];
+            $publishes = Publish::all()->where('name', $this->pageValues->link . '.slider')->first();
+            if (!is_null($publishes)) {
+                $this->isSlideshow = ($publishes->only(['public']))['public'];
+            }
         }
     }
 
@@ -88,10 +100,11 @@ final class PageController extends Controller implements PageRepository
 
         return view('pages.index', [
             'currPageValues' => $this->pageValues,
-            'contentItem' => $this->contentItem,
-            'slideSrc' => $this->slideImages,
+            'contentItem' => $this->contentItem ?? [],
+            'slideSrc' => $this->slideImages ?? [],
             'isSlideshow' => $this->isSlideshow,
             'pages' => $this->pages,
+            'subpages' => $this->subpages,
             'infos' => Info::all()->firstOrFail(),
             'opening' => OpeningHours::all()->sortBy('ranking'),
         ]);

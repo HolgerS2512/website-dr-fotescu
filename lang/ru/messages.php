@@ -3,10 +3,14 @@
 use Illuminate\Support\Facades\DB;
 
 $title = [];
-$dbTitle = DB::table('pages')->select('link', 'ru_name')->get();
+$dbPages = DB::table('pages')->select('link', 'ru')->get();
+$dbSubpages = DB::table('subpages')->select('link', 'ru')->get();
 
-foreach ($dbTitle as $value) {
-  $title[$value->link] = $value->ru_name;
+foreach ($dbPages as $value) {
+  $title[$value->link] = $value->ru;
+}
+foreach ($dbSubpages as $value) {
+  $title[$value->link] = $value->ru;
 }
 
 $words = [];

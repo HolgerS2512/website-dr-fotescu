@@ -38,8 +38,8 @@ if (app()->getLocale() !== 'de') {
         <link rel="apple-touch-icon" type="image/X-UA-Compatible" href="{{ asset('assets/icons/apple-touch-icon-180x180.png') }}">
         <link rel="android-icon" type="image/X-UA-Compatible" href="{{ asset('assets/icons/android-icon-192x192.png') }}">
 
-        <link rel="alternate" hreflang="de-DE" href="{{ 'https://www.meinzahnarztdresden.de' . $active_link }}" />
         <link rel="alternate" hreflang="x-default" href="{{ 'https://www.meinzahnarztdresden.de' . $active_link }}" />
+        <link rel="alternate" hreflang="de-DE" href="{{ 'https://www.meinzahnarztdresden.de' . $active_link }}" />
         <link rel="alternate" hreflang="en-GB" href="{{ 'https://www.meinzahnarztdresden.de/en' . $active_link }}" />
         <link rel="alternate" hreflang="ru-RU" href="{{ 'https://www.meinzahnarztdresden.de/ru' . $active_link }}" />
 
@@ -58,6 +58,7 @@ if (app()->getLocale() !== 'de') {
             :active="$active_link" 
             :path="$homePath" 
             :locale="$locale" 
+            :pages="$pages" 
             :infos="$infos"
         />
 
@@ -74,6 +75,7 @@ if (app()->getLocale() !== 'de') {
             :path="$homePath" 
             :locale="$locale" 
             :pages="$pages" 
+            :subpages="$subpages" 
             :infos="$infos"
         />
 

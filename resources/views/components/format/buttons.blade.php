@@ -17,7 +17,12 @@
 
             if (!is_null($attr->{'item_' . $itemIdx})) {
               $page = $pages->where('link', $attr->{'item_' . $itemIdx})->first();
-              $title = $page->{($locale === 'de' ? '' : $locale . '_') . 'name'};
+              if (is_null($page)) {
+                foreach ($pages->where('any_pages', true) as $p) {
+                  $page = $p->subpages->where('link', $attr->{'item_' . $itemIdx})->first();
+                }
+              }
+              $title = $page->{$locale};
               $href = $locale === 'de' ? '' : $locale . '/';
               $href .= $page->weblink;
               $image = $attr->itemImage($attr->{'item_' . $itemIdx} . '.format.button');

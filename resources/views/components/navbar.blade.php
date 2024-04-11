@@ -44,7 +44,7 @@
         </div>
     </div>
     <nav>
-        <div class="wrapper">
+        <div class="wrapper h-100 nav-wrapper">
             <div class="brand py-1 pe-1">
                 <img 
                     src="{{ asset('assets/img/logo.png') }}" 
@@ -52,12 +52,61 @@
                     width="61" height="60"
                 >
             </div>
+
+            <h2 class="additive-link">
+                <a href="{{ $path }}" title="{{ __('messages.words.nav_title') }}">{{ __('messages.words.nav_title') }}</a>
+            </h2>
             
-            <ul>
-                <li class="ms-1">link </li>
+            <input type="checkbox" id="toggle">
+            <label class="toggle" for="toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+
+            <div id="menu">
+                <ul>
+                    @foreach ($pages as $page)
+                        @if ( ! ($page->link === 'imprint' || $page->link === 'privacy') )
+                            <li>
+                                @if ($page->link !== 'treatments')
+                                    <a 
+                                    href="{{ url((strlen($path) > 1 ? "$path/" : $path) . ($page->weblink === 'home' ? '' : $page->weblink)) }}" 
+                                    title="{{ $page->{$locale} }}"
+                                    class="{{ $active === $page->weblink ? 'menu-active' : '' }}">
+                                    {{ $page->{$locale} }}
+                                </a>
+                                @else
+                                    <ul>
+                                        {{-- SUBPAGES --}}
+                                    </ul>
+                                @endif
+                            </li>
+                        @endif
+                    @endforeach
+                </ul>
+            </div>
+
+            {{-- <ul style="height:100%;width: 70px;position:relative;">
+                <div style="position: absolute">
+                    <li class="ms-1">link </li>
                 <li class="ms-1 px-1 bg-primary text-white">active: ('{{ $active }}')</li>
                 <li class="ms-1">link</li>
-            </ul>
+                </div>
+            </ul> --}}
         </div>
     </nav>
 </header>
+
+<script>
+(() => {
+    const header = document.querySelector('.navigation');
+    const toggle = header.querySelector('#toggle');
+
+    const init = () => {
+        toggle.checked = false;
+    }
+
+    init();
+})()
+</script>
