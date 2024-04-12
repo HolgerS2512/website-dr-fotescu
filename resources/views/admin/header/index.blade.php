@@ -46,7 +46,7 @@
       <div class="border shadow-lg p-3 bg-white mb-5">
         <h3>Slideshow : <b class="{{ $public ? 'text-success' : 'text-danger' }}">{{ $public ? 'visible' : 'hidden' }}</b></h3>
         <div class="mb-3">
-          <form action="{{ '/' . 'header/' . $page->link . '/image/visible' }}" method="POST" id="change-slideshow">
+          <form action="{{ url('administration/header/' . $page->link . '/image/visible') }}" method="POST" id="change-slideshow">
             @method('PATCH')
             @csrf
             <input type="radio" class="btn-check" name="slideshow" value="0" id="danger-outlined" autocomplete="off" @if(!$public) checked @endif>
@@ -125,7 +125,7 @@
             </td>
             <td>
               <div class="d-flex justify-content-center">
-                <form action="{{ url('/' . 'header/' . $page->link . '/image/update/up/' . $slider->id) }}" method="POST">
+                <form action="{{ url('administration/header/' . $page->link . '/image/update/up/' . $slider->id) }}" method="POST">
                   @method('PATCH')
                   @csrf
                   @if (! $loop->first)
@@ -137,13 +137,13 @@
                   </button>
                 </form>
 
-                <a href="{{ url('/' . 'header/' . $page->link . '/image/edit/' . $slider->id) }}" class="btn btn-warning" title="Edit image">
+                <a href="{{ url('administration/header/' . $page->link . '/image/edit/' . $slider->id) }}" class="btn btn-warning" title="Edit image">
                   <x-icons.edit :size="35" :clr="'FFF'" />
                 </a>
               </div>
 
               <div class="mt-2 d-flex justify-content-center">
-                <form action="{{ url('/' . 'header/' . $page->link . '/image/update/down/' . $slider->id) }}" method="POST">
+                <form action="{{ url('administration/header/' . $page->link . '/image/update/down/' . $slider->id) }}" method="POST">
                   @method('PATCH')
                   @csrf
                   @if (! $loop->last)
@@ -155,7 +155,7 @@
                   </button>
                 </form>
 
-                <a href="{{ url('/' . 'header/' . $page->link . '/image/delete/' . $slider->id) }}" class="btn btn-danger" title="Delete image" onclick="return confirm('Are you sure to delete slide : {{ $slider->title }}?')">
+                <a href="{{ url('administration/header/' . $page->link . '/image/delete/' . $slider->id) }}" class="btn btn-danger" title="Delete image" onclick="return confirm('Are you sure to delete slide : {{ $slider->title }}?')">
                   <x-icons.trash :size="35" :clr="'FFF'" />
                 </a>
               </div>
@@ -169,7 +169,7 @@
 
     <div class="col-xl-4">
       <div class="row g-0">
-        <form action="{{ url('/' . 'header/' . $page->link . '/image/store') }}" method="POST" enctype="multipart/form-data" class="p-3 pb-0 border shadow-lg bg-body-tertiary">
+        <form action="{{ url('administration/header/' . $page->link . '/image/store') }}" method="POST" enctype="multipart/form-data" class="p-3 pb-0 border shadow-lg bg-body-tertiary">
           @csrf
 
           <div class="mb-4">

@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\TitleController;
-use App\Http\Controllers\Admin\WordController;
+use App\Http\Controllers\Admin\TranslationController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -15,25 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('administration/translation/{name}', [TranslationController::class, 'index']);
 
-/*
-|
-|--------------------------------------------------------------------------
-| Translation Title Routes
-|--------------------------------------------------------------------------
-|
-*/
-Route::get('translation/title', [TitleController::class, 'index']);
-
-Route::any('translation/title/update/{id}', [TitleController::class, 'update']);
-
-/*
-|
-|--------------------------------------------------------------------------
-| Translation Word Routes
-|--------------------------------------------------------------------------
-|
-*/
-Route::get('translation/words', [WordController::class, 'index']);
-
-Route::any('translation/words/update/{id}', [WordController::class, 'update']);
+Route::any('administration/translation/{name}/update/{id}', [TranslationController::class, 'update']);

@@ -9,10 +9,10 @@ use App\Repositories\Admin\HandleLayoutRepository;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Image;
+use Illuminate\Database\Eloquent\Collection;
 use App\Traits\GetLangMessage;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
-use App\Traits\GetBoolFromDB;
 // use Intervention\Image\ImageManager;
 // use Intervention\Image\Drivers\Gd\Driver;
 
@@ -20,6 +20,7 @@ use App\Traits\GetBoolFromDB;
  * Contains this methods and variables.
  * 
  * @var \App\Models\Page $page
+ * @var \App\Models\Subpage $subpages,
  * @var \App\Models\Image $images,
  * @var \App\Models\Publish $publishes
  * @method construct
@@ -39,16 +40,18 @@ final class HeadController extends Controller implements HandleLayoutRepository
      * Saves the associated db data for the respective variable.
      *
      * @var \App\Models\Page $page,
+     * @var \App\Models\Subpage $subpages,
      * @var \App\Models\Image $images,
      * @var \App\Models\Publish $publishes
      */
-    private $page, $images, $publishes;
+    private $page, $subpages, $images, $publishes;
 
     /**
      * Store db data in this variables $page, $images, $publishes.
      * 
      * @param \App\Repositories\Admin\DbDataRepository $dbData
      * @var   \App\Models\Page $page,
+     * @var   \App\Models\Subpage $subpages,
      * @var   \App\Models\Image $images,
      * @var   \App\Models\Publish $publishes
      * @method __construct($dbData)
@@ -58,6 +61,9 @@ final class HeadController extends Controller implements HandleLayoutRepository
     {
         try {
             $this->page = $dbData->page;
+            if (!is_null($dbData->subpages)) {
+                $this->subpages = $dbData->subpages;
+            }
             $this->images = $dbData->images->where('slide', true);
             $this->publishes = $dbData->publishes;
         } catch (\Throwable $th) {
@@ -71,6 +77,7 @@ final class HeadController extends Controller implements HandleLayoutRepository
      * @method index return view admin.header.index
      * 
      * @var \App\Models\Page $page
+     * @var \App\Models\Subpage $subpages,
      * @var \App\Models\Image $images
      * @var \App\Models\Publish $publishes
      * 
@@ -88,8 +95,9 @@ final class HeadController extends Controller implements HandleLayoutRepository
 
             return view('admin.header.index', [
                 'page' => $this->page,
+                'subpages' => $this->subpages ?? [],
                 'src' => $this->images,
-                'public' => $this->publishes,
+                'public' => $this->publishes->public,
                 'imageIds' => $imageIds,
             ]);
         } catch (Exception $e) {
@@ -277,7 +285,7 @@ final class HeadController extends Controller implements HandleLayoutRepository
                 }
             }
 
-            return redirect('/' . 'header/' . $this->page->link)->with([
+            return redirect('/administration' . '/' . 'header/' . $this->page->link)->with([
                 'present' => true,
                 'status' => true,
                 'message' => GetLangMessage::languagePackage('en')->updateTrue,
@@ -323,9 +331,18 @@ final class HeadController extends Controller implements HandleLayoutRepository
                     ->withInput();
             }
 
-            foreach ($this->publishes as $is_public) {
-                if ($is_public->name ===  $this->page->link . '.slider') {
-                    $is_public->update([
+            if ($this->publishes instanceof Collection) {
+                foreach ($this->publishes as $publish) {
+                    if ($publish->name ===  $this->page->link . '.slider') {
+                        $publish->updateOrCreate([
+                            'public' => $request->slideshow,
+                            'updated_at' => Carbon::now(),
+                        ]);
+                    }
+                }
+            } else {
+                if ($this->publishes->name ===  $this->page->link . '.slider') {
+                    $this->publishes->updateOrCreate([
                         'public' => $request->slideshow,
                         'updated_at' => Carbon::now(),
                     ]);

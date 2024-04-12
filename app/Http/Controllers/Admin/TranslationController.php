@@ -3,29 +3,63 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\File\OverwriteLangMsgFiles;
-use App\Models\Page;
+use App\Models\Lang\Word;
 use Exception;
 use Illuminate\Http\Request;
 use App\Traits\GetLangMessage;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\File\OverwriteLangMsgFiles;
+use App\Models\Page;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
-final class TitleController extends Controller
+final class TranslationController extends Controller
 {
+    /**
+     * Stores a specific model resource.
+     *
+     * @param  \Illuminate\Http\Request  $name
+     * @var     \Illuminate\Database\Eloquent\Model
+     */
+    private Model $model;
+
+    /**
+     * Set the variable $model.
+     *
+     * @param  \Illuminate\Http\Request  $name
+     * @var    \Illuminate\Database\Eloquent\Model
+     * @return void
+     */
+    public function setModel($name)
+    {
+        switch ($name) {
+            case 'Words':
+                $this->model = new Word;
+                break;
+            case 'Title':
+                $this->model = new Page;
+                break;
+            default:
+                break;
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($name)
     {
         try {
-            $editable = Page::all();
-            $name = 'Title';
+            $name = ucfirst(strtolower($name));
+            $this->setModel($name);
 
-            return view('admin.translation.title.index', compact('name', 'editable'));
+            return view('admin.translation.index', [
+                'name' => $name, 
+                'editable' => $this->model::all(),
+            ]);
         } catch (Exception $e) {
             return redirect()->back()->with([
                 'present' => true,
@@ -44,16 +78,20 @@ final class TitleController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $name
      * @param  \Illuminate\Http\Request  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $name, $id)
     {
         try {
+            $name = ucfirst(strtolower($name));
+            $this->setModel($name);
+
             $credentials = Validator::make($request->all(), [
-                'name' => 'required|min:3|max:255',
-                'en_name' => 'required|min:3|max:255',
-                'ru_name' => 'required|min:3|max:255',
+                'de' => 'required|min:3|max:255',
+                'en' => 'required|min:3|max:255',
+                'ru' => 'required|min:3|max:255',
             ]);
 
             if ($credentials->fails()) {
@@ -62,10 +100,10 @@ final class TitleController extends Controller
                     ->withInput();
             }
 
-            Page::whereId($id)->update([
-                'name' => $request->name,
-                'en_name' => $request->en_name,
-                'ru_name' => $request->ru_name,
+            $this->model::whereId($id)->update([
+                'de' => $request->de,
+                'en' => $request->en,
+                'ru' => $request->ru,
                 'updated_at' => Carbon::now(),
             ]);
 
@@ -74,8 +112,7 @@ final class TitleController extends Controller
                 'status' => true,
                 'message' => GetLangMessage::languagePackage('en')->updateTrue,
             ]);
-
-            // return redirect('translation/title#' . $id)->with([
+            // return back()->with([
             //     'present' => true,
             //     'status' => true,
             //     'message' => GetLangMessage::languagePackage('en')->updateTrue,
@@ -86,12 +123,6 @@ final class TitleController extends Controller
                 'status' => false,
                 'message' => GetLangMessage::languagePackage('en')->updateFalse,
             ]);
-            
-            // return redirect('translation/title#' . $id)->with([
-            //     'present' => true,
-            //     'status' => false,
-            //     'message' => GetLangMessage::languagePackage('en')->updateFalse,
-            // ]);
         }
 
         return response()->json([

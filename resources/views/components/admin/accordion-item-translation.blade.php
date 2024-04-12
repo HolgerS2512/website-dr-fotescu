@@ -7,14 +7,14 @@
   <div id="{{ $link }}" class="accordion-collapse collapse" data-bs-parent="#aside-bar">
 
     <div class="accordion-body">
-      <a href="" class="link-light link-underline-opacity-25 link-underline-opacity-100-hover acc-links">
+      <a href="{{ url('administration/translation/title') }}" class="link-light link-underline-opacity-25 link-underline-opacity-100-hover acc-links">
         <div>Section 1 : Title</div>
         <x-icons.segment :size="24" :clr="'FFF'" />
       </a>
     </div>
 
     <div class="accordion-body">
-      <a href="" class="link-light link-underline-opacity-25 link-underline-opacity-100-hover acc-links">
+      <a href="{{ url('administration/translation/words') }}" class="link-light link-underline-opacity-25 link-underline-opacity-100-hover acc-links">
         <div>Section 2 : Words</div>
         <x-icons.segment :size="24" :clr="'FFF'" />
       </a>

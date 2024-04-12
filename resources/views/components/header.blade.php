@@ -2,18 +2,22 @@
   @if($isSlideshow)
     <x-slideshow :src="$src" :infos="$infos" />
   @else
-    @php
-      $alt = $src[0]->title . '-' . __("messages.words.nav_title") . '-' . $infos->city . '-' . $src[0]->ext;
-      $alt = preg_replace('/[. ( -)]+/', '-', mb_strtolower($alt));
-    @endphp
-  {{-- @elseif (!$isSlideshow) --}}
-    <div class="img-box-header">
-      <img 
-        class="slideshow-img" 
-        src="{{ asset($src[0]->src) }}" 
-        alt="{{ $alt }}"
-      >
-    </div>
+    @if($src)
+      @php
+        $alt = $src[0]->title . '-' . __("messages.words.nav_title") . '-' . $infos->city . '-' . $src[0]->ext;
+        $alt = preg_replace('/[. ( -)]+/', '-', mb_strtolower($alt));
+      @endphp
+    {{-- @elseif (!$isSlideshow) --}}
+      <div class="img-box-header">
+        <img 
+          class="slideshow-img" 
+          src="{{ asset($src[0]->src) }}" 
+          alt="{{ $alt }}"
+        >
+      </div>
+    @else
+      <div style="margin-top:300px;">Noch bearbeiten! header.blade.php</div>
+    @endif
   @endif
   
   @php

@@ -77,7 +77,7 @@
             </td>
             <td>
               <div class="d-flex justify-content-center">
-                <form action="{{ url('/' . 'header/' . $page->link . '/image/update/up/' . $slider->id) }}" method="POST">
+                <form action="{{ url('administration/header/' . $page->link . '/image/update/up/' . $slider->id) }}" method="POST">
                   @method('PATCH')
                   @csrf
                   @if (! $loop->first)
@@ -89,13 +89,13 @@
                   </button>
                 </form>
 
-                <a href="{{ url('/' . 'header/' . $page->link . '/image/edit/' . $slider->id) }}" class="btn btn-warning" title="Edit image">
+                <a href="{{ url('administration/header/' . $page->link . '/image/edit/' . $slider->id) }}" class="btn btn-warning" title="Edit image">
                   <x-icons.edit :size="35" :clr="'FFF'" />
                 </a>
               </div>
 
               <div class="mt-2 d-flex justify-content-center">
-                <form action="{{ url('/' . 'header/' . $page->link . '/image/update/down/' . $slider->id) }}" method="POST">
+                <form action="{{ url('administration/header/' . $page->link . '/image/update/down/' . $slider->id) }}" method="POST">
                   @method('PATCH')
                   @csrf
                   @if (! $loop->last)
@@ -107,7 +107,7 @@
                   </button>
                 </form>
 
-                <a href="{{ url('/' . 'header/' . $page->link . '/image/delete/' . $slider->id) }}" class="btn btn-danger" title="Delete image" onclick="return confirm('Are you sure to delete slide : {{ $slider->title }}?')">
+                <a href="{{ url('administration/header/' . $page->link . '/image/delete/' . $slider->id) }}" class="btn btn-danger" title="Delete image" onclick="return confirm('Are you sure to delete slide : {{ $slider->title }}?')">
                   <x-icons.trash :size="35" :clr="'FFF'" />
                 </a>
               </div>

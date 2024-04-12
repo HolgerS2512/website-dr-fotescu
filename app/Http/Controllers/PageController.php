@@ -18,7 +18,6 @@ use Exception;
 use Illuminate\Support\Facades\Mail;
 use App\Traits\GetLangMessage;
 use Illuminate\Support\Facades\DB;
-use App\Traits\GetBoolFromDB;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -37,42 +36,53 @@ use Illuminate\Database\Eloquent\Collection;
  * @method contact(Request $request)
  * 
  */
-final class PageController extends Controller implements PageRepository
+final class PageController extends Controller 
+// implements PageRepository
 {
-    private $currentPageLink;
+    private string $currPageLink;
+    private string $currLanguage;
+    
     private $pageValues;
     private $subpageValues;
 
     private Collection $pages;
     private Collection $subpages;
     private Collection $contentItem;
+
     private array $slideImages;
-    private $isSlideshow;
+    private bool $isSlideshow;
 
     /**
-     * Set the var $currentPageLink.
+     * Set $currPageLink, $currLanguage and calls setAttributes.
      *
      * @return void
      */
     public function __construct(GetPageUrlVars $urlVars, Request $request)
     {
-        $this->currentPageLink = $urlVars->currentPageLink;
+        $this->currLanguage = $urlVars::getLanguage();
 
-        // ab hier setAttributes()
-        $this->pages = Page::all()->sortBy('ranking');
+        $this->currPageLink = $urlVars->currentPageLink;
 
-        $this->subpages = Subpage::all()->sortBy('ranking');
+        $this->setAttributes();
+    }
 
-        $this->pageValues = $this->pages->where('weblink', "$this->currentPageLink")->first();
+    /**
+     * Calls functions and this set attributes for this instance.
+     *
+     * @return void
+     * 
+     */
+    public function setAttributes()
+    {
+        $this->setWebpages();
+
+        $this->pageValues = $this->pages->where('weblink', "$this->currPageLink")->first();
         // $this->subpageValues = $this->subpages->where('weblink', "$this->currentPageLink")->first();
 
-        // Füge allPages hinzu (join) und lagere aus in setAttributes()
-
-        if (is_null($this->pageValues)) dd('url values test =>', $this->pageValues);
+        if (is_null($this->pageValues)) dd('url values test =>', $this->pageValues, $this->pageValues);
         if (!is_null($this->pageValues)) {
-            $lang = $urlVars::getLanguage();
 
-            $this->contentItem = $this->pageValues->contents()->orderBy('ranking')->get()->load([$lang, "{$lang}List"]);
+            $this->contentItem = $this->pageValues->contents()->orderBy('ranking')->get()->load([$this->currLanguage, "{$this->currLanguage}List"]);
 
             $slideImages = $this->pageValues->images()->where('slide', true)->orderBy('ranking')->get();
 
@@ -85,6 +95,19 @@ final class PageController extends Controller implements PageRepository
                 $this->isSlideshow = ($publishes->only(['public']))['public'];
             }
         }
+    }
+
+    /**
+     * Sets webpage db values to corresponding variables.
+     *
+     * @return void
+     * 
+     */
+    public function setWebpages()
+    {
+        $this->pages = Page::all()->sortBy('ranking');
+
+        $this->subpages = Subpage::all()->sortBy('ranking');
     }
 
     /**
@@ -102,7 +125,7 @@ final class PageController extends Controller implements PageRepository
             'currPageValues' => $this->pageValues,
             'contentItem' => $this->contentItem ?? [],
             'slideSrc' => $this->slideImages ?? [],
-            'isSlideshow' => $this->isSlideshow,
+            'isSlideshow' => $this->isSlideshow ?? [],
             'pages' => $this->pages,
             'subpages' => $this->subpages,
             'infos' => Info::all()->firstOrFail(),

@@ -38,7 +38,9 @@ Route::group(['middleware' => 'auth'], function () {
   |--------------------------------------------------------------------------
   |
   */
-  Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+  Route::get('/admin', fn () => redirect('/administration/dashboard'));
+  Route::get('/dashboard', fn () => redirect('/administration/dashboard'));
+  Route::get('/administration/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
   /*
   |

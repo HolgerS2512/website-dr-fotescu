@@ -4,6 +4,7 @@ namespace App\Http\Controllers\HandleHttp;
 
 use Illuminate\Http\Request;
 use App\Models\Page;
+use App\Models\Subpage;
 use App\Repositories\Http\UrlVariablesRepository;
 use Illuminate\Support\Facades\App;
 use Illuminate\Database\Eloquent\Collection;
@@ -12,10 +13,12 @@ use Illuminate\Database\Eloquent\Collection;
  * Contains this methods and variables.
  * 
  * @param \Illuminate\Http\Request $request
- * @var \App\Models\Page $page
+ * @var \App\Models\Page $pages
+ * @var \App\Models\Subpage $subpages
  * @var static string $requestPath
  * @var static array $urlValues
  * @var Collection $pages
+ * @var Collection $subpages
  * @var array $pageLinks
  * @var string $currentPageLink
  * @var static string $lang
@@ -26,6 +29,8 @@ use Illuminate\Database\Eloquent\Collection;
  * @method setLinks
  * @method setUrlValues
  * @method setCurrentPageLink
+ * @method setAdminPageLink
+ * @method setWebPageLink
  * @method static getLanguage(): string
  * @method static isHeadMethod(): bool
  * @method static hasLanguages(): array
@@ -55,10 +60,11 @@ final class GetPageUrlVars implements UrlVariablesRepository
    * Contains the value that is returned from the URL.
    *
    * @param \App\Models\Page $pages
+   * @param \App\Models\Subpage $subpages
    * @var \Illuminate\Database\Eloquent\Collection
    * 
    */
-  private Collection $pages;
+  private Collection $pages, $subpages;
 
   /**
    * Contains strings in an array from db.
@@ -107,6 +113,8 @@ final class GetPageUrlVars implements UrlVariablesRepository
    *
    * @param \Illuminate\Http\Request $request
    * @var string $requestPath
+   * @var array $hasLanguages
+   * @method setAttributes
    * @return void
    * 
    */
@@ -120,8 +128,13 @@ final class GetPageUrlVars implements UrlVariablesRepository
   }
 
   /**
-   * Executes all functions that are set variably to the values.
+   * Set all attributes for this instance.
    *
+   * @method setPages
+   * @method setLinks
+   * @method setUrlValues
+   * @method getLanguage
+   * @method setCurrentPageLink
    * @return void
    * 
    */
@@ -139,23 +152,27 @@ final class GetPageUrlVars implements UrlVariablesRepository
   }
 
   /**
-   * Sets the variable pages to all db page data.
+   * Sets the variable pages to all db page and subpage data.
    *
-   * @param \App\Models\Page
-   * @var \App\Models\Page $pages
+   * @var \App\Models\Page
+   * @var \App\Models\Subpage
    * @return void
    * 
    */
   public function setPages()
   {
     $this->pages = Page::all();
+
+    $this->subpages = Subpage::all();
   }
 
   /**
    * Sets the variable links to the value present in variable pages.
    *
    * @param \App\Models\Page $pages
-   * @var array $links
+   * @param \App\Models\Subpage $subpages
+   * @var array $pagelinks
+   * @var array $webpagelinks
    * @return void
    * 
    */
@@ -165,13 +182,18 @@ final class GetPageUrlVars implements UrlVariablesRepository
       $this->pageLinks[] = $page->only(['link'])['link'];
       $this->webpageLinks[] = $page->only(['weblink'])['weblink'];
     }
+
+    foreach ($this->subpages as $page) {
+      $this->pageLinks[] = $page->only(['link'])['link'];
+      $this->webpageLinks[] = $page->only(['weblink'])['weblink'];
+    }
   }
 
   /**
    * Converts the request string path into an array.
    *
-   * @param static $requestPath
-   * @var array $urlValues
+   * @param static string $requestPath
+   * @var static array $urlValues
    * @return void
    * 
    */
@@ -184,8 +206,8 @@ final class GetPageUrlVars implements UrlVariablesRepository
   /**
    * Set the URL values to the $currentPageLink variable.
    *
-   * @param array $webpageLinks
-   * @param array $pageLinks
+   * @method setAdminPageLink
+   * @method setWebPageLink
    * @param array $urlValues
    * @var string $currentPageLink
    * @return void
@@ -193,50 +215,79 @@ final class GetPageUrlVars implements UrlVariablesRepository
    */
   public function setCurrentPageLink()
   {
-    $values = '';
+    $value = '';
+
+    if (in_array('administration', self::$urlValues)) {
+      $value = $this->setAdminPageLink();
+    }
+
+    if (!in_array('administration', self::$urlValues)) {
+      $value = $this->setWebPageLink();
+    }
+
+    $this->currentPageLink = $value;
+  }
+
+  /**
+   * Returns URL administration values as a string (current page link).
+   *
+   * @param array $pageLinks
+   * @param array $urlValues
+   * @return string
+   * 
+   */
+  public function setAdminPageLink()
+  {
+    $urlString = '';
+
+    foreach ($this->pageLinks as $link) {
+      foreach (self::$urlValues as $urlString) {
+        if ($link === $urlString) return $urlString;
+      }
+    }
+  }
+
+  /**
+   * Returns URL webpage values as a string (current page link).
+   *
+   * @param array $webpageLinks
+   * @param array $urlValues
+   * @return string
+   * 
+   */
+  public function setWebPageLink()
+  {
     $urlString = '';
     $collectValues = [];
 
-    if (in_array('header', self::$urlValues) || in_array('content', self::$urlValues) || in_array('translation', self::$urlValues)) {
-      foreach ($this->pageLinks as $link) {
-        foreach (self::$urlValues as $urlString) {
-          if ($link === $urlString) $values = $urlString;
-        }
-      }
-    }
+    for ($i = 0; $i < count(self::$urlValues); $i++) {
 
-    if (!in_array('header', self::$urlValues) || !in_array('content', self::$urlValues) || !in_array('translation', self::$urlValues)) {
-      
-      for ($i = 0; $i < count(self::$urlValues); $i++) {
+      if (strlen(self::$urlValues[$i]) > 2) {
+        if (count($collectValues)) {
 
-        if (strlen(self::$urlValues[$i]) > 2) {
-
-          if (count($collectValues)) {
-
-            foreach ($collectValues as $val) {
-              if ($val === self::$urlValues[$i]) break;
-              $collectValues[] = self::$urlValues[$i];
-            }
-          } else {
+          foreach ($collectValues as $val) {
+            if ($val === self::$urlValues[$i]) break;
             $collectValues[] = self::$urlValues[$i];
           }
+        } else {
+          $collectValues[] = self::$urlValues[$i];
         }
       }
-      $urlString = implode('/', $collectValues);
-
-      foreach ($this->webpageLinks as $link) {
-        if ($link === $urlString) $values = $urlString;
-      }
     }
+    $urlString = implode('/', $collectValues);
 
-    $this->currentPageLink = $values;
+    foreach ($this->webpageLinks as $link) {
+      if ($link === $urlString) return $urlString;
+    }
   }
 
   /**
    * Set the language for APP, variable $lang & return lang string.
    *
-   * @param array $urlValues
-   * @var string $lang
+   * @param static array $hasLanguages
+   * @param static array $urlValues
+   * @param \Illuminate\Support\Facades\App
+   * @var static string $lang
    * @return string
    * 
    */
@@ -268,7 +319,7 @@ final class GetPageUrlVars implements UrlVariablesRepository
    */
   public static function isHeadMethod(): bool
   {
-    return str_contains(self::$requestPath, 'content');
+    return str_contains(self::$requestPath, 'header');
   }
 
   /**

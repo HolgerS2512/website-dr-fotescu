@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
  * @method setLinks
  * @method setUrlValues
  * @method setCurrentPageLink
+ * @method setAdminPageLink
+ * @method setWebPageLink
  * @method static getLanguage(): string
  * @method static isHeadMethod(): bool
  * @method static hasLanguages(): array
@@ -25,24 +27,31 @@ interface UrlVariablesRepository
    *
    * @param \Illuminate\Http\Request $request
    * @var string $requestPath
+   * @var array $hasLanguages
+   * @method setAttributes
    * @return void
    * 
    */
   public function __construct(Request $request);
 
   /**
-   * Executes all functions that are set variably to the values.
+   * Set all attributes for this instance.
    *
+   * @method setPages
+   * @method setLinks
+   * @method setUrlValues
+   * @method getLanguage
+   * @method setCurrentPageLink
    * @return void
    * 
    */
   public function setAttributes();
 
   /**
-   * Sets the variable pages to all db page data.
+   * Sets the variable pages to all db page and subpage data.
    *
-   * @param \App\Models\Page
-   * @var \App\Models\Page $pages
+   * @var \App\Models\Page
+   * @var \App\Models\Subpage
    * @return void
    * 
    */
@@ -52,7 +61,9 @@ interface UrlVariablesRepository
    * Sets the variable links to the value present in variable pages.
    *
    * @param \App\Models\Page $pages
-   * @var array $links
+   * @param \App\Models\Subpage $subpages
+   * @var array $pagelinks
+   * @var array $webpagelinks
    * @return void
    * 
    */
@@ -61,8 +72,8 @@ interface UrlVariablesRepository
   /**
    * Converts the request string path into an array.
    *
-   * @param static $requestPath
-   * @var array $urlValues
+   * @param static string $requestPath
+   * @var static array $urlValues
    * @return void
    * 
    */
@@ -71,7 +82,8 @@ interface UrlVariablesRepository
   /**
    * Set the URL values to the $currentPageLink variable.
    *
-   * @param array $pageLinks
+   * @method setAdminPageLink
+   * @method setWebPageLink
    * @param array $urlValues
    * @var string $currentPageLink
    * @return void
@@ -80,10 +92,32 @@ interface UrlVariablesRepository
   public function setCurrentPageLink();
 
   /**
+   * Returns URL administration values as a string (current page link).
+   *
+   * @param array $pageLinks
+   * @param array $urlValues
+   * @return string
+   * 
+   */
+  public function setAdminPageLink();
+
+  /**
+   * Returns URL webpage values as a string (current page link).
+   *
+   * @param array $webpageLinks
+   * @param array $urlValues
+   * @return string
+   * 
+   */
+  public function setWebPageLink();
+
+  /**
    * Set the language for APP, variable $lang & return lang string.
    *
-   * @param array $urlValues
-   * @var string $lang
+   * @param static array $hasLanguages
+   * @param static array $urlValues
+   * @param \Illuminate\Support\Facades\App
+   * @var static string $lang
    * @return string
    * 
    */

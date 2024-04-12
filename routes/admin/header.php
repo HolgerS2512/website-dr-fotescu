@@ -11,18 +11,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('header/{link}', [HeadController::class, 'index']);
+Route::get('administration/header/{link}', [HeadController::class, 'index']);
 
-Route::post('header/{link}/image/store', [HeadController::class, 'store']);
+Route::post('administration/header/{link}/image/store', [HeadController::class, 'store']);
 
-Route::get('header/{link}/image/edit/{id}', [HeadController::class, 'edit']);
+Route::get('administration/header/{link}/image/edit/{id}', [HeadController::class, 'edit']);
 
-Route::put('header/{link}/image/update/{id}', [HeadController::class, 'update']);
+Route::put('administration/header/{link}/image/update/{id}', [HeadController::class, 'update']);
 
-Route::patch('header/{link}/image/visible', [HeadController::class, 'visible']);
+Route::patch('administration/header/{link}/image/visible', [HeadController::class, 'visible']);
 
-Route::patch('header/{link}/image/update/up/{id}', [HeadController::class, 'up']);
+Route::patch('administration/header/{link}/image/update/up/{id}', [HeadController::class, 'up']);
 
-Route::patch('header/{link}/image/update/down/{id}', [HeadController::class, 'down']);
+Route::patch('administration/header/{link}/image/update/down/{id}', [HeadController::class, 'down']);
 
-Route::get('header/{link}/image/delete/{id}', [HeadController::class, 'destroy']);
+Route::get('administration/header/{link}/image/delete/{id}', [HeadController::class, 'destroy']);

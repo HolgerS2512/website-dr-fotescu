@@ -6,13 +6,13 @@
   </h2>
   <div id="{{ $link }}" class="accordion-collapse collapse" data-bs-parent="#aside-bar-main">
     <div class="accordion-body">
-      <a href="{{ url('/'.'header/' . $link) }}" class="link-light link-underline-opacity-25 link-underline-opacity-100-hover acc-links"> 
+      <a href="{{ url('administration/header/' . $link) }}" class="link-light link-underline-opacity-25 link-underline-opacity-100-hover acc-links"> 
         <div>Section 1 : Header</div>
         <x-icons.image :size="24" :clr="'FFF'" />
       </a>
     </div>
     <div class="accordion-body">
-      <a href="{{ url('/'.'content/' . $link) }}" class="link-light link-underline-opacity-25 link-underline-opacity-100-hover acc-links">
+      <a href="{{ url('administration/content/' . $link) }}" class="link-light link-underline-opacity-25 link-underline-opacity-100-hover acc-links">
         <div>Section 2 : Content</div>
         <x-icons.segment :size="24" :clr="'FFF'" />
       </a>

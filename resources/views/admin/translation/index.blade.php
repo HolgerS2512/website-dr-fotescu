@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 {{--------------------> Title <--------------------}}
-@section('title')
+@section(mb_strtolower($name))
 <title>Edit / Update {{ $name }}</title>
 <style>
   #error,
@@ -29,7 +29,7 @@
           @foreach ($editable as $edit)
           <form
             id="{{ $edit->id }}"
-            action="{{ url('/translation/title/update/' . $edit->id) }}" 
+            action="{{ url('administration/translation/' . mb_strtolower($name) .'/'. 'update/' . $edit->id) }}" 
             method="POST" 
             class="form-item p-3 pb-0 border shadow-lg bg-body-tertiary"
           >
@@ -37,18 +37,25 @@
           @csrf
             <div class="col-12">
 
+              @isset($edit->context)
+              <div class="text-black bg-info-subtle p-3">
+                <p class="mb-2 text-secondary">Page context / Notice:</p>
+                <p class="mb-0">{{ $edit->context }}</p>
+              </div>
+              @endisset
+
               <div class="my-3">
                 <label for="" class="form-label">German</label>
                 <input 
                   type="text" 
-                  class="form-control @error("name") is-invalid @enderror" 
-                  name="name" 
-                  value="{{ $edit->name }}" 
+                  class="form-control @error("de") is-invalid @enderror" 
+                  name="de" 
+                  value="{{ $edit->de }}" 
                   minlength="3" 
                   maxlength="255"
                   required
                 >
-                @error("name")
+                @error("de")
                   <div class="invalid-feedback">
                     {{ $message }}
                   </div>
@@ -59,14 +66,14 @@
                 <label for="" class="form-label">English</label>
                 <input 
                   type="text" 
-                  class="form-control @error("en_name") is-invalid @enderror" 
-                  name="en_name" 
-                  value="{{ $edit->en_name }}" 
+                  class="form-control @error("en") is-invalid @enderror" 
+                  name="en" 
+                  value="{{ $edit->en }}" 
                   minlength="3" 
                   maxlength="255"
                   required
                 >
-                @error("en_name")
+                @error("en")
                   <div class="invalid-feedback">
                     {{ $message }}
                   </div>
@@ -77,14 +84,14 @@
                 <label for="" class="form-label">Russian</label>
                 <input 
                   type="text" 
-                  class="form-control @error("ru_name") is-invalid @enderror" 
-                  name="ru_name" 
-                  value="{{ $edit->ru_name }}" 
+                  class="form-control @error("ru") is-invalid @enderror" 
+                  name="ru" 
+                  value="{{ $edit->ru }}" 
                   minlength="3" 
                   maxlength="255"
                   required
                 >
-                @error("ru_name")
+                @error("ru")
                   <div class="invalid-feedback">
                     {{ $message }}
                   </div>
@@ -132,9 +139,9 @@
 
       postAjax(formEl.action, {
         '_token' : "{{ csrf_token() }}",
-        'name' : formEl.querySelector("input[name='name']").value,
-        'en_name' : formEl.querySelector("input[name='en_name']").value,
-        'ru_name' : formEl.querySelector("input[name='ru_name']").value,
+        'de' : formEl.querySelector("input[name='de']").value,
+        'en' : formEl.querySelector("input[name='en']").value,
+        'ru' : formEl.querySelector("input[name='ru']").value,
       }, (resp) => {
         userMessage(userMsgEl, (resp && resp.length < 100) && JSON.parse(resp).status);
       });

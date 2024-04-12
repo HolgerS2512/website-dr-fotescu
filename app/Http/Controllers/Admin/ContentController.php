@@ -12,7 +12,7 @@ use App\Models\Image;
 use App\Traits\GetLangMessage;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
-use App\Traits\GetBoolFromDB;
+
 
 /**
  * Contains this methods and variables.

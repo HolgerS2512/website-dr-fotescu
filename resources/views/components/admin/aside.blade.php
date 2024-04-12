@@ -7,7 +7,7 @@
   </div>
   <div class="p-3 border-top">
     <a 
-      href="{{ url('/dashboard') }}"
+      href="{{ url('administration/dashboard') }}"
       class="link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover d-flex justify-content-between"
       style="line-height: 2.25"
     >
@@ -22,12 +22,12 @@
   @foreach ($pages as $page)
 
     @include('components.admin.accordion-item', [
-      'name' => $page->en_name,
+      'name' => $page->en,
       'link' => $page->link,
       'id' => $page->id,
-      'subpage' => $page->subpage,
-      'page_id' => $page->page_id,
+      'any_pages,' => $page->any_pages,
       'pages' => $pages,
+      'subpages' => $subpages,
     ])
 
   @endforeach

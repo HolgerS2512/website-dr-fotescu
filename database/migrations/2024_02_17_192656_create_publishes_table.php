@@ -20,6 +20,7 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
+            $table->integer('subpage_id')->nullable();
             $table->string('name')->unique();
             $table->boolean('public');
             $table->timestamps();

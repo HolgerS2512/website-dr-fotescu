@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Lang\Word;
 use App\Models\Page;
+use App\Models\Subpage;
 use App\Traits\GetLangMessage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Query\JoinClause;
@@ -65,12 +66,21 @@ final class DashboardController extends Controller
                 })
                 ->get(['pages.*', 'images.src']);
 
+            $subpages = DB::table('subpages')
+                ->leftJoin('images', function (JoinClause $join) {
+                    $join->on('subpages.id', '=', 'images.subpage_id')
+                        ->where('images.ranking', '=', 1)
+                        ->where('slide', true)
+                        ->limit(1);
+                })
+                ->get(['subpages.*', 'images.src']);
+  
             $percent = (object) [
                 'title' => $this->titlePercent,
                 'words' => $this->wordsPercent,
             ];
 
-            return view('auth.dashboard', compact('pages', 'percent'));
+            return view('auth.dashboard', compact('pages', 'subpages', 'percent'));
         } catch (Exception $e) {
             // dump($e);
             // todo errorlog
@@ -119,8 +129,9 @@ final class DashboardController extends Controller
     {
         $percent = [];
         $pages = Page::all();
+        $subpages = Subpage::all();
 
-        $total = $pages->count() * 3;
+        $total = $pages->count() * 3 + $subpages->count() * 3;
 
         $col = $pages->map(function ($page) {
             return collect($page->toArray())

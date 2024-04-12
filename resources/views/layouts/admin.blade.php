@@ -2,6 +2,7 @@
     $path = str_replace(config('app.url'), '', url()->current());
     $active_link = $path ?: '/';
     $pages = DB::table('pages')->orderBy('ranking')->get();
+    $subpages = DB::table('subpages')->orderBy('ranking')->get();
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +35,7 @@
         <div class="row g-0">
             @auth
                 <div class="special-col special-col-header m-0 p-0">
-                    <x-admin.aside :pages="$pages" />
+                    <x-admin.aside :pages="$pages" :subpages="$subpages" />
                 </div>
             @endauth
             

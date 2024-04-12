@@ -25,7 +25,7 @@
             <h5 class="card-title">Pages</h5>
             <h6 class="mt-3">Total completed : {{ ($percent->words + $percent->title) / 2 }} %</h6>
             <a 
-              href="{{ url('translation/title') }}" 
+              href="{{ url('administration/translation/title') }}" 
               class="btn mt-3 w-100 text-white
               @if ($percent->words < 100)
               btn-danger
@@ -35,7 +35,7 @@
             >Title | {{ $percent->words }} %
             </a>
             <a 
-              href="{{ url('translation/words') }}" 
+              href="{{ url('administration/translation/words') }}" 
               class="btn mt-3 w-100 text-white
               @if ($percent->words < 100)
               btn-danger
@@ -57,7 +57,7 @@
             <h6 class="mt-3">Already completed : 0 %</h6>
             {{-- <h6 class="mt-3">Total completed : {{ ($percent->words + $percent->title) / 2 }} %</h6> --}}
             <a 
-              href="{{ url('translation/title') }}" 
+              href="{{ url('administration/translation/title') }}" 
               class="btn mt-5 w-100 text-white
               @if ($percent->words < 100)
               btn-danger
@@ -82,14 +82,13 @@
     <hr>
     @foreach ($pages as $page)
     @php
-      $parent[ $page->id ] = $page->en_name;
+      $parent[ $page->id ] = $page->en;
     @endphp
-    @if ( ! $page->subpage )
       <div class="col-lg-6 col-xl-4">
         <div class="p-3 mb-3">
           <div class="card w-100" style="min-height: 220px">
             <div class="card-body">
-              <h5 class="card-title">{{ $page->en_name }}</h5>
+              <h5 class="card-title">{{ $page->en }}</h5>
               @if ( $page->src === null )
                 <div class="d-flex justify-content-center align-items-center" style="height: 150px; border-radius: 6px;">
                   <small style="height: min-content; color: red;">No Image Available</small>         
@@ -101,30 +100,28 @@
               @if ($page->link === 'imprint' || $page->link === 'privacy')
                 <button type="button" disabled class="btn btn-secondary mt-3 w-100">Header</button>
               @else
-                <a href="{{ url('/' . 'header/' . $page->link) }}" class="btn btn-primary mt-3 w-100">Header</a>
+                <a href="{{ url('/' . 'administration/header/' . $page->link) }}" class="btn btn-primary mt-3 w-100">Header</a>
               @endif
 
-              <a href="{{ url('/' . 'content/' . $page->link) }}" class="btn btn-primary mt-3 w-100">Content</a>
+              <a href="{{ url('/' . 'administration/content/' . $page->link) }}" class="btn btn-primary mt-3 w-100">Content</a>
             </div>
           </div>
         </div>
       </div>
-    @endif
     @endforeach
   </div>
 
   <div class="row my-5 pt-5">
     <h3>Subpages</h3>
     <hr>
-    @foreach ($pages as $page)
-    @if ( $page->subpage )
+    @foreach ($subpages as $page)
     
       <div class="col-lg-6 col-xl-4">
         <div class="p-3 mb-3">
           <div class="card w-100">
             <div class="card-body">
               <h5 class="card-title">
-                {{ $page->en_name }}
+                {{ $page->en }}
                 <br>
                 <small class="h6 fw-lighter text-body-tertiary">{{ 'Subpage' . ' : ' . $parent[ $page->page_id ] }}</small>
               </h5>
@@ -139,16 +136,15 @@
               @if ($page->link === 'imprint' || $page->link === 'privacy')
                 <button type="button" disabled class="btn btn-secondary mt-3 w-100">Header</button>
               @else
-                <a href="{{ url('/' . 'header/' . $page->link) }}" class="btn btn-primary mt-3 w-100">Header</a>
+                <a href="{{ url('/' . 'administration/header/' . $page->link) }}" class="btn btn-primary mt-3 w-100">Header</a>
               @endif
 
-              <a href="{{ url('/' . 'content/' . $page->link) }}" class="btn btn-primary mt-3 w-100">Content</a>
+              <a href="{{ url('/' . 'administration/content/' . $page->link) }}" class="btn btn-primary mt-3 w-100">Content</a>
             </div>
           </div>
         </div>
       </div>
       
-    @endif
     @endforeach
 
   </div>
