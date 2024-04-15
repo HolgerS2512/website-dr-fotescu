@@ -1,12 +1,46 @@
 @php
   $locale = app()->getLocale();
+  $title = '';
+  $base = '';
+
+  switch ($currPageValues->link) {
+    case 'home':
+      break;
+    case 'blog':
+      $title = __('messages.words.page_title_blog');
+      break;
+    default:
+      $title = __("messages.title.$currPageValues->link");
+      break;
+  }
+
+  $splitArr = explode(' ', (__('messages.words.nav_title')));
+  $revArr = array_reverse($splitArr);
+  $counter = 1;
+  switch ($locale) {
+    case 'de':
+      $base = $revArr[0] . ' ';
+      break;
+    case 'en':
+      $base = $revArr[1] . ' ' . $revArr[0] . ' ';
+      $counter = 2;
+      break;
+    case 'ru':
+      $base = $revArr[1] . ' ' . $revArr[0] . ' ';
+      $counter = 2;
+      break;
+  }
+
+  for($i = 0; $i < count($splitArr) - $counter; $i++) {
+    $base .= ($i === 0 ? '' : ' ') . $splitArr[$i];
+  }
 @endphp
 @extends('layouts.app')
 
 {{--------------------> Metadata <--------------------}}
 @section('meta')
-<meta name="description" content="Herzlich willkommen bei Zahnarztpraxis Dr. Fotescu in Dresden | Ihr Zahnarzt für nette, kompetente und profesionelle Zahnmedizin | Zahnheilkunde auf dem höhsten Niveau.">
-<meta name="keywords" content="zahnarztpraxis, zahnarztpraxis-dresden, zahnarzt, zahnarzt-dresden, zahnarzt-dr-fotescu">
+<meta name="description" content="{{ $currPageValues->link === 'home' ? '' : $title . ' | ' }}{{ __('messages.words.meta_data') }}">
+<meta name="keywords" content="{{ __('messages.words.seo_keywords') }}{{ $currPageValues->link === 'home' ? '' : (', ' . str_replace(' ', '-', mb_strtolower($currPageValues->{$locale}))) }}">
 @endsection
 
 {{--------------------> Link <--------------------}}
@@ -16,7 +50,7 @@
 
 {{--------------------> Title <--------------------}}
 @section('title')
-<title>Zahnarztpraxis Dr. Sebastian Fotescu</title>
+<title>{{ $currPageValues->link === 'home' ? $base : $title . ' | ' . $base }}</title>
 @endsection
 
 {{--------------------> Content <--------------------}}
@@ -39,6 +73,8 @@
         // dump(app()->getLocale());
       }
     @endphp --}}
+
+    {{-- @dd($currPageValues) --}}
     
 
     @foreach ($contentItem as $content)

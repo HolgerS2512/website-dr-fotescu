@@ -17,6 +17,7 @@
       </div>
     @else
       <div style="margin-top:300px;">Noch bearbeiten! header.blade.php</div>
+      {{-- data-aos-offset="0" data-aos="fade-right" data-aos-delay="100" data-aos-duration="750" --}}
     @endif
   @endif
   

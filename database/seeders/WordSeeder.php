@@ -170,5 +170,19 @@ class WordSeeder extends Seeder
             'de' => 'Unser Blog',
             'en' => 'Our Blog',
         ]);
+
+        $publish->insert([
+            'name' => 'meta_data',
+            'context' => 'Description texts that appear in web searches (Google short description).',
+            'de' => 'Herzlich willkommen bei Zahnarztpraxis Dr. Fotescu in Dresden | Ihr Zahnarzt für nette, kompetente und profesionelle Zahnmedizin | Zahnheilkunde auf dem höhsten Niveau.',
+            'en' => 'Welcome to the dental practice of Dr. Fotescu in Dresden | Your dentist for friendly, competent and professional dentistry | Dentistry at the highest level.',
+        ]);
+
+        $publish->insert([
+            'name' => 'seo_keywords',
+            'context' => 'Web search keywords. !!! Spelling is very important !!!',
+            'de' => 'zahnarztpraxis, zahnarztpraxis-dresden, zahnarzt, zahnarzt-dresden, zahnarzt-dr-fotescu',
+            'en' => 'dental-practice, dental-practice-dresden, dentist, dentist-dresden, dentist-dr-fotescu',
+        ]);
     }
 }

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->string('phone')->nullable();
             $table->string('mail')->nullable();
+            $table->string('web')->nullable();
             $table->string('maps')->nullable();
             $table->text('iframe')->nullable();
             $table->timestamps();

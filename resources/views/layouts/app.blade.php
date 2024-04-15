@@ -20,16 +20,16 @@ if (app()->getLocale() !== 'de') {
         <meta name="msapplication-TileImage" content="{{ asset('assets/icons/mstile-70x70.png') }}">
         <meta name="theme-color" content="#ffffff" />
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Zahnarztpraxis Dr. Sebastian Fotescu">
+        <meta name="twitter:title" content="{{ __('messages.words.nav_title') }}">
         <meta name="twitter:image" content="{{ asset('assets/img/logo.png') }}">
         <meta name="author" content="Holger Schatte">
         
-        <meta property="og:title" content="Zahnarzt Dr. Sebastian Fotescu | Zahnarztpraxis in Dresden" />
-        <meta property="og:description" content="Herzlich willkommen bei Zahnarztpraxis Dr. Fotescu in Dresden | Ihr Zahnarzt für nette, kompetente und profesionelle Zahnmedizin | Zahnheilkunde auf dem höhsten Niveau." />
+        <meta property="og:title" content="{{ __('messages.words.nav_title') }}" />
+        <meta property="og:description" content="{{ __('messages.words.meta_data') }}" />
         <meta property="og:image" content="{{ asset('assets/img/logo.png') }}" />
-        <meta property="og:url" content="https://www.meinzahnarztdresden.de" />
+        <meta property="og:url" content="{{ $infos->web }}" />
         <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="Zahnarztpraxis Dr. Sebastian Fotescu" />
+        <meta property="og:site_name" content="{{ __('messages.words.nav_title') }}" />
         <meta property="og:locale" content="de_DE" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -38,10 +38,10 @@ if (app()->getLocale() !== 'de') {
         <link rel="apple-touch-icon" type="image/X-UA-Compatible" href="{{ asset('assets/icons/apple-touch-icon-180x180.png') }}">
         <link rel="android-icon" type="image/X-UA-Compatible" href="{{ asset('assets/icons/android-icon-192x192.png') }}">
 
-        <link rel="alternate" hreflang="x-default" href="{{ 'https://www.meinzahnarztdresden.de' . $active_link }}" />
-        <link rel="alternate" hreflang="de-DE" href="{{ 'https://www.meinzahnarztdresden.de' . $active_link }}" />
-        <link rel="alternate" hreflang="en-GB" href="{{ 'https://www.meinzahnarztdresden.de/en' . $active_link }}" />
-        <link rel="alternate" hreflang="ru-RU" href="{{ 'https://www.meinzahnarztdresden.de/ru' . $active_link }}" />
+        <link rel="alternate" hreflang="x-default" href="{{ $infos->web . $active_link }}" />
+        <link rel="alternate" hreflang="de-DE" href="{{ $infos->web . $active_link }}" />
+        <link rel="alternate" hreflang="en-GB" href="{{ $infos->web . $active_link }}" />
+        <link rel="alternate" hreflang="ru-RU" href="{{ $infos->web . $active_link }}" />
 
         @yield('title')
         
@@ -59,6 +59,7 @@ if (app()->getLocale() !== 'de') {
             :path="$homePath" 
             :locale="$locale" 
             :pages="$pages" 
+            :subpages="$subpages" 
             :infos="$infos"
         />
 
@@ -81,5 +82,10 @@ if (app()->getLocale() !== 'de') {
 
 @stack('scripts')
 {{-- <script>AOS.init();</script> --}}
+<script>
+    'use strict'
+    let screen = window.screen.width;
+    AOS.init({ offset: (screen === null || screen === undefined || screen > 991.998 ? 200 : 100) });
+</script>
     </body>
 </html>

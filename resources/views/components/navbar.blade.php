@@ -64,22 +64,49 @@
                 <span></span>
             </label>
 
-            <div id="menu">
+            <div class="menu">
                 <ul>
                     @foreach ($pages as $page)
                         @if ( ! ($page->link === 'imprint' || $page->link === 'privacy') )
                             <li>
-                                @if ($page->link !== 'treatments')
+                                @if ( ! $page->any_pages )
                                     <a 
                                     href="{{ url((strlen($path) > 1 ? "$path/" : $path) . ($page->weblink === 'home' ? '' : $page->weblink)) }}" 
                                     title="{{ $page->{$locale} }}"
-                                    class="{{ $active === $page->weblink ? 'menu-active' : '' }}">
+                                    class="{{ $active === $page->weblink ? 'active' : '' }}">
                                     {{ $page->{$locale} }}
-                                </a>
+                                    </a>
                                 @else
-                                    <ul>
-                                        {{-- SUBPAGES --}}
-                                    </ul>
+                                    @php
+                                        $counter = 0;
+                                        foreach ($subpages as $sPage) {
+                                            if ($sPage->page_id === $page->id) ++$counter;
+                                        }
+                                    @endphp
+
+                                    <input type="checkbox" id="x{{ $page->id }}-toggle" class="x-toggle-id">
+                                    <label class="x-toggle" for="x{{ $page->id }}-toggle">
+                                        <span><span></span></span>
+                                        <h6 class="x-point{{ $active === $page->weblink ? ' active' : '' }}">{{ $page->{$locale} }}</h6>
+                                    </label>
+                                    <div class="sub-menu">
+                                        <ul class="x{{ $counter }}-ul">
+                                            @foreach ($subpages as $sPage)
+                                            @if ($sPage->page_id === $page->id)
+                                            <li class="x-list{{ $active === $sPage->weblink ? ' active' : '' }}">
+                                                <a 
+                                                href="{{ url((strlen($path) > 1 ? "$path/" : $path) . $sPage->weblink) }}" 
+                                                title="{{ $sPage->{$locale} }}"
+                                                id="{{ $loop->last ? 'x-link-last' : '' }}{{ $loop->first ? 'x-link-first' : '' }}"
+                                                class="x-link">
+                                                {{ $sPage->{$locale} }}
+                                                </a>
+                                            </li>
+                                            @endif
+                                            @endforeach
+                                        </ul>
+                                    </div>
+
                                 @endif
                             </li>
                         @endif
@@ -102,9 +129,20 @@
 (() => {
     const header = document.querySelector('.navigation');
     const toggle = header.querySelector('#toggle');
+    const xtoggleItem = header.querySelectorAll('.x-toggle-id');
 
     const init = () => {
         toggle.checked = false;
+        xtoggleItem.forEach(el => toggleXmenu(el));
+    }
+
+    const toggleXmenu = (el) => {
+        const liItem = el.parentNode.querySelectorAll('li');
+        const isMobileScreen = window.screen.width <= 991.998;
+        const check = [];
+        
+        liItem.forEach(li => check.push(li.classList.contains('active')));
+        el.checked = isMobileScreen ? check.some(el => el) : false;
     }
 
     init();

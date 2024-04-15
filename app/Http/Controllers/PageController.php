@@ -26,6 +26,8 @@ use Illuminate\Database\Eloquent\Collection;
  * @var \App\Models\Page $page
  * @var \App\Models\Image $images,
  * @var \App\Models\Publish $publishes
+ * @var \App\Models\Info $infos
+ * @var \App\Models\OpeningHours $opening
  * @var \App\Models\Content $contents
  * @var \App\Models\ContentList $contentLists
  * @var \App\Models\Lang\DE_content $deContents
@@ -43,11 +45,12 @@ final class PageController extends Controller
     private string $currLanguage;
     
     private $pageValues;
-    private $subpageValues;
 
     private Collection $pages;
     private Collection $subpages;
     private Collection $contentItem;
+    private Collection $opening;
+    private Info $infos;
 
     private array $slideImages;
     private bool $isSlideshow;
@@ -74,12 +77,14 @@ final class PageController extends Controller
      */
     public function setAttributes()
     {
-        $this->setWebpages();
+        $this->setDbValues();
 
-        $this->pageValues = $this->pages->where('weblink', "$this->currPageLink")->first();
-        // $this->subpageValues = $this->subpages->where('weblink', "$this->currentPageLink")->first();
+        $this->pageValues = $this->pages->where('weblink', "$this->currPageLink")->first() ?? $this->subpages->where('weblink', "$this->currPageLink")->first();
 
-        if (is_null($this->pageValues)) dd('url values test =>', $this->pageValues, $this->pageValues);
+        if (is_null($this->pageValues)) {
+            dd('url values test =>', $this->pageValues);
+        }
+
         if (!is_null($this->pageValues)) {
 
             $this->contentItem = $this->pageValues->contents()->orderBy('ranking')->get()->load([$this->currLanguage, "{$this->currLanguage}List"]);
@@ -98,16 +103,24 @@ final class PageController extends Controller
     }
 
     /**
-     * Sets webpage db values to corresponding variables.
+     * Sets db values to corresponding variables.
      *
      * @return void
      * 
      */
-    public function setWebpages()
+    public function setDbValues()
     {
-        $this->pages = Page::all()->sortBy('ranking');
-
-        $this->subpages = Subpage::all()->sortBy('ranking');
+        try {
+            $this->pages = Page::all()->sortBy('ranking');
+            
+            $this->subpages = Subpage::all()->sortBy('ranking');
+            
+            $this->infos = Info::all()->firstOrFail();
+            
+            $this->opening = OpeningHours::all()->sortBy('ranking');
+        } catch (\Throwable $th) {
+            return view('errors.500');
+        }
     }
 
     /**
@@ -128,8 +141,8 @@ final class PageController extends Controller
             'isSlideshow' => $this->isSlideshow ?? [],
             'pages' => $this->pages,
             'subpages' => $this->subpages,
-            'infos' => Info::all()->firstOrFail(),
-            'opening' => OpeningHours::all()->sortBy('ranking'),
+            'infos' => $this->infos,
+            'opening' => $this->opening,
         ]);
     }
 

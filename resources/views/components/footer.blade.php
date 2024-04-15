@@ -43,7 +43,7 @@
                                     <a 
                                         href="{{ url((strlen($path) > 1 ? "$path/" : $path) . ($page->weblink === 'home' ? '' : $page->weblink)) }}"
                                         title="{{ $page->{$locale} }}" 
-                                        class="{{ $active === $page->weblink ? 'menu-active' : '' }}">
+                                        class="{{ $active === $page->weblink ? 'active' : '' }}">
                                         {{ $page->{$locale} }}
                                     </a>
                                 </li>
@@ -63,7 +63,7 @@
                                         <a 
                                             href="{{ url((strlen($path) > 1 ? "$path/" : $path) . $subpage->weblink) }}"
                                             title="{{ $subpage->{$locale} }}" 
-                                            class="{{ $active === $subpage->weblink ? 'menu-active' : '' }}">
+                                            class="{{ $active === $subpage->weblink ? 'active' : '' }}">
                                             {{ $subpage->{$locale} }}
                                         </a>
                                     </li>
