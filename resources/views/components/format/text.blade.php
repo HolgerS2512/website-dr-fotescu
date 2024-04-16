@@ -5,13 +5,13 @@
   <div class="mb-3 py-5">
     <div class="row">
       <div class="col-lg-2">
-        <div class="mb-3 textblack">
+        <div class="mb-3 textblack" {!! $aos::right() !!}>
           <b>{{ mb_strtoupper($attr->title) }}</b>
         </div>
       </div>
       
       <div class="col-lg-10" style="max-width: 1175px;">
-        <p>{{ $attr->content }}</p>
+        <p {!! $aos::up() !!}>{{ $attr->content }}</p>
       </div>
     </div>
   </div>

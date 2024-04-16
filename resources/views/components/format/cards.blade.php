@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
       @for ($i = 0; $i < $content->count(); $i++)
         
-        <div class="info-card">
+        <div class="info-card" {!! $aos::upLeft($i * 200, 300) !!}>
           <div>
 
             <div class="d-flex mb-4">

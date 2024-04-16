@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Api\AOS;
 use App\Http\Controllers\HandleHttp\GetPageUrlVars;
 use App\Models\Page;
 use Illuminate\Http\Request;
@@ -143,6 +144,7 @@ final class PageController extends Controller
             'subpages' => $this->subpages,
             'infos' => $this->infos,
             'opening' => $this->opening,
+            'aos' => new AOS,
         ]);
     }
 

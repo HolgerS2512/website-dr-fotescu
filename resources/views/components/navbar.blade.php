@@ -89,7 +89,7 @@
                                         <span><span></span></span>
                                         <h6 class="x-point{{ $active === $page->weblink ? ' active' : '' }}">{{ $page->{$locale} }}</h6>
                                     </label>
-                                    <div class="sub-menu">
+                                    <div class="d-none sub-menu">
                                         <ul class="x{{ $counter }}-ul">
                                             @foreach ($subpages as $sPage)
                                             @if ($sPage->page_id === $page->id)
@@ -130,10 +130,12 @@
     const header = document.querySelector('.navigation');
     const toggle = header.querySelector('#toggle');
     const xtoggleItem = header.querySelectorAll('.x-toggle-id');
+    const subItem = header.querySelectorAll('.sub-menu');
 
     const init = () => {
         toggle.checked = false;
         xtoggleItem.forEach(el => toggleXmenu(el));
+        window.addEventListener('load', docReady);
     }
 
     const toggleXmenu = (el) => {
@@ -143,6 +145,14 @@
         
         liItem.forEach(li => check.push(li.classList.contains('active')));
         el.checked = isMobileScreen ? check.some(el => el) : false;
+    }
+
+    const docReady = () => {
+        subItem.forEach((sub) => {
+            if (sub.classList.contains('d-none')) {
+                sub.classList.remove('d-none');
+            }
+        });
     }
 
     init();

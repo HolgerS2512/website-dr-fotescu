@@ -44,9 +44,9 @@
 @endsection
 
 {{--------------------> Link <--------------------}}
-{{-- @section('link') --}}
-{{-- <link rel="stylesheet" href="{{ asset('assets/css/splide.min.css') }}"> --}}
-{{-- @endsection --}}
+@section('link')
+<link href="{{ asset('assets/css/aos.min.css') }}" rel="stylesheet">
+@endsection
 
 {{--------------------> Title <--------------------}}
 @section('title')
@@ -63,6 +63,7 @@
       :currPageValues="$currPageValues"
       :infos="$infos"
       :locale="$locale"
+      :aos="$aos"
     />
   @endisset
 
@@ -80,14 +81,15 @@
     @foreach ($contentItem as $content)
       @switch($content->format)
         @case('text')
-            <x-format.text :content="$content->{$locale}" />
+            <x-format.text :content="$content->{$locale}" :aos="$aos" />
           @break
         @case('buttons')
             <x-format.buttons 
               :list="$content->{$locale . 'List'}" 
               :locale="$locale" 
               :pages="$pages"
-              :infos="$infos"
+              :infos="$infos" 
+              :aos="$aos"
             />
           @break
         @case('cards')
@@ -95,50 +97,51 @@
               :content="$content->{$locale}" 
               :list="$content->{$locale . 'List'}" 
               :infos="$infos"
-              :opening="$opening"
+              :opening="$opening" 
+              :aos="$aos"
             />
           @break
         @case('headline_list')
-            <x-format.headline_list :content="$content->{$locale}" />
+            <x-format.headline_list :content="$content->{$locale}" :aos="$aos" />
           @break
         @case('headline_text')
-            <x-format.headline_text :content="$content->{$locale}" />
+            <x-format.headline_text :content="$content->{$locale}" :aos="$aos" />
           @break
         @case('two_images_overlap')
-            <x-format.two_images_overlap :content="$content->{$locale}" />
+            <x-format.two_images_overlap :content="$content->{$locale}" :aos="$aos" />
           @break
         @case('extra_link')
-            <x-format.extra_link :content="$content->{$locale}" />
+            <x-format.extra_link :content="$content->{$locale}" :aos="$aos" />
           @break
         @case('download')
-            <x-format.download :content="$content->{$locale}" />
+            <x-format.download :content="$content->{$locale}" :aos="$aos" />
           @break
         @case('address')
-            <x-format.address :content="$content->{$locale}" />
+            <x-format.address :content="$content->{$locale}" :aos="$aos" />
           @break
         @case('office_hours')
-            <x-format.office_hours :content="$content->{$locale}" />
+            <x-format.office_hours :content="$content->{$locale}" :aos="$aos" />
           @break
         @case('cross_list')
             <x-format.cross_list :content="$content->{$locale}" />
           @break
         @case('map')
-            <x-format.map :content="$content->{$locale}" />
+            <x-format.map :content="$content->{$locale}" :aos="$aos" />
           @break
         @case('headline_image')
-            <x-format.headline_image :content="$content->{$locale}" />
+            <x-format.headline_image :content="$content->{$locale}" :aos="$aos" />
           @break
         @case('image_small')
-            <x-format.image_small :content="$content->{$locale}" />
+            <x-format.image_small :content="$content->{$locale}" :aos="$aos" />
           @break
         @case('subheading')
-            <x-format.subheading :list="$content->{$locale . 'List'}" />
+            <x-format.subheading :list="$content->{$locale . 'List'}" :aos="$aos" />
           @break
         @case('form')
-            <x-format.form :content="$content->{$locale}" />
+            <x-format.form :content="$content->{$locale}" :aos="$aos" />
           @break
         @case('blog_post')
-            <x-format.blog_post :content="$content->{$locale}" />
+            <x-format.blog_post :content="$content->{$locale}" :aos="$aos" />
           @break
         @default
       @endswitch

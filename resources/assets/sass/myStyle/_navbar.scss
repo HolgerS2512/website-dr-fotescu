@@ -72,8 +72,10 @@
 
 
   // ------ navigation ------ 
+
   $list35r: .35rem;
   $list75r: .75rem;
+
   nav {
     @include h-w-100($main-nav);
     .nav-wrapper {

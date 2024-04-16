@@ -1,6 +1,6 @@
-<section class="header">
+<section class="header{{ $src ? '' : ' header-no-src' }}">
   @if($isSlideshow)
-    <x-slideshow :src="$src" :infos="$infos" />
+    <x-slideshow :src="$src" :infos="$infos" :aos="$aos" />
   @else
     @if($src)
       @php
@@ -10,14 +10,14 @@
     {{-- @elseif (!$isSlideshow) --}}
       <div class="img-box-header">
         <img 
-          class="slideshow-img" 
+          class="static-img" 
           src="{{ asset($src[0]->src) }}" 
           alt="{{ $alt }}"
+          {!! $aos::right(100, 0) !!}
         >
       </div>
-    @else
-      <div style="margin-top:300px;">Noch bearbeiten! header.blade.php</div>
-      {{-- data-aos-offset="0" data-aos="fade-right" data-aos-delay="100" data-aos-duration="750" --}}
+    {{-- @else
+      <div>Bearbeiten (evtl.)! header.blade</div> --}}
     @endif
   @endif
   
@@ -56,5 +56,5 @@
         break;
     }
   @endphp
-  <h1>{!! ucwords($title) !!}</h1>
+  <h1 {!! $aos::left(100) !!}>{!! ucwords($title) !!}</h1>
 </section>

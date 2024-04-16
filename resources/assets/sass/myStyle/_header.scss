@@ -17,12 +17,17 @@
 
   .img-box-header {
     @include h-w-100($header-min500-height);
+    max-height: 84vh;
   
-    .slideshow-img {
+    .slideshow-img,
+    .static-img {
       @include h-w-100($header-min500-height);
-      max-height: 84vh;
       object-fit: cover;
       object-position: center;
+    }
+
+    .static-img {
+      max-height: 84vh;
     }
   }
 
@@ -45,7 +50,8 @@
     .img-box-header {
       @include h-w-100;
     
-      .slideshow-img {
+      .slideshow-img,
+      .static-img {
         @include h-w-100;
         object-fit: cover;
         object-position: center;
@@ -54,3 +60,6 @@
   }
 }
 
+.header-no-src {
+  height: 16vh;
+}

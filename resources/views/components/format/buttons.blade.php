@@ -4,9 +4,11 @@
   <div class="mb-3 py-5">
 
     <div class="buttons">
-
+      @php
+        $li = 0;
+      @endphp
       @foreach ($list as $attr)
-        <h2>{{ $attr->title }}</h2>
+        <h2 {!! $aos::right(0, 100) !!}>{{ $attr->title }}</h2>
         <div class="btn-flex">
         @for ($itemIdx = 1; $itemIdx <= 20; $itemIdx++)
           @php
@@ -14,6 +16,13 @@
             $alt = '';
             $title = '';
             $href = '';
+            $li++;
+            $offset = 0;
+
+            if ($li > 5) {
+              $li = 1;
+              $offset = 200;
+            }
 
             if (!is_null($attr->{'item_' . $itemIdx})) {
               $page = $pages->where('link', $attr->{'item_' . $itemIdx})->first();
@@ -37,7 +46,7 @@
             }
           @endphp
 
-          <figure>
+          <figure {!! $aos::upLeft($li * 200, $offset) !!}>
             <img src="{{ $url }}" alt="{{ $alt }}" width="250" height="250">
             <figcaption>
               <h3>{{ $title }}</h3>

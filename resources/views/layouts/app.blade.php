@@ -81,8 +81,8 @@ if (app()->getLocale() !== 'de') {
         />
 
 @stack('scripts')
-{{-- <script>AOS.init();</script> --}}
-<script>
+<script type="text/javascript" src="{{ asset('assets/js/aos.js') }}"></script>
+<script type="text/javascript">
     'use strict'
     let screen = window.screen.width;
     AOS.init({ offset: (screen === null || screen === undefined || screen > 991.998 ? 200 : 100) });

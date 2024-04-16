@@ -8,7 +8,7 @@
       @endphp
       <div class="swiper-slide">
         <div class="img-box-header">
-          <img class="slideshow-img" src="{{ asset($link->src) }}" alt="{{ $alt }}">
+          <img class="slideshow-img" src="{{ asset($link->src) }}" alt="{{ $alt }}" {!! $aos::right(100, 0) !!}>
         </div>
       </div>
     @endforeach
