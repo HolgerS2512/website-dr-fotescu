@@ -205,3 +205,61 @@ $font-size: 15px;
     }
   }
 }
+
+// --- strip --- //
+$strip-map: (
+  1: $blue,
+  2: $bluelight,
+  3: $blueextralight,
+  4: $bluedark,
+  5: $blueextradark,
+);
+
+.bg-strip {
+  box-shadow: 0 .75rem .5rem 1px rgba(0, 0, 0, 0.2);
+
+  @media (min-width:480px) {
+      background-color: map-get($strip-map, 3);
+  }
+}
+
+.strip-col {
+  width: 100%;
+  flex: 0 0 auto;
+
+  .strip-font {
+    font-size: 1.25rem;
+    font-weight: 400;
+  }
+}
+
+@media (max-width:767.998px) {
+  .no-wrapper-992 {
+    padding: unset;
+  }
+}
+
+@for $i from 1 through 5 {
+  .strip-clr-#{$i} {
+    background-color: map-get($strip-map, $i);
+  }
+
+  @media (min-width:480px) {
+    .strip-c-#{$i} {
+      @if $i == 5 {
+        width: 50%;
+      } @else if $i == 4 {
+        width: 50%;
+      } @else {
+        width: 33.333333%;
+      }
+    }
+  }
+}
+
+@media (min-width:768px) {
+  .strip-col {
+    width: 20%;
+    flex: 1 0 0;
+  }
+}

@@ -69,5 +69,18 @@ class DeListSeeder extends Seeder
             'item_9' => 'dentures',
             'created_at' => Carbon::now(),
         ]);
+
+        // buttons_strip
+        $deList->insert([
+            'content_id' => 5,
+            'ranking' => 1,
+            'image_id' => 23,
+            'item_1' => 'fürsorliche<br>Behandlungen',
+            'item_2' => 'individuelle<br>Beratung',
+            'item_3' => 'kompetente<br>Betreuung',
+            'item_4' => 'kinder-<br>freundlich',
+            'item_5' => 'familien<br>orientiert',
+            'created_at' => Carbon::now(),
+        ]);
     }
 }

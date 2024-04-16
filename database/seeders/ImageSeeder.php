@@ -199,6 +199,26 @@ class ImageSeeder extends Seeder
             'src' => 'uploads/images/button/dentures.format.button.webp',
             'ext' => 'webp',
             'created_at' => Carbon::now(),
+        ]);    
+
+        // team
+        $images->insert([
+            'page_id' => 2,
+            'ranking' => 1,
+            'title' => 'treatments',
+            'src' => 'uploads/images/treatments/treatments.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]); 
+
+        // strip
+        $images->insert([
+            'page_id' => 2,
+            'ranking' => 1,
+            'title' => 'tooth',
+            'src' => 'uploads/images/svg/tooth.svg',
+            'ext' => 'svg',
+            'created_at' => Carbon::now(),
         ]);  
     }
 }

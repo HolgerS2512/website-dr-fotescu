@@ -87,7 +87,11 @@
                                     <input type="checkbox" id="x{{ $page->id }}-toggle" class="x-toggle-id">
                                     <label class="x-toggle" for="x{{ $page->id }}-toggle">
                                         <span><span></span></span>
-                                        <h6 class="x-point{{ $active === $page->weblink ? ' active' : '' }}">{{ $page->{$locale} }}</h6>
+                                        <a 
+                                            href="{{ url((strlen($path) > 1 ? "$path/" : $path) . $page->weblink) }}" 
+                                            title="{{ $page->{$locale} }}"
+                                            class="x-point{{ $active === $page->weblink ? ' active' : '' }}">{{ $page->{$locale} }}
+                                        </a>
                                     </label>
                                     <div class="d-none sub-menu">
                                         <ul class="x{{ $counter }}-ul">

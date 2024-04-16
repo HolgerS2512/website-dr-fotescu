@@ -58,5 +58,80 @@ class PublicSeeder extends Seeder
             'name' => 'contact.slider',
             'public' => '0',
         ]);
+
+        $publish->insert([
+            'page_id' => 8,
+            'name' => 'privacy.slider',
+            'public' => '0',
+        ]);
+
+        $publish->insert([
+            'page_id' => 9,
+            'name' => 'imprint.slider',
+            'public' => '0',
+        ]);
+
+        $publish->insert([
+            'page_id' => 2,
+            'subpage_id' => 1,
+            'name' => 'emergency.slider',
+            'public' => '0',
+        ]);
+
+        $publish->insert([
+            'page_id' => 2,
+            'subpage_id' => 2,
+            'name' => 'family.slider',
+            'public' => '0',
+        ]);
+
+        $publish->insert([
+            'page_id' => 2,
+            'subpage_id' => 3,
+            'name' => 'prophylaxis.slider',
+            'public' => '0',
+        ]);
+
+        $publish->insert([
+            'page_id' => 2,
+            'subpage_id' => 4,
+            'name' => 'dentistry.slider',
+            'public' => '0',
+        ]);
+
+        $publish->insert([
+            'page_id' => 2,
+            'subpage_id' => 5,
+            'name' => 'periodontology.slider',
+            'public' => '0',
+        ]);
+
+        $publish->insert([
+            'page_id' => 2,
+            'subpage_id' => 6,
+            'name' => 'bleaching.slider',
+            'public' => '0',
+        ]);
+
+        $publish->insert([
+            'page_id' => 2,
+            'subpage_id' => 7,
+            'name' => 'restorative.slider',
+            'public' => '0',
+        ]);
+
+        $publish->insert([
+            'page_id' => 2,
+            'subpage_id' => 8,
+            'name' => 'implants.slider',
+            'public' => '0',
+        ]);
+
+        $publish->insert([
+            'page_id' => 2,
+            'subpage_id' => 9,
+            'name' => 'dentures.slider',
+            'public' => '0',
+        ]);
     }
 }

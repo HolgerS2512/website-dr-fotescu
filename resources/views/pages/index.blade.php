@@ -92,6 +92,14 @@
               :aos="$aos"
             />
           @break
+        @case('strip')
+            <x-format.strip 
+              :list="$content->{$locale . 'List'}" 
+              :locale="$locale" 
+              :infos="$infos"
+              :aos="$aos"
+            />
+          @break
         @case('cards')
             <x-format.cards 
               :content="$content->{$locale}" 
