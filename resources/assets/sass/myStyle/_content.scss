@@ -263,3 +263,71 @@ $strip-map: (
     flex: 1 0 0;
   }
 }
+
+// --- Address --- //
+.address-col {
+  p {
+    margin-bottom: 3px;
+  }
+}
+
+// --- cross_list --- //
+.square-list {
+  list-style: square;
+  color: $bluelight;
+
+  li {
+    width: max-content;
+    padding: 0 1rem 0 .75rem;
+    margin-bottom: 1rem;
+
+    span {
+      color: black;
+    }
+  }
+}
+
+// --- map --- //
+.iframe-map {
+  height: 500px;
+  box-shadow: 0 0 20px 8px rgba(0, 0, 0, 0.1), 0 0 12px 2px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width:575.9998px) {
+  .no-wrapper-576 {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .iframe-map {
+    height: 360px;
+  }
+}
+
+// --- download --- //
+.download-link {
+  width: max-content;
+  // display: flex;
+  // justify-content: start;
+  // align-items: center;
+  // text-decoration: none;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: black;
+
+  button {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    background: transparent;
+    border: unset;
+    text-decoration: none;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    &:focus {
+      outline: inherit;
+    }
+  }
+}

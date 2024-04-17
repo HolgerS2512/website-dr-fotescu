@@ -8,7 +8,7 @@
         $li = 0;
       @endphp
       @foreach ($list as $attr)
-        <h2 {!! $aos::right(0, 100) !!}>{{ $attr->title }}</h2>
+        <h2 {!! $aos::right(0, 100) !!}>{{ $attr->title ? $attr->title : __("messages.words.$attr->words_name") }}</h2>
         <div class="btn-flex">
         @for ($itemIdx = 1; $itemIdx <= 20; $itemIdx++)
           @php

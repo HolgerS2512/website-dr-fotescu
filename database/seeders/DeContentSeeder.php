@@ -18,6 +18,7 @@ class DeContentSeeder extends Seeder
     {
         $deContent = DB::table('de_contents');
         
+        // home
         $deContent->insert([
             'content_id' => 2,
             'ranking' => 1,
@@ -61,6 +62,42 @@ class DeContentSeeder extends Seeder
             'ranking' => 5,
             'title' => 'Kontakt',
             'image_id' => 11,
+            'created_at' => Carbon::now(),
+        ]);
+
+        // contact
+        $deContent->insert([
+            'content_id' => 7,
+            'ranking' => 1,
+            'title' => 'Vereinbaren Sie ganz einfach einen Termin',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 8,
+            'ranking' => 1,
+            'title' => 'Sprechzeiten',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 9,
+            'ranking' => 1,
+            'title' => 'Ihr Weg in unsere Zahnarztpraxis',
+            'content' => 'Das Team der Zahnarztpraxis Dr. Fotescu freut sich auf Ihren Besuch. Unsere Praxis befindet sich in der obersten Etage im Sachsen Forum, welche sehr gut an den öffentlichen Nahverkehr Dresdens angebunden ist. Das Sachsen Forum bietet ausserdem, zu jeder Tageszeit ausreichend kostenfreie Parkmöglichkeiten. Sie erreichen uns ausgezeichnet mit dem Auto, Bus und der dresdner Straßenbahn. Folgende Haltestellenlinien sind in der Nähe der Zahnarztpraxis gelegen:',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 10,
+            'ranking' => 1,
+            'title' => 'Anfahrt',
+            'created_at' => Carbon::now(),
+        ]);
+
+        // transfer
+        $deContent->insert([
+            'content_id' => 11,
+            'ranking' => 1,
+            'title' => 'Lassen Sie sich<br>in unsere Zahnarztpraxis empfehlen',
+            'content' => 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus laudantium odit quam hic, enim sequi facere dolor distinctio rem, mollitia rerum voluptates? Provident natus rerum voluptatem, illo commodi eligendi numquam.',
             'created_at' => Carbon::now(),
         ]);
     }

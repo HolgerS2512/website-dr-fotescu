@@ -25,7 +25,7 @@ class Content extends Model
     protected $guarded = [];
 
     /**
-     * Return the page for the images
+     * Return the page for the content
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo 
      */

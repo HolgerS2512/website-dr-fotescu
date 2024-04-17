@@ -44,52 +44,16 @@ class LanguageFactory extends Model
     ];
 
     /**
-     * This variable contains the appropriate output in the respective language.
+     * This variables contains the appropriate output in the respective language.
      *
      * @var string
      */
     public $contactTrue, $contactFalse;
-
-    /**
-     * This variable contains the appropriate output in the respective language.
-     *
-     * @var string
-     */
     public $loginTrue, $loginFalse;
-
-    /**
-     * This variable contains the appropriate output in the respective language.
-     *
-     * @var string
-     */
     public $uploadTrue, $uploadFalse;
-
-    /**
-     * This variable contains the appropriate output in the respective language.
-     *
-     * @var string
-     */
     public $updateTrue, $updateFalse;
-
-    /**
-     * This variable contains the appropriate output in the respective language.
-     *
-     * @var string
-     */
     public $deleteTrue, $deleteFalse;
-
-    /**
-     * This variable contains the appropriate output in the respective language.
-     *
-     * @var string
-     */
     public $databaseError;
-
-    /**
-     * This variable contains the appropriate output in the respective language.
-     *
-     * @var string
-     */
     public $methodError;
 
     /**

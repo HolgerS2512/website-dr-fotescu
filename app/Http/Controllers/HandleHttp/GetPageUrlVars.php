@@ -200,7 +200,9 @@ final class GetPageUrlVars implements UrlVariablesRepository
   public function setUrlValues()
   {
     if (strlen(self::$requestPath) <= 2) self::$requestPath .= '/home';
+    
     self::$urlValues = self::$requestPath === '/' ? [0 => 'home'] : explode('/', self::$requestPath);
+    // self::$urlValues = self::$requestPath === '/' ? [0 => 'home'] : explode('/', preg_replace('/\/download+/', '', self::$requestPath));
   }
 
   /**

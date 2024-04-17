@@ -1,4 +1,4 @@
-{{-- please refer treatments --}}
+{{-- Colored stripes with keyword-like content.  --}}
 
 <div class="bg-strip">
   <div class="wrapper no-wrapper-992">

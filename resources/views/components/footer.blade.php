@@ -81,7 +81,8 @@
                             <iframe
                                 class="my-1 mw-100"
                                 src="{{ $infos->iframe }}" width="300" height="240" style="border:0;" allowfullscreen loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade" alt="google-maps-link-zahnarzt-dr-fotescu-dresden" title="Google Maps">
+                                referrerpolicy="no-referrer-when-downgrade" 
+                                alt="google-maps-link-{{ __('messages.words.main_title') }}-{{ $infos->city }}" title="Google Maps">
                             </iframe>
                         </ul>
                     </div>

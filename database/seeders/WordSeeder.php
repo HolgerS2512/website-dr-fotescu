@@ -25,6 +25,13 @@ class WordSeeder extends Seeder
         ]);
 
         $publish->insert([
+            'name' => 'main_title',
+            'context' => 'Main title',
+            'de' => 'Zahnarztpraxis Dr. Sebastian Fotescu',
+            'en' => 'Dental practice Dr. Sebastian Fotescu',
+        ]);
+
+        $publish->insert([
             'name' => 'current',
             'context' => 'Text section',
             'de' => 'aktuelles',
@@ -70,6 +77,13 @@ class WordSeeder extends Seeder
             'name' => 'tel',
             'context' => 'on page home card section contact',
             'de' => 'Tel',
+            'en' => 'Phone',
+        ]);
+
+        $publish->insert([
+            'name' => 'tel_long',
+            'context' => 'Contact page address word',
+            'de' => 'Telefon',
             'en' => 'Phone',
         ]);
 
@@ -183,6 +197,13 @@ class WordSeeder extends Seeder
             'context' => 'Web search keywords. !!! Spelling is very important !!!',
             'de' => 'zahnarztpraxis, zahnarztpraxis-dresden, zahnarzt, zahnarzt-dresden, zahnarzt-dr-fotescu',
             'en' => 'dental-practice, dental-practice-dresden, dentist, dentist-dresden, dentist-dr-fotescu',
+        ]);
+
+        $publish->insert([
+            'name' => 'download_form',
+            'context' => 'Transfer pdf download title',
+            'de' => ' 	Formular herunterladen',
+            'en' => 'Download form',
         ]);
     }
 }

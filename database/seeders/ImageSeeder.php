@@ -24,7 +24,7 @@ class ImageSeeder extends Seeder
             'page_id' => 1,
             'slide' => 1,
             'title' => 'home-slide',
-            'src' => 'uploads/images/home/home-slide-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden.webp',
+            'src' => 'uploads/images/home/home-slide.webp',
             'ext' => 'webp',
             'created_at' => Carbon::now(),
         ]); 
@@ -33,7 +33,7 @@ class ImageSeeder extends Seeder
             'page_id' => 1,
             'slide' => 1,
             'title' => 'home-slide-2',
-            'src' => 'uploads/images/home/home-slide-2-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden.webp',
+            'src' => 'uploads/images/home/home-slide-2.webp',
             'ext' => 'webp',
             'created_at' => Carbon::now(),
         ]);
@@ -42,7 +42,7 @@ class ImageSeeder extends Seeder
             'page_id' => 1,
             'slide' => 1,
             'title' => 'home-slide-3',
-            'src' => 'uploads/images/home/home-slide-3-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden.webp',
+            'src' => 'uploads/images/home/home-slide-3.webp',
             'ext' => 'webp',
             'created_at' => Carbon::now(),
         ]);
@@ -53,7 +53,7 @@ class ImageSeeder extends Seeder
             'page_id' => 5,
             'slide' => 1,
             'title' => 'team-slide',
-            'src' => 'uploads/images/team/team-slide-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden.webp',
+            'src' => 'uploads/images/team/team-slide.webp',
             'ext' => 'webp',
             'created_at' => Carbon::now(),
         ]); 
@@ -62,7 +62,7 @@ class ImageSeeder extends Seeder
             'page_id' => 5,
             'slide' => 1,
             'title' => 'team-slide-2',
-            'src' => 'uploads/images/team/team-slide-2-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden.webp',
+            'src' => 'uploads/images/team/team-slide-2.webp',
             'ext' => 'webp',
             'created_at' => Carbon::now(),
         ]);
@@ -71,7 +71,7 @@ class ImageSeeder extends Seeder
             'page_id' => 5,
             'slide' => 1,
             'title' => 'team-slide-3',
-            'src' => 'uploads/images/team/team-slide-3-zahnarzt-zahnarztpraxis-dr-sebastian-fotescu-dresden.webp',
+            'src' => 'uploads/images/team/team-slide-3.webp',
             'ext' => 'webp',
             'created_at' => Carbon::now(),
         ]); 
@@ -81,7 +81,7 @@ class ImageSeeder extends Seeder
             'ranking' => 1,
             'page_id' => 1,
             'title' => 'calendar',
-            'src' => 'uploads/images/svg/calendar.svg',
+            'src' => 'uploads/svg/calendar.svg',
             'ext' => 'svg',
             'created_at' => Carbon::now(),
         ]); 
@@ -89,7 +89,7 @@ class ImageSeeder extends Seeder
             'ranking' => 2,
             'page_id' => 1,
             'title' => 'wlan',
-            'src' => 'uploads/images/svg/wlan.svg',
+            'src' => 'uploads/svg/wlan.svg',
             'ext' => 'svg',
             'created_at' => Carbon::now(),
         ]); 
@@ -97,7 +97,7 @@ class ImageSeeder extends Seeder
             'ranking' => 3,
             'page_id' => 1,
             'title' => 'wheelchair',
-            'src' => 'uploads/images/svg/wheelchair.svg',
+            'src' => 'uploads/svg/wheelchair.svg',
             'ext' => 'svg',
             'created_at' => Carbon::now(),
         ]); 
@@ -105,7 +105,7 @@ class ImageSeeder extends Seeder
             'ranking' => 4,
             'page_id' => 1,
             'title' => 'parking',
-            'src' => 'uploads/images/svg/parking.svg',
+            'src' => 'uploads/svg/parking.svg',
             'ext' => 'svg',
             'created_at' => Carbon::now(),
         ]); 
@@ -113,7 +113,7 @@ class ImageSeeder extends Seeder
             'ranking' => 5,
             'page_id' => 1,
             'title' => 'phone',
-            'src' => 'uploads/images/svg/phone.svg',
+            'src' => 'uploads/svg/phone.svg',
             'ext' => 'svg',
             'created_at' => Carbon::now(),
         ]);  
@@ -122,7 +122,7 @@ class ImageSeeder extends Seeder
         $images->insert([
             'page_id' => 1,
             'title' => 'blue checkbox',
-            'src' => 'uploads/images/svg/checkbox.svg',
+            'src' => 'uploads/svg/checkbox.svg',
             'ext' => 'svg',
             'created_at' => Carbon::now(),
         ]);   
@@ -216,7 +216,37 @@ class ImageSeeder extends Seeder
             'page_id' => 2,
             'ranking' => 1,
             'title' => 'tooth',
-            'src' => 'uploads/images/svg/tooth.svg',
+            'src' => 'uploads/svg/tooth.svg',
+            'ext' => 'svg',
+            'created_at' => Carbon::now(),
+        ]);  
+
+        // contact
+        $images->insert([
+            'page_id' => 7,
+            'ranking' => 1,
+            'slide'=> 1,
+            'title' => 'header',
+            'src' => 'uploads/images/contact/header.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]);   
+
+        // transfer
+        $images->insert([
+            'page_id' => 6,
+            'ranking' => 1,
+            'slide'=> 1,
+            'title' => 'transfer',
+            'src' => 'uploads/images/transfer/transfer.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]);
+        $images->insert([
+            'page_id' => 6,
+            'ranking' => 1,
+            'title' => 'pdf',
+            'src' => 'uploads/svg/pdf.svg',
             'ext' => 'svg',
             'created_at' => Carbon::now(),
         ]);  

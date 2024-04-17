@@ -109,11 +109,28 @@
               :aos="$aos"
             />
           @break
+        @case('has_subpages')
+            <x-format.has_subpages
+              :pageId="$currPageValues->id"
+              :subpages="$subpages"
+              :locale="$locale"  
+              :infos="$infos"
+              :aos="$aos"
+            />
+          @break
         @case('headline_list')
-            <x-format.headline_list :content="$content->{$locale}" :aos="$aos" />
+            <x-format.headline_list 
+              :content="$content->{$locale}" 
+              :rang="$content->ranking" 
+              :aos="$aos" 
+              />
           @break
         @case('headline_text')
-            <x-format.headline_text :content="$content->{$locale}" :aos="$aos" />
+            <x-format.headline_text 
+              :content="$content->{$locale}" 
+              :rang="$content->ranking" 
+              :aos="$aos" 
+            />
           @break
         @case('two_images_overlap')
             <x-format.two_images_overlap :content="$content->{$locale}" :aos="$aos" />
@@ -122,19 +139,35 @@
             <x-format.extra_link :content="$content->{$locale}" :aos="$aos" />
           @break
         @case('download')
-            <x-format.download :content="$content->{$locale}" :aos="$aos" />
+            <x-format.download :content="$content" :infos="$infos" :aos="$aos" />
           @break
         @case('address')
-            <x-format.address :content="$content->{$locale}" :aos="$aos" />
+            <x-format.address 
+              :content="$content->{$locale}"
+              :rang="$content->ranking" 
+              :locale="$locale" 
+              :infos="$infos" 
+              :aos="$aos" 
+            />
           @break
         @case('office_hours')
-            <x-format.office_hours :content="$content->{$locale}" :aos="$aos" />
+            <x-format.office_hours
+            :content="$content->{$locale}" 
+            :locale="$locale" 
+            :opening="$opening" 
+            :aos="$aos" 
+          />
           @break
         @case('cross_list')
-            <x-format.cross_list :content="$content->{$locale}" />
+            <x-format.cross_list
+            :content="$content->{$locale}" 
+            :list="$content->{$locale . 'List'}" 
+            :locale="$locale" 
+            :aos="$aos" 
+          />
           @break
         @case('map')
-            <x-format.map :content="$content->{$locale}" :aos="$aos" />
+            <x-format.map :content="$content->{$locale}" :locale="$locale" :infos="$infos" :aos="$aos" />
           @break
         @case('headline_image')
             <x-format.headline_image :content="$content->{$locale}" :aos="$aos" />

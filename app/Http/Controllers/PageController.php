@@ -39,12 +39,12 @@ use Illuminate\Database\Eloquent\Collection;
  * @method contact(Request $request)
  * 
  */
-final class PageController extends Controller 
+final class PageController extends Controller
 // implements PageRepository
 {
     private string $currPageLink;
     private string $currLanguage;
-    
+
     private $pageValues;
 
     private Collection $pages;
@@ -113,11 +113,11 @@ final class PageController extends Controller
     {
         try {
             $this->pages = Page::all()->sortBy('ranking');
-            
+
             $this->subpages = Subpage::all()->sortBy('ranking');
-            
+
             $this->infos = Info::all()->firstOrFail();
-            
+
             $this->opening = OpeningHours::all()->sortBy('ranking');
         } catch (\Throwable $th) {
             return view('errors.500');
@@ -171,7 +171,7 @@ final class PageController extends Controller
                     ->withInput();
             }
 
-            Mail::to(env('MAIL_FROM_ADDRESS'))->send(new ContactMail($request));
+            Mail::to($this->infos->mail)->send(new ContactMail($request));
 
             Mail::to($request['email'])->send(new ContactFeedbackMail);
 
@@ -193,5 +193,34 @@ final class PageController extends Controller
             'status' => false,
             'message' => GetLangMessage::languagePackage()->contactFalse,
         ]);
+    }
+
+    /**
+     * Response the download file.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function download(Request $request)
+    {
+        try {
+            $credentials = Validator::make($request->all(), [
+                'name' => 'required|min:3|max:50',
+                'path' => 'required|min:3|max:70',
+            ]);
+
+            if ($credentials->fails()) return view('errors.500');
+
+            $headers = [
+                'Content-Type' => 'application/pdf',
+            ];
+    
+            return response()->download($request->path, $request->name, $headers);
+
+        } catch (Exception $e) {
+            return view('errors.500');
+        }
+
+        return view('errors.500');
     }
 }

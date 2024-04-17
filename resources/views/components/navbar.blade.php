@@ -3,13 +3,13 @@
         <div class="wrapper">
             <ul class="info-strip">
                 <li class="info-title">
-                    <a href="{{ $path }}" title="{{ __('messages.words.nav_title') }}">{{ __('messages.words.nav_title') }}</a>
+                    <a href="{{ $path }}" title="{{ __('messages.title.home') }} {{ __('messages.words.nav_title') }}">{{ __('messages.words.nav_title') }}</a>
                 </li>
                 <li class="info-contact">
                     <a 
                         class="d-flex"
                         href="tel:{{ str_replace(' ', '', $infos->phone) }}" 
-                        title="{{ __("messages.title.contact") }}"
+                        title="{{ str_replace(' ', '', $infos->phone) }}"
                     >
                         <img class="phone-img" src="{{ asset('assets/svg/phone.svg') }}" alt="{{ 'mobile-' . __("messages.words.nav_title") . '-' . $infos->city . '-svg' }}">
                         <span class="info-phone">&nbsp;{{ $infos->phone }}</span>

@@ -26,26 +26,11 @@
 
     switch ($currPageValues->link) {
       case 'home':
-        $splitArr = explode(' ', (__('messages.words.nav_title')));
-        $revArr = array_reverse($splitArr);
+        $splitArr = explode(' ', (__('messages.words.main_title')));
+        $title = $splitArr[0] . ($locale === 'de' ? '' : ' ' . $splitArr[1]) . '<br/>';
 
-        $counter = 1;
-        switch ($locale) {
-          case 'de':
-            $title = $revArr[0] . '<br/>';
-            break;
-          case 'en':
-            $title = $revArr[1] . ' ' . $revArr[0] . '<br/>';
-            $counter = 2;
-            break;
-          case 'ru':
-            $title = $revArr[1] . ' ' . $revArr[0] . '<br/>';
-            $counter = 2;
-            break;
-        }
-
-        for($i = 0; $i < count($splitArr) - $counter; $i++) {
-          $title .= ($i === 0 ? '' : ' ') . $splitArr[$i];
+        for($i = ($locale === 'de' ? 1 : 2); $i < count($splitArr); $i++) {
+          $title .= ' ' . $splitArr[$i];
         }
         break;
       case 'blog':

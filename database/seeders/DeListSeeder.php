@@ -57,7 +57,7 @@ class DeListSeeder extends Seeder
         $deList->insert([
             'content_id' => 4,
             'ranking' => 1,
-            'title' => 'Zahnarzt Behandlungen',
+            'words_name' => 'zfatreatments',
             'item_1' => 'emergency',
             'item_2' => 'family',
             'item_3' => 'prophylaxis',
@@ -80,6 +80,21 @@ class DeListSeeder extends Seeder
             'item_3' => 'kompetente<br>Betreuung',
             'item_4' => 'kinder-<br>freundlich',
             'item_5' => 'familien<br>orientiert',
+            'created_at' => Carbon::now(),
+        ]);
+
+        // contact cross_list
+        $deList->insert([
+            'content_id' => 9,
+            'ranking' => 1,
+            'item_1' => 'Linie 1',
+            'item_2' => 'Linie 6',
+            'item_3' => 'Linie 8',
+            'item_4' => 'Linie 11',
+            'item_5' => 'Linie 2',
+            'item_6' => 'Linie 7',
+            'item_7' => 'Linie 10',
+            'item_8' => 'Linie 12',
             'created_at' => Carbon::now(),
         ]);
     }
