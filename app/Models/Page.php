@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\WebpageModelMethods;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Collection;
 
 class Page extends Model
 {
-    use HasFactory;
+    use WebpageModelMethods;
 
     /**
      * The attributes that aren't mass assignable.
@@ -23,7 +24,7 @@ class Page extends Model
      * @return array<bool>
      */
     protected $casts = [
-        'subpages' => 'boolean',
+        'any_pages' => 'boolean',
         'created_at' => 'datetime',
     ];
 
@@ -41,7 +42,7 @@ class Page extends Model
      * 
      * @return Collection|null
      */
-    public function getSubpagesAttribute()
+    public function getSubpagesAttribute(): Collection|null
     {
         return $this->subpages()->orderBy('ranking')->get();
     }
@@ -54,35 +55,5 @@ class Page extends Model
     public function subpages(): HasMany
     {
         return $this->hasMany(Subpage::class);
-    }
-
-    /**
-     * Get the images for this page.
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function images(): HasMany
-    {
-        return $this->hasMany(Image::class);
-    }
-
-    /**
-     * Get the publish for this page.
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany 
-     */
-    public function publishes(): HasMany
-    {
-        return $this->hasMany(Publish::class);
-    }
-
-    /**
-     * Get the contents for this page.
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany 
-     */
-    public function contents(): HasMany
-    {
-        return $this->hasMany(Content::class);
     }
 }

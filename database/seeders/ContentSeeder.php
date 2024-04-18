@@ -63,26 +63,38 @@ class ContentSeeder extends Seeder
         ]);
 
         // contact
+        // $content->insert([
+        //     'ranking' => 1,
+        //     'page_id' => 7,
+        //     'format' => 'address',
+        //     'created_at' => Carbon::now(),
+        // ]);
+        // $content->insert([
+        //     'ranking' => 2,
+        //     'page_id' => 7,
+        //     'format' => 'form',
+        //     'created_at' => Carbon::now(),
+        // ]);
+        // $content->insert([
+        //     'ranking' => 3,
+        //     'page_id' => 7,
+        //     'format' => 'office_hours',
+        //     'created_at' => Carbon::now(),
+        // ]);
         $content->insert([
             'ranking' => 1,
             'page_id' => 7,
-            'format' => 'address',
+            'format' => 'contact_collection',
             'created_at' => Carbon::now(),
         ]);
         $content->insert([
             'ranking' => 2,
             'page_id' => 7,
-            'format' => 'office_hours',
-            'created_at' => Carbon::now(),
-        ]);
-        $content->insert([
-            'ranking' => 3,
-            'page_id' => 7,
             'format' => 'cross_list',
             'created_at' => Carbon::now(),
         ]);
         $content->insert([
-            'ranking' => 4,
+            'ranking' => 3,
             'page_id' => 7,
             'format' => 'map',
             'created_at' => Carbon::now(),
@@ -102,6 +114,14 @@ class ContentSeeder extends Seeder
             'format' => 'download',
             'btn' => 'Formular',
             'url_link' => 'download/ueberweisung.pdf',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'ranking' => 3,
+            'page_id' => 6,
+            'format' => 'x_link',
+            'btn' => 'x-btn',
+            'url_link' => '2',
             'created_at' => Carbon::now(),
         ]);
     }

@@ -35,4 +35,19 @@ class Image extends Model
     {
         return $this->belongsTo(Page::class);
     }
+
+    /**
+     * Return alt text for this image.
+     * 
+     * @return string
+     */
+    public function getAlt(): string
+    {
+        $infos = Info::all()->firstOrFail();
+
+        $alt = $this->title . '-' . __('messages.words.nav_title') . '-' . ($infos->city ? "$infos->city-" : '') . $this->ext;
+        $alt = preg_replace('/[. ( -)]+/', '-', mb_strtolower($alt));
+
+        return $alt;
+    }
 }

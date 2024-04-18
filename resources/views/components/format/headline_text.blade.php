@@ -6,12 +6,12 @@
 
       <div class="col-12 col-sm-11 col-lg-10 offset-sm-1 offset-lg-2 row">
         @foreach ($content as $row)
-          <h2 class="g-sm-0">
+          <h2 class="g-sm-0" {!! $aos::right() !!}>
             <b>{!! $row->title !!}</b>
           </h2>
 
           <div class="offset-md-2 col-md-10 offset-lg-2 col-lg-10 col-xxl-7 g-sm-0">
-            <p style="max-width: 1000px">{{ $row->content }}</p>
+            <p style="max-width: 1000px" {!! $aos::left(200) !!}>{{ $row->content }}</p>
           </div>
         @endforeach
       </div>

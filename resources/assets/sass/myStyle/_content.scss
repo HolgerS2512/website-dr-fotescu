@@ -315,6 +315,22 @@ $strip-map: (
   font-weight: 500;
   color: black;
 
+  img {
+    transform: scale(1);
+    transition: .2s;
+  }
+
+  &:hover {
+    img {
+      transform: scale(1.1);
+    }
+
+    button {
+      color: $bluelight;
+      text-decoration: underline;
+    }
+  }
+
   button {
     display: flex;
     justify-content: start;
@@ -325,9 +341,30 @@ $strip-map: (
     outline: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+    appearance: none;
 
     &:focus {
       outline: inherit;
     }
   }
+}
+
+// --- extra_link --- //
+.x-link-col {
+  max-width: 900px;
+
+  h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+  }
+}
+
+// --- form --- //
+.contact-form {
+  border: 1px solid rgba(0, 0, 0, 0.175);
+  box-shadow: 0 0 20px 8px rgba(0, 0, 0, 0.1), 0 0 12px 2px rgba(0, 0, 0, 0.1);
+  padding: 1rem 1rem 2rem 1rem;
+  max-width: 620px;
 }

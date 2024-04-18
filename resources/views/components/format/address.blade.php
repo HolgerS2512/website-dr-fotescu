@@ -3,8 +3,9 @@
 <div class="wrapper">
   <div class="{{ $rang === 1 ? 'my-5 pt-5' : 'mb-3' }} pb-3">
     <div class="row">
-
+      
       <div class="col-12 col-sm-11 col-lg-10 offset-sm-1 offset-lg-2 address-col">
+
         @foreach ($content as $model)
           @if ($model->title)
             <div class="mb-4 pb-1 h2" {!! $aos::left() !!}>
@@ -38,8 +39,9 @@
             </a>
           </p>
         </div>
+
       </div>
-      
+
     </div>
   </div>
 </div>

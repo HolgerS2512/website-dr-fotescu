@@ -21,6 +21,7 @@ return new class extends Migration
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
             $table->smallInteger('ranking');
+            $table->string('words_name', 30)->nullable();
             $table->string('title')->nullable();
             $table->text('content')->nullable();
             $table->integer('image_id')->nullable();

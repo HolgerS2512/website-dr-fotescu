@@ -66,27 +66,27 @@ class DeContentSeeder extends Seeder
         ]);
 
         // contact
-        $deContent->insert([
-            'content_id' => 7,
-            'ranking' => 1,
-            'title' => 'Vereinbaren Sie ganz einfach einen Termin',
-            'created_at' => Carbon::now(),
-        ]);
+        // $deContent->insert([
+        //     'content_id' => 7,
+        //     'ranking' => 1,
+        //     'title' => 'Vereinbaren Sie ganz einfach einen Termin',
+        //     'created_at' => Carbon::now(),
+        // ]);
+        // $deContent->insert([
+        //     'content_id' => 9,
+        //     'ranking' => 1,
+        //     'title' => 'Sprechzeiten',
+        //     'created_at' => Carbon::now(),
+        // ]);
         $deContent->insert([
             'content_id' => 8,
-            'ranking' => 1,
-            'title' => 'Sprechzeiten',
-            'created_at' => Carbon::now(),
-        ]);
-        $deContent->insert([
-            'content_id' => 9,
             'ranking' => 1,
             'title' => 'Ihr Weg in unsere Zahnarztpraxis',
             'content' => 'Das Team der Zahnarztpraxis Dr. Fotescu freut sich auf Ihren Besuch. Unsere Praxis befindet sich in der obersten Etage im Sachsen Forum, welche sehr gut an den öffentlichen Nahverkehr Dresdens angebunden ist. Das Sachsen Forum bietet ausserdem, zu jeder Tageszeit ausreichend kostenfreie Parkmöglichkeiten. Sie erreichen uns ausgezeichnet mit dem Auto, Bus und der dresdner Straßenbahn. Folgende Haltestellenlinien sind in der Nähe der Zahnarztpraxis gelegen:',
             'created_at' => Carbon::now(),
         ]);
         $deContent->insert([
-            'content_id' => 10,
+            'content_id' => 9,
             'ranking' => 1,
             'title' => 'Anfahrt',
             'created_at' => Carbon::now(),
@@ -94,10 +94,17 @@ class DeContentSeeder extends Seeder
 
         // transfer
         $deContent->insert([
-            'content_id' => 11,
+            'content_id' => 10,
             'ranking' => 1,
             'title' => 'Lassen Sie sich<br>in unsere Zahnarztpraxis empfehlen',
             'content' => 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus laudantium odit quam hic, enim sequi facere dolor distinctio rem, mollitia rerum voluptates? Provident natus rerum voluptatem, illo commodi eligendi numquam.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 12,
+            'ranking' => 1,
+            'words_name' => 'zfatreatments',
+            'content' => 'Bei uns sind Ihre Zähne in guten Händen. Hier finden Sie mehr Informationen über unsere Behandlungsmöglichkeiten. Selbstverständlich stehen wir Ihnen auch gerne persönlich zur Verfügung, um Ihre Fragen zu beantworten oder einen Termin zu vereinbaren.',
             'created_at' => Carbon::now(),
         ]);
     }

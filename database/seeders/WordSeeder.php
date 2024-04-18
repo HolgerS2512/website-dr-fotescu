@@ -202,8 +202,22 @@ class WordSeeder extends Seeder
         $publish->insert([
             'name' => 'download_form',
             'context' => 'Transfer pdf download title',
-            'de' => ' 	Formular herunterladen',
+            'de' => 'Formular herunterladen',
             'en' => 'Download form',
+        ]);
+
+        $publish->insert([
+            'name' => 'make_appointment',
+            'context' => 'Contact page sentence',
+            'de' => 'Vereinbaren Sie ganz einfach einen Termin',
+            'en' => 'Simply make an appointment',
+        ]);
+
+        $publish->insert([
+            'name' => 'word_office_hours',
+            'context' => 'Contact page word',
+            'de' => 'Sprechzeiten',
+            'en' => 'Office hours',
         ]);
     }
 }

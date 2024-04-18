@@ -1,14 +1,10 @@
 <div class="swiper">
   <div class="swiper-wrapper">
 
-    @foreach ($src as $link)
-      @php
-        $alt = $link->title . '-' . __("messages.words.nav_title") . '-' . $infos->city . '-' . $link->ext;
-        $alt = preg_replace('/[. ( -)]+/', '-', mb_strtolower($alt));
-      @endphp
+    @foreach ($images as $image)
       <div class="swiper-slide">
         <div class="img-box-header">
-          <img class="slideshow-img" src="{{ asset($link->src) }}" alt="{{ $alt }}" {!! $aos::right(100, 0) !!}>
+          <img class="slideshow-img" src="{{ asset($image->src) }}" alt="{{ $image->getAlt() }}" {!! $aos::right(100, 0) !!}>
         </div>
       </div>
     @endforeach

@@ -85,7 +85,7 @@ class DeListSeeder extends Seeder
 
         // contact cross_list
         $deList->insert([
-            'content_id' => 9,
+            'content_id' => 8,
             'ranking' => 1,
             'item_1' => 'Linie 1',
             'item_2' => 'Linie 6',

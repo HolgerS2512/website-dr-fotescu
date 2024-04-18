@@ -18,6 +18,15 @@ class Content extends Model
     use HasFactory;
 
     /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<bool>
+     */
+    protected $casts = [
+        'layout' => 'boolean',
+    ];
+
+    /**
      * The attributes that aren't mass assignable.
      *
      * @var array

@@ -10,11 +10,7 @@
 
             <div class="d-flex mb-4">
               @isset ($content[$i]->image()->src)
-              @php
-                $alt = $content[$i]->image()->title . '-' . __("messages.words.nav_title") . '-' . $infos->city . '-' . $content[$i]->image()->ext;
-                $alt = preg_replace('/[. ( -)]+/', '-', mb_strtolower($alt));
-              @endphp
-                <img src="{{ $content[$i]->image()->src }}" width="48" height="auto" alt="{{ $alt }}">
+                <img src="{{ $content[$i]->image()->src }}" width="48" height="auto" alt="{{ $content[$i]->image()->getAlt() }}">
               @endif
               <span class="ms-2">
                 {{ $content[$i]->title }}
@@ -27,9 +23,9 @@
               @else
 
                 @php
-                  foreach ($list as $attr) {
-                    if ($attr->ranking === $content[$i]->ranking) {
-                      $listEl = $attr;
+                  foreach ($list as $row) {
+                    if ($row->ranking === $content[$i]->ranking) {
+                      $listEl = $row;
                     }
                   }
                 @endphp
@@ -42,11 +38,7 @@
                         @if($listEl->{'item_' . $idx})
                           <li>
                             @isset($listEl->image()->src)
-                              @php
-                                $alt = $content[$i]->image()->title . '-' . __("messages.words.nav_title") . '-' . $infos->city . '-' . $content[$i]->image()->ext;
-                                $alt = preg_replace('/[. ( -)]+/', '-', mb_strtolower($alt));
-                              @endphp
-                              <img width="18" height="18" src="{{ url($listEl->image()->src) }}" alt="{{ $alt }}">
+                              <img width="18" height="18" src="{{ url($listEl->image()->src) }}" alt="{{ $listEl->image()->getAlt() }}">
                             @endisset
                             {{ $listEl->{'item_' . $idx} }}
                           </li>

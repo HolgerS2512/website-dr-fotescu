@@ -14,7 +14,7 @@
             @isset($image)
               <img 
                 src="{{ $image->src }}" 
-                alt="{{ preg_replace('/[. ( -)]+/', '-', mb_strtolower(mb_strtolower("$image->title-" . __("messages.words.nav_title") . '-' . $infos->city . '-' . $image->ext))) }}"
+                alt="{{ $image->getAlt() }}"
               >
             @endisset
           @endif

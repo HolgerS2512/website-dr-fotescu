@@ -12,21 +12,19 @@ use App\Mail\ContactMail;
 use App\Models\Content;
 use App\Models\Info;
 use App\Models\OpeningHours;
-use App\Models\Publish;
 use App\Models\Subpage;
 use App\Repositories\Page\PageRepository;
 use Exception;
 use Illuminate\Support\Facades\Mail;
 use App\Traits\GetLangMessage;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Contains this methods and variables.
  * 
  * @var \App\Models\Page $page
+ * @var \App\Models\Subpage $subpage
  * @var \App\Models\Image $images,
- * @var \App\Models\Publish $publishes
  * @var \App\Models\Info $infos
  * @var \App\Models\OpeningHours $opening
  * @var \App\Models\Content $contents
@@ -45,16 +43,13 @@ final class PageController extends Controller
     private string $currPageLink;
     private string $currLanguage;
 
-    private $pageValues;
+    private $currPage;
 
     private Collection $pages;
     private Collection $subpages;
     private Collection $contentItem;
     private Collection $opening;
     private Info $infos;
-
-    private array $slideImages;
-    private bool $isSlideshow;
 
     /**
      * Set $currPageLink, $currLanguage and calls setAttributes.
@@ -63,8 +58,6 @@ final class PageController extends Controller
      */
     public function __construct(GetPageUrlVars $urlVars, Request $request)
     {
-        $this->currLanguage = $urlVars::getLanguage();
-
         $this->currPageLink = $urlVars->currentPageLink;
 
         $this->setAttributes();
@@ -78,28 +71,21 @@ final class PageController extends Controller
      */
     public function setAttributes()
     {
+        $this->currLanguage = app()->getLocale();
+
         $this->setDbValues();
 
-        $this->pageValues = $this->pages->where('weblink', "$this->currPageLink")->first() ?? $this->subpages->where('weblink', "$this->currPageLink")->first();
+        $this->currPage = $this->pages->where('weblink', "$this->currPageLink")->first() ?? $this->subpages->where('weblink', "$this->currPageLink")->first();
 
-        if (is_null($this->pageValues)) {
-            dd('url values test =>', $this->pageValues);
+        // test
+        if (is_null($this->currPage)) {
+            dd('url values test =>', $this->currPage);
         }
+        // end
 
-        if (!is_null($this->pageValues)) {
+        if (!is_null($this->currPage)) {
 
-            $this->contentItem = $this->pageValues->contents()->orderBy('ranking')->get()->load([$this->currLanguage, "{$this->currLanguage}List"]);
-
-            $slideImages = $this->pageValues->images()->where('slide', true)->orderBy('ranking')->get();
-
-            foreach ($slideImages as $key => $image) {
-                $this->slideImages[$key] = (object) $image->only(['title', 'src', 'ext']);
-            }
-
-            $publishes = Publish::all()->where('name', $this->pageValues->link . '.slider')->first();
-            if (!is_null($publishes)) {
-                $this->isSlideshow = ($publishes->only(['public']))['public'];
-            }
+            $this->contentItem = $this->currPage->contents()->orderBy('ranking')->get()->load([$this->currLanguage, "{$this->currLanguage}List"]);
         }
     }
 
@@ -120,6 +106,7 @@ final class PageController extends Controller
 
             $this->opening = OpeningHours::all()->sortBy('ranking');
         } catch (\Throwable $th) {
+
             return view('errors.500');
         }
     }
@@ -131,19 +118,18 @@ final class PageController extends Controller
      */
     public function index()
     {
-        if (is_null($this->pageValues)) {
+        if (is_null($this->currPage)) {
             return view('errors.500');
         }
 
         return view('pages.index', [
-            'currPageValues' => $this->pageValues,
+            'currPage' => $this->currPage,
             'contentItem' => $this->contentItem ?? [],
-            'slideSrc' => $this->slideImages ?? [],
-            'isSlideshow' => $this->isSlideshow ?? [],
             'pages' => $this->pages,
             'subpages' => $this->subpages,
             'infos' => $this->infos,
             'opening' => $this->opening,
+            'locale' => $this->currLanguage,
             'aos' => new AOS,
         ]);
     }
@@ -209,7 +195,7 @@ final class PageController extends Controller
                 'path' => 'required|min:3|max:70',
             ]);
 
-            if ($credentials->fails()) return view('errors.500');
+            if ($credentials->fails()) return view('errors.401');
 
             $headers = [
                 'Content-Type' => 'application/pdf',

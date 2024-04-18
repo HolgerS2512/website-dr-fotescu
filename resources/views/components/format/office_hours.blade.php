@@ -5,6 +5,7 @@
     <div class="row">
 
       <div class="col-12 col-sm-11 col-lg-10 offset-sm-1 offset-lg-2 address-col">
+
         @foreach ($content as $row)
           @if ($row->title)
             <div class="mb-4 pb-1 h2" {!! $aos::left() !!}>
@@ -34,6 +35,7 @@
         <div {!! $aos::left($opening->count() * 200) !!}>
           <p class="mb-3">{{ __('messages.words.opening_hours_additional') }}</p>
         </div>
+
       </div>
       
     </div>

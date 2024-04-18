@@ -89,6 +89,7 @@
           <div class="card w-100" style="min-height: 220px">
             <div class="card-body">
               <h5 class="card-title">{{ $page->en }}</h5>
+
               @if ( $page->src === null )
                 <div class="d-flex justify-content-center align-items-center" style="height: 150px; border-radius: 6px;">
                   <small style="height: min-content; color: red;">No Image Available</small>         
