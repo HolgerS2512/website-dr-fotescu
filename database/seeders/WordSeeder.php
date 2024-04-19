@@ -219,5 +219,69 @@ class WordSeeder extends Seeder
             'de' => 'Sprechzeiten',
             'en' => 'Office hours',
         ]);
+
+        $publish->insert([
+            'name' => 'gender_woman',
+            'de' => 'Frau',
+            'en' => 'Mrs.',
+        ]);
+
+        $publish->insert([
+            'name' => 'gender_man',
+            'de' => 'Herr',
+            'en' => 'Mr.',
+        ]);
+
+        $publish->insert([
+            'name' => 'gender_divers',
+            'de' => 'Divers',
+            'en' => 'Divers',
+        ]);
+
+        $publish->insert([
+            'name' => 'first_name',
+            'de' => 'Vorname',
+            'en' => 'First name',
+        ]);
+
+        $publish->insert([
+            'name' => 'last_name',
+            'de' => 'Nachname',
+            'en' => 'Last name',
+        ]);
+
+        $publish->insert([
+            'name' => 'regarding',
+            'de' => 'Betreff',
+            'en' => 'Regarding',
+        ]);
+
+        $publish->insert([
+            'name' => 'your_msg',
+            'de' => 'Ihre Nachricht an uns',
+            'en' => 'Your message to us',
+        ]);
+
+        $publish->insert([
+            'name' => 'terms_start',
+            'de' => 'Ich habe die',
+            'en' => 'Regarding',
+        ]);
+        $publish->insert([
+            'name' => 'terms_link',
+            'de' => 'Datenschutz-Richtlinien',
+            'en' => 'Regarding',
+        ]);
+        $publish->insert([
+            'name' => 'terms_end',
+            'de' => 'zur Kenntnis genommen und akzeptiere diese.',
+            'en' => 'Regarding',
+        ]);
+
+        $publish->insert([
+            'name' => 'send_btn',
+            'de' => 'Abschicken',
+            'en' => 'Send',
+        ]);
     }
 }

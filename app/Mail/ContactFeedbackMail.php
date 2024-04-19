@@ -19,10 +19,7 @@ class ContactFeedbackMail extends Mailable
      *
      * @return void
      */
-    public function __construct()
-    {
-        //
-    }
+    public function __construct(protected $values, protected $base64) {}
 
     /**
      * Get the message envelope.
@@ -46,6 +43,10 @@ class ContactFeedbackMail extends Mailable
     {
         return new Content(
             view: 'mails.fb_contact_mail',
+            with: [
+                'src' => $this->base64,
+                'name' => ($this->values['gender'] ? $this->values['gender'] . ' ' : '') . $this->values['firstname'] .' '. $this->values['lastname'],
+            ],
         );
     }
 

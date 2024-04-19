@@ -89,7 +89,8 @@
           @break
         @case('contact_collection')
             <x-format.contact_collection 
-              :rang="$content->ranking" 
+              :rang="$content->ranking"
+              :form="$currPage->hasForm('contact_collection')" 
               :opening="$opening" 
               :infos="$infos" 
               :aos="$aos" 

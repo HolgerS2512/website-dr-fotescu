@@ -18,6 +18,7 @@ use Exception;
 use Illuminate\Support\Facades\Mail;
 use App\Traits\GetLangMessage;
 use Illuminate\Database\Eloquent\Collection;
+use Symfony\Component\Mime\Encoder\Base64Encoder;
 
 /**
  * Contains this methods and variables.
@@ -42,6 +43,7 @@ final class PageController extends Controller
 {
     private string $currPageLink;
     private string $currLanguage;
+    private string $base64Logo;
 
     private $currPage;
 
@@ -87,6 +89,8 @@ final class PageController extends Controller
 
             $this->contentItem = $this->currPage->contents()->orderBy('ranking')->get()->load([$this->currLanguage, "{$this->currLanguage}List"]);
         }
+
+        $this->base64Logo = 'data:image/' . $this->infos->logo_ext . ';base64,' . base64_encode(file_get_contents(base_path($this->infos->logo_path)));
     }
 
     /**
@@ -144,8 +148,11 @@ final class PageController extends Controller
     {
         try {
             $credentials = Validator::make($request->all(), [
-                'name' => 'required|min:3|max:50',
+                'gender' => 'required|regex:/[w,m,d]{1}/',
+                'firstname' => 'required|min:3|max:50',
+                'lastname' => 'required|min:3|max:50',
                 'email' => 'required|email',
+                'phone' => 'required|regex:/(01)[0-9]*/',
                 'reference' => 'required|min:3|max:50',
                 'msg' => 'required|min:10|max:255',
                 'terms' => 'accepted',
@@ -157,27 +164,29 @@ final class PageController extends Controller
                     ->withInput();
             }
 
-            Mail::to($this->infos->mail)->send(new ContactMail($request));
+            $request['gender'] = $request['gender'] === 'd' ? '' : __("messages.words.gender_{$request['gender']}");
 
-            Mail::to($request['email'])->send(new ContactFeedbackMail);
+            Mail::to($this->infos->mail)->send(new ContactMail($request, $this->base64Logo));
+
+            Mail::to($request['email'])->send(new ContactFeedbackMail($request, $this->base64Logo));
 
             return redirect()->back()->with([
                 'present' => true,
                 'status' => true,
-                'message' => GetLangMessage::languagePackage()->contactTrue,
+                'message' => GetLangMessage::languagePackage($this->currLanguage)->contactTrue,
             ]);
         } catch (Exception $e) {
             return redirect()->back()->with([
                 'present' => true,
                 'status' => false,
-                'message' => GetLangMessage::languagePackage()->contactFalse,
+                'message' => GetLangMessage::languagePackage($this->currLanguage)->contactFalse,
             ]);
         }
 
         return redirect()->back()->with([
             'present' => true,
             'status' => false,
-            'message' => GetLangMessage::languagePackage()->contactFalse,
+            'message' => GetLangMessage::languagePackage($this->currLanguage)->contactFalse,
         ]);
     }
 

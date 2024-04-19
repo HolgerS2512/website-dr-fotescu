@@ -1,20 +1,17 @@
-{{-- Address section --}}
+{{-- Contact collection section (address, office hours, contact form) --}}
 
 <div class="wrapper">
-  <div class="{{ $rang === 1 ? 'pt-5' : '' }} pb-3" style="margin-bottom: 160px">
-  {{-- <div class="{{ $rang === 1 ? 'my-5 pt-5' : 'mb-3' }} pb-3"> --}}
-    <div class="row row-gap-5">
-      
+  <div class="{{ $rang === 1 ? 'pt-5 mt-5' : '' }} pb-3" style="margin-bottom: 120px">
+    <div class="row row-gap-3">
 
-      {{-- <div class="col-12 col-sm-11 col-lg-10 offset-sm-1 offset-lg-2 address-col"> --}}
-      <div class="col-sm-11 offset-sm-1 offset-lg-2 address-col">
-        <div class="mb-4 pb-1 h2" {!! $aos::left() !!}>
+
+      <div class="col-sm-11 col-xxl-10 offset-sm-1 offset-xxl-2">
+        <div class="mb-3 h2" {!! $aos::left() !!}>
           <b>{{ __('messages.words.make_appointment') }}</b>
         </div>
-      {{-- </div> --}}
       </div>
 
-      <div class="col col-sm-10 offset-sm-1 offset-lg-2 col-xl-4 address-col">
+      <div class="col-12 col-lg-4 offset-sm-1 offset-xxl-2 address-col">
         <div {!! $aos::left(200) !!}>
           <p>{{ __('messages.words.main_title') }}</p>
           <p>{{ $infos->location }}</p>
@@ -42,7 +39,7 @@
         </div>
 
         <div>
-          <div class="mb-4 mt-5 pb-1 h2" {!! $aos::left() !!}>
+          <div class="mb-4 mt-5 pb-1 h4" {!! $aos::left() !!}>
             <b>{{ __('messages.words.word_office_hours') }}</b>
           </div>
 
@@ -70,67 +67,95 @@
         </div>
       </div>
 
-      <div class="col-sm-10 offset-sm-1 offset-lg-2 col-xl-6 offset-xl-0 my-3 d-xl-flex justify-content-center">
-        <form 
-        method="POST" 
-        action="/kontakt"
-        class="row g-3 contact-form"
-        >
-        @csrf
-        <div>
-            <label for="name" class="form-label">Name*</label>
-            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name" value="{{ old('name') }}" required>
-            @error('name')
+      @if ($form)
+        <div class="col-sm-11 offset-sm-1 offset-lg-0 col-lg-7 col-xxl-6 my-3">
+          <div class="contact-form" {!! $aos::right() !!}>
+            <form 
+            method="POST" 
+            action="{{ route('contact') }}"
+            class="row g-3"
+            >
+            @csrf
+            <div class="col-sm-6">
+              <select class="form-select" name="gender" required>
+                <option value="w" selected>{{ __('messages.words.gender_w') }}</option>
+                <option value="m">{{ __('messages.words.gender_m') }}</option>
+                <option value="d">{{ __('messages.words.gender_d') }}</option>
+              </select> 
+              @error('gender')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
-            @enderror
-        </div>           
-        <div>
-            <label for="email" class="form-label">Email*</label>
-            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="email" value="{{ old('email') }}" required>
-            @error('email')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-            @enderror
-        </div>           
-        <div>
-            <label for="reference" class="form-label">Betreff*</label>
-            <input type="text" name="reference" class="form-control @error('reference') is-invalid @enderror" id="reference" value="{{ old('reference') }}" required>
-            @error('reference')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-            @enderror
-        </div>
-        <div>
-            <label for="msg" class="form-label">Nachricht*</label>
-            <textarea rows="6" class="form-control @error('msg') is-invalid @enderror" name="msg" id="msg" placeholder="Ihre Nachricht an uns" required>{{ old('msg') }}</textarea>
-            @error('msg')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-            @enderror
-        </div>
-        <div>
-            <div class="form-check">
-                <input class="form-check-input @error('terms') is-invalid @enderror" type="checkbox" id="terms" name="terms">
-                <label class="form-check-label" for="terms">
-                Ich habe die Datenschutz-Richtlinien zur Kenntnis genommen und akzeptiere diese.*
-                </label>
-                @error('terms')
-                    <div class="invalid-feedback terms-fb">
+              @enderror
+            </div>
+            <div class="col-sm-6">
+                <input type="text" name="firstname" class="form-control @error('firstname') is-invalid @enderror" value="{{ old('firstname') }}" placeholder="{{ __('messages.words.first_name') }}*" required>
+                @error('firstname')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>   
+            <div class="col-sm-6">
+                <input type="text" name="lastname" class="form-control @error('lastname') is-invalid @enderror" value="{{ old('lastname') }}" placeholder="{{ __('messages.words.last_name') }}*" required>
+                @error('lastname')
+                    <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                 @enderror
             </div>
+            <div class="col-sm-6">
+                <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="{{ __('messages.words.mail') }}*" required>
+                @error('email')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="col-sm-6">
+                <input type="tel" name="phone" pattern="[0-9]*" class="form-control @error('phone') is-invalid @enderror" placeholder="{{ __('messages.words.tel_long') }}*" value="{{ old('phone') }}" required>
+                @error('phone')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="col-sm-6">
+                <input type="text" name="reference" class="form-control @error('reference') is-invalid @enderror" placeholder="{{ __('messages.words.regarding') }}*" value="{{ old('reference') }}" required>
+                @error('reference')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div>
+                <textarea rows="4" class="form-control @error('msg') is-invalid @enderror" name="msg" placeholder="{{ __('messages.words.your_msg') }}*" required>{{ old('msg') }}</textarea>
+                @error('msg')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div>
+                <div class="form-check">
+                    <input class="form-check-input @error('terms') is-invalid @enderror" type="checkbox" id="terms" name="terms">
+                    <label class="form-check-label" for="terms">
+                      {{ __('messages.words.terms_start') }} <a href="{{ url((app()->getLocale() === 'de' ? '' : '/'. app()->getLocale()) . '/datenschutz') }}">{{ __('messages.words.terms_link') }}</a> {{ __('messages.words.terms_end') }}*
+                    </label>
+                    @error('terms')
+                        <div class="invalid-feedback terms-fb">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">{{ __('messages.words.send_btn') }}</button>
+            </div>
+            </form>
+          </div>
         </div>
-        <div>
-            <button type="submit" class="btn btn-primary">Abschicken</button>
-        </div>
-        </form>
-      </div>
+      @endif
 
 
     </div>

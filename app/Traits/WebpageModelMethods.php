@@ -60,7 +60,7 @@ trait WebpageModelMethods
    */
   public function isSlideshow(): bool
   {
-    return $this->publishes()->first()->public ?? false;
+    return $this->publishes()->where('name', $this->link . '.slider')->first()->public ?? false;
   }
 
   /**
@@ -108,9 +108,10 @@ trait WebpageModelMethods
   /**
    * Return header informations for this page as string.
    * 
+   * @param string $key
    * @return string
    */
-  public function getHeader($input = 'default'): string
+  public function getHeader($key = 'default'): string
   {
     $result = [
       'description' => '',
@@ -131,6 +132,17 @@ trait WebpageModelMethods
     $result['title'] = $isCurrPageHome ? '' : "{$this->getHeadline()} | ";
     $result['title'] .= __('messages.words.main_title');
 
-    return ucwords($result[$input]);
+    return ucwords($result[$key]);
+  }
+
+  /**
+   * Returns a bool if present and whether the form is visible.
+   * 
+   * @param string $blade
+   * @return bool
+   */
+  public function hasForm($blade = ''): bool
+  {
+    return $this->publishes()->where('name', $blade . '.form')->first()->public ?? false;
   }
 }

@@ -9,6 +9,7 @@
 
       <div class="col-12 col-sm-10 col-lg-8 offset-sm-1 offset-lg-2">
 
+        @if ( ! is_null($content) && ! is_null($list->first()) )
         @foreach ($content as $row)
           <div class="mb-4 pb-1 h2" {!! $aos::left() !!}>
             <b>{{ $row->title }}</b>
@@ -38,6 +39,7 @@
               </li>
             </div>
           @endfor
+          @endif
         </ul>
 
       </div>

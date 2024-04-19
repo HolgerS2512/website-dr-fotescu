@@ -96,12 +96,12 @@
             <div class="row flex-row-reverse align-items-center h-100">
                 <div class="col-md-4 text-center text-md-end my-3 m-md-0">
                     <a 
-                        href="{{ url($path === '/' ? $path . 'impressum' : $path . '/impressum') }}"
+                        href="{{ url((app()->getLocale() === 'de' ? '' : '/'. app()->getLocale()) . '/impressum') }}"
                         title="{{ __('messages.title.imprint') }}"
                         class="me-1 link-hover link-light link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover"
                     >{{ __('messages.title.imprint') }}
                     </a> &VerticalLine; <a 
-                        href="{{ url($path === '/' ? $path . 'datenschutz' : $path . '/datenschutz') }}"
+                        href="{{ url((app()->getLocale() === 'de' ? '' : '/'. app()->getLocale()) . '/datenschutz') }}"
                         title="{{ __('messages.title.privacy') }}"
                         class="ms-1 link-hover link-light link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover"
                     >{{ __('messages.title.privacy') }}</a>

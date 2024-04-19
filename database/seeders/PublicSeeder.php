@@ -133,5 +133,11 @@ class PublicSeeder extends Seeder
             'name' => 'dentures.slider',
             'public' => '0',
         ]);
+
+        $publish->insert([
+            'page_id' => 7,
+            'name' => 'contact_collection.form',
+            'public' => '1',
+        ]);
     }
 }

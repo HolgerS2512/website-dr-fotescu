@@ -15,14 +15,16 @@ return new class extends Migration
     {
         Schema::create('infos', function (Blueprint $table) {
             $table->id();
-            $table->string('location')->nullable();
-            $table->string('address')->nullable();
-            $table->string('zip')->nullable();
-            $table->string('city')->nullable();
-            $table->string('country')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('mail')->nullable();
-            $table->string('web')->nullable();
+            $table->string('location', 50)->nullable();
+            $table->string('address', 80)->nullable();
+            $table->string('zip', 10)->nullable();
+            $table->string('city', 100)->nullable();
+            $table->string('country', 50)->nullable();
+            $table->string('phone', 30)->nullable();
+            $table->string('mail', 40)->nullable();
+            $table->string('web', 80)->nullable();
+            $table->string('logo_path', 80)->nullable();
+            $table->string('logo_ext', 5)->nullable();
             $table->string('maps')->nullable();
             $table->text('iframe')->nullable();
             $table->timestamps();

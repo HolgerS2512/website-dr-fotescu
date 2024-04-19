@@ -4,6 +4,7 @@ main {
 
 main:not(.panel) {
   padding-top: $total-nav;
+  overflow: hidden;
 }
 
 
