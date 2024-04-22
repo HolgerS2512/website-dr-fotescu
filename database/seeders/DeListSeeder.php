@@ -97,5 +97,20 @@ class DeListSeeder extends Seeder
             'item_8' => 'Linie 12',
             'created_at' => Carbon::now(),
         ]);
+
+        // praxis_&_team headline_list
+        $deList->insert([
+            'content_id' => 15,
+            'ranking' => 1,
+            'image_id' => 12,
+            'title' => 'Warum unsere<br>Zahnarztpraxis deine Wahl sein sollte?',
+            'item_1' => 'Hervorragende Beratung durch fachliche Kompetenz.',
+            'item_2' => 'Eine schmerzfreie und blendende medizinische Versorgung.',
+            'item_3' => 'Ein angenehmes und wohlfühlendes Praxisklima.',
+            'item_4' => 'Eine beruhigende und stressfreie Behandlung.',
+            'item_5' => 'Ein freundliches und zuvorkommendes Praxisteam.',
+            'item_6' => 'Eine ausgezeichnete Pflege, Zahnbehandlung und Vorsorge.',
+            'created_at' => Carbon::now(),
+        ]);
     }
 }

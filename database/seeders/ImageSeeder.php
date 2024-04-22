@@ -249,6 +249,24 @@ class ImageSeeder extends Seeder
             'src' => 'uploads/svg/pdf.svg',
             'ext' => 'svg',
             'created_at' => Carbon::now(),
+        ]); 
+
+        // praxis_&_team
+        $images->insert([
+            'page_id' => 5,
+            'ranking' => 1,
+            'title' => 'example',
+            'src' => 'uploads/images/team/example.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]);  
+        $images->insert([
+            'page_id' => 5,
+            'ranking' => 1,
+            'title' => 'lemon-example',
+            'src' => 'uploads/images/team/lemon-example.jpg',
+            'ext' => 'jpg',
+            'created_at' => Carbon::now(),
         ]);  
     }
 }

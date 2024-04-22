@@ -107,5 +107,55 @@ class DeContentSeeder extends Seeder
             'content' => 'Bei uns sind Ihre Zähne in guten Händen. Hier finden Sie mehr Informationen über unsere Behandlungsmöglichkeiten. Selbstverständlich stehen wir Ihnen auch gerne persönlich zur Verfügung, um Ihre Fragen zu beantworten oder einen Termin zu vereinbaren.',
             'created_at' => Carbon::now(),
         ]);
+
+        // praxis_&_team
+        $deContent->insert([
+            'content_id' => 13,
+            'ranking' => 1,
+            'title' => 'Herzlich Willkommen<br>in unserer Zahnarztpraxis',
+            'content' => 'Mit Leidenschaft und Kompetenz für Ihre Zähne. Unser junges Praxis Team gewährleistet eine zeitnahe Versorgung bei Zahnschmerzen oder anderen dentalen Problemstellungen, wir sind sehr fürsorglich bei Kindern sowie Angstpatienten.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 14,
+            'ranking' => 1,
+            'title' => 'Innovatives Konzept für<br>neueste Zahnmedizin &amp; modernisierte Praxis',
+            'content' => 'Seit der Übernahme der Zahnarztpraxis von Herr und Frau Dr. Wünschmann am 01.01.2023 wurde die Praxis grundlegend modernisiert und digitalisiert, u. a. durch den Umzug in größere Räumlichkeiten eine Ebene tiefer. Unsere Zahnarztpraxis liegt jetzt genau gegenüber der Apotheke auf Ebene 3.<p>Durch die Modernisierung und Volldigitalisierung bietet die Praxis nun einen hohen Standard an Behandlungsmöglichkeiten, der sich an den aktuellen und substanziellen Anforderungen in der Zahnmedizin ausrichtet.<p>Unser Ziel ist es, eine qualitativ hochwertige und heilsame Behandlung in einer sicheren Umgebung anzubieten, um Ihren Besuch so angenehm wie möglich zu gestalten. Bei uns steht der Patient an erster Stelle, wir behandeln Sie als Individuum und gehen bei jedem Schritt auf Ihre Sorgen und Erwartungen ein.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 16,
+            'ranking' => 1,
+            'image_id' => 28,
+            'title' => 'Leidenschaftlich für gesunde Zähne',
+            'content' => 'Mit stetig wachsenden Ansprüchen an Ihre Zähne, bieten wir hochwertige und langlebige spitzen Qualität. Patienten stehen bei uns an erster Stelle! Jede Behandlung ist bei uns individuell, ausgezeichnet beraten und genau auf Sie abgestimmt.<br>Hier finden Sie mehr Informationen zu unseren Behandlungsverfahren. Selbstverständlich stehen wir Ihnen auch persönlich zur Verfügung, um Ihre Fragen zu beantworten oder für Ihr Anliegen, einen Termin zu vereinbaren.',
+            'created_at' => Carbon::now(),
+        ]);
+
+        // kost
+        $deContent->insert([
+            'content_id' => 17,
+            'ranking' => 1,
+            'title' => 'Hervorragende Leistungen<br>müssen nicht immer Unmengen kosten!',
+            'content' => 'Mit stetig wachsenden Ansprüchen an Ihre Zähne, bieten wir hochwertige und langlebige spitzen Qualität zu fairen Kostenaufwand. Wir behandeln Patienten NICHT nach Fließband Methode! Jede Behandlung ist bei uns, eine individuell abgestimmte und spezifische Behandlung.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 18,
+            'ranking' => 1,
+            'title' => 'Zahnarztpraxis & Team',
+            'content' => 'Der Zahnarzt unserer Praxis hat sich nach seiner Ausbildung und Studium zusätzlich umfangreiches Spezialwissen angeeignet und bildet sich auch jetzt stetig fort. Mit großer Kompetenz und Anteilnahme ist Herr Dr. Fotescu und das freundliche Praxisteam stetig für Sie bereit.<br>Hier finden Sie mehr Informationen über uns. Selbstverständlich stehen wir Ihnen auch gerne persönlich zur Verfügung, um Ihre Fragen zu beantworten oder einen Termin zu vereinbaren.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 19,
+            'ranking' => 1,
+            'title' => 'Details folgen in Kürze.',
+            'created_at' => Carbon::now(),
+        ]);
+
+
+
+
     }
 }

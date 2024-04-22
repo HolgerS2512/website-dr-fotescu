@@ -120,8 +120,56 @@ class ContentSeeder extends Seeder
             'ranking' => 3,
             'page_id' => 6,
             'format' => 'x_link',
-            'btn' => 'x-btn',
             'url_link' => '2',
+            'created_at' => Carbon::now(),
+        ]);
+
+        // praxis_&_team
+        $content->insert([
+            'ranking' => 1,
+            'page_id' => 5,
+            'format' => 'headline_text',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'ranking' => 2,
+            'page_id' => 5,
+            'format' => 'headline_text',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'ranking' => 3,
+            'page_id' => 5,
+            'format' => 'headline_list',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'ranking' => 4,
+            'page_id' => 5,
+            'image_id' => 27,
+            'format' => 'image_overlap',
+            'url_link' => '2',
+            'created_at' => Carbon::now(),
+        ]);
+
+        // kost
+        $content->insert([
+            'ranking' => 1,
+            'page_id' => 4,
+            'format' => 'headline_text',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'ranking' => 3,
+            'page_id' => 4,
+            'format' => 'x_link',
+            'url_link' => '5',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'ranking' => 2,
+            'page_id' => 4,
+            'format' => 'details',
             'created_at' => Carbon::now(),
         ]);
     }

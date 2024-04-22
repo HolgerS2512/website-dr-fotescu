@@ -2,18 +2,22 @@
 {{-- h3 --}}
 {{-- text sections --}}
 {{-- button --}}
+
+@if ( ! is_null($content->url_link) && ! is_null($content->{app()->getLocale()}->first()) )
 @php
 $page = $pages->find($content->url_link);
 $thisContent = $content->{app()->getLocale()}->first();
 $hasBreak = str_contains($thisContent->content, '<br>');
 @endphp
 
-<div class="wrapper">
-  <div class="mb-3 py-5">
-    <div class="row my-5" {!! $aos::up(0, 300) !!}>
+@if ( ! ( isset($isOverlap) && $isOverlap ) )
+  <div class="wrapper">
+    <div class="mb-3 py-5">
+      <div class="row my-5" {!! $aos::up(0, 300) !!}>
+        <div class="col-12 col-sm-11 col-lg-10 offset-sm-1 offset-lg-2 x-link-col">
+@endif
 
-      <div class="col-12 col-sm-11 col-lg-10 offset-sm-1 offset-lg-2 x-link-col">
-        <h2 class="mb-2 textblack">{{ __('messages.words.main_title') }}</h2>
+        <h2 class="mb-2 textdark">{{ __('messages.words.main_title') }}</h2>
         <h3  class="mb-3">
           <strong>
             @if ($thisContent->words_name)
@@ -34,15 +38,19 @@ $hasBreak = str_contains($thisContent->content, '<br>');
 
         <div>
           <a 
-            class="{{ $content->btn }}"
+            class="x-btn"
             href="{{ url($page->weblink) }}"
             title="{{ $page->{app()->getLocale()} }}"
           >
             {{ $page->{app()->getLocale()} }}
           </a>
         </div>
+        
+@if ( ! ( isset($isOverlap) && $isOverlap ) )
+        </div>
       </div>
-      
     </div>
   </div>
-</div>
+@endif
+
+@endif

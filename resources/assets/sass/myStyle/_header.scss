@@ -1,17 +1,27 @@
 .header {
   position: relative;
-  // max-height: $header-max-height;
   @include h-w-100($header-min500-height);
   z-index: 9;
 
   h1 {
     position: absolute;
     left: 0;
-    // bottom: -2.15vw;
     bottom: -1rem;
-    // bottom: 0;
     z-index: 99;
     padding-left: .5rem;
+
+    > strong {
+      font-size: 14px;
+      letter-spacing: 2px;
+      color: $textblack;
+      text-transform: uppercase;
+      white-space: nowrap;
+
+      position: absolute;
+      left: 0;
+      bottom: -.5rem;
+      padding-left: .7rem;
+    }
   }
 
 
@@ -39,6 +49,11 @@
     h1 {
       bottom: -2.15vw;
       padding-left: 14vw;
+
+      > strong {
+        bottom: -.75vw;
+        padding-left: calc(14vw + .4vw);
+      }
     }
   }
 }
@@ -55,6 +70,46 @@
         @include h-w-100;
         object-fit: cover;
         object-position: center;
+      }
+    }
+  }
+}
+
+@media(min-width:820px) {
+  .header {
+    h1 {
+      > strong {
+        bottom: -.35vw;
+      }
+    }
+  }
+}
+
+@media(min-width:992px) {
+  .header {
+    h1 {
+      > strong {
+        bottom: .2vw;
+      }
+    }
+  }
+}
+
+@media(min-width:1400px) {
+  .header {
+    h1 {
+      > strong {
+        bottom: .5vw;
+      }
+    }
+  }
+}
+
+@media(min-width:1900px) {
+  .header {
+    h1 {
+      > strong {
+        bottom: .75vw;
       }
     }
   }

@@ -18,5 +18,10 @@
     @endif
   @endif
 
-  <h1 {!! $aos::left(100) !!}>{!! $currPage->getHeadline() !!}</h1>
+  <h1 {!! $aos::left(100) !!}>
+    {!! $currPage->getHeadline() !!}
+    @if ( ! ( $currPage->link === 'home' || $currPage->link === 'treatments' ) )
+      <strong>{{ __('messages.words.h1_subtitle') }}</strong>
+    @endif
+  </h1>
 </section>

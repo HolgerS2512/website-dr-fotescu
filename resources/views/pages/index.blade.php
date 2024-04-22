@@ -62,7 +62,7 @@
           @break
         @case('headline_list')
             <x-format.headline_list 
-              :content="$content->{$locale}" 
+              :content="$content->{$locale . 'List'}" 
               :rang="$content->ranking" 
               :aos="$aos" 
               />
@@ -74,8 +74,13 @@
               :aos="$aos" 
             />
           @break
-        @case('two_images_overlap')
-            <x-format.two_images_overlap :content="$content->{$locale}" :aos="$aos" />
+        @case('image_overlap')
+            <x-format.image_overlap 
+              :first="$content" 
+              :second="$content->{$locale}" 
+              :pages="$pages" 
+              :aos="$aos" 
+            />
           @break
         @case('x_link')
             <x-format.x_link 
@@ -83,6 +88,9 @@
               :pages="$pages" 
               :aos="$aos" 
             />
+          @break
+        @case('details')
+            <x-format.details :content="$content->{$locale}" />
           @break
         @case('download')
             <x-format.download :content="$content" :aos="$aos" />
