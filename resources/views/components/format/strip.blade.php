@@ -1,7 +1,7 @@
 {{-- Colored stripes with keyword-like content.  --}}
 
 <div class="bg-strip">
-  <div class="wrapper no-wrapper-992">
+  <div class="wrapper no-wrapper-768">
     <div class="row row-cols-5 g-0 justify-content-between">
 
     @foreach ($list as $row)

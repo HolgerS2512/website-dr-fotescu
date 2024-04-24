@@ -19,7 +19,7 @@
 {{--------------------> Content <--------------------}}
 @section('content')
 
-  <x-header :currPage="$currPage" :aos="$aos" />
+  <x-header :currPage="$currPage" :isBlogPost="$isBlogPost" :aos="$aos" />
 
   @isset($contentItem)
 
@@ -141,8 +141,8 @@
           @case('form')
             <x-format.form :content="$content->{$locale}" :layout="$content->layout" :aos="$aos" />
           @break
-        @case('blog_post')
-            <x-format.blog_post :content="$content->{$locale}" :aos="$aos" />
+        @case('blog_posts')
+            <x-format.blog_posts :postMap="$content" :locale="$locale" :aos="$aos" />
           @break
         @default
       @endswitch

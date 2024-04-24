@@ -41,11 +41,14 @@ use Symfony\Component\Mime\Encoder\Base64Encoder;
 final class PageController extends Controller
 // implements PageRepository
 {
-    private string $currPageLink;
+    private string|NULL $currPageLink;
+    private string|NULL $postUrl;
     private string $currLanguage;
     private string $base64Logo;
-
-    private $currPage;
+    private bool $isBlogPost;
+    
+    private \App\Models\Page|Subpage $currPage;
+    private \App\Models\Post|NULL $currPost;
 
     private Collection $pages;
     private Collection $subpages;
@@ -62,7 +65,16 @@ final class PageController extends Controller
     {
         $this->currPageLink = $urlVars->currentPageLink;
 
-        $this->setAttributes();
+        if (isset($urlVars->postUrl) && !is_null($urlVars->postUrl)) {
+            $this->postUrl = $urlVars->postUrl;
+        }
+
+        if (!is_null($this->currPageLink)) {
+
+            $this->isBlogPost = $urlVars->isBlogPost;
+
+            $this->setAttributes();
+        }
     }
 
     /**
@@ -79,18 +91,20 @@ final class PageController extends Controller
 
         $this->currPage = $this->pages->where('weblink', "$this->currPageLink")->first() ?? $this->subpages->where('weblink', "$this->currPageLink")->first();
 
-        // test
-        if (is_null($this->currPage)) {
-            dd('url values test =>', $this->currPage);
-        }
-        // end
-
         if (!is_null($this->currPage)) {
 
-            $this->contentItem = $this->currPage->contents()->orderBy('ranking')->get()->load([$this->currLanguage, "{$this->currLanguage}List"]);
+            $this->contentItem = $this->currPage->contents()->whereNotNull('format')->orderBy('ranking')->get()->load([$this->currLanguage, "{$this->currLanguage}List"]);
         }
 
         $this->base64Logo = 'data:image/' . $this->infos->logo_ext . ';base64,' . base64_encode(file_get_contents(base_path($this->infos->logo_path)));
+
+        if ($this->isBlogPost) {
+            foreach ($this->contentItem as $content) {
+                if ($content->url_link === $this->postUrl) {
+                    $this->currPost = $content->findPost();
+                }
+            }
+        }
     }
 
     /**
@@ -122,11 +136,13 @@ final class PageController extends Controller
      */
     public function index()
     {
-        if (is_null($this->currPage)) {
-            return view('errors.500');
-        }
+        if (is_null($this->currPageLink)) return view('errors.404');
 
-        return view('pages.index', [
+        if (is_null($this->currPage)) return view('errors.500');
+
+        $blade = $this->isBlogPost ? 'feed' : 'index';
+
+        return view("pages.$blade", [
             'currPage' => $this->currPage,
             'contentItem' => $this->contentItem ?? [],
             'pages' => $this->pages,
@@ -134,6 +150,9 @@ final class PageController extends Controller
             'infos' => $this->infos,
             'opening' => $this->opening,
             'locale' => $this->currLanguage,
+            'isBlogPost' => $this->isBlogPost,
+            'currPost' => $this->currPost ?? [],
+            'postUrl' => $this->postUrl ?? '',
             'aos' => new AOS,
         ]);
     }
@@ -209,9 +228,8 @@ final class PageController extends Controller
             $headers = [
                 'Content-Type' => 'application/pdf',
             ];
-    
-            return response()->download($request->path, $request->name, $headers);
 
+            return response()->download($request->path, $request->name, $headers);
         } catch (Exception $e) {
             return view('errors.500');
         }

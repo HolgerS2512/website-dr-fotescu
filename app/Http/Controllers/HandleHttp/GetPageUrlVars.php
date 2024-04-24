@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\HandleHttp;
 
+use App\Models\Content;
 use Illuminate\Http\Request;
 use App\Models\Page;
+use App\Models\Post;
 use App\Models\Subpage;
 use App\Repositories\Http\UrlVariablesRepository;
 use Illuminate\Support\Facades\App;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Query\JoinClause;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Contains this methods and variables.
@@ -23,6 +27,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @var string $currentPageLink
  * @var static string $lang
  * @var static array $hasLanguages
+ * @var bool $isBlogPost
  * @method __construct(Request $request)
  * @method setAttributes
  * @method setPages
@@ -83,7 +88,7 @@ final class GetPageUrlVars implements UrlVariablesRepository
    * @var string
    * 
    */
-  public string $currentPageLink;
+  public string|NULL $currentPageLink;
 
   /**
    * Contains the current language value.
@@ -93,6 +98,22 @@ final class GetPageUrlVars implements UrlVariablesRepository
    * 
    */
   public static string $lang;
+
+  /**
+   * Contains is current page a blog post.
+   *
+   * @var bool
+   * 
+   */
+  public bool $isBlogPost = false;
+
+  /**
+   * Contains is current post url link.
+   *
+   * @var string|null
+   * 
+   */
+  public string $postUrl;
 
   /**
    * Contains the current languages for this webpage.
@@ -200,7 +221,7 @@ final class GetPageUrlVars implements UrlVariablesRepository
   public function setUrlValues()
   {
     if (strlen(self::$requestPath) <= 2) self::$requestPath .= '/home';
-    
+
     self::$urlValues = self::$requestPath === '/' ? [0 => 'home'] : explode('/', self::$requestPath);
     // self::$urlValues = self::$requestPath === '/' ? [0 => 'home'] : explode('/', preg_replace('/\/download+/', '', self::$requestPath));
   }
@@ -210,6 +231,7 @@ final class GetPageUrlVars implements UrlVariablesRepository
    *
    * @method setAdminPageLink
    * @method setWebPageLink
+   * @method setPageBlogLink
    * @param array $urlValues
    * @var string $currentPageLink
    * @return void
@@ -218,13 +240,26 @@ final class GetPageUrlVars implements UrlVariablesRepository
   public function setCurrentPageLink()
   {
     $value = '';
+    $withoutLanguage = [];
 
     if (in_array('administration', self::$urlValues)) {
       $value = $this->setAdminPageLink();
     }
 
     if (!in_array('administration', self::$urlValues)) {
-      $value = $this->setWebPageLink();
+
+      foreach (self::$urlValues as $arrVal) {
+
+        if (!in_array($arrVal, self::$hasLanguages['options'])) {
+          $withoutLanguage[] = $arrVal;
+        }
+      }
+
+      if (in_array('blog', self::$urlValues) && count($withoutLanguage) > 1) {
+        $value = $this->setPageBlogLink();
+      } else {
+        $value = $this->setWebPageLink();
+      }
     }
 
     $this->currentPageLink = $value;
@@ -265,6 +300,7 @@ final class GetPageUrlVars implements UrlVariablesRepository
     for ($i = 0; $i < count(self::$urlValues); $i++) {
 
       if (strlen(self::$urlValues[$i]) > 2) {
+
         if (count($collectValues)) {
 
           foreach ($collectValues as $val) {
@@ -281,6 +317,42 @@ final class GetPageUrlVars implements UrlVariablesRepository
     foreach ($this->webpageLinks as $link) {
       if ($link === $urlString) return $urlString;
     }
+  }
+
+  /**
+   * Returns blog as a string if the link to the respective blog exists (link to the current page) and isBlogPage var.
+   *
+   * @param \App\Models\Content&&Post
+   * @param Collection $pages
+   * @param array $urlValues
+   * @var string $postUrl
+   * @var bool $isBlogPost
+   * @return string|null
+   * 
+   */
+  public function setPageBlogLink(): string|NULL
+  {
+    $check = false;
+
+    $posts = DB::table('contents')->where('format', 'post')
+      ->rightJoin('posts', function (JoinClause $join) {
+        $join->on('contents.id', '=', 'posts.content_id')
+          ->where('posts.public', true);
+      })->get();
+
+    foreach (self::$urlValues as $urlStr) {
+
+      foreach ($posts as $post) {
+        $result = $post->url_link === $urlStr;
+        if ($result) {
+          $this->postUrl = $urlStr;
+          $this->isBlogPost = $result;
+          $check = $result;
+        }
+      }
+    }
+
+    return $check ? 'blog' : NULL;
   }
 
   /**

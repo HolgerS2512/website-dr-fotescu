@@ -283,5 +283,12 @@ class WordSeeder extends Seeder
             'de' => 'Abschicken',
             'en' => 'Send',
         ]);
+
+        $publish->insert([
+            'name' => 'back',
+            'de' => 'Zurück',
+            'en' => 'Back',
+            'ru' => 'Back',
+        ]);
     }
 }

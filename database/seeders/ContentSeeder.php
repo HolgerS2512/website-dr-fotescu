@@ -172,5 +172,37 @@ class ContentSeeder extends Seeder
             'format' => 'details',
             'created_at' => Carbon::now(),
         ]);
+
+        // blog
+        $content->insert([
+            'ranking' => 1,
+            'page_id' => 3,
+            'format' => 'headline_text',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'ranking' => 2,
+            'page_id' => 3,
+            'format' => 'blog_posts',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'page_id' => 3,
+            'format' => 'post',
+            'url_link' => 'lorem-ipsum-dolor-sit-amet-consectetur-adipisicing',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'page_id' => 3,
+            'format' => 'post',
+            'url_link' => 'lorem-ipsum-dolor-sit-reprehenderit-animi-provident',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'page_id' => 3,
+            'format' => 'post',
+            'url_link' => 'lorem-ipsum-dolor-sit-amet-dolor-sit-amet',
+            'created_at' => Carbon::now(),
+        ]);
     }
 }

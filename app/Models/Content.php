@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use PhpParser\ErrorHandler\Collecting;
 
 class Content extends Model
 {
@@ -108,8 +109,28 @@ class Content extends Model
      * 
      * @return \App\Models\Image
      */
-    public function image()
+    public function image(): Image|null
     {
-        return Image::all()->where('id', $this->image_id)->first();
+        return Image::where('id', $this->image_id)->firstOrFail();
+    }
+
+    /**
+     * Called post collection for this instance
+     * 
+     * @return Collection<App\Models\Post>|null
+     */
+    public function publicPosts()
+    {
+        return Post::all()->where('public', true)->sortBy('ranking');
+    }
+
+    /**
+     * Find the post for this instance
+     * 
+     * @return \App\Models\Post|null
+     */
+    public function findPost()
+    {
+        return Post::where('content_id', $this->id)->firstOrFail();
     }
 }

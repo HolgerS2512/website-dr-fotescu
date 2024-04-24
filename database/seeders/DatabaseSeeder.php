@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             DeListSeeder::class,
             InfoSeeder::class,
             OpeningHoursSeeder::class,
+            PostSeeder::class,
         ]);
     }
 }

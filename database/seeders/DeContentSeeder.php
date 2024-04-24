@@ -17,7 +17,7 @@ class DeContentSeeder extends Seeder
     public function run()
     {
         $deContent = DB::table('de_contents');
-        
+
         // home
         $deContent->insert([
             'content_id' => 2,
@@ -97,7 +97,7 @@ class DeContentSeeder extends Seeder
             'content_id' => 10,
             'ranking' => 1,
             'title' => 'Lassen Sie sich<br>in unsere Zahnarztpraxis empfehlen',
-            'content' => 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus laudantium odit quam hic, enim sequi facere dolor distinctio rem, mollitia rerum voluptates? Provident natus rerum voluptatem, illo commodi eligendi numquam.',
+            'content' => '',
             'created_at' => Carbon::now(),
         ]);
         $deContent->insert([
@@ -154,8 +154,80 @@ class DeContentSeeder extends Seeder
             'created_at' => Carbon::now(),
         ]);
 
+        // blog
+        $deContent->insert([
+            'content_id' => 20,
+            'ranking' => 1,
+            'title' => 'Abschnitt im Aufbau',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 22,
+            'ranking' => 1,
+            'title' => 'Lorem ipsum dolor sit amet consectetur',
+            'content' => ' Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque?
 
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque?
+            
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque?
+            
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque?
+            
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque?
+            
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque? ',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 22,
+            'ranking' => 2,
+            'title' => 'Lorem ipsum dolor sit amet consectetur',
+            'content' => ' Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque?
 
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque?
+            
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque?
+            
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque?
+            
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque?
+            
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque?',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 23,
+            'ranking' => 1,
+            'title' => 'Lorem ipsum dolor sit amet consectetur',
+            'content' => ' Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque?
 
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque?
+            
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque?
+            
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque?
+            
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque?
+            
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque?',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 24,
+            'ranking' => 1,
+            'title' => 'Lorem ipsum dolor sit amet consectetur',
+            'content' => ' Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque?
+
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque?
+            
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque?
+            
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque?
+            
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque?
+            
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque?',
+            'created_at' => Carbon::now(),
+        ]);
     }
 }

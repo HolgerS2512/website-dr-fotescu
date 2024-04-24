@@ -12,22 +12,30 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [PageController::class, 'index']);
-// Route::get('/{link}/{link2}', [PageController::class, 'index']);
+
 Route::get('en', [PageController::class, 'index']);
-// Route::get('en/praxis_&_team', [PageController::class, 'index']);
+
 Route::get('ru', [PageController::class, 'index']);
 
+// Get Language var START
 $splitUrl = explode('/', str_replace(config('app.url'), '', url()->current()));
-usort($splitUrl, fn($a, $b) => strlen($a) <=> strlen($b));
-$local = array_filter($splitUrl, function($v) {
+
+usort($splitUrl, fn ($a, $b) => strlen($a) <=> strlen($b));
+
+$local = array_filter($splitUrl, function ($v) {
   if (strlen($v) === 2) return $v;
 });
+
 sort($local);
+
 $lang = isset($local[0]) ? ($local[0] === 'de' ? '' : $local[0]) : '';
+// Get Language var END
 
 Route::get("$lang/behandlungen", [PageController::class, 'index']);
 
 Route::get("$lang/blog", [PageController::class, 'index']);
+
+Route::get("$lang/blog/{post}", [PageController::class, 'index']);
 
 Route::get("$lang/kosten", [PageController::class, 'index']);
 

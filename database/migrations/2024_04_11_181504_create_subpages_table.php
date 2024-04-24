@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('subpages', function (Blueprint $table) {
             $table->id();
-            $table->integer('ranking');
+            $table->integer('ranking')->nullable();
             $table
                 ->foreignId('page_id')
                 ->constrained()

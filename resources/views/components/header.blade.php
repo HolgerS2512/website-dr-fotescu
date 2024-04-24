@@ -1,17 +1,18 @@
 @php
   $data = $currPage->getSliderData();
+  if ($isBlogPost) $data = NULL;
 @endphp
 
 <section class="header{{ !is_null($data) ? '' : ' header-no-src' }}">
-  @if($currPage->isSlideshow())
+  @if( $currPage->isSlideshow() && ! $isBlogPost )
     <x-slideshow :images="$data" :aos="$aos" />
   @else
-    @if($data)
+    @if( $data )
       <div class="img-box-header">
         <img 
           class="static-img" 
           src="{{ asset($data->src) }}" 
-          alt="{{ $data->getAlt() }}"
+          alt="{{ method_exists($data, 'getAlt') ? $data->getAlt() : 'example' }}"
           {!! $aos::right(100, 0) !!}
         >
       </div>
