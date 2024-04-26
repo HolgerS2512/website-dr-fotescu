@@ -146,5 +146,33 @@ class DeListSeeder extends Seeder
             'item_4' => 'Rheumatoide Arthritis',
             'created_at' => Carbon::now(),
         ]);
+
+        // dentures
+        $deList->insert([
+            'content_id' => 38,
+            'ranking' => 1,
+            'title' => 'Vorteile von Brücken:',
+            'item_1' => 'Gute Langlebigkeit',
+            'item_2' => 'Feste Option',
+            'created_at' => Carbon::now(),
+        ]);
+        $deList->insert([
+            'content_id' => 38,
+            'ranking' => 2,
+            'title' => 'Nachteile von Brücken:',
+            'item_1' => 'Invasiveres Verfahren',
+            'item_2' => 'Das Durchtrennen benachbarter Zähne für eine Brücke kann dazu führen, dass der Nerv mit der Zeit abstirbt.',
+            'item_3' => 'Wenn die Brücke versagt, kann dies die benachbarten Zähne beeinträchtigen, was zu deren Verlust führen kann.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deList->insert([
+            'content_id' => 38,
+            'ranking' => 3,
+            'title' => 'Nicht geeignet, wenn:',
+            'item_1' => 'Der Patient eine sehr schlechte Mundhygiene hat',
+            'created_at' => Carbon::now(),
+        ]);
+
+
     }
 }

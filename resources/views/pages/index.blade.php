@@ -135,11 +135,12 @@
               :content="$content" 
               :locale="$locale" 
               :pages="$pages"
+              :subpages="$subpages"
               :aos="$aos" 
             />
           @break
-        @case('image_small')
-            <x-format.image_small :content="$content->{$locale}" :aos="$aos" />
+        @case('image_solo')
+            <x-format.image_solo :content="$content" :aos="$aos" />
           @break
         @case('subheading')
             <x-format.subheading :list="$content->{$locale . 'List'}" :aos="$aos" />

@@ -364,5 +364,110 @@ class ImageSeeder extends Seeder
             'created_at' => Carbon::now(),
         ]); 
 
+        // bleaching
+        $images->insert([
+            'page_id' => 2,
+            'subpage_id' => 6,
+            'ranking' => 1,
+            'title' => 'bleached-tooths',
+            'src' => 'uploads/images/bleaching/bleached-tooths.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]); 
+        $images->insert([
+            'page_id' => 2,
+            'subpage_id' => 6,
+            'ranking' => 1,
+            'title' => 'woman-call',
+            'src' => 'uploads/images/bleaching/woman-call.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]); 
+
+        // dentures
+        $images->insert([
+            'page_id' => 2,
+            'subpage_id' => 9,
+            'ranking' => 1,
+            'title' => 'couple',
+            'src' => 'uploads/images/dentures/couple.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]); 
+        $images->insert([
+            'page_id' => 2,
+            'subpage_id' => 9,
+            'ranking' => 1,
+            'title' => 'couple-near',
+            'src' => 'uploads/images/dentures/couple-near.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]); 
+        $images->insert([
+            'page_id' => 2,
+            'subpage_id' => 9,
+            'ranking' => 1,
+            'title' => 'couple-2',
+            'src' => 'uploads/images/dentures/couple-2.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]); 
+        $images->insert([
+            'page_id' => 2,
+            'subpage_id' => 9,
+            'ranking' => 1,
+            'title' => 'implants',
+            'src' => 'uploads/images/dentures/implants.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]); 
+
+        // implants
+        $images->insert([
+            'page_id' => 2,
+            'subpage_id' => 8,
+            'ranking' => 1,
+            'title' => 'two-implants',
+            'src' => 'uploads/images/implants/two-implants.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]); 
+        $images->insert([
+            'page_id' => 2,
+            'subpage_id' => 8,
+            'ranking' => 1,
+            'title' => 'tooth-bridge',
+            'src' => 'uploads/images/implants/tooth-bridge.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]); 
+        $images->insert([
+            'page_id' => 2,
+            'subpage_id' => 8,
+            'ranking' => 1,
+            'title' => 'implants-right',
+            'src' => 'uploads/images/implants/implants-right.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]); 
+        $images->insert([
+            'page_id' => 2,
+            'subpage_id' => 8,
+            'ranking' => 1,
+            'title' => 'implants',
+            'src' => 'uploads/images/implants/implants-2.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]); 
+        $images->insert([
+            'page_id' => 2,
+            'subpage_id' => 8,
+            'ranking' => 1,
+            'title' => 'woman-ok',
+            'src' => 'uploads/images/implants/woman-ok.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]); 
+
     }
 }

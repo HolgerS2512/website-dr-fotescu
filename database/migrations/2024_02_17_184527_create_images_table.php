@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->integer('ranking')->default(0);
+            $table->integer('ranking')->default(1);
             $table
                 ->foreignId('page_id')
                 ->constrained()
@@ -23,7 +23,7 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->integer('subpage_id')->nullable();
             $table->tinyInteger('slide')->default(0);
-            $table->string('title')->unique();
+            $table->string('title');
             $table->string('src');
             $table->string('ext', 4);
             $table->timestamps();

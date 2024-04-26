@@ -568,11 +568,12 @@ $overlap: 2.5rem;
 .headline-image {
   p, h3 {
     color: black;
+    text-shadow: 1px 1px 0 rgba(255,255,255, .25);
   }
 
   .hl-img-list {
     margin: 0;
-    padding: .25rem 0 2rem 1.5rem;
+    padding: 0 0 .8rem 2rem;
 
     li {
       margin: inherit;
@@ -581,19 +582,17 @@ $overlap: 2.5rem;
     }
 
     p {
+      text-shadow: 1px 1px 0 rgba(255,255,255, .25);
       display: inline;
       margin: 0;
       padding: 0;
     }
   }
 
-  @media (min-width:992px) {
-    display: flex;
-  }
-
-  @media (max-width:991.9998px) {
+  @media (max-width:1399.9998px) {
     .img-box {
       max-height: 270px;
+
       img {
         object-fit: cover;
         object-position: center 17%;
@@ -602,62 +601,57 @@ $overlap: 2.5rem;
     }
   }
 
-  @media (min-width:576px) {
-    .text-box {
-      max-width: 600px;
+  @media (min-width: 1600px) {
+    margin: 0 0 6rem 6rem;
+
+    .img-box {
+      margin: inherit inherit inherit inherit;
     }
   }
 
-  @media (min-width:992px) {
+
+
+  @media (min-width:1400px) {
+    display: flex;
+
     .text-box {
+      
       .hi-img-p, h3 {
-        // text-shadow: 1px 1px 0 rgba(255,255,255,.75);
         margin-bottom: 0;
         padding: .5rem;
-        text-shadow: 1px 1px 0 rgba(255,255,255, .25);
-        position: relative;
-        top: .75rem;
-        left: -2rem;
-        
-        &::after {
-          content: '';
-          background-color: rgba(255, 255, 255, .35);
-          @include position;
-          height: 100%;
-          width: 2rem;
-          z-index: -1;
-        }
       }
-      .hl-img-list li {
-        position: relative;
-        top: 1rem;
-        left: 0;
-      }
-    }
-  }
 
-  @media (min-width:1120px) {
-    .text-box {
-      max-width: 760px;
-      .hi-img-p, h3 {
+      .hi-img-p, h3,
+      .hl-img-list {
+        position: relative;
         top: 2rem;
         left: -4rem;
 
         &::after {
           content: '';
+          background-color: rgba(255, 255, 255, .5);
+          @include position;
+          height: 100%;
+          z-index: -1;
           width: 4rem;
         }
       }
+    }
+  }
 
-      .hl-img-list li {
-        top: 2rem;
-      }
+  @media (min-width:768px) {
+    .text-box {
+      max-width: 840px;
     }
   }
 }
 
-@media (min-width: 1400px) and (max-width: 1600px) {
-  .headline-img-offset {
-    margin-left: 27%;
+.hl-img-title {
+  @media (min-width: 1400px) {
+    margin-left: 15%;
+  }
+  @media (min-width: 1600px) {
+    margin-left: 28%;
   }
 }
+

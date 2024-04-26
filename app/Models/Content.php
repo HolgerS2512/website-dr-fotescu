@@ -111,7 +111,7 @@ class Content extends Model
      */
     public function image(): Image|null
     {
-        return Image::where('id', $this->image_id)->firstOrFail();
+        return Image::where('id', $this->image_id)->first();
     }
 
     /**

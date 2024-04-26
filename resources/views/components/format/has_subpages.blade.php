@@ -5,6 +5,10 @@
     <div class="my-3 py-5">
       <div class="row g-0 row-justify">
 
+@php
+  $i = 0;
+@endphp
+
 @foreach ($subpages as $sub)
 
   @php
@@ -28,7 +32,7 @@
 
   @if ($pageId === $sub->page_id)
     <div class="col-md-6 col-xxl-4 py-2 p-md-2 d-flex justify-content-center mt-5">
-      <div class="present-container">
+      <div class="present-container" {!! $aos::right(300 * $i, 200) !!}>
         <div class="present-aimage">
           <img 
             height="300" width="100%"
@@ -49,6 +53,10 @@
         </div>
       </div>
     </div>
+
+    @php
+      $i === 2 ? $i = 0 : $i++;
+    @endphp
   @endif
 
 @endforeach

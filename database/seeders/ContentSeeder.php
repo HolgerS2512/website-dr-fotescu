@@ -283,5 +283,104 @@ class ContentSeeder extends Seeder
             'btn' => '2',
             'created_at' => Carbon::now(),
         ]);
+
+        // bleaching
+        $content->insert([
+            'page_id' => 2,
+            'subpage_id' => 6,
+            'image_id' => 39,
+            'ranking' => 1,
+            'format' => 'headline_image',
+            'btn' => '7',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'page_id' => 2,
+            'subpage_id' => 6,
+            'image_id' => 40,
+            'ranking' => 2,
+            'format' => 'image_solo',
+            'created_at' => Carbon::now(),
+        ]);
+
+        // dentures
+        $content->insert([
+            'page_id' => 2,
+            'subpage_id' => 9,
+            'image_id' => 41,
+            'ranking' => 1,
+            'format' => 'headline_image',
+            'btn' => '7',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'page_id' => 2,
+            'subpage_id' => 9,
+            'image_id' => 42,
+            'ranking' => 2,
+            'format' => 'image_solo',
+            'btn' => '7',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'page_id' => 2,
+            'subpage_id' => 9,
+            'image_id' => 43,
+            'ranking' => 3,
+            'format' => 'headline_image',
+            'btn' => '7',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'page_id' => 2,
+            'subpage_id' => 9,
+            'image_id' => 44,
+            'ranking' => 4,
+            'btn' => 'subpage.8',
+            'format' => 'image_solo',
+            'created_at' => Carbon::now(),
+        ]);
+
+        // implants
+        $content->insert([
+            'page_id' => 2,
+            'subpage_id' => 8,
+            'image_id' => 45,
+            'ranking' => 1,
+            'format' => 'headline_image',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'page_id' => 2,
+            'subpage_id' => 8,
+            'image_id' => 46,
+            'ranking' => 2,
+            'format' => 'headline_image',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'page_id' => 2,
+            'subpage_id' => 8,
+            'image_id' => 47,
+            'ranking' => 3,
+            'format' => 'headline_image',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'page_id' => 2,
+            'subpage_id' => 8,
+            'image_id' => 48,
+            'ranking' => 4,
+            'format' => 'headline_image',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'page_id' => 2,
+            'subpage_id' => 8,
+            'image_id' => 49,
+            'ranking' => 5,
+            'format' => 'headline_image',
+            'created_at' => Carbon::now(),
+        ]);
     }
 }

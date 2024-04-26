@@ -350,5 +350,199 @@ class DeContentSeeder extends Seeder
             'content' => 'Interesse an weitere Behandlungsmöglichkeiten? Hier können Sie weiterlesen.',
             'created_at' => Carbon::now(),
         ]);
+
+        // bleaching
+        $deContent->insert([
+            'content_id' => 34,
+            'ranking' => 1,
+            'title' => 'Optionen zur<br>Verbesserung des Lächelns',
+            'content' => 'Die Zahnaufhellung kann von vielen Faktoren abhängen, darunter Ihre Lebensgewohnheiten, die aktuelle Farbe Ihrer Zähne und das gewünschte Ergebnis.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 34,
+            'ranking' => 2,
+            'content' => 'Es gibt viele Möglichkeiten, das Aussehen Ihrer Zähne zu verbessern, von der Entfernung oberflächlicher Verfärbungen über die Aufhellung der inneren Pigmente der Zähne bis hin zu komplexeren restaurativen Methoden.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 34,
+            'ranking' => 3,
+            'content' => 'Unsere professionellen Bleaching-Behandlungen sind sicher und wirksam. Sie werden auch auf Ihre speziellen zahnmedizinischen Bedürfnisse zugeschnitten, wobei alle Komplikationen der Mundgesundheit und die Anforderungen an die Beurteilung berücksichtigt werden, bevor Sie Ihre Reise zum "perfekten Lächeln" antreten.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 34,
+            'ranking' => 4,
+            'content' => 'Um mehr über Ihre Möglichkeiten zu erfahren, vereinbaren Sie bitte einen Konsultationstermin mit uns.',
+            'created_at' => Carbon::now(),
+        ]);
+
+        // dentures
+        $deContent->insert([
+            'content_id' => 36,
+            'ranking' => 1,
+            'content' => 'Fehlende Zähne können Ihr Lächeln beeinträchtigen. In unserer Praxis bieten wir Ihnen eine Reihe von Lösungen für fehlende Zähne wie Zahnimplantate, Zahnbrücken und Prothesen.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 37,
+            'ranking' => 1,
+            'title' => 'Prothesen oder<br>herausnehmbarer Zahnersatz',
+            'content' => 'Herausnehmbarer Zahnersatz kommt zum Einsatz, wenn festsitzender Zahnersatz nicht möglich ist, eine große Anzahl von Zähnen fehlt oder die vorhandenen Zähne zu schwach sind, um festsitzenden Zahnersatz zu tragen. Das Spektrum reicht von Teilprothesen bis zu Vollprothesen. Die Totalprothese stützt sich ausschließlich auf das Zahnfleisch, während die Teilprothese auch von den vorhandenen Zähnen getragen wird. Teilprothesen werden mit verschiedenen Verankerungselementen an den Restzähnen befestigt. Klammern ermöglichen eine einfache Verankerung, ohne die vorhandene Zahnsubstanz weiter zu schwächen. Komfortablere Verankerungselemente sind Teleskope. Sie erfordern in der Regel den Abbau von Zahnsubstanz.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 37,
+            'ranking' => 2,
+            'content' => 'Für mehr Informationen buchen Sie bitte einen Konsultationstermin bei uns.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 38,
+            'ranking' => 1,
+            'title' => 'Zahnbrücke oder<br>festsitzender Zahnersatz',
+            'content' => 'Was ist eine Brücke? Wenn ein Zahn fehlt und die benachbarten Zähne überkront werden müssen, kann es sein, dass eine Brücke, die von den benachbarten Zähnen getragen wird, die beste Möglichkeit ist, den fehlenden Zahn zu ersetzen. Bei einer konventionellen Brücke wird der festsitzende künstliche Zahn durch Beschleifen des/der benachbarten Zahns/Zähne fixiert, damit er an seinen Platz passt.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 39,
+            'ranking' => 1,
+            'title' => 'Eine Alternative<br>Option sind Zahnimplantate',
+            'content' => 'Was ist ein Zahnimplantat? Ein festsitzender künstlicher Zahn, der von einer Schraube im Kiefer gehalten wird.',
+            'created_at' => Carbon::now(),
+        ]);
+
+        // implants
+        $deContent->insert([
+            'content_id' => 40,
+            'ranking' => 1,
+            'title' => 'Was ist ein Zahnimplantat?<br>Ein festsitzender künstlicher Zahn,<br>der von einer Schraube im Kiefer gehalten wird.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 41,
+            'ranking' => 1,
+            'title' => 'Lösung<br>für einzelne Zähne',
+            'content' => 'Wenn ein Zahn und seine Wurzel fehlen, stellt eine auf einem Zahnimplantat befestigte Krone eine hervorragende ästhetische und funktionelle Lösung dar. Das Zahnimplantat ersetzt die fehlende Zahnwurzel, und die gesunden Nachbarzähne bleiben vollständig intakt und müssen nicht angetastet werden.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 42,
+            'ranking' => 1,
+            'title' => 'Lösung<br>für mehrere Zähne',
+            'content' => 'Wenn zwei oder mehr Zähne fehlen, muss die Lücke so schnell wie möglich geschlossen werden, um Fehlstellungen von Zähnen und Kieferknochen zu vermeiden. Mit einer implantatgetragenen Brücke kann eine Mehrzahnlücke geschlossen werden, wobei die gesunden Nachbarzähne unangetastet bleiben. Alternativ kann auch eine Teilprothese auf Zahnimplantaten getragen und auf Wunsch des Patienten entfernt werden. Beide Lösungen bieten wesentlich mehr Stabilität als herkömmlicher Zahnersatz.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 43,
+            'ranking' => 1,
+            'title' => 'Lösung<br>für alle Zähne',
+            'content' => 'Wenn der Kiefer völlig zahnlos ist, können Zahnimplantate ein komplettes Gebiss stützen oder eine herausnehmbare Prothese befestigen.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 44,
+            'ranking' => 1,
+            'title' => 'Die Vorteile<br>von Zahnimplantaten:',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 44,
+            'ranking' => 2,
+            'content' => '<headline>1. Den natürlichen Zähnen am ähnlichsten',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 44,
+            'ranking' => 3,
+            'content' => 'Nach Abschluss der Behandlung sieht das Ergebnis völlig natürlich aus und ist optisch nicht von Ihren natürlichen Zähnen zu unterscheiden.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 44,
+            'ranking' => 4,
+            'content' => '<headline>2. Verhinderung von Knochenschwund',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 44,
+            'ranking' => 5,
+            'content' => 'Wenn der Zahn nicht im Knochen ersetzt wird, folgt auf den Zahnverlust unweigerlich ein Knochenverlust. Zahnimplantate können den Knochen dazu anregen, sich selbst wieder aufzubauen und gesund zu bleiben, indem sie mit dem Kieferknochen verwachsen und ihn stabilisieren.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 44,
+            'ranking' => 6,
+            'content' => '<headline>3. Stärke und Funktion',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 44,
+            'ranking' => 7,
+            'content' => 'Zahnimplantate werden zu einem Teil des Kieferknochens und bieten so eine dauerhafte Lösung für den Zahnverlust - im Gegensatz zu Prothesen oder Brücken, die möglicherweise ersetzt oder neu angefertigt werden müssen.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 44,
+            'ranking' => 8,
+            'content' => '<headline>4. Leichte Pflege',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 44,
+            'ranking' => 9,
+            'content' => 'Die Pflege von Implantatzähnen unterscheidet sich nicht von der Pflege Ihrer natürlichen Zähne. Sie müssen sie täglich putzen und mit Zahnseide reinigen, aber Sie müssen keine speziellen Cremes und Klebstoffe auftragen oder sie über Nacht in einem Glas einweichen, wie es bei Zahnersatz der Fall ist. Sie brauchen auch nie eine Füllung oder eine Wurzelbehandlung, wie es bei den natürlichen Zähnen, die eine Brücke tragen, der Fall sein kann.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 44,
+            'ranking' => 10,
+            'content' => '<headline>5. Unterstützung der Gesichtsstruktur',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 44,
+            'ranking' => 11,
+            'content' => 'Wenn der Knochen unter einem verlorenen Zahn zu schwinden beginnt, kann das Ihr Gesicht eingefallen und vorzeitig gealtert aussehen lassen und Ihren Kiefer sogar anfälliger für Brüche machen, wenn er lange genug unbehandelt bleibt. Mit Zahnimplantaten lässt sich dies verhindern und sogar rückgängig machen, so dass Sie länger jünger aussehen.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 44,
+            'ranking' => 12,
+            'content' => '<headline>6. Sicher für die Zähne',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 44,
+            'ranking' => 13,
+            'content' => 'Zahnimplantate haben keine Auswirkungen auf die Gesundheit der natürlichen Nachbarzähne. Andere Zahnersatzmöglichkeiten können jedoch die Nachbarzähne schwächen und sie anfälliger für Karies machen.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 44,
+            'ranking' => 14,
+            'content' => '<headline>7. Langlebig',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 44,
+            'ranking' => 15,
+            'content' => 'Mit der richtigen Pflege haben Zahnimplantate das Potenzial, ein Leben lang zu halten.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 44,
+            'ranking' => 16,
+            'content' => '<headline>8. Lebensqualität',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 44,
+            'ranking' => 17,
+            'content' => 'Mit Implantaten können Sie selbstbewusst essen, sprechen und lächeln, weil sie nicht verrutschen oder sich verschieben, wie es bei herausnehmbarem Zahnersatz oft der Fall ist.',
+            'created_at' => Carbon::now(),
+        ]);
+        
     }
 }

@@ -22,7 +22,39 @@
   <h1 {!! $aos::left(100) !!}>
     {!! $currPage->getHeadline() !!}
     @if ( ! ( $currPage->link === 'home' || $currPage->link === 'treatments' ) )
-      <strong>{{ __('messages.words.h1_subtitle') }}</strong>
+      <strong>
+        {{ __('messages.words.h1_subtitle') }}
+      </strong>
     @endif
   </h1>
 </section>
+
+<script>
+  (() => {
+    'use strict'
+    const h1El = document.querySelectorAll('.header');
+    const subH1El = document.querySelector('h1 > strong');
+    const options = { rootMargin: '-150px' };
+
+    const init = () => {
+      if (window.screen.width <= 299.9998) {
+        subH1El.classList.add('scaling');
+      } else {
+        
+        const elObserver = new IntersectionObserver ((entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              subH1El.classList.add('scaling');
+            } else {
+              subH1El.classList.remove('scaling');
+            }
+          });
+        }, options);
+        
+        h1El.forEach ((h1El) => elObserver.observe (h1El));
+      }
+    }
+
+    setTimeout(() => init(), 300);
+  })()
+</script>
