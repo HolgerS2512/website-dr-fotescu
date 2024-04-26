@@ -229,5 +229,126 @@ class DeContentSeeder extends Seeder
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis iure natus deleniti animi doloribus dolore iste eum ea ipsum. Reprehenderit animi provident deserunt aut nemo illum vero quas, harum cumque?',
             'created_at' => Carbon::now(),
         ]);
+
+        // emergency
+        $deContent->insert([
+            'content_id' => 25,
+            'ranking' => 1,
+            'title' => 'Zahnärztliche<br>Notfallversorgung',
+            'content' => 'Von Zahnschmerzen bis hin zu Abszessen und Zungenbissen - in unserer Zahnarztpraxis kümmern wir uns um Sie und können Ihnen helfen, Ihr zahnmedizinisches Notfallproblem zu lösen.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 26,
+            'ranking' => 1,
+            'title' => 'Haben Sie<br>jetzt Zahnschmerzen?',
+            'content' => 'Dann melden Sie sich jetzt vorab telefonisch an!<br>Machen Sie einen Termin oder kommen Sie noch heute vorbei und wir schauen uns gemeinsam Ihr Anliegen an. Zusammen finden wir schnell eine geeignete Lösung, mit einer herausragenden Behandlung und dem Ziel einen schmerzfreien Tag genießen zu können.',
+            'created_at' => Carbon::now(),
+        ]);
+
+        // prophylaxis
+        $deContent->insert([
+            'content_id' => 27,
+            'ranking' => 1,
+            'title' => 'Über diese Behandlung ',
+            'content' => 'Selbst die beste Zahnbürste kann nicht jeden Teil Ihres Mundes erreichen, und orale Probleme müssen erkannt werden, bevor sie behandelt werden müssen. Unsere Dentalhygienikerinnen erreichen auch die schwer zugänglichen Stellen und sorgen für eine hochwertige professionelle Tiefenreinigung.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 28,
+            'ranking' => 1,
+            'title' => 'Saubere Zähne, frischer Atem',
+            'content' => 'Unsere Dentalhygienikerinnen sind speziell dafür ausgebildet, Ihre Zähne und Ihr Zahnfleisch viel gründlicher zu reinigen, als Sie es zu Hause tun könnten, und gleichzeitig auf frühe Warnzeichen für ernstere Entwicklungen wie Zahnfleischerkrankungen und sogar Mundkrebs zu achten.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 28,
+            'ranking' => 2,
+            'content' => 'In unserer Praxis gehören eine vollständige Zahnsteinentfernung und eine Politur zum Standardprogramm. Außerdem können wir mit der neuesten Air-Flow-Technologie den Biofilm entfernen und unseren Patienten ein perfektes "sauberes" Gefühl geben.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 28,
+            'ranking' => 3,
+            'content' => 'Neben einer gründlichen häuslichen Mundhygiene, zu der das zweimal tägliche Putzen der Zähne mit einer fluoridhaltigen Zahnpasta, einer geeigneten Zahnbürste, Mundwasser und mindestens einmal täglicher Verwendung von Zahnseide gehört, ist es wichtig, regelmäßig zur Zahnhygienikerin zu gehen, um künftige Probleme und die hartnäckige Bildung von schwer erreichbarem Zahnbelag und Zahnstein zu verhindern.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 28,
+            'ranking' => 4,
+            'content' => 'Interesse geweckt? Tun Sie Ihren Zähnen etwas gutes!',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 29,
+            'ranking' => 1,
+            'title' => 'Was beinhaltet<br>eine Dentalhygiene Behandlung?',
+            'content' => '<headline>Während Ihres Termins wird unsere professionelle Zahnhygienikerin:',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 29,
+            'ranking' => 2,
+            'content' => 'In unserer Praxis gehören eine vollständige Zahnsteinentfernung und eine Politur zum Standardprogramm. Außerdem können wir mit der neuesten Air-Flow-Technologie den Biofilm entfernen und unseren Patienten ein perfektes "sauberes" Gefühl geben.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 29,
+            'ranking' => 3,
+            'content' => 'Neben einer gründlichen häuslichen Mundhygiene, zu der das zweimal tägliche Putzen der Zähne mit einer fluoridhaltigen Zahnpasta, einer geeigneten Zahnbürste, Mundwasser und mindestens einmal täglicher Verwendung von Zahnseide gehört, ist es wichtig, regelmäßig zur Zahnhygienikerin zu gehen, um künftige Probleme und die hartnäckige Bildung von schwer erreichbarem Zahnbelag und Zahnstein zu verhindern.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 29,
+            'ranking' => 4,
+            'content' => 'Interesse geweckt? Tun Sie Ihren Zähnen etwas gutes!',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 30,
+            'ranking' => 1,
+            'title' => 'Warum ist die<br>Mundhygiene so wichtig?',
+            'content' => 'Eine gute Zahnhygiene ist von entscheidender Bedeutung, denn eine schlechte Mundhygiene kann zu peinlichen und potenziell ernsten Beschwerden führen. Diese Symptome können Ihr soziales Leben und Ihre täglichen Aktivitäten beeinträchtigen, das Essen und Sprechen erschweren und Sie in Bezug auf Ihr Lächeln verunsichern. Eines der ernsteren Probleme sind die Auswirkungen, die eine schlechte Zahngesundheit auf Ihre allgemeine Gesundheit haben kann.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 30,
+            'ranking' => 2,
+            'content' => 'Eine gute Mundgesundheit verringert das Risiko von Zahnfleischerkrankungen, schlechtem Atem, Karies und sogar Mundkrebs.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 31,
+            'ranking' => 1,
+            'title' => 'Schlechte Mundhygiene<br>kann Folgendes verursachen:',
+            'content' => 'Eine gute Zahnhygiene ist von entscheidender Bedeutung, denn eine schlechte Mundhygiene kann zu peinlichen und potenziell ernsten Beschwerden führen. Diese Symptome können Ihr soziales Leben und Ihre täglichen Aktivitäten beeinträchtigen, das Essen und Sprechen erschweren und Sie in Bezug auf Ihr Lächeln verunsichern. Eines der ernsteren Probleme sind die Auswirkungen, die eine schlechte Zahngesundheit auf Ihre allgemeine Gesundheit haben kann.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 31,
+            'ranking' => 2,
+            'content' => 'Eine gute Mundgesundheit verringert das Risiko von Zahnfleischerkrankungen, schlechtem Atem, Karies und sogar Mundkrebs.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 32,
+            'ranking' => 1,
+            'title' => 'Zahnfleischerkrankung',
+            'content' => 'Schlechte Zahnreinigung kann ein Nährboden für Bakterien sein, und wenn Sie Ihre Mundhygiene vernachlässigen oder ignorieren, kann dies im Laufe der Zeit zu einer Zahnfleischerkrankung führen (auch bekannt als Parodontose oder Parodontitis). Die mit Parodontitis verbundenen Bakterien können über blutendes Zahnfleisch in den Blutkreislauf gelangen und werden mit den folgenden Erkrankungen in Verbindung gebracht:',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 33,
+            'ranking' => 1,
+            'title' => 'AirFlow-Technologie',
+            'content' => 'Ein weiterer Vorteil eines Besuchs in unserer Praxis ist, dass wir die neueste AirFlow-Technologie verwenden, bei der ein feiner Luftstrom mit Wasser und feinem Pulver gemischt wird, um Ihre Zähne richtig zu polieren und Flecken und Plaque/Biofilm zu entfernen. AirFlow bietet eine sanftere und effektivere Zahnreinigung als herkömmliche Zahnsteinentfernung und Politur und kann weiter unter den Zahnfleischrand vordringen als herkömmliche Zahnsteinentfernung.',
+            'created_at' => Carbon::now(),
+        ]);
+        $deContent->insert([
+            'content_id' => 33,
+            'ranking' => 2,
+            'content' => 'Interesse an weitere Behandlungsmöglichkeiten? Hier können Sie weiterlesen.',
+            'created_at' => Carbon::now(),
+        ]);
     }
 }

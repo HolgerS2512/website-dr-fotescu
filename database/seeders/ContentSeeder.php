@@ -204,5 +204,84 @@ class ContentSeeder extends Seeder
             'url_link' => 'lorem-ipsum-dolor-sit-amet-dolor-sit-amet',
             'created_at' => Carbon::now(),
         ]);
+
+        // emergency
+        $content->insert([
+            'page_id' => 2,
+            'subpage_id' => 1,
+            'image_id' => 29,
+            'ranking' => 1,
+            'format' => 'headline_image',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'page_id' => 2,
+            'subpage_id' => 1,
+            'image_id' => 30,
+            'ranking' => 2,
+            'format' => 'headline_image',
+            'btn' => '7',
+            'created_at' => Carbon::now(),
+        ]);
+
+        // prophylaxis
+        $content->insert([
+            'page_id' => 2,
+            'subpage_id' => 3,
+            'image_id' => 32,
+            'ranking' => 1,
+            'format' => 'headline_image',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'page_id' => 2,
+            'subpage_id' => 3,
+            'image_id' => 33,
+            'ranking' => 2,
+            'format' => 'headline_image',
+            'btn' => '7',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'page_id' => 2,
+            'subpage_id' => 3,
+            'image_id' => 34,
+            'ranking' => 3,
+            'format' => 'headline_image',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'page_id' => 2,
+            'subpage_id' => 3,
+            'image_id' => 35,
+            'ranking' => 4,
+            'format' => 'headline_image',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'page_id' => 2,
+            'subpage_id' => 3,
+            'image_id' => 36,
+            'ranking' => 5,
+            'format' => 'headline_image',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'page_id' => 2,
+            'subpage_id' => 3,
+            'image_id' => 37,
+            'ranking' => 6,
+            'format' => 'headline_image',
+            'created_at' => Carbon::now(),
+        ]);
+        $content->insert([
+            'page_id' => 2,
+            'subpage_id' => 3,
+            'image_id' => 38,
+            'ranking' => 7,
+            'format' => 'headline_image',
+            'btn' => '2',
+            'created_at' => Carbon::now(),
+        ]);
     }
 }

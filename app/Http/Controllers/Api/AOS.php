@@ -27,6 +27,11 @@ class AOS extends Controller
         return "data-aos-offset=\"$offset\" data-aos=\"" . self::$animation . "-up-left\" data-aos-delay=\"$delay\" data-aos-duration=\"" . ($duration ? $duration : self::$duration) . "\"";
     }
 
+    public static function upRight(int $delay = 0, int $offset = 0, int $duration = 0): string
+    {
+        return "data-aos-offset=\"$offset\" data-aos=\"" . self::$animation . "-up-right\" data-aos-delay=\"$delay\" data-aos-duration=\"" . ($duration ? $duration : self::$duration) . "\"";
+    }
+
     public static function right(int $delay = 0, int $offset = 0, int $duration = 0): string
     {
         return "data-aos-offset=\"$offset\" data-aos=\"" . self::$animation . "-right\" data-aos-delay=\"$delay\" data-aos-duration=\"" . ($duration ? $duration : self::$duration) . "\"";

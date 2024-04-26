@@ -221,19 +221,19 @@ class WordSeeder extends Seeder
         ]);
 
         $publish->insert([
-            'name' => 'gender_woman',
+            'name' => 'gender_w',
             'de' => 'Frau',
             'en' => 'Mrs.',
         ]);
 
         $publish->insert([
-            'name' => 'gender_man',
+            'name' => 'gender_m',
             'de' => 'Herr',
             'en' => 'Mr.',
         ]);
 
         $publish->insert([
-            'name' => 'gender_divers',
+            'name' => 'gender_d',
             'de' => 'Divers',
             'en' => 'Divers',
         ]);

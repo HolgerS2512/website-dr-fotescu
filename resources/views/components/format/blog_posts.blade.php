@@ -2,7 +2,7 @@
 
 <div class="wrapper no-wrapper-768">
   <div class="mb-3 py-5">
-    <div class="row g-0 blog-justify">
+    <div class="row g-0 row-justify">
 
 @foreach ($postMap->publicPosts() as $post)
 
@@ -11,7 +11,7 @@
       <div class="present-aimage">
         <img 
           height="300" width="100%"
-          src="{{ url(is_null($post->image()) ? 'uploads/images/posts/example.webp' : $post->image()->src) }}" 
+          src="{{ url(is_null($post->image()) ? 'uploads/images/examples/example.webp' : $post->image()->src) }}" 
           alt="{{ is_null($post->image()) ? 'example' : $post->image()->getAlt() }}"
         >
       </div>

@@ -5,30 +5,14 @@ main {
 main:not(.panel) {
   padding-top: $total-nav;
   overflow: hidden;
-}
 
+  &::before {
+    content: '';
+    background-image: radial-gradient(at left top, rgb(180, 200, 232) 0, transparent 55%);
+    background-color: white;
 
-.x-btn {
-  width: 194px;
-  height: min-content;
-  white-space: nowrap;
-  padding: 1.3rem 3rem;
-  font-weight: 700;
-  font-size: 18px;
-  text-decoration: none;
-  background-color: #5a94cf;
-  color: #fff;
-  border: 2px solid #5a94cf;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  -webkit-transition: .25s;
-  -moz-transition: .25s;
-  -o-transition: .25s;
-  transition: .25s;
-
-  &:hover {
-    color: #1870c9;
-    background-color: rgba(0,0,0,0);
+    @include position;
+    @include h-w-100(250rem);
+    z-index: -1;
   }
 }

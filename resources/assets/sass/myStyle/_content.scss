@@ -218,11 +218,7 @@ $strip-map: (
   }
 }
 
-@media (max-width:767.998px) {
-  .no-wrapper-768 {
-    padding: unset;
-  }
-}
+
 
 @for $i from 1 through 5 {
   .strip-clr-#{$i} {
@@ -465,7 +461,7 @@ $overlap: 2.5rem;
 
 // --- blog --- //
 
-.blog-justify {
+.row-justify {
   justify-content: center;
 
   @media(min-width:1400px) {
@@ -474,7 +470,8 @@ $overlap: 2.5rem;
 }
 
 .present-container {
-  background-image: linear-gradient(55deg, rgb(180, 200, 232) 0, #fff 75%);
+  background-image: linear-gradient(40deg, #fff 0, rgba(180, 200, 232, .5) 45%);
+  background-color: white;
   box-shadow: -15px 15px 30px 5px rgba(0,0,0,.15);
   width: 500px;
   
@@ -505,7 +502,7 @@ $overlap: 2.5rem;
     overflow: hidden;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: left;
     flex-direction: column;
     
     h2 {
@@ -563,5 +560,104 @@ $overlap: 2.5rem;
   img {
     width: 600px;
     filter: blur(5px);
+  }
+}
+
+
+// --- headline_image --- //
+.headline-image {
+  p, h3 {
+    color: black;
+  }
+
+  .hl-img-list {
+    margin: 0;
+    padding: .25rem 0 2rem 1.5rem;
+
+    li {
+      margin: inherit;
+      padding: .8rem .5rem 0 .5rem;
+      width: 100%;
+    }
+
+    p {
+      display: inline;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  @media (min-width:992px) {
+    display: flex;
+  }
+
+  @media (max-width:991.9998px) {
+    .img-box {
+      max-height: 270px;
+      img {
+        object-fit: cover;
+        object-position: center 17%;
+        max-height: inherit;
+      }
+    }
+  }
+
+  @media (min-width:576px) {
+    .text-box {
+      max-width: 600px;
+    }
+  }
+
+  @media (min-width:992px) {
+    .text-box {
+      .hi-img-p, h3 {
+        // text-shadow: 1px 1px 0 rgba(255,255,255,.75);
+        margin-bottom: 0;
+        padding: .5rem;
+        text-shadow: 1px 1px 0 rgba(255,255,255, .25);
+        position: relative;
+        top: .75rem;
+        left: -2rem;
+        
+        &::after {
+          content: '';
+          background-color: rgba(255, 255, 255, .35);
+          @include position;
+          height: 100%;
+          width: 2rem;
+          z-index: -1;
+        }
+      }
+      .hl-img-list li {
+        position: relative;
+        top: 1rem;
+        left: 0;
+      }
+    }
+  }
+
+  @media (min-width:1120px) {
+    .text-box {
+      max-width: 760px;
+      .hi-img-p, h3 {
+        top: 2rem;
+        left: -4rem;
+
+        &::after {
+          content: '';
+          width: 4rem;
+        }
+      }
+
+      .hl-img-list li {
+        top: 2rem;
+      }
+    }
+  }
+}
+
+@media (min-width: 1400px) and (max-width: 1600px) {
+  .headline-img-offset {
+    margin-left: 27%;
   }
 }

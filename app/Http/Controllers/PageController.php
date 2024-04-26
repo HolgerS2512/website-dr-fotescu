@@ -91,9 +91,15 @@ final class PageController extends Controller
 
         $this->currPage = $this->pages->where('weblink', "$this->currPageLink")->first() ?? $this->subpages->where('weblink', "$this->currPageLink")->first();
 
-        if (!is_null($this->currPage)) {
+        if ( ! is_null($this->currPage) ) {
 
-            $this->contentItem = $this->currPage->contents()->whereNotNull('format')->orderBy('ranking')->get()->load([$this->currLanguage, "{$this->currLanguage}List"]);
+            if ($this->currPage instanceof Page) {
+                
+              $this->contentItem = $this->currPage->contents()->whereNotNull('format')->where('subpage_id', null)->orderBy('ranking')->get()->load([$this->currLanguage, "{$this->currLanguage}List"]);
+            } else {
+              $this->contentItem = $this->currPage->contents()->whereNotNull('format')->whereNotNull('subpage_id')->orderBy('ranking')->get()->load([$this->currLanguage, "{$this->currLanguage}List"]);
+
+            }
         }
 
         $this->base64Logo = 'data:image/' . $this->infos->logo_ext . ';base64,' . base64_encode(file_get_contents(base_path($this->infos->logo_path)));

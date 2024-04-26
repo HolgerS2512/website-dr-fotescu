@@ -267,6 +267,102 @@ class ImageSeeder extends Seeder
             'src' => 'uploads/images/team/lemon-example.jpg',
             'ext' => 'jpg',
             'created_at' => Carbon::now(),
+        ]);   
+
+        // emergency
+        $images->insert([
+            'page_id' => 2,
+            'subpage_id' => 1,
+            'ranking' => 1,
+            'title' => 'show-mobile',
+            'src' => 'uploads/images/emergency/show-mobile.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]); 
+        $images->insert([
+            'page_id' => 2,
+            'subpage_id' => 1,
+            'ranking' => 1,
+            'title' => 'mobile',
+            'src' => 'uploads/images/emergency/mobile.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
         ]);  
+        $images->insert([
+            'page_id' => 2,
+            'subpage_id' => 1,
+            'ranking' => 1,
+            'slide' => 1,
+            'title' => 'emergency',
+            'src' => 'uploads/images/emergency/emergency.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]);    
+
+        // prophylaxis
+        $images->insert([
+            'page_id' => 2,
+            'subpage_id' => 3,
+            'ranking' => 1,
+            'title' => 'woman',
+            'src' => 'uploads/images/prophylaxis/woman.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]); 
+        $images->insert([
+            'page_id' => 2,
+            'subpage_id' => 3,
+            'ranking' => 1,
+            'title' => 'woman1',
+            'src' => 'uploads/images/prophylaxis/woman1.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]); 
+        $images->insert([
+            'page_id' => 2,
+            'subpage_id' => 3,
+            'ranking' => 1,
+            'title' => 'woman2',
+            'src' => 'uploads/images/prophylaxis/woman2.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]); 
+        $images->insert([
+            'page_id' => 2,
+            'subpage_id' => 3,
+            'ranking' => 1,
+            'title' => 'woman3',
+            'src' => 'uploads/images/prophylaxis/woman3.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]); 
+        $images->insert([
+            'page_id' => 2,
+            'subpage_id' => 3,
+            'ranking' => 1,
+            'title' => 'woman4',
+            'src' => 'uploads/images/prophylaxis/woman4.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]); 
+        $images->insert([
+            'page_id' => 2,
+            'subpage_id' => 3,
+            'ranking' => 1,
+            'title' => 'woman5',
+            'src' => 'uploads/images/prophylaxis/woman5.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]); 
+        $images->insert([
+            'page_id' => 2,
+            'subpage_id' => 3,
+            'ranking' => 1,
+            'title' => 'woman6',
+            'src' => 'uploads/images/prophylaxis/woman6.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]); 
+
     }
 }

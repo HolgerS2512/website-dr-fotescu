@@ -4,6 +4,7 @@ $shadowSec2: 0 0 8px 3px rgba(0, 0, 0, 0.4);
 
 footer {
   background-color: white;
+  z-index: 19;
 
   .f-nav {
     box-shadow: $shadowSec1;

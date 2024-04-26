@@ -112,5 +112,39 @@ class DeListSeeder extends Seeder
             'item_6' => 'Eine ausgezeichnete Pflege, Zahnbehandlung und Vorsorge.',
             'created_at' => Carbon::now(),
         ]);
+
+        // prophylaxis headline_image
+        $deList->insert([
+            'content_id' => 29,
+            'ranking' => 1,
+            'item_1' => 'Ihre medizinische und zahnmedizinische Vorgeschichte überprüfen',
+            'item_2' => 'den aktuellen Gesundheitszustand Ihres Mundes, Ihres Zahnfleisches und des umliegenden Gewebes beurteilen',
+            'item_3' => 'Behandlung, einschließlich Polieren der Zähne',
+            'item_4' => 'Aufklärung der Patienten über die Mundgesundheit, einschließlich der richtigen Mundpflegetechniken für zu Hause und Empfehlungen für Produkte zur Vorbeugung künftiger Probleme',
+            'item_5' => 'Wir schicken Sie nach Ihrem Termin mit einem maßgeschneiderten Behandlungsplan nach Hause, um Ihre Mundgesundheit und Ihren frischen Atem zu erhalten',
+            'item_6' => 'bei Bedarf eine fachärztliche Behandlung empfehlen',
+            'created_at' => Carbon::now(),
+        ]);
+        $deList->insert([
+            'content_id' => 31,
+            'ranking' => 1,
+            'item_1' => 'Schlechten Atem (Halitosis)',
+            'item_2' => 'Sichtbare Ablagerungen von Plaque und Zahnstein',
+            'item_3' => 'Verfärbte Zähne',
+            'item_4' => 'Zahnfleischbluten',
+            'item_5' => 'Zurückgehendes Zahnfleisch',
+            'item_6' => 'Empfindliche Zähne',
+            'item_7' => 'Zahnverfall',
+            'created_at' => Carbon::now(),
+        ]);
+        $deList->insert([
+            'content_id' => 32,
+            'ranking' => 1,
+            'item_1' => 'Herzkrankheiten',
+            'item_2' => 'Schlaganfälle',
+            'item_3' => 'Generalisierte Entzündungen',
+            'item_4' => 'Rheumatoide Arthritis',
+            'created_at' => Carbon::now(),
+        ]);
     }
 }

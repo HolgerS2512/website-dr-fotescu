@@ -1,22 +1,21 @@
 $wrapper: 1rem;
+$t-wrapper: 1rem;
 $wrapper-width: 1950px;
 
-.wrapper {
+.wrapper, .text-wrapper {
   width: 100%;
   padding-left: $wrapper;
   padding-right: $wrapper;
   margin: 0 auto;
-
-  // --- BUTTONS --- //
-
 
   // --- LINKS --- //
   .link-logo,
   .link-hover:hover {
     opacity: .75;
   }
-
 }
+
+
 
 @media (min-width:992px) {
   $wrapper: 8vw;
@@ -48,4 +47,55 @@ $wrapper-width: 1950px;
   @include position;
   background-image: linear-gradient(to top, $blueextralight 0%, white 85%);
   z-index: -1;
+}
+
+// text-wrapper
+.text-wrapper-max768 {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+@media (max-width:767.998px) {
+  .no-wrapper-768 {
+    padding: unset;
+  }
+}
+
+@media (max-width:991.998px) {
+  .no-wrapper-992 {
+    padding: unset;
+  }
+
+  .text-wrapper-max992 {
+    padding-left: $t-wrapper;
+    padding-right: $t-wrapper;
+  }
+}
+
+
+// main button
+
+.x-btn {
+  width: 194px;
+  height: min-content;
+  white-space: nowrap;
+  padding: 1.3rem 3rem;
+  font-weight: 700;
+  font-size: 18px;
+  text-decoration: none;
+  background-color: #5a94cf;
+  color: #fff;
+  border: 2px solid #5a94cf;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  -webkit-transition: .25s;
+  -moz-transition: .25s;
+  -o-transition: .25s;
+  transition: .25s;
+
+  &:hover {
+    color: #1870c9;
+    background-color: rgba(0,0,0,0);
+  }
 }

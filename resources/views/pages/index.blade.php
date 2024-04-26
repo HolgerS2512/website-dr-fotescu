@@ -130,16 +130,19 @@
             />
           @break
         @case('headline_image')
-            <x-format.headline_image :content="$content->{$locale}" :aos="$aos" />
+            <x-format.headline_image 
+              :rang="$content->ranking" 
+              :content="$content" 
+              :locale="$locale" 
+              :pages="$pages"
+              :aos="$aos" 
+            />
           @break
         @case('image_small')
             <x-format.image_small :content="$content->{$locale}" :aos="$aos" />
           @break
         @case('subheading')
             <x-format.subheading :list="$content->{$locale . 'List'}" :aos="$aos" />
-          @break
-          @case('form')
-            <x-format.form :content="$content->{$locale}" :layout="$content->layout" :aos="$aos" />
           @break
         @case('blog_posts')
             <x-format.blog_posts :postMap="$content" :locale="$locale" :aos="$aos" />
