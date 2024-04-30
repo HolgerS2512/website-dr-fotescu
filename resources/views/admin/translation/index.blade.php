@@ -45,7 +45,7 @@
               @endisset
 
               <div class="my-3">
-                <label for="" class="form-label">German</label>
+                <label class="form-label">German</label>
                 <input 
                   type="text" 
                   class="form-control @error("de") is-invalid @enderror" 
@@ -63,7 +63,7 @@
               </div>
 
               <div class="mb-3">
-                <label for="" class="form-label">English</label>
+                <label class="form-label">English</label>
                 <input 
                   type="text" 
                   class="form-control @error("en") is-invalid @enderror" 
@@ -81,7 +81,7 @@
               </div>
 
               <div class="mb-3">
-                <label for="" class="form-label">Russian</label>
+                <label class="form-label">Russian</label>
                 <input 
                   type="text" 
                   class="form-control @error("ru") is-invalid @enderror" 

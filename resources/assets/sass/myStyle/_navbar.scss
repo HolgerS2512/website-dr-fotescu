@@ -500,6 +500,9 @@
             font-weight: 500;
           }
         }
+        li.active > a {
+          color: $grey;
+        }
       }
     }
 

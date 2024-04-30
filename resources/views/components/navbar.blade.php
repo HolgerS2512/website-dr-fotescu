@@ -73,7 +73,7 @@
                                     <a 
                                     href="{{ url((strlen($path) > 1 ? "$path/" : $path) . ($page->weblink === 'home' ? '' : $page->weblink)) }}" 
                                     title="{{ $page->{$locale} }}"
-                                    class="{{ $active === $page->weblink ? 'active' : '' }}">
+                                    class="{{ $active === '/'.$page->weblink ? 'active' : '' }}">
                                     {{ $page->{$locale} }}
                                     </a>
                                 @else
@@ -90,14 +90,16 @@
                                         <a 
                                             href="{{ url((strlen($path) > 1 ? "$path/" : $path) . $page->weblink) }}" 
                                             title="{{ $page->{$locale} }}"
-                                            class="x-point{{ $active === $page->weblink ? ' active' : '' }}">{{ $page->{$locale} }}
+                                            class="x-point{{ $active === '/'.$page->weblink || str_contains($active, $page->weblink) ? ' active' : '' }}"
+                                        >
+                                            {{ $page->{$locale} }}
                                         </a>
                                     </label>
                                     <div class="d-none sub-menu">
                                         <ul class="x{{ $counter }}-ul">
                                             @foreach ($subpages as $sPage)
                                             @if ($sPage->page_id === $page->id)
-                                            <li class="x-list{{ $active === $sPage->weblink ? ' active' : '' }}">
+                                            <li class="x-list{{ $active === '/'.$sPage->weblink ? ' active' : '' }}">
                                                 <a 
                                                 href="{{ url((strlen($path) > 1 ? "$path/" : $path) . $sPage->weblink) }}" 
                                                 title="{{ $sPage->{$locale} }}"

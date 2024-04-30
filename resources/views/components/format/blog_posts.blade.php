@@ -21,7 +21,19 @@
       </div>
       <div class="present-box">
         <h2>{{ $post->{$locale} }}</h2>
-        <p>{{ $post->content()->{$locale}->first()->content ?? '' }}</p>
+
+        @php
+          $letterCounter = 372;
+          $content = $post->content()->{$locale}->first()->content ?? '';
+
+          if (strlen($content) >= $letterCounter) {
+            $content = substr($content, 0, $letterCounter);
+            $content = substr($content, 0, strripos($content, ' '));
+          }
+          $content = $content . ' ...';
+        @endphp
+
+        <p>{!! $content !!}</p>
       </div>
       <div class="present-link">
         <a 

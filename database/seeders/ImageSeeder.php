@@ -468,6 +468,15 @@ class ImageSeeder extends Seeder
             'ext' => 'webp',
             'created_at' => Carbon::now(),
         ]); 
+        $images->insert([
+            'page_id' => 2,
+            'subpage_id' => 4,
+            'ranking' => 1,
+            'title' => 'man-points-upwards',
+            'src' => 'uploads/images/dentistry/man-points-upwards.webp',
+            'ext' => 'webp',
+            'created_at' => Carbon::now(),
+        ]); 
 
     }
 }

@@ -22,17 +22,17 @@
       <div class="p-3 mb-3">
         <div class="card w-100" style="min-height: 220px">
           <div class="card-body position-relative">
-            <h5 class="card-title">Pages</h5>
+            <h5 class="card-title">Pages title and words</h5>
             <h6 class="mt-3">Total completed : {{ ($percent->words + $percent->title) / 2 }} %</h6>
             <a 
               href="{{ url('administration/translation/title') }}" 
               class="btn mt-3 w-100 text-white
-              @if ($percent->words < 100)
+              @if ($percent->title < 100)
               btn-danger
               @else
               btn-success
               @endif"
-            >Title | {{ $percent->words }} %
+            >Title | {{ $percent->title }} %
             </a>
             <a 
               href="{{ url('administration/translation/words') }}" 
@@ -42,7 +42,7 @@
               @else
               btn-success
               @endif"
-            >Words | {{ $percent->title }} %
+            >Words | {{ $percent->words }} %
             </a>
           </div>
         </div>
@@ -53,20 +53,29 @@
       <div class="p-3 mb-3">
         <div class="card w-100" style="min-height: 220px">
           <div class="card-body position-relative">
-            <h5 class="card-title">Page content</h5>
-            <h6 class="mt-3">Already completed : 0 %</h6>
-            {{-- <h6 class="mt-3">Total completed : {{ ($percent->words + $percent->title) / 2 }} %</h6> --}}
+            <h5 class="card-title">Page content and lists</h5>
+            <h6 class="mt-3">Total completed : {{ ($percent->content + $percent->list) / 2 }} %</h6>
             <a 
-              href="{{ url('administration/translation/title') }}" 
-              class="btn mt-5 w-100 text-white
-              @if ($percent->words < 100)
+              href="{{ url('administration/translation/content') }}" 
+              class="btn mt-3 w-100 text-white
+              @if ($percent->content < 100)
               btn-danger
               @else
               btn-success
               @endif"
             >
-              Content | 0 %
-              {{-- Content | {{ $percent->words }} % --}}
+              Content | {{ $percent->content }} %
+            </a>
+            <a 
+              href="{{ url('administration/translation/list') }}" 
+              class="btn mt-3 w-100 text-white
+              @if ($percent->list < 100)
+              btn-danger
+              @else
+              btn-success
+              @endif"
+            >
+              Content lists | {{ $percent->list }} %
             </a>
           </div>
         </div>

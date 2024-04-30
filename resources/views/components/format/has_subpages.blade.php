@@ -19,13 +19,11 @@
       $image = $sub->isSlideshow() ? $sub->getSliderData()->first() : $sub->getSliderData();
     }
 
-    $fForm = $sub->contents()->get();
+    foreach($sub->contents()->get() as $key) {
+      $langContent = $key->{$locale}->first();
 
-    foreach($fForm as $key) {
-      $fCon = $key->{$locale}->first();
-
-      if ( ! ( is_null($fCon) && empty($fCon->content) || is_null($fCon->content) ) ) {
-        $content = $content ?? $fCon->content;
+      if ( ! ( is_null($langContent) && empty($langContent->content) || is_null($langContent->content) ) ) {
+        $content = $content ?? $langContent->content;
       }
     }
   @endphp  
@@ -42,6 +40,16 @@
         </div>
         <div class="present-box">
           <h2>{{ $sub->{$locale} }}</h2>
+
+          @php
+            $letterCounter = 372;
+
+            if (strlen($content) >= $letterCounter) {
+              $content = substr($content, 0, $letterCounter);
+              $content = substr($content, 0, strripos($content, ' ')) . ' ...';
+            }
+          @endphp
+
           <p>{!! $content !!}</p>
         </div>
         <div class="present-link">

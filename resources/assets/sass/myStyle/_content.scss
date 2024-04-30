@@ -498,17 +498,19 @@ $overlap: 2.5rem;
 
   .present-box {
     padding: 1.25rem 1rem;
-    height: 18.5rem;
+    height: 17.75rem;
     overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: left;
-    flex-direction: column;
+    // display: flex;
+    // justify-content: center;
+    // align-items: left;
+    // flex-direction: column;
+    position: relative;
     
     h2 {
       color: $textblack;
       font-size: 1.25rem;
       line-height: 1.5;
+      min-height: 60px;
       max-height: 12rem;
       overflow: hidden;
     }
@@ -517,8 +519,9 @@ $overlap: 2.5rem;
       margin: 1rem 0;
       line-height: 1.5;
       font-size: 1rem;
-      max-height: 6rem;
+      max-height: 9rem;
       overflow: hidden;
+      text-overflow: clip;
     }
   }
 
@@ -634,6 +637,17 @@ $overlap: 2.5rem;
           height: 100%;
           z-index: -1;
           width: 4rem;
+          opacity: 0;
+          transition: .75s ease-out .5s;
+        }
+      }
+
+      .hi-img-p.aos-animate, h3.aos-animate,
+      .hl-img-list.aos-animate {
+
+        &::after {
+          content: '';
+          opacity: 1;
         }
       }
     }

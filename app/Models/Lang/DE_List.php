@@ -2,6 +2,7 @@
 
 namespace App\Models\Lang;
 
+use App\Models\Content;
 use App\Models\Image;
 use App\Models\Page;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -34,6 +35,16 @@ class DE_List extends Model
     public function page(): BelongsTo
     {
         return $this->belongsTo(Page::class);
+    }
+
+    /**
+     * Return the page for the images
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo 
+     */
+    public function content(): BelongsTo
+    {
+        return $this->belongsTo(Content::class);
     }
 
     /**

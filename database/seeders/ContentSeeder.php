@@ -318,7 +318,7 @@ class ContentSeeder extends Seeder
             'subpage_id' => 9,
             'image_id' => 42,
             'ranking' => 2,
-            'format' => 'image_solo',
+            'format' => 'headline_image',
             'btn' => '7',
             'created_at' => Carbon::now(),
         ]);
@@ -337,7 +337,7 @@ class ContentSeeder extends Seeder
             'image_id' => 44,
             'ranking' => 4,
             'btn' => 'subpage.8',
-            'format' => 'image_solo',
+            'format' => 'headline_image',
             'created_at' => Carbon::now(),
         ]);
 
@@ -380,6 +380,17 @@ class ContentSeeder extends Seeder
             'image_id' => 49,
             'ranking' => 5,
             'format' => 'headline_image',
+            'created_at' => Carbon::now(),
+        ]);
+
+        // dentistry
+        $content->insert([
+            'page_id' => 2,
+            'subpage_id' => 4,
+            'image_id' => 50,
+            'ranking' => 1,
+            'format' => 'headline_image',
+            'url_link' => 'https://www.bundesgesundheitsministerium.de/zahnvorsorgeuntersuchungen.html',
             'created_at' => Carbon::now(),
         ]);
     }

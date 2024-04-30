@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Models\Content;
 use App\Models\Image;
+use App\Models\Page;
 use App\Models\Publish;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Collection;
@@ -71,6 +72,13 @@ trait WebpageModelMethods
   public function getSliderData(): Collection|Image|NULL
   {
     $exp = $this->images()->where('slide', true);
+
+    if ($this instanceof Page) {
+      
+      $exp = $exp->where('subpage_id', null);
+    } else {
+      $exp = $exp->whereNotNull('subpage_id');
+    }
 
     return ($this->isSlideshow() ? $exp->get() : $exp->first());
   }

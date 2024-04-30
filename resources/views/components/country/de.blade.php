@@ -1,0 +1,1 @@
+<img width="20" height="20" src="{{ url('uploads/images/countries/de.png') }}">

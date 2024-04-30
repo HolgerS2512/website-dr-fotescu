@@ -19,6 +19,20 @@
         <x-icons.segment :size="24" :clr="'FFF'" />
       </a>
     </div>
+
+    <div class="accordion-body">
+      <a href="{{ url('administration/translation/content') }}" class="link-light link-underline-opacity-25 link-underline-opacity-100-hover acc-links">
+        <div>Section 3 : Content</div>
+        <x-icons.segment :size="24" :clr="'FFF'" />
+      </a>
+    </div>
+
+    <div class="accordion-body">
+      <a href="{{ url('administration/translation/list') }}" class="link-light link-underline-opacity-25 link-underline-opacity-100-hover acc-links">
+        <div>Section 4 : Content list</div>
+        <x-icons.segment :size="24" :clr="'FFF'" />
+      </a>
+    </div>
     
   </div>
 </div>

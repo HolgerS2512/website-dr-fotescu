@@ -543,6 +543,16 @@ class DeContentSeeder extends Seeder
             'content' => 'Mit Implantaten können Sie selbstbewusst essen, sprechen und lächeln, weil sie nicht verrutschen oder sich verschieben, wie es bei herausnehmbarem Zahnersatz oft der Fall ist.',
             'created_at' => Carbon::now(),
         ]);
+
+        // denistry
+        $deContent->insert([
+            'content_id' => 45,
+            'ranking' => 1,
+            'title' => 'Wichtigkeit der<br>Zahnärztlichen Untersuchung',
+            'content' => 'Selbst die beste Zahnbürste kann nicht jeden Teil Ihres Mundes erreichen, und orale Probleme müssen erkannt werden, bevor sie behandelt werden müssen. Unsere Dentalhygienikerinnen erreichen auch die schwer zugänglichen Stellen und sorgen für eine hochwertige professionelle Tiefenreinigung.
+            Siehe auch:',
+            'created_at' => Carbon::now(),
+        ]);
         
     }
 }
