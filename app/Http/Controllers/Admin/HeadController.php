@@ -64,6 +64,7 @@ final class HeadController extends Controller implements HandleLayoutRepository
             if (!is_null($dbData->subpages)) {
                 $this->subpages = $dbData->subpages;
             }
+
             $this->images = $dbData->images->where('slide', true);
             $this->publishes = $dbData->publishes;
         } catch (\Throwable $th) {
@@ -96,7 +97,7 @@ final class HeadController extends Controller implements HandleLayoutRepository
             return view('admin.header.index', [
                 'page' => $this->page,
                 'subpages' => $this->subpages ?? [],
-                'src' => $this->images,
+                'src' => $this->page->getSliderData(),
                 'public' => $this->publishes->public,
                 'imageIds' => $imageIds,
             ]);

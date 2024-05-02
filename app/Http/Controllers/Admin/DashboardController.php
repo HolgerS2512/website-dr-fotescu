@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HandleHttp\GetPageUrlVars;
+use App\Models\Content;
 use App\Models\Lang\DE_Content;
 use App\Models\Lang\DE_List;
 use App\Models\Lang\EN_Content;
@@ -103,9 +104,19 @@ final class DashboardController extends Controller
                 })
                 ->get(['subpages.*', 'images.src']);
 
+            $posts = DB::table('contents')
+                ->where('format', 'post')
+                ->leftJoin('posts', function (JoinClause $join) {
+                    $join->on('contents.id', '=', 'content_id')->limit(1);
+                })
+                ->leftJoin('images', function (JoinClause $join) {
+                    $join->on('contents.image_id', '=', 'images.id')->limit(1);
+                })
+                ->get(['contents.url_link', 'posts.ranking', 'posts.public', 'posts.id', 'posts.de', 'images.src']);
+
             $percent = (object) $this->percentage;
 
-            return view('auth.dashboard', compact('pages', 'subpages', 'percent'));
+            return view('auth.dashboard', compact('pages', 'subpages', 'posts', 'percent'));
         } catch (Exception $e) {
             // dump($e);
             // todo errorlog

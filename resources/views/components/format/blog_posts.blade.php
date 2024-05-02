@@ -10,8 +10,8 @@
 
 @foreach ($postMap->publicPosts() as $post)
 
-  <div class="col-md-6 col-xxl-4 py-2 p-md-2 d-flex justify-content-center">
-    <div class="present-container" {!! $aos::right(300 * $i, 200) !!}>
+  <div class="col-md-6 col-xxl-4 py-2 p-md-2 mb-5 d-flex justify-content-center">
+    <div class="mb-3 present-container" {!! $aos::right(300 * $i, 200) !!}>
       <div class="present-aimage">
         <img 
           height="300" width="100%"

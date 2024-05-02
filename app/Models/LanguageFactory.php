@@ -28,6 +28,8 @@ class LanguageFactory extends Model
             'contactFalse' => 'Unfortunately, a problem has occurred. Please try again later.',
             'loginTrue' => 'You are logged in!',
             'loginFalse' => 'Login failed!',
+            'createPostTrue' => 'Blog post successfully created.',
+            'createPostFalse' => 'Database error, created failed!',
             'uploadTrue' => 'Upload successfully.',
             'uploadFalse' => 'Database error, upload failed!',
             'updateTrue' => 'Update successfully.',
@@ -50,6 +52,7 @@ class LanguageFactory extends Model
      */
     public $contactTrue, $contactFalse;
     public $loginTrue, $loginFalse;
+    public $createPostTrue, $createPostFalse;
     public $uploadTrue, $uploadFalse;
     public $updateTrue, $updateFalse;
     public $deleteTrue, $deleteFalse;

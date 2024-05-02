@@ -23,7 +23,7 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->integer('subpage_id')->nullable();
             $table->tinyInteger('slide')->default(0);
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->string('src');
             $table->string('ext', 4);
             $table->timestamps();

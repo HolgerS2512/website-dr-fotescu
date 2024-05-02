@@ -73,28 +73,7 @@
           </tr>
         </thead>
         <tbody>
-          @if ( ! isset($src) && empty($src) )
-          <tr>
-            <td>
-              <p class="text-danger">{{ $err }}</p>
-            </td>
-            <td>
-              <p class="text-danger">{{ $err }}</p>
-            </td>
-            <td>
-              <p class="text-danger">{{ $err }}</p>
-            </td>
-            <td>
-              <p class="text-danger">{{ $err }}</p>
-            </td>
-            <td>
-              <p class="text-danger">{{ $err }}</p>
-            </td>
-            <td>
-              <p class="text-danger">{{ $err }}</p>
-            </td>
-          </tr>
-          @else
+          @if ( isset($src) && ! empty($src) )
           @foreach ($src as $slider)
           <tr>
             <th scope="row">
@@ -162,17 +141,17 @@
             </td>
           </tr>
           @endforeach
-          @endisset
+          @endif
         </tbody>
       </table>
     </div>
 
     <div class="col-xl-4">
       <div class="row g-0">
-        <form action="{{ url('administration/header/' . $page->link . '/image/store') }}" method="POST" enctype="multipart/form-data" class="p-3 pb-0 border shadow-lg bg-body-tertiary">
+        <form id="form" action="{{ url('administration/header/' . $page->link . '/image/store') }}" method="POST" enctype="multipart/form-data" class="p-3 pb-0 border shadow-lg bg-body-tertiary">
           @csrf
 
-          <div class="mb-4">
+          <div class="mb-2">
             <h3>Upload a new image</h3>
           </div>
           @if (isset($src))
@@ -186,6 +165,9 @@
             @endforeach
             @endif
             @endif
+            <div class="mb-3">
+              <img id="output-img" class="img-fluid" src="">
+            </div>
             <div class="mb-3">
               <label for="title" class="form-label">Title*</label>
               <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}" required minlength="3" maxlength="255">
@@ -263,6 +245,31 @@
     }
 
     init();
+  })()
+</script>
+<script>
+  (() => {
+    'use strict';
+    const formEl = document.querySelector('#form');
+    const inputImgEl = formEl.querySelector('#image');
+    const preview = formEl.querySelector('#output-img');
+
+    const init = () => {
+      inputImgEl.addEventListener('change', showInputImg);
+    }
+
+    const showInputImg = () => {
+      const file = inputImgEl.files[0];
+      const reader = new FileReader();
+
+      reader.addEventListener('load', () => {
+        preview.src = reader.result;
+      }, false);
+
+      if (file) reader.readAsDataURL(file);
+    }
+
+    init()
   })()
 </script>
 @endsection

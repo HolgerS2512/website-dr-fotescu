@@ -14,6 +14,56 @@
 <div class='container pt-5'>
   <h1 class="special-admin-header">Dashboard</h1>
 
+
+
+
+  <div class="row mt-5 pt-5">
+    <h3>Blog post administration</h3>
+    <hr>
+
+    @foreach ($posts as $post)  
+      <div class="col-lg-6 col-xl-4">
+        <div class="p-3 mb-3">
+          <div class="card w-100" style="min-height: 220px">
+            <div class="card-body position-relative">
+              <h5 class="card-title text-truncate">{{ $post->de }}</h5>
+              @if ( $post->src === null )
+                <div class="d-flex justify-content-center align-items-center" style="height: 150px; border-radius: 6px;">
+                  <small style="height: min-content; color: red;">No Image Available</small>         
+                </div>
+              @else
+                <img src="/{{ $post->src ?? '' }}" class="card-img-top admin-card">
+              @endif
+              <span class="post-public {{ $post->public ? 'post-true' : 'post-false' }}">{{ $post->public ? '' : 'not ' }}public</span>
+              <a 
+                href="{{ url('administration/post/edit/' . $post->id) }}" 
+                class="btn btn-primary mt-3 w-100 text-white"
+                >Update
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    @endforeach
+
+    <div class="col-lg-6 col-xl-4">
+      <div class="p-3 mb-3">
+        <div class="card w-100" style="min-height: 180px">
+          <div class="card-body position-relative">
+            <h5 class="card-title">Create a new blog post</h5>
+            <a 
+              href="{{ url('administration/post/create') }}" 
+              class="btn btn-success mt-5 w-100 text-white"
+            ><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20">
+              <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" fill="#FFF" />
+            </svg> To the form</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <div class="row my-5 pt-5">
     <h3>Translation</h3>
     <hr>
@@ -83,7 +133,6 @@
     </div>
 
   </div>
-
 
   
   <div class="row my-5 pt-5">

@@ -121,7 +121,17 @@ class Content extends Model
      */
     public function publicPosts()
     {
-        return Post::all()->where('public', true)->sortBy('ranking');
+        return $this->showPosts()->where('public', true);
+    }
+
+    /**
+     * Called all posts collection for this instance
+     * 
+     * @return Collection<App\Models\Post>|null
+     */
+    public function showPosts()
+    {
+        return Post::all()->sortBy('ranking');
     }
 
     /**
