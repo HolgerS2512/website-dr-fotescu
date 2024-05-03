@@ -36,7 +36,7 @@
     <h1 class="special-admin-header">Edit blog post</h1>
 
     <form 
-      action="{{ url("administration/post/update/$post->id") }}" 
+      action="{{ url("administration/post/update/$post->id/$post->content_id") }}" 
       method="POST" 
       enctype="multipart/form-data"
       class="create-form row"
@@ -65,11 +65,49 @@
       </div>
 
       <div class="mb-5">
-        <label class="form-label">Main title</label>
+        <label class="form-label">Headline</label>
         <x-helpers.i-group :flag="'de'" :name="'de'" :value="old('de') ?? $post->de" />
         <x-helpers.i-group :flag="'en'" :name="'en'" :value="old('en') ?? $post->en" />
         <x-helpers.i-group :flag="'ru'" :name="'ru'" :value="old('ru') ?? $post->ru" />
       </div>
+
+      @for ($i = 0; $i < $deContent->count(); $i++)
+        <div class="mb-5">
+          <label class="form-label">Subtitle</label>
+          <x-helpers.i-group :flag="'de'" 
+            :name="'title.de.' . (isset($deContent[$i]) ? $deContent[$i]->id : $i . '.new')" 
+            :value="old('title.de.' . $deContent[$i]->id) ?? $deContent[$i]->title" 
+          />
+
+          <x-helpers.i-group :flag="'en'" 
+            :name="'title.en.' . (isset($enContent[$i]) ? $enContent[$i]->id : $i . '.new')" 
+            :value="old('title.en.' . (isset($enContent[$i]) ? $enContent[$i]->id : $i . '.new')) ?? ( isset($enContent[$i]) ? $enContent[$i]->title : '' )"
+           />
+
+          <x-helpers.i-group :flag="'ru'" 
+            :name="'title.ru.' . (isset($ruContent[$i]) ? $ruContent[$i]->id : $i . '.new')" 
+            :value="old('title.ru.' . (isset($ruContent[$i]) ? $ruContent[$i]->id : $i . '.new')) ?? ( isset($ruContent[$i]) ? $ruContent[$i]->title : '' )" 
+          />
+        </div>
+
+        <div class="mb-5">
+          <label class="form-label">Content</label>
+          <x-helpers.t-group :flag="'de'" 
+            :name="'content.de.' . (isset($deContent[$i]) ? $deContent[$i]->id : $i . '.new')" 
+            :value="old('content.de.' . $deContent[$i]->id) ?? $deContent[$i]->content" 
+          />
+
+          <x-helpers.t-group :flag="'en'" 
+            :name="'content.en.' . (isset($enContent[$i]) ? $enContent[$i]->id : $i . '.new')" 
+            :value="old('content.en.' . (isset($enContent[$i]) ? $enContent[$i]->id : $i . '.new')) ?? ( isset($enContent[$i]) ? $enContent[$i]->content : '' )" 
+          />
+
+          <x-helpers.t-group :flag="'ru'" 
+            :name="'content.ru.' . (isset($ruContent[$i]) ? $ruContent[$i]->id : $i . '.new')" 
+            :value="old('content.ru.' . (isset($ruContent[$i]) ? $ruContent[$i]->id : $i . '.new')) ?? ( isset($ruContent[$i]) ? $ruContent[$i]->content : '' )" 
+          />
+        </div>
+      @endfor
 
       {{-- Hier js felder --}}
 

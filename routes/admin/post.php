@@ -17,7 +17,7 @@ Route::post('administration/post/store', [PostController::class, 'store']);
 
 Route::get('administration/post/edit/{id}', [PostController::class, 'edit']);
 
-Route::put('administration/post/update/{id}', [PostController::class, 'update']);
+Route::put('administration/post/update/{postId}/{conId}', [PostController::class, 'update']);
 
 Route::patch('administration/post/update/visible/{id}', [PostController::class, 'visible']);
 
