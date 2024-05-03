@@ -202,43 +202,37 @@ class PostController extends Controller
                 'ru' => $request->ru,
             ]);
 
-            $deI = 0;
             foreach ($this->filtedLang('de', $this->persistValues) as $values) {
-                ++$deI;
+                
                 if (array_key_exists('id', $values)) {
                     DE_Content::whereId(array_slice($values, 0, 1)['id'])
                         ->update(array_slice($values, 1));
                 } else {
                     $values['content_id'] = $conId;
-                    $values['ranking'] = $deI;
                     $deCon = DE_Content::create($values);
                     $deCon->save();
                 }
             }
 
-            $enI = 0;
             foreach ($this->filtedLang('en', $this->persistValues) as $values) {
-                ++$enI;
+
                 if (array_key_exists('id', $values)) {
                     EN_Content::whereId(array_slice($values, 0, 1)['id'])
                         ->update(array_slice($values, 1));
                 } else {
                     $values['content_id'] = $conId;
-                    $values['ranking'] = $enI;
                     $enCon = new EN_Content($values);
                     $enCon->save();
                 }
             }
 
-            $ruI = 0;
             foreach ($this->filtedLang('ru', $this->persistValues) as $values) {
-                ++$ruI;
+
                 if (array_key_exists('id', $values)) {
                     RU_Content::whereId(array_slice($values, 0, 1)['id'])
                         ->update(array_slice($values, 1));
                 } else {
                     $values['content_id'] = $conId;
-                    $values['ranking'] = $ruI;
                     $ruCon = RU_Content::create($values);
                     $ruCon->save();
                 }
@@ -427,7 +421,11 @@ class PostController extends Controller
             $check = false;
 
             foreach ($resArr[$i] as $key => $val) {
-                if ($key === 'id' && str_contains($val, '_new')) $check = true;
+
+                if ($key === 'id' && str_contains($val, '_new')) {
+                    $resArr[$i]['ranking'] = substr($val, 0, strpos($val, '_'));
+                    $check = true;
+                }
             }
 
             if ($check) unset($resArr[$i]['id']);
