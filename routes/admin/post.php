@@ -21,8 +21,4 @@ Route::put('administration/post/update/{postId}/{conId}', [PostController::class
 
 Route::patch('administration/post/update/visible/{id}', [PostController::class, 'visible']);
 
-Route::patch('administration/post/update/up/{id}', [PostController::class, 'up']);
-
-Route::patch('administration/post/update/down/{id}', [PostController::class, 'down']);
-
 Route::get('administration/post/delete/{id}', [PostController::class, 'destroy']);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Content;
+use App\Models\Helpers\ImageConverter;
 use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\Validator;
@@ -70,22 +71,14 @@ class PostController extends Controller
                     ->withInput();
             }
 
-            if ($request->image) {
-                $file = $request->file('image');
-
-                $name_gen = hexdec(uniqid());
-                $extension = strtolower($file->getClientOriginalExtension());
-                $img_name = $name_gen . '.' . $extension;
-
-                $upload_location = 'uploads/images/posts/';
-                $save_url = $upload_location . $img_name;
-
-                $file->move($upload_location, $img_name);
+            if ( $request->image ) {
+                $ic = new ImageConverter($request->image, 'uploads/images/posts/');
+                $ic->move();
 
                 $image = Image::create([
                     'page_id' => 3,
-                    'src' => $save_url,
-                    'ext' => $extension,
+                    'src' => $ic->saveUrl,
+                    'ext' => $ic->extension,
                     'created_at' => Carbon::now(),
                 ]);
                 $image->save();
@@ -187,7 +180,6 @@ class PostController extends Controller
     {
         try {
             $this->setStoreValues($request->all());
-
             $credentials = Validator::make($request->all(), $this->validateRules);
 
             if ($credentials->fails()) {
@@ -196,11 +188,43 @@ class PostController extends Controller
                     ->withInput();
             }
 
-            $post = Post::find($postId)->update([
+            if ($request->ranking !== $request->new_ranking) {
+                $i = 1;
+                foreach (Post::whereNot('id', $postId)->orderBy('ranking')->get() as $pModel) {
+                    if ($i === (int) $request->new_ranking) ++$i;
+                    $pModel->update([ 'ranking' => $i ]);
+                    ++$i;
+                }
+            }
+
+            $post = Post::find($postId);
+            $post->update([
+                'ranking' => $request->new_ranking,
                 'de' => $request->de,
                 'en' => $request->en,
                 'ru' => $request->ru,
             ]);
+
+            if ( $request->image ) {
+                $ic = new ImageConverter($request->image, 'uploads/images/posts/');
+                $ic->move();
+
+                if ( $request->old_image && File::exists($request->old_image) ) {
+                    File::delete($request->old_image);
+                }
+
+                $img = Image::updateOrCreate([
+                    'id' => $post->image_id ?? null,
+                ], [
+                    'page_id' => 3,
+                    'src' => $ic->saveUrl,
+                    'ext' => $ic->extension,
+                ]);
+
+                if ($img->id) {
+                    $post->update([ 'image_id' => $img->id ]);
+                }
+            }
 
             foreach ($this->filtedLang('de', $this->persistValues) as $values) {
                 
@@ -302,30 +326,6 @@ class PostController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function up(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function down(Request $request, $id)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -350,14 +350,30 @@ class PostController extends Controller
         ];
 
         $this->persistValues = array_filter($requVal, function ($v) {
-            return !($v === '_method' || $v === '_token');
+            return !(
+                $v === '_method' 
+                || $v === '_token' 
+                || $v === 'image' 
+                || $v === 'old_image'
+                || $v === 'ranking'
+                || $v === 'new_ranking'
+            );
         }, ARRAY_FILTER_USE_KEY);
 
         foreach (array_flip($this->persistValues) as $val) {
             $this->validateRules[$val] = "required|min:3{$rule[str_contains($val, 'content')]}";
         }
 
-        $this->validateRules['image'] = 'mimes:jpg,png,webp,jpeg';
+        $this->validateRules['ranking'] = 'required|numeric|min:1';
+        $this->validateRules['new_ranking'] = 'required|numeric|min:1';
+
+        if (array_key_exists('image', $requVal)) {
+            $this->validateRules['image'] = 'required|mimes:jpg,png,webp,jpeg';
+        }
+
+        if (array_key_exists('old_image', $requVal)) {
+            $this->validateRules['old_image'] = 'required|min:10|max:255';
+        }
 
         $this->persistValues = array_filter($this->persistValues, function ($v) {
             return !($v === 'de' || $v === 'en' || $v === 'ru');

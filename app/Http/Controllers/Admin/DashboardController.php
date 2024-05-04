@@ -93,6 +93,7 @@ final class DashboardController extends Controller
                         ->where('subpage_id', null)
                         ->limit(1);
                 })
+                ->orderBy('ranking')
                 ->get(['pages.*', 'images.src']);
 
             $subpages = DB::table('subpages')
@@ -102,6 +103,7 @@ final class DashboardController extends Controller
                         ->where('slide', true)
                         ->limit(1);
                 })
+                ->orderBy('ranking')
                 ->get(['subpages.*', 'images.src']);
 
             $posts = DB::table('contents')
@@ -112,6 +114,7 @@ final class DashboardController extends Controller
                 ->leftJoin('images', function (JoinClause $join) {
                     $join->on('contents.image_id', '=', 'images.id')->limit(1);
                 })
+                ->orderBy('ranking')
                 ->get(['contents.url_link', 'posts.ranking', 'posts.public', 'posts.id', 'posts.de', 'images.src']);
 
             $percent = (object) $this->percentage;

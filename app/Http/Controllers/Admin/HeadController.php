@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\HandleDB\SetAdminDatabaseData;
+use App\Models\Helpers\ImageConverter;
 use App\Repositories\Admin\HandleLayoutRepository;
 use Exception;
 use Illuminate\Support\Facades\Validator;
@@ -134,16 +135,8 @@ final class HeadController extends Controller implements HandleLayoutRepository
                     ->withInput();
             }
 
-            $file = $request->file('image');
-
-            $name = str_replace(' ', '-', strtolower($request->title));
-            $extension = strtolower($file->getClientOriginalExtension());
-            $img_name = $name . '.' . $extension;
-
-            $upload_location = 'uploads/images/' . $this->page->link . '/';
-            $save_url = $upload_location . $img_name;
-
-            $file->move($upload_location, $img_name);
+            $ic = new ImageConverter($request->image, 'uploads/images/' . $this->page->link . '/');
+            $ic->move();
 
             // $manager = new ImageManager(new Driver());
             // $read_img = $manager->read($save_url);
@@ -155,8 +148,8 @@ final class HeadController extends Controller implements HandleLayoutRepository
                 'page_id' => $this->page->id,
                 'slide' => 1,
                 'title' => mb_strtolower(str_replace(' ', '-', $request->title)),
-                'src' => $save_url,
-                'ext' => $extension,
+                'src' => $ic->saveUrl,
+                'ext' => $ic->extension,
                 'created_at' => Carbon::now(),
             ]);
 
@@ -248,28 +241,20 @@ final class HeadController extends Controller implements HandleLayoutRepository
             }
 
             if (!empty($request->file('image'))) {
-
-                $file = $request->file('image');
-
-                $name = str_replace(' ', '-', strtolower($request->title));
-                $extension = strtolower($file->getClientOriginalExtension());
-                $img_name = $name . '.' . $extension;
-
-                $upload_location = 'uploads/images/' . $this->page->link . '/';
-                $save_url = $upload_location . $img_name;
+                $ic = new ImageConverter($request->image, 'uploads/images/' . $this->page->link . '/');
 
                 if (File::exists($request->old_image)) {
                     File::delete($request->old_image);
                 }
 
-                $file->move($upload_location, $img_name);
+                $ic->move();
 
                 foreach ($this->images as $image) {
                     if ($image->id === (int) $id) {
                         $image->update([
                             'title' => mb_strtolower(str_replace(' ', '-', $request->title)),
-                            'src' => $save_url,
-                            'ext' => $extension,
+                            'src' => $ic->saveUrl,
+                            'ext' => $ic->extension,
                             'updated_at' => Carbon::now(),
                         ]);
                     }

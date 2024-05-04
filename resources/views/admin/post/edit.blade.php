@@ -23,10 +23,14 @@
             @csrf
             @method('PATCH')
             <input type="hidden" name="public" value="{{ ! $post->public ? '1' : '0' }}">
+
             <div class="form-check form-switch" style="max-width: max-content">
-              <input class="form-check-input" type="checkbox" role="switch" id="public">
+              <input class="form-check-input" type="checkbox" role="switch" id="public" {{ $post->public ? 'checked' : '' }}>
               <label class="form-check-label" for="public">
-                <span class="post-public {{ $post->public ? 'post-true' : 'post-false' }} position-relative top-0 left-0">{{ $post->public ? '' : 'not ' }}public</span>
+                <span 
+                  class="post-public {{ $post->public ? 'post-true' : 'post-false' }} position-relative top-0 left-0">
+                    {{ $post->public ? '' : 'not ' }}public
+                </span>
               </label>
             </div>
           </form>
@@ -43,10 +47,22 @@
     >
     @method('PUT')
     @csrf
+      <input type="hidden" name="ranking" value="{{ $post->ranking }}">
+      <div class="mb-4 mt-lg-3 d-flex">
+        <label class="form-label mt-2">Ranking:</label>
+        <input type="number" 
+          class="form-control border-0 bg-dark text-white shadow-none text-center ms-3"
+          style="width: 5rem;" min="1" max="{{ App\Models\Post::all()->count() }}"
+          name="new_ranking" id="ranking" value="{{ $post->ranking }}">
+      </div>
+
       <div class="mb-3">
         <label class="form-label d-block">Blog page main image</label>
         @if( $post->image() )
-          <img width="400" style="max-height:200px;" id="output-img" class="img-fluid" src="{{ url($post->image()->src) }}">
+          <img style="max-height:200px;" id="output-img" class="img-fluid" src="{{ url($post->image()->src) }}">
+          <input type="hidden" name="old_image" value="{{ $post->image()->src }}">
+        @else
+          <img id="output-img" class="img-fluid" src="" style="max-height:200px;">
         @endif
       </div>
 
