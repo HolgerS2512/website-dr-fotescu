@@ -45,4 +45,14 @@ class EN_List extends Model
     {
         return Image::all()->where('id', $this->image_id)->first();
     }
+
+    /**
+     * Called image for this instance
+     * 
+     * @return \App\Models\Image
+     */
+    public function itemImage($item)
+    {
+        return Image::all()->where('title', $item)->first();
+    }
 }

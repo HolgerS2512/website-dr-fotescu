@@ -43,7 +43,8 @@
       action="{{ url("administration/post/update/$post->id/$post->content_id") }}" 
       method="POST" 
       enctype="multipart/form-data"
-      class="create-form row"
+      class="edit-form row"
+      data-ranking="" data-title="0"
     >
     @method('PUT')
     @csrf
@@ -125,8 +126,6 @@
         </div>
       @endfor
 
-      {{-- Hier js felder --}}
-
       <div class="mb-5">
         <button data-ftype="subtitle" type="button" class="btn btn-success p-3 me-2 add-btn">
           <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20">
@@ -153,14 +152,23 @@
 <script>
   (() => {
     'use strict';
-    const formEl = document.querySelector('.create-form');
+    const LANGUAGES = [
+      'de', 
+      'en', 
+      'ru'
+    ];
+    const DOM = {};
+    const formEl = document.querySelector('.edit-form');
     const pFormEl = document.querySelector('#pForm');
     const inputImgEl = formEl.querySelector('#image');
     const preview = formEl.querySelector('#output-img');
     const inputCBoxEl = document.querySelector('#public');
-    const addBtnItem = formEl.querySelectorAll('.add-btn') 
+    const addBtnItem = formEl.querySelectorAll('.add-btn'); 
+    const parentAddBtns = addBtnItem[0].parentNode; 
+    const fieldNode = document.querySelectorAll('.field');
 
     const init = () => {
+      setRanking();
       inputImgEl.addEventListener('change', showInputImg);
       inputCBoxEl.addEventListener('change', () => pFormEl.submit());
       addBtnItem.forEach((el) => el.addEventListener('click', formAction));
@@ -169,20 +177,82 @@
     const formAction = (e) => {
       const el = e.currentTarget;
       const fType = el.dataset.ftype;
-      console.log(fType)
-      // buildFields(el, fType, fType === 'content')
+      const newFields = buildScaf(el, fType);
+
+      formEl.insertBefore(newFields, parentAddBtns);
     }
 
-    const buildFields = (el, fType, itype = false) => {
-      const obj = {
-        //
-      };
+    const buildScaf = (el, fType) => {
+      const quest = fType === 'content';
+      const scaf = document.createElement('div');
+      const ranking = getRanking(quest);
+
+      scaf.classList.add('mb-5');
+
+      LANGUAGES.forEach((lang) => {
+        const newF = buildFields(quest, lang, ranking);
+        scaf.append(newF);
+      });
+
+      return scaf;
+    }
+
+    const buildFields = (itype, lang, ranking) => {
+      const divEl = document.createElement('div');
+      const flagEl = document.createElement('span');
+      const flagImg = document.createElement('img');
+      const iEl = document.createElement(itype ? 'textarea' : 'input');
+
+      divEl.classList.add('input-group', 'pb-3', 'w-100');
+      flagEl.classList.add('input-group-text', 'bg-primary-subtle');
+      iEl.classList.add('form-control', 'field');
+
+      flagImg.setAttribute('width', '20');
+      flagImg.setAttribute('height', '20');
+      flagImg.setAttribute('src', `{{ url('uploads/images/countries') }}/${lang}.png`);
+      iEl.setAttribute('required', '');
+      iEl.setAttribute('minlength', '3');
+      iEl.setAttribute('name', `${itype ? 'content' : 'title'}.${lang}.${ranking}.new`);
 
       if (itype) {
-        //
+        iEl.setAttribute('cols', '1');
+        iEl.setAttribute('rows', '2');
+      } else {
+        iEl.setAttribute('maxlength', '255');
+        iEl.setAttribute('type', 'text');
       }
 
-      // return obj;
+      divEl.append(flagEl);
+      flagEl.append(flagImg);
+      divEl.append(iEl);
+
+      return divEl;
+    }
+
+    const setRanking = (search = '.new') => {
+      DOM.arr = [];
+      
+      fieldNode.forEach((el) => {
+        DOM.en = el.name;
+
+        if (DOM.en.includes(search)) {
+          DOM.en = DOM.en.slice(0, DOM.en.length - search.length);
+          DOM.arr.push(Number(DOM.en.substring(DOM.en.lastIndexOf('.') + 1)));
+        }
+      });
+
+      if (! DOM.arr.length) DOM.arr.push(0);
+      formEl.dataset.ranking = DOM.arr.sort().reverse()[0];
+    }
+
+    const getRanking = (quest) => {
+      if (!quest) formEl.dataset.title = 1;
+
+      const result = Number(formEl.dataset.title) && quest ? formEl.dataset.ranking : ++formEl.dataset.ranking;
+
+      if (quest) formEl.dataset.title = 0;
+
+      return result;
     }
 
     const showInputImg = () => {

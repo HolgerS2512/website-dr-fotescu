@@ -17,20 +17,22 @@
   </div>
   <div class="accordion accordion-flush" id="aside-bar">
 
+    <x-admin.accordion-item-posts :posts="$posts" :name="'Blog posts'" />
+
     <x-admin.accordion-item-translation :name="'Translation'" :link="'translation'" />
 
-  @foreach ($pages as $page)
+    @foreach ($pages as $page)
 
-    @include('components.admin.accordion-item', [
-      'name' => $page->en,
-      'link' => $page->link,
-      'id' => $page->id,
-      'any_pages,' => $page->any_pages,
-      'pages' => $pages,
-      'subpages' => $subpages,
-    ])
+      @include('components.admin.accordion-item', [
+        'name' => $page->en,
+        'link' => $page->link,
+        'id' => $page->id,
+        'any_pages,' => $page->any_pages,
+        'pages' => $pages,
+        'subpages' => $subpages,
+      ])
 
-  @endforeach
+    @endforeach
 
   </div>
 </div>

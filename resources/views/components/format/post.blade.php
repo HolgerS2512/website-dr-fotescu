@@ -12,14 +12,18 @@
 
 @foreach ($content as $column)
 
-  <div class="col-12 col-sm-11 col-lg-10 offset-sm-1 offset-lg-2 mb-5 pb-4" style="max-width: 1000px">
-    <div class="mb-4">
-      <h3>{{ $column->title }}</h3>
-    </div>
+  <div class="col-12 col-sm-11 col-lg-10 offset-sm-1 offset-lg-2 mb-5" style="max-width: 1000px">
+    @if ($column->title)
+      <div class="mb-4">
+        <h3>{!! $column->title !!}</h3>
+      </div>
+    @endif
 
-    <div>
-      <p>{{ $column->content }}</p>
-    </div>
+    @if ($column->content)
+      <div>
+        <p>{!!  $column->content !!}</p>
+      </div>
+    @endif
   </div>
 
 @endforeach

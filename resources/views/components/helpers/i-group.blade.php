@@ -14,12 +14,10 @@
   </span>
   <input 
     type="text" 
-    class="form-control @error("{{ $name }}") is-invalid @enderror" 
+    class="field form-control @error("{{ $name }}") is-invalid @enderror" 
     name="{{ $name }}" 
-    value="{{ $value }}" 
-    minlength="3" 
+    value="{{ preg_replace('/<br>/', "\r\n", $value) }}" 
     maxlength="255"
-    required
   >
   @error("{{ $name }}")
     <div class="invalid-feedback">

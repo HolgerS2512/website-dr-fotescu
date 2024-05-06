@@ -127,17 +127,6 @@ class PostController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -205,6 +194,11 @@ class PostController extends Controller
                 'ru' => $request->ru,
             ]);
 
+            $conTable = Content::find($conId);
+            $conTable->update([
+                'url_link' => $post->getUrl(),
+            ]);
+
             if ( $request->image ) {
                 $ic = new ImageConverter($request->image, 'uploads/images/posts/');
                 $ic->move();
@@ -225,7 +219,7 @@ class PostController extends Controller
                     $post->update([ 'image_id' => $img->id ]);
                 }
             }
-
+            dump('step into');
             foreach ($this->filtedLang('de', $this->persistValues) as $values) {
                 
                 if (array_key_exists('id', $values)) {
@@ -345,7 +339,7 @@ class PostController extends Controller
     public function setStoreValues($requVal)
     {
         $rule = [
-            false => '|max:255',
+            false => 'max:255',
             true => '',
         ];
 
@@ -360,8 +354,9 @@ class PostController extends Controller
             );
         }, ARRAY_FILTER_USE_KEY);
 
-        foreach (array_flip($this->persistValues) as $val) {
-            $this->validateRules[$val] = "required|min:3{$rule[str_contains($val, 'content')]}";
+        foreach ($this->persistValues as $key => $_) {
+            if (str_contains($key, 'content')) $this->validateRules[$key] = 'max:255';
+            // $this->validateRules[$key] = "{$rule[str_contains($key, 'content')]}";
         }
 
         $this->validateRules['ranking'] = 'required|numeric|min:1';
@@ -421,7 +416,7 @@ class PostController extends Controller
                 }
             }
         }
-
+        
         return $this->filterResult($result);
     }
 
@@ -436,8 +431,10 @@ class PostController extends Controller
         for ($i = 0; $i < count($resArr); $i++) {
             $check = false;
 
-            foreach ($resArr[$i] as $key => $val) {
+            if (isset($resArr[$i]['content'])) $resArr[$i]['content'] = preg_replace('/\r\n/', '<br>', $resArr[$i]['content']);
+            if (isset($resArr[$i]['title'])) $resArr[$i]['title'] = preg_replace('/\r\n/', '<br>', $resArr[$i]['title']);
 
+            foreach ($resArr[$i] as $key => $val) {
                 if ($key === 'id' && str_contains($val, '_new')) {
                     $resArr[$i]['ranking'] = substr($val, 0, strpos($val, '_'));
                     $check = true;

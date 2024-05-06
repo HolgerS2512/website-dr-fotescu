@@ -27,6 +27,7 @@
           </div>
 
           @for ($i = 0; $i < $deEdit->count(); $i++)
+            {{-- @if ( true ) --}}
             @if ( ! in_array( $deEdit[$i]->title, ['opening', 'infos'] ) && $deEdit[$i]->content()->first()->format !== 'buttons' )
 
             <form

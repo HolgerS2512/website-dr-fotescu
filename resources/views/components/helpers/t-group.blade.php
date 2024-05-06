@@ -15,11 +15,9 @@
   <textarea 
     cols="1"
     rows="2"
-    class="form-control @error("{{ $name }}") is-invalid @enderror" 
+    class="field form-control @error("{{ $name }}") is-invalid @enderror" 
     name="{{ $name }}" 
-    minlength="3" 
-    required
-  >{{ $value }}</textarea>
+  >{{ preg_replace('/<br>/', "\r\n", $value) }}</textarea>
   @error("{{ $name }}")
     <div class="invalid-feedback">
       {{ $message }}

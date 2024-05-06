@@ -31,6 +31,7 @@
                   $page = $p->subpages->where('link', $row->{'item_' . $itemIdx})->first();
                 }
               }
+
               $title = $page->{$locale};
               $href = $locale === 'de' ? '' : $locale . '/';
               $href .= $page->weblink;
