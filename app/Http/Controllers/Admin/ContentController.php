@@ -78,8 +78,6 @@ final class ContentController extends Controller implements HandleLayoutReposito
             return view('admin.content.index', [
                 'page' => $this->page,
                 'content' => $this->content,
-                'src' => $this->images->where('slide', false),
-                'public' => $this->publishes,
             ]);
         } catch (Exception $e) {
 

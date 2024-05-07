@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\HandleDB\SetAdminDatabaseData;
+use App\Http\Controllers\HandleHttp\GetPageUrlVars;
 use App\Models\Helpers\ImageConverter;
 use App\Repositories\Admin\HandleLayoutRepository;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Image;
+use App\Models\Subpage;
 use Illuminate\Database\Eloquent\Collection;
 use App\Traits\GetLangMessage;
 use Illuminate\Support\Carbon;
@@ -62,12 +64,11 @@ final class HeadController extends Controller implements HandleLayoutRepository
     {
         try {
             $this->page = $dbData->page;
-            if (!is_null($dbData->subpages)) {
-                $this->subpages = $dbData->subpages;
-            }
 
             $this->images = $dbData->images->where('slide', true);
+
             $this->publishes = $dbData->publishes;
+
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -89,18 +90,10 @@ final class HeadController extends Controller implements HandleLayoutRepository
     public function index()
     {
         try {
-            $imageIds = [];
-
-            foreach ($this->images as $image) {
-                $imageIds[$image->ranking] = $image->id;
-            }
-
             return view('admin.header.index', [
-                'page' => $this->page,
-                'subpages' => $this->subpages ?? [],
-                'src' => $this->page->getSliderData(),
+                'page' => $this->page ?? [],
+                'images' => $this->page->anySlideData(),
                 'public' => $this->publishes->public,
-                'imageIds' => $imageIds,
             ]);
         } catch (Exception $e) {
 

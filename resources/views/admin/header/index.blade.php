@@ -73,8 +73,8 @@
           </tr>
         </thead>
         <tbody>
-          @if ( isset($src) && ! empty($src) )
-          @foreach ($src as $slider)
+          @if ( isset($images) && ! empty($images) )
+          @foreach ($images as $slider)
           <tr>
             <th scope="row">
               <div class="text-center d-flex justify-content-center align-items-center mh-100" style="min-height: 110px">
@@ -154,11 +154,11 @@
           <div class="mb-2">
             <h3>Upload a new image</h3>
           </div>
-          @if (isset($src))
-          @if ( ! empty($src) && count($src) < 1 )
+          @if (isset($images))
+          @if ( ! empty($images) && count($images) < 1 )
               <input type="hidden" name="ranking" value="1">
             @else
-            @foreach ($src as $slider)
+            @foreach ($images as $slider)
             @if ($loop->last)
               <input type="hidden" name="ranking" value="{{ $slider->ranking + 1 }}">
             @endif

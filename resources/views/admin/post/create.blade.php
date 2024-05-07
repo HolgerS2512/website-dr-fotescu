@@ -44,6 +44,9 @@
     </div>
 
     <div class="mb-4">
+      <a href="{{ route('dashboard') }}" class="mt-3 me-2 btn btn-danger">
+        Back and discard
+      </a>
       <button type="submit" class="mt-3 btn btn-success">
         Save and edit post
       </button>

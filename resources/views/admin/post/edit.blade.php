@@ -139,6 +139,9 @@
 
       <div class="d-flex justify-content-between">
         <div class="mb-4">
+          <a href="{{ route('dashboard') }}" class="mt-3 me-2 btn btn-danger">
+            Back and discard
+          </a>
           <button type="reset" class="px-5 mt-3 me-2 btn btn-dark">Reset</button>
           <button type="submit" class="px-5 mt-3 btn btn-primary">Update</button>
         </div>

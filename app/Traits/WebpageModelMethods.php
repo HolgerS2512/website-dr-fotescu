@@ -84,6 +84,25 @@ trait WebpageModelMethods
   }
 
   /**
+   * Get any images for header.
+   * 
+   * @return Collection|Image|null
+   */
+  public function anySlideData(): Collection|NULL
+  {
+    $exp = $this->images()->where('slide', true);
+
+    if ($this instanceof Page) {
+      
+      $exp = $exp->where('subpage_id', null);
+    } else {
+      $exp = $exp->whereNotNull('subpage_id');
+    }
+
+    return $exp->get();
+  }
+
+  /**
    * Get the main title (h1 Headline) for this page.
    * 
    * @return string|null

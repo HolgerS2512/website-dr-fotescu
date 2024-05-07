@@ -38,7 +38,7 @@
               <a 
                 href="{{ url('administration/post/edit/' . $post->id) }}" 
                 class="btn btn-primary mt-3 w-100 text-white"
-                >Update
+                >Edit
               </a>
             </div>
           </div>
@@ -48,16 +48,13 @@
 
     <div class="col-lg-6 col-xl-4">
       <div class="p-3 mb-3">
-        <div class="card" style="width: max-content;">
-          <div class="card-body position-relative">
-            <h5 class="card-title pe-1">Create a new post</h5>
-            <a 
-              href="{{ url('administration/post/create') }}" 
-              class="btn btn-success w-100 text-white"
-            ><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20">
-              <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" fill="#FFF" />
-            </svg> To the form</a>
-          </div>
+        <div style="width: max-content;">
+          <a 
+            href="{{ url('administration/post/create') }}" 
+            class="btn btn-success w-100 text-white py-3"
+          ><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20">
+            <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" fill="#FFF" />
+          </svg> Create new post</a>
         </div>
       </div>
     </div>
