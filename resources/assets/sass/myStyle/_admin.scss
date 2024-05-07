@@ -55,6 +55,8 @@
     object-fit: cover;
     border-radius: 6px;
   }
+
+
   
 }
 
@@ -201,4 +203,40 @@
 }
 .post-public.post-false {
     background-color: rgba(240, 11, 87, 0.75);
+}
+
+.post-content {
+  transition: .25s;
+  padding: 2rem .75rem;
+  position: relative;
+
+  &:hover {
+    background-color: rgba(0, 0, 255, .05);
+  }
+
+  button {
+    width: 48px;
+    height: 48px;
+    background-image: url('/public/assets/svg/cancel_post.svg');
+    background-color: transparent;
+    outline: none;
+    border: none;
+
+    position: absolute;
+    right: .25rem;
+    top: .25rem;
+    transform: scale(1) rotate(180deg);
+    transition: .2s;
+    z-index: 5;
+    opacity: .25;
+
+    &:hover {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+  }
+
+  div:first-child {
+    margin-bottom: 2rem;
+  }
 }

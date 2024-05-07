@@ -43,6 +43,8 @@
                     @if(session('present'))
                         <x-modal :message="session('message')" :status="session('status')" />
                     @endif
+
+                    <x-js-modal />
                     
                     @yield('content')
                 </main>

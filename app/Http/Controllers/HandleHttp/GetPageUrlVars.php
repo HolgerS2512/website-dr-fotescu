@@ -39,6 +39,7 @@ use Illuminate\Support\Facades\DB;
  * @method static getLanguage(): string
  * @method static isHeadMethod(): bool
  * @method static hasLanguages(): array
+ * @method static getAllLangs(): array
  * 
  */
 final class GetPageUrlVars implements UrlVariablesRepository
@@ -405,5 +406,16 @@ final class GetPageUrlVars implements UrlVariablesRepository
   public static function hasLanguages(): array
   {
     return self::$hasLanguages;
+  }
+
+  /**
+   * Static method return all Languages as array.
+   *
+   * @return array
+   * 
+   */
+  public static function getAllLangs(): array
+  {
+    return array_merge([self::$hasLanguages['base']], self::$hasLanguages['options']);
   }
 }

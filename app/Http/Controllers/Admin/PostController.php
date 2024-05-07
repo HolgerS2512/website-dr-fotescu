@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\HandleHttp\GetPageUrlVars;
 use App\Models\Content;
 use App\Models\Helpers\ImageConverter;
 use Illuminate\Http\Request;
@@ -13,7 +14,6 @@ use App\Models\Lang\DE_Content;
 use App\Models\Lang\EN_Content;
 use App\Models\Lang\RU_Content;
 use App\Models\Post;
-use Illuminate\Database\Eloquent\Collection;
 use App\Traits\GetLangMessage;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -71,7 +71,7 @@ class PostController extends Controller
                     ->withInput();
             }
 
-            if ( $request->image ) {
+            if ($request->image) {
                 $ic = new ImageConverter($request->image, 'uploads/images/posts/');
                 $ic->move();
 
@@ -181,7 +181,7 @@ class PostController extends Controller
                 $i = 1;
                 foreach (Post::whereNot('id', $postId)->orderBy('ranking')->get() as $pModel) {
                     if ($i === (int) $request->new_ranking) ++$i;
-                    $pModel->update([ 'ranking' => $i ]);
+                    $pModel->update(['ranking' => $i]);
                     ++$i;
                 }
             }
@@ -199,11 +199,11 @@ class PostController extends Controller
                 'url_link' => $post->getUrl(),
             ]);
 
-            if ( $request->image ) {
+            if ($request->image) {
                 $ic = new ImageConverter($request->image, 'uploads/images/posts/');
                 $ic->move();
 
-                if ( $request->old_image && File::exists($request->old_image) ) {
+                if ($request->old_image && File::exists($request->old_image)) {
                     File::delete($request->old_image);
                 }
 
@@ -216,43 +216,20 @@ class PostController extends Controller
                 ]);
 
                 if ($img->id) {
-                    $post->update([ 'image_id' => $img->id ]);
-                }
-            }
-            dump('step into');
-            foreach ($this->filtedLang('de', $this->persistValues) as $values) {
-                
-                if (array_key_exists('id', $values)) {
-                    DE_Content::whereId(array_slice($values, 0, 1)['id'])
-                        ->update(array_slice($values, 1));
-                } else {
-                    $values['content_id'] = $conId;
-                    $deCon = DE_Content::create($values);
-                    $deCon->save();
+                    $post->update(['image_id' => $img->id]);
                 }
             }
 
-            foreach ($this->filtedLang('en', $this->persistValues) as $values) {
-
-                if (array_key_exists('id', $values)) {
-                    EN_Content::whereId(array_slice($values, 0, 1)['id'])
-                        ->update(array_slice($values, 1));
-                } else {
-                    $values['content_id'] = $conId;
-                    $enCon = new EN_Content($values);
-                    $enCon->save();
-                }
-            }
-
-            foreach ($this->filtedLang('ru', $this->persistValues) as $values) {
-
-                if (array_key_exists('id', $values)) {
-                    RU_Content::whereId(array_slice($values, 0, 1)['id'])
-                        ->update(array_slice($values, 1));
-                } else {
-                    $values['content_id'] = $conId;
-                    $ruCon = RU_Content::create($values);
-                    $ruCon->save();
+            foreach (GetPageUrlVars::getAllLangs() as $lang) {
+                foreach ($this->filtedLang($lang, $this->persistValues) as $values) {
+                    if (array_key_exists('id', $values)) {
+                        ('\App\Models\Lang\\' . strtoupper($lang) . '_Content')::whereId(array_slice($values, 0, 1)['id'])
+                            ->update(array_slice($values, 1));
+                    } else {
+                        $values['content_id'] = $conId;
+                        $deCon = ('\App\Models\Lang\\' . strtoupper($lang) . '_Content')::create($values);
+                        $deCon->save();
+                    }
                 }
             }
 
@@ -261,7 +238,6 @@ class PostController extends Controller
                 'status' => true,
                 'message' => GetLangMessage::languagePackage('en')->updateTrue,
             ]);
-
         } catch (Exception $e) {
             return redirect()->back()->with([
                 'present' => true,
@@ -320,14 +296,94 @@ class PostController extends Controller
     }
 
     /**
+     * Remove the specified content resource from storage.
+     *
+     * @param  int  $deId, $enId, $ruId
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteContent($deId, $enId, $ruId)
+    {
+        try {
+            foreach (GetPageUrlVars::getAllLangs() as $lang) {
+                $id = ${$lang . 'Id'};
+                if ($id) {
+                    $model = ('\App\Models\Lang\\' . strtoupper($lang) . '_Content')::find($id);
+                    if ($model) $model->delete();
+                }
+            }
+
+            return response()->json([
+                'present' => true,
+                'status' => true,
+                'message' => GetLangMessage::languagePackage('en')->deleteConTrue,
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'present' => true,
+                'status' => false,
+                'message' => GetLangMessage::languagePackage('en')->deleteConFalse,
+            ]);
+        }
+
+        return response()->json([
+            'present' => true,
+            'status' => false,
+            'message' => GetLangMessage::languagePackage('en')->deleteConFalse,
+        ]);
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($postId, $conId)
     {
-        //
+        try {
+            $content = Content::find($conId);
+            $content->delete();
+
+            foreach (GetPageUrlVars::getAllLangs() as $lang) {
+                $model = ('\App\Models\Lang\\' . strtoupper($lang) . '_Content')::all()->where('content_id', $conId);
+                foreach ($model as $item) {
+                    $item->delete();
+                }
+            }
+
+            $post = Post::find($postId);
+            $img = Image::find($post->image_id);
+            if ($img) $img->delete();
+            $post->delete();
+
+            $posts = Post::whereNot('id', $postId)->orderBy('ranking')->get();
+            for ($i = 1; $i <= $posts->count(); $i++) {
+                $posts[$i - 1]->update([
+                    'ranking' => $i,
+                    'updated_at' => Carbon::now(),
+                ]);
+            }
+
+            if ($content && $post) {
+                return redirect()->route('dashboard')->with([
+                    'present' => true,
+                    'status' => true,
+                    'message' => GetLangMessage::languagePackage('en')->deletePostTrue,
+                ]);
+            }
+        } catch (Exception $e) {
+            return response()->json([
+                'present' => true,
+                'status' => false,
+                'message' => GetLangMessage::languagePackage('en')->deletePostFalse,
+            ]);
+        }
+
+        return response()->json([
+            'present' => true,
+            'status' => false,
+            'message' => GetLangMessage::languagePackage('en')->deletePostFalse,
+        ]);
     }
 
     /**
@@ -345,9 +401,9 @@ class PostController extends Controller
 
         $this->persistValues = array_filter($requVal, function ($v) {
             return !(
-                $v === '_method' 
-                || $v === '_token' 
-                || $v === 'image' 
+                $v === '_method'
+                || $v === '_token'
+                || $v === 'image'
                 || $v === 'old_image'
                 || $v === 'ranking'
                 || $v === 'new_ranking'
@@ -392,7 +448,7 @@ class PostController extends Controller
                 $resId = substr($key, strpos($key, '_') + 1);
                 $resKey = substr($key, 0, strpos($key, '_'));
 
-                if ( empty($result) ) {
+                if (empty($result)) {
                     $result[] = [
                         'id' => $resId,
                         $resKey => $value,
@@ -416,7 +472,7 @@ class PostController extends Controller
                 }
             }
         }
-        
+
         return $this->filterResult($result);
     }
 

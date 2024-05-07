@@ -36,6 +36,10 @@ class LanguageFactory extends Model
             'updateFalse' => 'Database error, update failed!',
             'deleteTrue' => 'Delete successfully.',
             'deleteFalse' => 'Database error, delete failed!',
+            'deletePostTrue' => 'Delete post successfully.',
+            'deletePostFalse' => 'Database error, post delete failed!',
+            'deleteConTrue' => 'Delete content successfully.',
+            'deleteConFalse' => 'Database error, delete content failed!',
             'databaseError' => 'Database error!',
             'methodError' => 'This method is not allowed!',
         ],
@@ -56,6 +60,8 @@ class LanguageFactory extends Model
     public $uploadTrue, $uploadFalse;
     public $updateTrue, $updateFalse;
     public $deleteTrue, $deleteFalse;
+    public $deletePostTrue, $deletePostFalse;
+    public $deleteConTrue, $deleteConFalse;
     public $databaseError;
     public $methodError;
 

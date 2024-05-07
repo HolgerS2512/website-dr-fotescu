@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
  * @method static getLanguage(): string
  * @method static isHeadMethod(): bool
  * @method static hasLanguages(): array
+ * @method static getAllLangs(): array
  * 
  */
 interface UrlVariablesRepository
@@ -139,4 +140,12 @@ interface UrlVariablesRepository
    * 
    */
   public static function hasLanguages(): array;
+
+  /**
+   * Static method return all Languages as array.
+   *
+   * @return array
+   * 
+   */
+  public static function getAllLangs(): array;
 }
