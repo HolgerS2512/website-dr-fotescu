@@ -37,7 +37,8 @@ use Illuminate\Support\Facades\File;
  * @method destroy($id)
  * 
  */
-final class HeadController extends Controller implements HandleLayoutRepository
+final class HeadController extends Controller
+// implements HandleLayoutRepository
 {
     /**
      * Saves the associated db data for the respective variable.
@@ -65,10 +66,9 @@ final class HeadController extends Controller implements HandleLayoutRepository
         try {
             $this->page = $dbData->page;
 
-            $this->images = $dbData->images->where('slide', true);
+            $this->images = $dbData->images->where('slide', true)->sortBy('ranking');
 
             $this->publishes = $dbData->publishes;
-
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -136,9 +136,17 @@ final class HeadController extends Controller implements HandleLayoutRepository
             // $resize_img = $read_img->resize(300, 200);
             // $resize_img->toJpeg(85)->save(base_path($save_url));
 
+            $subpage_id = null;
+            $page_id = null;
+            if ( $this->page instanceof Subpage ) {
+                $subpage_id = $this->page->id;
+                $page_id = $this->page->page()->first()->id;
+            }
+
             Image::insert([
                 'ranking' => $request->ranking,
-                'page_id' => $this->page->id,
+                'page_id' => $page_id ?? $this->page->id,
+                'subpage_id' => $subpage_id,
                 'slide' => 1,
                 'title' => mb_strtolower(str_replace(' ', '-', $request->title)),
                 'src' => $ic->saveUrl,
@@ -357,72 +365,44 @@ final class HeadController extends Controller implements HandleLayoutRepository
      * @return \Illuminate\Http\Response
      * 
      */
-    public function up(Request $request, $_, $id)
+    public function changeRanking(Request $request, $_, $id)
     {
         try {
-            foreach ($this->images as $image) {
+            $credentials = Validator::make($request->all(), [
+                'ranking' => 'required|numeric',
+                'method' => 'required|min:2|max:4',
+            ]);
 
-                if ($image->id === (int) $request->previous_id) {
-                    $image->update([
-                        'ranking' => $request->ranking + 1,
-                        'updated_at' => Carbon::now(),
-                    ]);
-                }
-
-                if ($image->id === (int) $id) {
-                    $image->update([
-                        'ranking' => intval($request->ranking),
-                        'updated_at' => Carbon::now(),
-                    ]);
-                }
+            if ($credentials->fails()) {
+                return redirect()->back()
+                    ->withErrors($credentials->errors())
+                    ->withInput();
             }
 
-            return redirect()->back();
-        } catch (Exception $e) {
-            return redirect()->back()->with([
-                'present' => true,
-                'status' => false,
-                'message' => $e,
-            ]);
-        }
+            $quest = $request->method === 'up';
+            $newRank = $request->ranking + ($quest ? -1 : 1);
 
-        return redirect()->back()->with([
-            'present' => true,
-            'status' => false,
-            'message' => GetLangMessage::languagePackage('en')->updateFalse,
-        ]);
-    }
+            $image = Image::find($id);
+            $image->update(['ranking' => $newRank]);
 
-    /**
-     * Update the ranking of an image down in db.
-     * 
-     * @method down(Request $request, $id)
-     * 
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Illuminate\Http\Request $id
-     * 
-     * @var \App\Models\Image $images
-     * 
-     * @return \Illuminate\Http\Response
-     * 
-     */
-    public function down(Request $request, $_, $id)
-    {
-        try {
-            foreach ($this->images as $image) {
+            if ($image) {
+                $images = Image::whereNot('id', $id)
+                    ->where('slide', true)
+                    ->where('page_id', $image->page_id)
+                    ->where('subpage_id', $image->subpage_id)
+                    ->orderBy('ranking')
+                    ->get();
 
-                if ($image->id === (int) $request->previous_id) {
-                    $image->update([
-                        'ranking' => $request->ranking + 1,
-                        'updated_at' => Carbon::now(),
-                    ]);
-                }
-
-                if ($image->id === (int) $id) {
-                    $image->update([
-                        'ranking' => intval($request->ranking),
-                        'updated_at' => Carbon::now(),
-                    ]);
+                if (!empty($images->toArray())) {
+                    $i = 1;
+                    foreach ($images as $img) {
+                        if ($i === $newRank) ++$i;
+                        $img->update([
+                            'ranking' => $i,
+                            'updated_at' => Carbon::now(),
+                        ]);
+                        ++$i;
+                    }
                 }
             }
 
@@ -474,13 +454,21 @@ final class HeadController extends Controller implements HandleLayoutRepository
                 }
             }
 
-            $data = $this->images;
+            $images = Image::where('slide', true)
+                ->where('page_id', $image->page_id)
+                ->where('subpage_id', $image->subpage_id)
+                ->orderBy('ranking')
+                ->get();
 
-            for ($i = 0; $i < count($this->images); $i++) {
-                Image::whereId($data[$i]->id)->update([
-                    'ranking' => ($i + 1),
-                    'updated_at' => Carbon::now(),
-                ]);
+            if (!empty($images->toArray())) {
+                $i = 1;
+                foreach ($images as $img) {
+                    $img->update([
+                        'ranking' => $i,
+                        'updated_at' => Carbon::now(),
+                    ]);
+                    ++$i;
+                }
             }
 
             return redirect()->back()->with([

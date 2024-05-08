@@ -104,12 +104,12 @@
             </td>
             <td>
               <div class="d-flex justify-content-center">
-                <form action="{{ url('administration/header/' . $page->link . '/image/update/up/' . $slider->id) }}" method="POST">
+                <form action="{{ url('administration/header/' . $page->link . '/image/update/ranking/' . $slider->id) }}" method="POST">
                   @method('PATCH')
                   @csrf
                   @if (! $loop->first)
-                  <input type="hidden" name="ranking" value="{{ $slider->ranking - 1 }}">
-                  <input type="hidden" name="previous_id" value="{{ isset($imageIds[$slider->ranking - 1]) ? $imageIds[$slider->ranking - 1] : 1 }}">
+                    <input type="hidden" name="ranking" value="{{ $slider->ranking }}">
+                    <input type="hidden" name="method" value="up">
                   @endif
                   <button type="@if ($loop->first) button @else submit @endif" title="Image up" class="btn btn-dark me-2" @if ($loop->first) disabled @endif>
                     <x-icons.up :size="35" :clr="'FFF'" />
@@ -122,12 +122,12 @@
               </div>
 
               <div class="mt-2 d-flex justify-content-center">
-                <form action="{{ url('administration/header/' . $page->link . '/image/update/down/' . $slider->id) }}" method="POST">
+                <form action="{{ url('administration/header/' . $page->link . '/image/update/ranking/' . $slider->id) }}" method="POST">
                   @method('PATCH')
                   @csrf
                   @if (! $loop->last)
-                  <input type="hidden" name="ranking" value="{{ $slider->ranking + 1 }}">
-                  <input type="hidden" name="next_id" value="{{ isset($imageIds[$slider->ranking + 1]) ? $imageIds[$slider->ranking + 1] : 0 }}">
+                    <input type="hidden" name="ranking" value="{{ $slider->ranking }}">
+                    <input type="hidden" name="method" value="down">
                   @endif
                   <button type="@if ($loop->last) button @else submit @endif" title="Image down" class="btn btn-dark me-2" @if ($loop->last) disabled @endif>
                     <x-icons.down :size="35" :clr="'FFF'" />

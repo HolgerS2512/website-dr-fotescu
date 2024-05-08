@@ -21,8 +21,6 @@ Route::put('administration/header/{link}/image/update/{id}', [HeadController::cl
 
 Route::patch('administration/header/{link}/image/visible', [HeadController::class, 'visible']);
 
-Route::patch('administration/header/{link}/image/update/up/{id}', [HeadController::class, 'up']);
-
-Route::patch('administration/header/{link}/image/update/down/{id}', [HeadController::class, 'down']);
+Route::patch('administration/header/{link}/image/update/ranking/{id}', [HeadController::class, 'changeRanking']);
 
 Route::get('administration/header/{link}/image/delete/{id}', [HeadController::class, 'destroy']);

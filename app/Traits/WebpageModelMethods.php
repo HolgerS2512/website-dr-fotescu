@@ -99,7 +99,7 @@ trait WebpageModelMethods
       $exp = $exp->whereNotNull('subpage_id');
     }
 
-    return $exp->get();
+    return $exp->orderBy('ranking')->get();
   }
 
   /**
