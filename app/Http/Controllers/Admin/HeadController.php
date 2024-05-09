@@ -48,7 +48,7 @@ final class HeadController extends Controller
      * @var \App\Models\Image $images,
      * @var \App\Models\Publish $publishes
      */
-    private $page, $subpages, $images, $publishes;
+    private $page, $images, $publishes;
 
     /**
      * Store db data in this variables $page, $images, $publishes.
@@ -353,7 +353,7 @@ final class HeadController extends Controller
     }
 
     /**
-     * Update the ranking of an image up in db.
+     * Update the ranking of an image up and down in db.
      * 
      * @method up(Request $request, $id)
      * 

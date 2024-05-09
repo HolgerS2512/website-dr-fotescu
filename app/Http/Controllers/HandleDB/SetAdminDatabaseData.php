@@ -57,12 +57,11 @@ class SetAdminDatabaseData implements SetDbDataRepository
       $this->subpages = Subpage::all()->where('page_id', $this->page->id)->sortBy('ranking');
     }
 
-    $this->images = $this->page->images()->orderBy('ranking')->get();
-
-    if ($urlVars::isHeadMethod()) {
+    if ( $urlVars::isHeadMethod() ) {
+      $this->images = $this->page->images()->orderBy('ranking')->get();
+      $this->publishes = $this->page->publishes()->get()->first();
+    } else {
       $this->content = $this->page->contents()->orderBy('ranking')->get();
     }
-
-    $this->publishes = $this->page->publishes()->get()->first();
   }
 }

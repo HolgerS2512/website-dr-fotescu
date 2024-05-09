@@ -21,8 +21,6 @@ Route::put('administration/content/{link}/update/{id}', [ContentController::clas
 
 Route::patch('administration/content/{link}/visible', [ContentController::class, 'visible']);
 
-Route::patch('administration/content/{link}/update/up/{id}', [ContentController::class, 'up']);
-
-Route::patch('administration/content/{link}/update/down/{id}', [ContentController::class, 'down']);
+Route::patch('administration/content/{link}/update/ranking/{id}', [ContentController::class, 'changeRanking']);
 
 Route::get('administration/content/{link}/delete/{id}', [ContentController::class, 'destroy']);

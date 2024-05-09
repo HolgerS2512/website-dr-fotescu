@@ -4,11 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HandleDB\SetAdminDatabaseData;
+use App\Http\Controllers\HandleHttp\GetPageUrlVars;
+use App\Models\Content;
 use App\Repositories\Admin\HandleLayoutRepository;
 use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Image;
+use App\Models\Lang\DE_Content;
+use App\Models\Subpage;
 use App\Traits\GetLangMessage;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
@@ -32,7 +36,8 @@ use Illuminate\Support\Facades\File;
  * @method destroy($id)
  * 
  */
-final class ContentController extends Controller implements HandleLayoutRepository
+final class ContentController extends Controller
+// implements HandleLayoutRepository
 {
     /**
      * Saves the associated db data for the respective variable.
@@ -42,7 +47,7 @@ final class ContentController extends Controller implements HandleLayoutReposito
      * @var \App\Models\Content $content
      * @var \App\Models\Publish $publishes
      */
-    public $page, $images, $content, $publishes;
+    public $page, $images, $contents, $publishes;
 
     /**
      * Store db data in this variables $page, $images, $publishes.
@@ -59,9 +64,7 @@ final class ContentController extends Controller implements HandleLayoutReposito
     {
         try {
             $this->page = $dbData->page;
-            $this->images = $dbData->images;
-            $this->content = $dbData->content;
-            $this->publishes = $dbData->publishes;
+            $this->contents = $dbData->content;
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -77,7 +80,7 @@ final class ContentController extends Controller implements HandleLayoutReposito
         try {
             return view('admin.content.index', [
                 'page' => $this->page,
-                'content' => $this->content,
+                'contents' => $this->contents,
             ]);
         } catch (Exception $e) {
 
@@ -130,25 +133,70 @@ final class ContentController extends Controller implements HandleLayoutReposito
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the ranking of content up or down in db.
      *
      * @param  \Illuminate\Http\Request $request
      * @param  \Illuminate\Http\Request $id
      * @return \Illuminate\Http\Response
      */
-    public function up(Request $request, $_, $id)
+    public function changeRanking(Request $request, $_, $id)
     {
-    }
+        try {
+            $credentials = Validator::make($request->all(), [
+                'ranking' => 'required|numeric',
+                'new_ranking' => 'required|numeric',
+            ]);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Illuminate\Http\Request $id
-     * @return \Illuminate\Http\Response
-     */
-    public function down(Request $request, $_, $id)
-    {
+            if ($credentials->fails()) {
+                return redirect()->back()
+                    ->withErrors($credentials->errors())
+                    ->withInput();
+            }
+
+            $content = Content::find($id);
+            $content->update([
+                'ranking' => $request->new_ranking,
+                'updated_at' => Carbon::now(),
+            ]);
+
+            $i = 1;
+            $subpage_id = null;
+            $page_id = null;
+
+            if ($this->page instanceof Subpage) {
+                $subpage_id = $this->page->id;
+                $page_id = $this->page->page()->first()->id;
+            }
+
+            $contents = Content::whereNot('id', $id)
+                ->where('page_id', $page_id ?? $this->page->id)
+                ->where('subpage_id', $subpage_id)
+                ->orderBy('ranking')
+                ->get();
+
+            foreach ($contents as $content) {
+                if ($i === (int) $request->new_ranking) ++$i;
+                $content->update([
+                    'ranking' => $i,
+                    'updated_at' => Carbon::now(),
+                ]);
+                ++$i;
+            }
+
+            return redirect()->back();
+        } catch (Exception $e) {
+            return redirect()->back()->with([
+                'present' => true,
+                'status' => false,
+                'message' => GetLangMessage::languagePackage('en')->databaseError,
+            ]);
+        }
+
+        return redirect()->back()->with([
+            'present' => true,
+            'status' => false,
+            'message' => GetLangMessage::languagePackage('en')->databaseError,
+        ]);
     }
 
     /**
@@ -159,5 +207,77 @@ final class ContentController extends Controller implements HandleLayoutReposito
      */
     public function destroy($_, $id)
     {
+        $imageIds = [];
+
+        try {
+            foreach (GetPageUrlVars::getAllLangs() as $lang) {
+                $contents = ('\App\Models\Lang\\' . strtoupper($lang) . '_Content')::all()->where('content_id', $id);
+                $lists = ('\App\Models\Lang\\' . strtoupper($lang) . '_List')::all()->where('content_id', $id);
+
+                if (!empty($contents->toArray())) {
+                    foreach ($contents as $content) {
+                        // if ($content) $content->delete();
+                        if ($content)  dump($content);
+                    }
+                }
+
+                if (!empty($lists->toArray())) {
+                    foreach ($lists as $list) {
+                        // if ($list) $list->delete();
+                        if ($list) dump($list);
+                    }
+                }
+            }
+
+            $rmContent = Content::find($id);
+
+            if ($rmContent->format === 'headline_image' || $rmContent->format === 'image_overlap' || $rmContent->format === 'image_solo') {
+                if ($rmContent->image_id) $imageIds[] = $rmContent->image_id;
+
+                $imgLangCon = ('\App\Models\Lang\\' . strtoupper(GetPageUrlVars::$hasLanguages['base']) . '_Content')::all()->where('content_id', $rmContent->id);
+
+                if (!empty($imgLangCon->toArray())) {
+                    foreach ($imgLangCon as $item) {
+                        if ($item->image_id) $imageIds[] = $item->image_id;
+                    }
+                }
+            }
+
+            if (!empty($imageIds)) {
+
+                $imgs = Image::whereIn('id', $imageIds)->get();
+
+                if (!empty($imgs->toArray())) {
+                    foreach ($imgs as $img) {
+                        // if (File::exists($img->src)) File::delete($img->src);
+                        // $img->delete();
+                    }
+                }
+            }
+            dump($rmContent);
+            dump($imgs);
+            dd($imageIds);
+            // $rmContent->delete();
+
+            if ($rmContent) {
+                return response()->json([
+                    'present' => true,
+                    'status' => true,
+                    'message' => GetLangMessage::languagePackage('en')->deleteConTrue,
+                ]);
+            }
+        } catch (Exception $e) {
+            return response()->json([
+                'present' => true,
+                'status' => false,
+                'message' => GetLangMessage::languagePackage('en')->deleteConFalse,
+            ]);
+        }
+
+        return response()->json([
+            'present' => true,
+            'status' => false,
+            'message' => GetLangMessage::languagePackage('en')->deleteConFalse,
+        ]);
     }
 }
