@@ -2,14 +2,14 @@
 
 {{--------------------> Title <--------------------}}
 @section('title')
-<title>Edit {{ $page->name }} Header</title>
+<title>Edit {{ $page->en }} Header</title>
 @endsection
 
 {{--------------------> Content <--------------------}}
 @section('content')
 
 <div class='container py-5'>
-  <h1 class="special-admin-header">Edit {{ $page->name }} Header</h1>
+  <h1 class="special-admin-header">Edit {{ $page->en }} Header</h1>
 
   <div style="margin-top: 130px;" class="row">
     <div class="col-12">
@@ -23,7 +23,7 @@
             </div>
             <div id="collapseImportant" class="accordion-collapse collapse" data-bs-parent="#accordionImportantNote">
               <div class="accordion-body">
-                <p>Automatically adds it to slider on page "{{ $page->name }}" (every language)!</p>
+                <p>Automatically adds it to slider on page "{{ $page->en }}" (every language)!</p>
                 <a class="link" rel="noopener noreferrer" target="_blank" href="https://compress-or-die.com/webp">Optimize your image here! -> https://compress-or-die.com/webp</a>
                 <p class="mt-4">Follow this instructions:</p>
                 <ol>

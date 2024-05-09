@@ -122,7 +122,7 @@ class ImageSeeder extends Seeder
         $images->insert([
             'page_id' => 1,
             'title' => 'blue checkbox',
-            'src' => 'uploads/svg/checkbox.svg',
+            'src' => 'uploads/svg/list/checkbox.svg',
             'ext' => 'svg',
             'created_at' => Carbon::now(),
         ]);   

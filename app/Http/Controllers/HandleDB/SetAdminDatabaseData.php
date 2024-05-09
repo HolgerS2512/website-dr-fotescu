@@ -31,7 +31,7 @@ class SetAdminDatabaseData implements SetDbDataRepository
    * @var \App\Models\Content $content
    * @var \App\Models\Publish $publishes
    */
-  public $page, $subpages, $images, $content, $publishes;
+  public $page, $subpages, $images, $contents, $publishes;
 
   /**
    * Store db data in this variables.
@@ -61,7 +61,11 @@ class SetAdminDatabaseData implements SetDbDataRepository
       $this->images = $this->page->images()->orderBy('ranking')->get();
       $this->publishes = $this->page->publishes()->get()->first();
     } else {
-      $this->content = $this->page->contents()->orderBy('ranking')->get();
+      if ($this->page instanceof Page) {
+        $this->contents = $this->page->contents()->where('subpage_id', null)->orderBy('ranking')->get();
+      } else {
+        $this->contents = $this->page->contents()->orderBy('ranking')->get();
+      }
     }
   }
 }

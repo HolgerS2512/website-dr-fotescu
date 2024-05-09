@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\HandleDB\SetAdminDatabaseData;
 use App\Http\Controllers\HandleHttp\GetPageUrlVars;
 use App\Models\Content;
+use App\Models\Format;
 use App\Repositories\Admin\HandleLayoutRepository;
 use Illuminate\Http\Request;
 use Exception;
@@ -64,7 +65,7 @@ final class ContentController extends Controller
     {
         try {
             $this->page = $dbData->page;
-            $this->contents = $dbData->content;
+            $this->contents = $dbData->contents;
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -92,6 +93,27 @@ final class ContentController extends Controller
     }
 
     /**
+     * Create a newly resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        try {
+            return view('admin.content.create', [
+                'page' => $this->page,
+                'format' => Format::all(),
+            ]);
+        } catch (Exception $e) {
+
+            return view('admin.content.index', compact('e'));
+        }
+        $err = GetLangMessage::languagePackage('en')->databaseError;
+
+        return view('admin.content.index', compact('err'));
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
@@ -99,6 +121,7 @@ final class ContentController extends Controller
      */
     public function store(Request $request)
     {
+        
     }
 
     /**
@@ -123,16 +146,6 @@ final class ContentController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function visible(Request $request)
-    {
-    }
-
-    /**
      * Update the ranking of content up or down in db.
      *
      * @param  \Illuminate\Http\Request $request
@@ -143,8 +156,8 @@ final class ContentController extends Controller
     {
         try {
             $credentials = Validator::make($request->all(), [
-                'ranking' => 'required|numeric',
-                'new_ranking' => 'required|numeric',
+                'ranking' => 'required|numeric|min:0',
+                'new_ranking' => 'required|numeric|min:0',
             ]);
 
             if ($credentials->fails()) {
@@ -216,14 +229,14 @@ final class ContentController extends Controller
 
                 if (!empty($contents->toArray())) {
                     foreach ($contents as $content) {
-                        // if ($content) $content->delete();
+                        if ($content) $content->delete();
                         if ($content)  dump($content);
                     }
                 }
 
                 if (!empty($lists->toArray())) {
                     foreach ($lists as $list) {
-                        // if ($list) $list->delete();
+                        if ($list) $list->delete();
                         if ($list) dump($list);
                     }
                 }
@@ -249,15 +262,13 @@ final class ContentController extends Controller
 
                 if (!empty($imgs->toArray())) {
                     foreach ($imgs as $img) {
-                        // if (File::exists($img->src)) File::delete($img->src);
-                        // $img->delete();
+                        if (File::exists($img->src)) File::delete($img->src);
+                        $img->delete();
                     }
                 }
             }
-            dump($rmContent);
-            dump($imgs);
-            dd($imageIds);
-            // $rmContent->delete();
+
+            $rmContent->delete();
 
             if ($rmContent) {
                 return response()->json([

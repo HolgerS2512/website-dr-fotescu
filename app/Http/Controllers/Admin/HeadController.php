@@ -321,16 +321,17 @@ final class HeadController extends Controller
             if ($this->publishes instanceof Collection) {
                 foreach ($this->publishes as $publish) {
                     if ($publish->name ===  $this->page->link . '.slider') {
-                        $publish->updateOrCreate([
-                            'public' => $request->slideshow,
+                        $publish->update([
+                            'public' => intval($request->slideshow),
                             'updated_at' => Carbon::now(),
                         ]);
                     }
                 }
             } else {
-                if ($this->publishes->name ===  $this->page->link . '.slider') {
-                    $this->publishes->updateOrCreate([
-                        'public' => $request->slideshow,
+
+                if ($this->publishes->name === $this->page->link . '.slider') {
+                    $this->publishes->update([
+                        'public' => intval($request->slideshow),
                         'updated_at' => Carbon::now(),
                     ]);
                 }

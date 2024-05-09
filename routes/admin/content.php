@@ -13,13 +13,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('administration/content/{link}', [ContentController::class, 'index']);
 
+Route::get('administration/content/{link}/create', [ContentController::class, 'create']);
+
 Route::post('administration/content/{link}/store', [ContentController::class, 'store']);
 
 Route::get('administration/content/{link}/edit/{id}', [ContentController::class, 'edit']);
 
 Route::put('administration/content/{link}/update/{id}', [ContentController::class, 'update']);
-
-Route::patch('administration/content/{link}/visible', [ContentController::class, 'visible']);
 
 Route::patch('administration/content/{link}/update/ranking/{id}', [ContentController::class, 'changeRanking']);
 

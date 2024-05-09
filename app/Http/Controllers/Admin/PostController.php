@@ -170,7 +170,7 @@ class PostController extends Controller
         try {
             $this->setStoreValues($request->all());
             $credentials = Validator::make($request->all(), $this->validateRules);
-
+            
             if ($credentials->fails()) {
                 return redirect()->back()
                     ->withErrors($credentials->errors())
@@ -396,7 +396,7 @@ class PostController extends Controller
     {
         $rule = [
             false => 'max:255',
-            true => '',
+            true => 'max:4000',
         ];
 
         $this->persistValues = array_filter($requVal, function ($v) {
@@ -411,8 +411,7 @@ class PostController extends Controller
         }, ARRAY_FILTER_USE_KEY);
 
         foreach ($this->persistValues as $key => $_) {
-            if (str_contains($key, 'content')) $this->validateRules[$key] = 'max:255';
-            // $this->validateRules[$key] = "{$rule[str_contains($key, 'content')]}";
+            $this->validateRules[$key] = "{$rule[str_contains($key, 'content')]}";
         }
 
         $this->validateRules['ranking'] = 'required|numeric|min:1';

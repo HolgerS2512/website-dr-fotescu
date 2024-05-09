@@ -115,6 +115,16 @@ class Content extends Model
     }
 
     /**
+     * Called image for special format
+     * 
+     * @return string
+     */
+    public function getFormatSrc(): string
+    {
+        return asset("assets/img/formats/$this->format.jpg");
+    }
+
+    /**
      * Called post collection for this instance
      * 
      * @return Collection<App\Models\Post>|null

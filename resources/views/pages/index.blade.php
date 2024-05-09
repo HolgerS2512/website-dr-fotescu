@@ -123,7 +123,7 @@
           @break
         @case('map')
             <x-format.map 
-              :content="$content->{$locale}" 
+              :content="$content" 
               :locale="$locale" 
               :infos="$infos" 
               :aos="$aos" 

@@ -14,7 +14,7 @@
           <input type="hidden" name="name" value="{{ $content->btn }}">
           <input type="hidden" name="path" value="{{ $content->url_link }}">
 
-          <button class="textblacl" type="submit" title="{{ __('messages.words.download_form') }}">
+          <button class="textblack" type="submit" title="{{ __('messages.words.download_form') }}">
             {{ __('messages.words.download_form') }}
 
             @if ( ! is_null($content->image()) )

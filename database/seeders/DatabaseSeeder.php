@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             InfoSeeder::class,
             OpeningHoursSeeder::class,
             PostSeeder::class,
+            FormatSeeder::class,
         ]);
     }
 }
