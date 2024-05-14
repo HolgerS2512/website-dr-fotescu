@@ -14,7 +14,7 @@
             <div class="align-self-center mb-2">
               @if( ! is_null($row->image()) )
                 <img 
-                  src="{{ $row->image()->src }}" 
+                  src="{{ url($row->image()->src) }}" 
                   alt="{{ $row->image()->getAlt() }}"
                   width="60" height="60"
                 >

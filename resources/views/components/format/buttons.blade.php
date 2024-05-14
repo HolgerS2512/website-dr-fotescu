@@ -48,7 +48,7 @@
           <figure {!! $aos::upLeft($li * 200, $offset) !!}>
             <img src="{{ $url }}" alt="{{ str_replace('-format-button', '', $image->getAlt()) }}" width="250" height="250">
             <figcaption>
-              <h3>{{ $title }}</h3>
+              <h3 class="text-nowrap">{{ $title }}</h3>
             </figcaption>
             <a 
               href="{{ url($href) }}" 

@@ -13,7 +13,7 @@
 
 {{--------------------> Content <--------------------}}
 @section('content')
-{{-- @dd($deEdit, $enEdit, $ruEdit) --}}
+{{-- @dd($row->$de, $enEdit, $ruEdit) --}}
 <div class='container py-5'>
   <h1 class="special-admin-header">Edit / Update Page {{ $name }}s</h1>
 
@@ -26,79 +26,84 @@
             <p class="mb-1">Don't forget to save and pay attention to upper and lower case!</p>
           </div>
 
-          @for ($i = 0; $i < $deEdit->count(); $i++)
-            @if ( ! in_array( $deEdit[$i]->title, ['opening', 'infos'] ) && $deEdit[$i]->content()->first()->format !== 'buttons' )
+          {{-- create relationship functions --}}
+          @php 
+            foreach ($langs as $lang) {
+              ${$lang} = $lang . ($name === 'List' ? 'List' : '');
+            }
+          @endphp
 
-            <form
-              @if( isset($enEdit[$i]) && ! is_null($enEdit[$i]) && isset($ruEdit[$i]) && ! is_null($ruEdit[$i]) )
-                action="{{ url('administration/translation/' . mb_strtolower($name) .'/'. 'update/content/' . $deEdit[$i]->id .'/'. $enEdit[$i]->id .'/'. $ruEdit[$i]->id) }}"
-              @else
-                action="{{ url('administration/translation/' . mb_strtolower($name) .'/'. 'update/content/' . $deEdit[$i]->id) }}"
-              @endif
-              method="POST" 
-              class="form-item p-3 pb-0 border shadow-lg bg-body-tertiary"
-            >
-            @method('PUT')
-            @csrf
-            <x-helpers.hidden :name="'content_id'" :value="$deEdit[$i]->content_id" />
-            <x-helpers.hidden :name="'ranking'" :value="$deEdit[$i]->ranking" />
-            <div class="col-12">
+          @foreach ($contents as $row)
+            {{-- continue null relationship --}}
+            @php 
+              if ( ! (bool) $row->$de->count() 
+                && ! (bool) $row->$en->count() 
+                && ! (bool) $row->$ru->count() ) continue; 
+            @endphp
 
-              @if ( isset($deEdit[$i]->title) && preg_match('/style="|<br>|<headline>/', $deEdit[$i]->title) || isset($deEdit[$i]->content) && preg_match('/style="|<br>|<headline>/', $deEdit[$i]->content) )
-              <p class="text-danger">For optimal display, please use the following HTML tags in all languages: <b>&lt;span style="white-space: nowrap;"&gt;&lt;/span&gt;, &lt;br&gt; or &lt;headline&gt;</b>.</p>
-              @endif
+            @for ($i = 0; $i < $row->$de->count(); $i++)
+              {{-- continue special items --}}
+              @php if ( $row->$de[$i]->title === 'opening' || $row->$de[$i]->title === 'infos' ) continue; @endphp
 
-              @if ( isset($deEdit[$i]->title) && ! in_array( $deEdit[$i]->title, ['list'] ) && strlen(trim($deEdit[$i]->title)) > 2 )
-                <h5>Title</h5>
-                <x-helpers.i-group :flag="'de'" :name="$name.'.de.title'" :value="$deEdit[$i]->title ?? ''" />
-                <x-helpers.i-group :flag="'en'" :name="$name.'.en.title'" :value="$enEdit[$i]->title ?? ''" />
-                <x-helpers.i-group :flag="'ru'" :name="$name.'.ru.title'" :value="$ruEdit[$i]->title ?? ''" :last="true" />
-              @endif
+              <form
+                action="{{ url('administration/translation/' . mb_strtolower($name) .'/'. 'update/content/' . $row->$de[$i]->id .'/'. $row->$en[$i]->id .'/'. $row->$ru[$i]->id) }}"
+                method="POST" 
+                class="form-item p-3 my-3 pb-0 border shadow-lg bg-body-tertiary"
+              >
+              @method('PUT')
+              @csrf
+              <x-helpers.hidden :name="'content_id'" :value="$row->id" />
+              <x-helpers.hidden :name="'ranking'" :value="$row->$de[$i]->ranking" />
+              <div class="col-12">
 
-              @if ( mb_strtolower($name) === 'content' && isset($deEdit[$i]->content) && strlen(trim($deEdit[$i]->content)) > 2 )
-                <h5>Content</h5>
-                <x-helpers.t-group :flag="'de'" :name="$name.'.de.content'" :value="$deEdit[$i]->content ?? ''" />
-                <x-helpers.t-group :flag="'en'" :name="$name.'.en.content'" :value="$enEdit[$i]->content ?? ''" />
-                <x-helpers.t-group :flag="'ru'" :name="$name.'.ru.content'" :value="$ruEdit[$i]->content ?? ''" :last="true" />
-              @endif
+                @if ( isset($row->$de[$i]->title) && preg_match('/style="|<br>|<headline>/', $row->$de[$i]->title) || isset($row->$de[$i]->content) && preg_match('/style="|<br>|<headline>/', $row->$de[$i]->content) )
+                <p class="text-danger">For optimal display, please use the following HTML tags in all languages: <b>&lt;span style="white-space: nowrap;"&gt;&lt;/span&gt;, &lt;br&gt; or &lt;headline&gt;</b>.</p>
+                @endif
 
-              @if ( mb_strtolower($name) === 'list' )
-                @for ($idx = 1; $idx <= 20; $idx++)
-                  @if ( ! $deEdit[$i]->{'item_' . $idx} ) @break @endif
-                  @if ( preg_match('/style="|<br>|<headline>/', $deEdit[$i]->{'item_' . $idx}) )
-                    <p class="text-danger">For optimal display, please use the following HTML tags in all languages: <b>&lt;span style="white-space: nowrap;"&gt;&lt;/span&gt;, &lt;br&gt; or &lt;headline&gt;</b>.</p>
-                  @endif
+                @if ( isset($row->$de[$i]->title) && ! in_array( $row->$de[$i]->title, ['list'] ) && strlen(trim($row->$de[$i]->title)) > 2 )
+                  <h5>Title</h5>
+                  <x-helpers.i-group :flag="'de'" :name="$name.'.de.title'" :value="$row->$de[$i]->title ?? ''" />
+                  <x-helpers.i-group :flag="'en'" :name="$name.'.en.title'" :value="$row->$en[$i]->title ?? ''" />
+                  <x-helpers.i-group :flag="'ru'" :name="$name.'.ru.title'" :value="$row->$ru[$i]->title ?? ''" :last="true" />
+                @endif
 
-                  <h5>List item {{ $idx }}</h5>
-                  @if (strlen($deEdit[$i]->{'item_' . $idx}) <= 100)
-                    <x-helpers.i-group :flag="'de'" :name="$name.'.de.item_'.$idx" :value="$deEdit[$i]->{'item_' . $idx} ?? ''" />
-                    <x-helpers.i-group :flag="'en'" :name="$name.'.en.item_'.$idx" :value="$enEdit[$i]->{'item_' . $idx} ?? ''" />
-                    <x-helpers.i-group :flag="'ru'" :name="$name.'.ru.item_'.$idx" :value="$ruEdit[$i]->{'item_' . $idx} ?? ''" :last="true" />
-                  @else
-                    <x-helpers.t-group :flag="'de'" :name="$name.'.de.item_'.$idx" :value="$deEdit[$i]->{'item_' . $idx} ?? ''" />
-                    <x-helpers.t-group :flag="'en'" :name="$name.'.en.item_'.$idx" :value="$enEdit[$i]->{'item_' . $idx} ?? ''" />
-                    <x-helpers.t-group :flag="'ru'" :name="$name.'.ru.item_'.$idx" :value="$ruEdit[$i]->{'item_' . $idx} ?? ''" :last="true" />
-                  @endif
-                  
-                @endfor
-              @endif
+                @if ( mb_strtolower($name) === 'content' && isset($row->$de[$i]->content) && strlen(trim($row->$de[$i]->content)) > 2 )
+                  <h5>Content</h5>
+                  <x-helpers.t-group :flag="'de'" :name="$name.'.de.content'" :value="$row->$de[$i]->content ?? ''" />
+                  <x-helpers.t-group :flag="'en'" :name="$name.'.en.content'" :value="$row->$en[$i]->content ?? ''" />
+                  <x-helpers.t-group :flag="'ru'" :name="$name.'.ru.content'" :value="$row->$ru[$i]->content ?? ''" :last="true" />
+                @endif
 
-                <div class="mb-4">
-                  <button type="reset" class="mt-3 px-4 me-2 btn btn-danger" style="min-width: 100px">Reset</button>
-                  <button type="submit" class="mt-3 px-4 btn btn-dark" style="min-width: 100px">Save</button>
-                  <span class="user-message"></span>
+                @if ( mb_strtolower($name) === 'list' )
+                  @for ($idx = 1; $idx <= 20; $idx++)
+                    @if ( ! $row->$de[$i]->{'item_' . $idx} ) @break @endif
+                    @if ( preg_match('/style="|<br>|<headline>/', $row->$de[$i]->{'item_' . $idx}) )
+                      <p class="text-danger">For optimal display, please use the following HTML tags in all languages: <b>&lt;span style="white-space: nowrap;"&gt;&lt;/span&gt;, &lt;br&gt; or &lt;headline&gt;</b>.</p>
+                    @endif
+
+                    <h5>List item {{ $idx }}</h5>
+                    @if (strlen($row->$de[$i]->{'item_' . $idx}) <= 100)
+                      <x-helpers.i-group :flag="'de'" :name="$name.'.de.item_'.$idx" :value="$row->$de[$i]->{'item_' . $idx} ?? ''" />
+                      <x-helpers.i-group :flag="'en'" :name="$name.'.en.item_'.$idx" :value="$row->$en[$i]->{'item_' . $idx} ?? ''" />
+                      <x-helpers.i-group :flag="'ru'" :name="$name.'.ru.item_'.$idx" :value="$row->$ru[$i]->{'item_' . $idx} ?? ''" :last="true" />
+                    @else
+                      <x-helpers.t-group :flag="'de'" :name="$name.'.de.item_'.$idx" :value="$row->$de[$i]->{'item_' . $idx} ?? ''" />
+                      <x-helpers.t-group :flag="'en'" :name="$name.'.en.item_'.$idx" :value="$row->$en[$i]->{'item_' . $idx} ?? ''" />
+                      <x-helpers.t-group :flag="'ru'" :name="$name.'.ru.item_'.$idx" :value="$row->$ru[$i]->{'item_' . $idx} ?? ''" :last="true" />
+                    @endif
+                    
+                  @endfor
+                @endif
+
+                  <div class="mb-4">
+                    <button type="reset" class="mt-3 px-4 me-2 btn btn-danger" style="min-width: 100px">Reset</button>
+                    <button type="submit" class="mt-3 px-4 btn btn-dark" style="min-width: 100px">Save</button>
+                    <span class="user-message"></span>
+                  </div>
                 </div>
-              </div>
-            </form>
-
-            @if ( $i !== $deEdit->count() - 1 )
-              <hr class="my-5" style="border-width: 2px;">
-            @else
-              <div class="mb-5"></div>
-            @endif
-
-            @endif
-          @endfor
+              </form>
+            @endfor
+          @endforeach
 
         </div>
       </div>

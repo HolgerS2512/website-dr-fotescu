@@ -6,7 +6,7 @@
                     <div class="d-xl-flex justify-content-between mb-5">
 
                         <ul class="d-inline">
-                            <span>Standort Dresden</span>
+                            <span>{{ __('messages.words.location') }}</span>
                             <hr>
                             <li>
                                 <a href="{{ $infos->maps }}" target="_blank" rel="noopener noreferrer"
@@ -36,7 +36,7 @@
                 <div class="col-xl-3 col-sm-6 order-sm-1 order-xl-2">
                     <div class="d-xl-flex justify-content-between mb-5">
                         <ul class="d-inline">
-                            <span>Sitemap</span>
+                            <span>{{ __('messages.words.sitemap') }}</span>
                             <hr>
                             @foreach ($pages as $page)
                                 <li>

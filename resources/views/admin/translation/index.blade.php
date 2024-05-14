@@ -1,8 +1,9 @@
 @extends('layouts.admin')
 
 {{--------------------> Title <--------------------}}
-@section(mb_strtolower($name))
+@section('title')
 <title>Edit / Update {{ $name }}</title>
+
 <style>
   #error,
   #success {
@@ -26,10 +27,97 @@
             <p>Changes will only take effect after the page has been updated.</p>
           </div>
 
+          @if (mb_strtolower($name) === 'title')
+            @foreach ($editable_2 as $edit)
+            <form
+              id="{{ $edit->id }}"
+              action="{{ url('administration/translation/' . mb_strtolower($name) .'/'. 'update/subpage/' . $edit->id) }}" 
+              method="POST" 
+              class="form-item p-3 pb-0 border shadow-lg bg-body-tertiary"
+            >
+            @method('PUT')
+            @csrf
+              <div class="col-12">
+
+                @isset($edit->context)
+                <div class="text-black bg-info-subtle p-3">
+                  <p class="mb-2 text-secondary">Page context / Notice:</p>
+                  <p class="mb-0">{{ $edit->context }}</p>
+                </div>
+                @endisset
+
+                <div class="my-3">
+                  <label class="form-label">German</label>
+                  <input 
+                    type="text" 
+                    class="form-control @error("de") is-invalid @enderror" 
+                    name="de" 
+                    value="{{ $edit->de }}" 
+                    minlength="3" 
+                    maxlength="255"
+                    required
+                  >
+                  @error("de")
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">English</label>
+                  <input 
+                    type="text" 
+                    class="form-control @error("en") is-invalid @enderror" 
+                    name="en" 
+                    value="{{ $edit->en }}" 
+                    minlength="3" 
+                    maxlength="255"
+                    required
+                  >
+                  @error("en")
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">Russian</label>
+                  <input 
+                    type="text" 
+                    class="form-control @error("ru") is-invalid @enderror" 
+                    name="ru" 
+                    value="{{ $edit->ru }}" 
+                    minlength="3" 
+                    maxlength="255"
+                    required
+                  >
+                  @error("ru")
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
+                </div>
+
+                <div class="mb-4">
+                  <button type="reset" class="mt-3 px-4 me-2 btn btn-danger" style="min-width: 100px">Reset</button>
+                  <button type="submit" class="mt-3 px-4 btn btn-dark" style="min-width: 100px">Save</button>
+                  <span class="user-message"></span>
+                </div>
+              
+              </div>
+            </form>
+
+            <hr class="my-5" style="border-width: 2px;">
+            @endforeach
+          @endif
+
+          @php $model = mb_strtolower($name) === 'title' ? 'page' : 'word'; @endphp
           @foreach ($editable as $edit)
           <form
             id="{{ $edit->id }}"
-            action="{{ url('administration/translation/' . mb_strtolower($name) .'/'. 'update/' . $edit->id) }}" 
+            action="{{ url('administration/translation/' . mb_strtolower($name) . "/update/$model/$edit->id") }}" 
             method="POST" 
             class="form-item p-3 pb-0 border shadow-lg bg-body-tertiary"
           >
@@ -106,6 +194,7 @@
             
             </div>
           </form>
+
           @if ( ! $loop->last )
             <hr class="my-5" style="border-width: 2px;">
           @else

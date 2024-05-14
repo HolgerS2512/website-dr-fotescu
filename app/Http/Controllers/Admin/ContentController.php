@@ -13,6 +13,9 @@ use Exception;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Image;
 use App\Models\Lang\DE_Content;
+use App\Models\Lang\Word;
+use App\Models\Page;
+use App\Models\Publish;
 use App\Models\Subpage;
 use App\Traits\GetLangMessage;
 use Illuminate\Support\Carbon;
@@ -121,7 +124,6 @@ final class ContentController extends Controller
      */
     public function store(Request $request)
     {
-        
     }
 
     /**
@@ -132,6 +134,28 @@ final class ContentController extends Controller
      */
     public function edit($_, $id)
     {
+        $result = [];
+        try {
+            $result['page'] = $this->page;
+            $result['content'] = Content::find($id);
+            $result['pages'] = Page::all();
+            $result['subpages'] = Subpage::all();
+            $result['words'] = Word::all();
+
+            foreach (GetPageUrlVars::getAllLangs() as $lang) {
+                $result[$lang . 'Content'] = ('\App\Models\Lang\\' . strtoupper($lang) . '_Content')::where('content_id', $id)->get();
+                $result[$lang . 'List'] = ('\App\Models\Lang\\' . strtoupper($lang) . '_List')::where('content_id', $id)->get();
+            }
+
+            // dd($result);
+            return view('admin.content.edit', $result);
+        } catch (Exception $e) {
+
+            return view('admin.content.index', compact('e'));
+        }
+        $err = GetLangMessage::languagePackage('en')->databaseError;
+
+        return view('admin.content.index', compact('err'));
     }
 
     /**
@@ -143,6 +167,49 @@ final class ContentController extends Controller
      */
     public function update(Request $request, $_, $id)
     {
+        dd($request->all());
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request $id
+     * @return \Illuminate\Http\Response
+     */
+    public function visible(Request $request, $_, $id)
+    {
+        try {
+            $credentials = Validator::make($request->all(), [
+                'public' => 'required|numeric|min:0|max:1',
+            ]);
+
+            if ($credentials->fails()) {
+                return redirect()->back()
+                    ->withErrors($credentials->errors())
+                    ->withInput();
+            }
+
+            $pub = Publish::find($id);
+            $pub->update([
+                'public' => $request->public,
+                'updated_at' => Carbon::now(),
+            ]);
+
+            return redirect()->back();
+        } catch (Exception $e) {
+            return redirect()->back()->with([
+                'present' => true,
+                'status' => false,
+                'message' => GetLangMessage::languagePackage('en')->databaseError,
+            ]);
+        }
+
+        return redirect()->back()->with([
+            'present' => true,
+            'status' => false,
+            'message' => GetLangMessage::languagePackage('en')->databaseError,
+        ]);
     }
 
     /**

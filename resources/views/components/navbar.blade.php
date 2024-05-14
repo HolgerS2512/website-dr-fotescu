@@ -67,14 +67,16 @@
             <div class="menu">
                 <ul>
                     @foreach ($pages as $page)
+                        @php if ($active === 'home') $active = "/$active"; @endphp
+                        
                         @if ( ! ($page->link === 'imprint' || $page->link === 'privacy') )
                             <li>
                                 @if ( ! $page->any_pages )
                                     <a 
                                     href="{{ url((strlen($path) > 1 ? "$path/" : $path) . ($page->weblink === 'home' ? '' : $page->weblink)) }}" 
                                     title="{{ $page->{$locale} }}"
-                                    class="{{ $active === '/'.$page->weblink ? 'active' : '' }}">
-                                    {{ $page->{$locale} }}
+                                    class="{{ $active === '/' . $page->weblink ? 'active' : '' }}">
+                                    {{ $page->{$locale} }} 
                                     </a>
                                 @else
                                     @php
@@ -96,7 +98,7 @@
                                         </a>
                                     </label>
                                     <div class="d-none sub-menu">
-                                        <ul class="x{{ $counter }}-ul">
+                                        <ul class="x{{ $counter }}-ul{{ app()->getLocale() === 'ru' ? ' ru-menu' : '' }}">
                                             @foreach ($subpages as $sPage)
                                             @if ($sPage->page_id === $page->id)
                                             <li class="x-list{{ $active === '/'.$sPage->weblink ? ' active' : '' }}">

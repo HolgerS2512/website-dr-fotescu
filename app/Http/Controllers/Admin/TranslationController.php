@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\HandleHttp\GetPageUrlVars;
+use App\Models\Content;
 use App\Models\Lang\DE_Content;
 use App\Models\Lang\DE_List;
 use App\Models\Lang\EN_Content;
@@ -16,6 +18,7 @@ use App\Traits\GetLangMessage;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Page;
+use App\Models\Subpage;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,7 +30,7 @@ final class TranslationController extends Controller
      * @param  \Illuminate\Http\Request  $name
      * @var     \Illuminate\Database\Eloquent\Model
      */
-    private Model $model, $en, $ru;
+    private Model $model, $en, $ru, $sub;
 
     /**
      * Contains the request variables with validation rules.
@@ -44,6 +47,11 @@ final class TranslationController extends Controller
      * @var array
      */
     private array $persistValues;
+
+    public function __construct()
+    {
+        $this->sub = new Subpage;
+    }
 
     /**
      * Set the variable $model.
@@ -92,11 +100,14 @@ final class TranslationController extends Controller
                 return view('admin.translation.index', [
                     'name' => $name,
                     'editable' => $this->model::all(),
+                    'editable_2' => $this->sub::all(),
                 ]);
             } else {
-
+                
                 return view('admin.translation.lang', [
                     'name' => $name,
+                    'langs' => GetPageUrlVars::getAllLangs(),
+                    'contents' => Content::whereNot('format', 'buttons')->get(),
                     'deEdit' => $this->model::all(),
                     'enEdit' => $this->en::all(),
                     'ruEdit' => $this->ru::all(),
@@ -124,7 +135,7 @@ final class TranslationController extends Controller
      * @param  \Illuminate\Http\Request  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $name, $id)
+    public function update(Request $request, $name, $model, $id)
     {
         try {
             $name = ucfirst(strtolower($name));
@@ -142,7 +153,14 @@ final class TranslationController extends Controller
                     ->withInput();
             }
 
-            $this->model::whereId($id)->update([
+            $model = ucfirst($model);
+
+            if ($name === 'Words') {
+                $model = "Lang\\$model";
+            }
+
+            $obj = ("\App\Models\\$model")::find($id);
+            $obj->update([
                 'de' => $request->de,
                 'en' => $request->en,
                 'ru' => $request->ru,
@@ -154,11 +172,7 @@ final class TranslationController extends Controller
                 'status' => true,
                 'message' => GetLangMessage::languagePackage('en')->updateTrue,
             ]);
-            // return back()->with([
-            //     'present' => true,
-            //     'status' => true,
-            //     'message' => GetLangMessage::languagePackage('en')->updateTrue,
-            // ]);
+
         } catch (Exception $e) {
             return response()->json([
                 'present' => true,

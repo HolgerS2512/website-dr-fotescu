@@ -12,13 +12,22 @@
         @break
     @endswitch
   </span>
-  <input 
+  {{-- <input 
     type="text" 
     class="field form-control @error("{{ $name }}") is-invalid @enderror" 
     name="{{ $name }}" 
-    value="{{ preg_replace('/<br>/', "\r\n", $value) }}" 
+    value="{!! preg_replace('/<p>/', "\r\n\n", $value) !!}" 
     maxlength="255"
-  >
+  > --}}
+  <textarea 
+  cols="1"
+  rows="2"
+  class="field form-control @error("{{ $name }}") is-invalid @enderror" 
+  name="{{ $name }}" 
+  maxlength="255"
+>
+  {!! preg_replace('/<br>/', "\r\n", $value) !!}
+</textarea>
   @error("{{ $name }}")
     <div class="invalid-feedback">
       {{ $message }}

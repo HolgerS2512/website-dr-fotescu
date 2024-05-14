@@ -17,7 +17,7 @@
     rows="2"
     class="field form-control @error("{{ $name }}") is-invalid @enderror" 
     name="{{ $name }}" 
-  >{{ preg_replace('/<br>/', "\r\n", $value) }}</textarea>
+  >{{ preg_replace('/<p>/', "\r\n", preg_replace('/<br>/', "\r\n", $value)) }}</textarea>
   @error("{{ $name }}")
     <div class="invalid-feedback">
       {{ $message }}
