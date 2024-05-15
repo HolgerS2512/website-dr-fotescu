@@ -25,15 +25,13 @@
           @csrf
           @method('PUT')
           @endif
-            <input type="hidden" name="format" value="{{ $content->format }}">
-          {{-- @dd($deContent) --}}
 
           @if ($content->image_id)
             <div class="mb-3">
               <label class="form-label d-block">Content image</label>
               @if( $content->image() )
                 <img style="max-height:200px;" class="img-fluid" src="{{ url($content->image()->src) }}">
-                <input type="hidden" name="old_image" value="{{ $content->image()->src }}">
+                <input type="hidden" name="old_image" value="{{ $content->image_id }}">
               @else
                 <img id="output-img" class="img-fluid" src="" style="max-height:200px;">
               @endif
@@ -64,6 +62,7 @@
                         :deContent="$deContent[$i]" 
                         :enContent="$enContent[$i] ?? null" 
                         :ruContent="$ruContent[$i] ?? null" 
+                        :additive="'cont.'"
                       />
                     @endif
                     <x-helpers.content-group 
@@ -71,6 +70,7 @@
                       :deContent="$deContent[$i]" 
                       :enContent="$enContent[$i] ?? null" 
                       :ruContent="$ruContent[$i] ?? null" 
+                      :additive="'cont.'"
                     />
                   </div>
                 @endfor
@@ -109,13 +109,15 @@
                     :ranking="1" 
                     :deContent="$deContent->first()" 
                     :enContent="$enContent->first() ?? null" 
-                    :ruContent="$ruContent->first() ?? null" 
+                    :ruContent="$ruContent->first() ?? null"
+                    :additive="'cont.'" 
                   />
                   <x-helpers.content-group 
                     :ranking="1" 
                     :deContent="$deContent->first()" 
                     :enContent="$enContent->first() ?? null" 
-                    :ruContent="$ruContent->first() ?? null" 
+                    :ruContent="$ruContent->first() ?? null"
+                    :additive="'cont.'" 
                   />
                   <div class="my-3 input-group">
                     <label class="input-group-text bg-warning-subtle">Button link to the page:</label>
@@ -136,12 +138,14 @@
                     :deContent="$deContent->first()" 
                     :enContent="$enContent->first() ?? null" 
                     :ruContent="$ruContent->first() ?? null" 
+                    :additive="'cont.'"
                   />
                   <x-helpers.content-group 
                     :ranking="1" 
                     :deContent="$deContent->first()" 
                     :enContent="$enContent->first() ?? null" 
                     :ruContent="$ruContent->first() ?? null" 
+                    :additive="'cont.'"
                   />
                 </div>
               @break
@@ -152,6 +156,7 @@
                     :deContent="$deList->first()" 
                     :enContent="$enList->first() ?? null" 
                     :ruContent="$ruList->first() ?? null" 
+                    :additive="'list.'"
                   />
                   @for ($i = 1; $i <= 2; $i++)
                     <x-helpers.item-group 
@@ -159,6 +164,9 @@
                       :deItem="$deList->first()->{'item_' . $i}" 
                       :enItem="$enList->first()->{'item_' . $i} ?? null" 
                       :ruItem="$ruList->first()->{'item_' . $i} ?? null" 
+                      :deId="$deList[$i]->id ?? null" 
+                      :enId="$enList[$i]->id ?? null" 
+                      :ruId="$ruList[$i]->id ?? null" 
                     />
                   @endfor
                 </div>
@@ -167,7 +175,7 @@
               <div class="mb-3">
                 <div class="my-3">
                   <label class="form-label">Title from existing translation (priority 2):</label>
-                  <select class="form-select" name="content.url_link">
+                  <select class="form-select" name="content.words_name">
                     @foreach ($words as $item)
                       <option 
                         value="{{ "words_name.$item->id" }}"{{ $item->name == $deList->first()->words_name ? ' selected' : '' }}
@@ -181,10 +189,11 @@
                     :deContent="$deList->first()" 
                     :enContent="$enList->first() ?? null" 
                     :ruContent="$ruList->first() ?? null" 
+                    :additive="'list.'"
                   />
                   <div class="my-3">
                     <label class="form-label">Linked main page (must have subpages).:</label>
-                    <select class="form-select" name="content.url_link">
+                    <select class="form-select" name="url_link">
                       @foreach ($pages->where('any_pages', true) as $p)
                         <option 
                           value="{{ "page.id.$p->id" }}"{{ $p->id == $content->url_link ? ' selected' : '' }}
@@ -206,6 +215,7 @@
                     :deContent="$deContent->first()" 
                     :enContent="$enContent->first() ?? null" 
                     :ruContent="$ruContent->first() ?? null" 
+                    :additive="'cont.'"
                   />
                 </div>
               @break
@@ -216,6 +226,7 @@
                     :deContent="$deContent->first()" 
                     :enContent="$enContent->first() ?? null" 
                     :ruContent="$ruContent->first() ?? null" 
+                    :additive="'cont.'"
                   />
                   <label class="form-label">Map link (priority 1 otherwise company information)</label>
                   <input class="form-control" type="text" name="content.url_link" value="{{ $content->url_link }}">
@@ -231,6 +242,7 @@
                           :deContent="$deContent[$i]" 
                           :enContent="$enContent[$i] ?? null" 
                           :ruContent="$ruContent[$i] ?? null" 
+                          :additive="'cont.'"
                         />
                       @endif
                       <x-helpers.content-group 
@@ -238,6 +250,7 @@
                         :deContent="$deContent[$i]" 
                         :enContent="$enContent[$i] ?? null" 
                         :ruContent="$ruContent[$i] ?? null" 
+                        :additive="'cont.'"
                       />
                     </div>
                   @endfor
@@ -247,6 +260,9 @@
                         :deItem="$deList->first()->{'item_' . $i} ?? null" 
                         :enItem="$enList->first()->{'item_' . $i} ?? null" 
                         :ruItem="$ruList->first()->{'item_' . $i} ?? null" 
+                        :deId="$deList[$i]->id ?? null" 
+                        :enId="$enList[$i]->id ?? null" 
+                        :ruId="$ruList[$i]->id ?? null" 
                       />
                   @endfor
                 </div>
@@ -281,6 +297,7 @@
                     :deContent="$deList->first()" 
                     :enContent="$enList->first() ?? null" 
                     :ruContent="$ruList->first() ?? null" 
+                    :additive="'list.'"
                   />
                   @for ($i = 1; $i <= 20; $i++)
                     <x-helpers.item-group 
@@ -288,6 +305,9 @@
                       :deItem="$deList->first()->{'item_' . $i} ?? null" 
                       :enItem="$enList->first()->{'item_' . $i} ?? null" 
                       :ruItem="$ruList->first()->{'item_' . $i} ?? null" 
+                      :deId="$deList[$i]->id ?? null" 
+                      :enId="$enList[$i]->id ?? null" 
+                      :ruId="$ruList[$i]->id ?? null" 
                     />
                   @endfor
                 </div>
@@ -296,13 +316,13 @@
               <div class="mb-3">
                 <label class="form-label d-block">Content image 2</label>
                 <img style="max-height:200px;" class="img-fluid" src="{{ url($deContent->first()->image()->src) }}">
-                <input type="hidden" name="content.old_image" value="{{ $deContent->first()->image()->src }}">
+                <input type="hidden" name="content.old_image" value="{{ $deContent->first()->image()->id }}">
               </div>
               <div class="mb-5">
                 <input 
                   type="file" 
                   class="change-img form-control @error('image') is-invalid @enderror" 
-                  name="image" 
+                  name="content.image" 
                   id="image"
                 >
                 @error('image')
@@ -317,16 +337,18 @@
                     :deContent="$deContent->first()" 
                     :enContent="$enContent->first() ?? null" 
                     :ruContent="$ruContent->first() ?? null" 
+                    :additive="'cont.'"
                   />
                   <x-helpers.content-group 
                     :ranking="1" 
                     :deContent="$deContent->first()" 
                     :enContent="$enContent->first() ?? null" 
                     :ruContent="$ruContent->first() ?? null" 
+                    :additive="'cont.'"
                   />
                   <div class="my-3 input-group">
                     <label class="input-group-text bg-warning-subtle">Button link to the page:</label>
-                    <select class="form-select" name="content.url_link" style="max-width: 300px;">
+                    <select class="form-select" name="url_link" style="max-width: 300px;">
                       @foreach ($pages as $item)
                         <option 
                           value="{{ $item->id }}"{{ $item->id == $content->url_link ? ' selected' : '' }}
@@ -344,24 +366,27 @@
                       :ranking="$ranking" 
                       :deContent="$deContent[$i]" 
                       :enContent="$enContent[$i] ?? null" 
-                      :ruContent="$ruContent[$i] ?? null" 
+                      :ruContent="$ruContent[$i] ?? null"
+                      :additive="'cont.'" 
                     />
                     <x-helpers.content-group 
                       :ranking="$ranking" 
                       :deContent="$deContent[$i]" 
                       :enContent="$enContent[$i] ?? null" 
-                      :ruContent="$ruContent[$i] ?? null" 
+                      :ruContent="$ruContent[$i] ?? null"
+                      :additive="'cont.'"  
                     />
                   @endfor
                 <div class="mb-3">
                   <h4 class="my-3">Enumeration:</h4>
-                  @for ($i=0; $i<$deList->count(); $i++) @php $ranking = $i + 1; @endphp
+                  @for ($i = 0; $i < $deList->count(); $i++) @php $ranking = $i + 1; @endphp
                     <x-helpers.title-group 
                       :ranking="$ranking" 
                       :label="'List headline title'"
                       :deContent="$deList[$i]" 
                       :enContent="$enList[$i] ?? null" 
                       :ruContent="$ruList[$i] ?? null" 
+                      :additive="'list.'"
                     />
                     @for ($idx = 1; $idx <= 20; $idx++)
                       <x-helpers.item-group 
@@ -369,16 +394,19 @@
                         :deItem="$deList[$i]->{'item_' . $idx} ?? null" 
                         :enItem="$enList[$i]->{'item_' . $idx} ?? null" 
                         :ruItem="$ruList[$i]->{'item_' . $idx} ?? null" 
+                        :deId="$deList[$i]->id ?? null" 
+                        :enId="$enList[$i]->id ?? null" 
+                        :ruId="$ruList[$i]->id ?? null" 
                       />
                     @endfor
                   @endfor
                   <div class="my-3">
                     <label class="form-label">Page linking button (not duty):</label>
-                    <select class="form-select" name="content.url_link">
+                    <select class="form-select" name="btn">
                       <option value="">Choose a link</option>
                       @foreach ($pages as $p)
                         <option 
-                          value="{{ "page.id.$p->id" }}"{{ $p->id == $content->btn ? ' selected' : '' }}
+                          value="{{ $p->id }}"{{ $p->id == $content->btn ? ' selected' : '' }}
                         >{{ $p->en }}</option>
                       @endforeach
                     </select>

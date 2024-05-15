@@ -42,7 +42,8 @@
 
         <a 
           href="{{ url("administration/content/$page->link/edit/$content->id") }}" 
-          class="btn btn-primary text-white" style="padding: .5rem 4.1rem"
+          class="btn btn-primary text-white submit-edit" style="padding: .5rem 4.1rem"
+          data-format="{{ $content->format }}"
           >Edit
         </a>
 

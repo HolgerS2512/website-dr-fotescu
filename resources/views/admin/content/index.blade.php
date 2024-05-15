@@ -23,7 +23,9 @@
     </div>
 
     @foreach ($contents as $content)
-      <x-helpers.idx-content :content="$content" :count="$contents->count()" :page="$page" />
+      @if ($content->format !== 'post')
+        <x-helpers.idx-content :content="$content" :count="$contents->count()" :page="$page" />
+      @endif
     @endforeach
 
   </div>
@@ -56,6 +58,27 @@
           localStorage.removeItem("important");
         }
       }, 500);
+    }
+
+    init();
+  })()
+</script>
+<script>
+  (() => {
+    'use strict'
+    const aItem = document.querySelectorAll('.submit-edit');
+
+    const init = () => {
+      aItem.forEach((aEl) => aEl.addEventListener('click', disableSub));
+    }
+
+    const disableSub = (e) => {
+      const formatStr = e.currentTarget.dataset.format;
+      const quest = formatStr === 'has_subpages' || formatStr === 'blog_posts';
+      if (quest) {
+        e.preventDefault();
+        alert('Editing is not permitted for special formats. Only create and delete possible.');
+      }
     }
 
     init();
