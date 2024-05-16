@@ -28,7 +28,7 @@
 
           @if ($content->image_id)
             <div class="mb-3">
-              <label class="form-label d-block">Content image</label>
+              <label class="form-label d-block">Content main image</label>
               @if( $content->image() )
                 <img style="max-height:200px;" class="img-fluid" src="{{ url($content->image()->src) }}">
                 <input type="hidden" name="old_image" value="{{ $content->image_id }}">

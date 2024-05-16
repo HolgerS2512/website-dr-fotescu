@@ -153,6 +153,8 @@ final class TranslationController extends Controller
                     ->withInput();
             }
 
+            dd($request->all());
+
             $model = ucfirst($model);
 
             if ($name === 'Words') {

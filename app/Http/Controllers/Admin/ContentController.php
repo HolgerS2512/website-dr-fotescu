@@ -7,6 +7,7 @@ use App\Http\Controllers\HandleDB\SetAdminDatabaseData;
 use App\Http\Controllers\HandleHttp\GetPageUrlVars;
 use App\Models\Content;
 use App\Models\Format;
+use App\Models\Helpers\ImageConverter;
 use App\Repositories\Admin\HandleLayoutRepository;
 use Illuminate\Http\Request;
 use Exception;
@@ -18,6 +19,7 @@ use App\Models\Page;
 use App\Models\Publish;
 use App\Models\Subpage;
 use App\Traits\GetLangMessage;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
 
@@ -185,74 +187,40 @@ final class ContentController extends Controller
     {
         try {
             $this->setValidateRules(array_filter($request->all()));
-            $credentials = Validator::make($request->all(), $this->validateRules);
             
+            $credentials = Validator::make($request->all(), $this->validateRules);
+
             if ($credentials->fails()) {
                 return redirect()->back()
-                ->withErrors($credentials->errors())
-                ->withInput();
+                    ->withErrors($credentials->errors())
+                    ->withInput();
             }
 
-            $VALUES = $this->buildValueContainer();
-            // dump($this->validateRules);
-            dd($credentials->fails(), $id, $this->persistValues);
+            $VALUES = $this->buildValueContainer((int) $id);
 
+            foreach ($VALUES as $model => $valueArr) {
+                foreach ($valueArr as $nowId => $values) {
 
-            // if ($request->ranking !== $request->new_ranking) {
-            //     $i = 1;
-            //     foreach (Post::whereNot('id', $postId)->orderBy('ranking')->get() as $pModel) {
-            //         if ($i === (int) $request->new_ranking) ++$i;
-            //         $pModel->update(['ranking' => $i]);
-            //         ++$i;
-            //     }
-            // }
+                    $record = ('\App\Models\\' . $model)::find($nowId);
 
-            // $post = Post::find($postId);
-            // $post->update([
-            //     'ranking' => $request->new_ranking,
-            //     'de' => $request->de,
-            //     'en' => $request->en,
-            //     'ru' => $request->ru,
-            // ]);
+                    if ($record instanceof Image) {
+                        $path = substr($record->src, 0, strripos($record->src, '/') + 1);
+                        $ic = new ImageConverter($values->image, $path);
+                        $ic->move();
 
-            // $conTable = Content::find($conId);
-            // $conTable->update([
-            //     'url_link' => $post->getUrl(),
-            // ]);
+                        if ($record->src && File::exists($record->src)) {
+                            File::delete($record->src);
+                        }
 
-            // if ($request->image) {
-            //     $ic = new ImageConverter($request->image, 'uploads/images/posts/');
-            //     $ic->move();
-
-            //     if ($request->old_image && File::exists($request->old_image)) {
-            //         File::delete($request->old_image);
-            //     }
-
-            //     $img = Image::updateOrCreate([
-            //         'id' => $post->image_id ?? null,
-            //     ], [
-            //         'page_id' => 3,
-            //         'src' => $ic->saveUrl,
-            //         'ext' => $ic->extension,
-            //     ]);
-
-            //     if ($img->id) {
-            //         $post->update(['image_id' => $img->id]);
-            //     }
-            // }
-
-            // foreach (GetPageUrlVars::getAllLangs() as $lang) {
-            //     foreach ($this->filtedLang($lang, $this->persistValues) as $values) {
-            //         if (array_key_exists('id', $values)) {
-            //             ('\App\Models\Lang\\' . strtoupper($lang) . '_Content')::whereId(array_slice($values, 0, 1)['id'])
-            //                 ->update(array_slice($values, 1));
-            //         } else {
-            //             $values['content_id'] = $conId;
-            //             $deCon = ('\App\Models\Lang\\' . strtoupper($lang) . '_Content')::create($values);
-            //             $deCon->save();
-            //         }
-            //     }
-            // }
+                        $VALUES[$model][$nowId] = [
+                            'src' => $ic->saveUrl,
+                            'ext' => $ic->extension,
+                        ];
+                    }
+                    $VALUES[$model][$nowId] = array_merge($VALUES[$model][$nowId], [ 'updated_at' => Carbon::now() ]);
+                    $record->update($VALUES[$model][$nowId]);
+                }
+            }
 
             return redirect()->back()->with([
                 'present' => true,
@@ -481,7 +449,7 @@ final class ContentController extends Controller
         }, ARRAY_FILTER_USE_KEY);
 
         $this->persistValues = array_map(function ($val) {
-            return preg_replace('/\r\n/', '<br>', trim($val));
+            return (! $val instanceof UploadedFile) ? preg_replace('/\r\n/', '<br>', trim($val)) : $val;
         }, $this->persistValues);
 
         if (!array_key_exists('image', $this->persistValues)) unset($this->persistValues['old_image']);
@@ -493,7 +461,7 @@ final class ContentController extends Controller
                 $this->validateRules[$key] = "required|min:2|{$rule[str_contains($key, 'content')]}";
             }
             if (str_contains($key, 'image')) {
-                $this->validateRules[$key] = 'mimes:jpg,png,webp,jpeg';
+                $this->validateRules[$key] = 'required|image|mimes:jpg,png,webp,jpeg';
             }
             if (str_contains($key, 'old_image')) {
                 $this->validateRules[$key] = 'required|numeric';
@@ -510,10 +478,11 @@ final class ContentController extends Controller
     /**
      * Returned a array insert all sort values.
      *
+     * @param int $id
      * @var array $persistValues
      * @return array $result
      */
-    public function buildValueContainer(): array
+    public function buildValueContainer(int $id): array
     {
         $vault = [...$this->persistValues];
 
@@ -536,31 +505,39 @@ final class ContentController extends Controller
         $this->setLangBoxes($result, $content, '_Content');
 
         unset($list, $content);
-        $result['Content'] = $vault;
+        $result['Content'] = [$id => $vault];
 
-        return $result;
+        return $this->getBlankData($result);
     }
 
-    public function setImageBox(&$result, &$vault)
+    /**
+     * Sets data for existing images.
+     *
+     * @param array &$result
+     * @param array &$vault
+     * @return void
+     */
+    public function setImageBox(array &$result, array &$vault)
     {
         if (array_key_exists('image', $vault) && array_key_exists('old_image', $vault)) {
-            $result['Image'][] = [
-                'id' => $vault['old_image'],
-                'new' => $vault['image'],
-            ];
+            $result['Image'][intval($vault['old_image'])] = (object) ['image' => $vault['image']];
             unset($vault['old_image'], $vault['image']);
         }
 
         if (array_key_exists('content_image', $vault) && array_key_exists('content_old_image', $vault)) {
-            $result['Image'][] = [
-                'id' => $vault['content_old_image'],
-                'new' => $vault['content_image'],
-            ];
+            $result['Image'][intval($vault['content_old_image'])] = (object) ['image' => $vault['content_image']];
             unset($vault['content_old_image'], $vault['content_image']);
         }
     }
 
-    public function differenceValues(&$vault, $search): array
+    /**
+     * Returned an array of Content or List values and delete this in $vault.
+     *
+     * @param string $search
+     * @param array &$vault
+     * @return array
+     */
+    public function differenceValues(array &$vault, string $search): array
     {
         $result = [];
 
@@ -574,7 +551,15 @@ final class ContentController extends Controller
         return $result;
     }
 
-    public function setLangBoxes(&$result, &$box, $searchModel)
+    /**
+     * Assembles the language models with appropriate values.
+     *
+     * @param array &$vault
+     * @param array &$box
+     * @param string $searchModel
+     * @return void
+     */
+    public function setLangBoxes(array &$result, array &$box, string $searchModel)
     {
         foreach (GetPageUrlVars::getAllLangs() as $lang) {
             foreach ($box as $key => $v) {
@@ -618,5 +603,22 @@ final class ContentController extends Controller
                 }
             }
         }
+    }
+
+    /**
+     * Returned an key, value array of pure data without empty models.
+     *
+     * @param array $result
+     * @return array
+     */
+    public function getBlankData(array $result): array
+    {
+        foreach ($result as $key => $value) {
+            if (empty($value)) {
+                unset($result[$key]);
+            }
+        }
+
+        return $result;
     }
 }
