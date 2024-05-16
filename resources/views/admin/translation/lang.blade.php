@@ -56,8 +56,8 @@
               <x-helpers.hidden :name="'ranking'" :value="$row->$de[$i]->ranking" />
               <div class="col-12">
 
-                @if ( isset($row->$de[$i]->title) && preg_match('/style="|<br>|<headline>/', $row->$de[$i]->title) || isset($row->$de[$i]->content) && preg_match('/style="|<br>|<headline>/', $row->$de[$i]->content) )
-                <p class="text-danger">For optimal display, please use the following HTML tags in all languages: <b>&lt;span style="white-space: nowrap;"&gt;&lt;/span&gt;, &lt;br&gt; or &lt;headline&gt;</b>.</p>
+                @if ( isset($row->$de[$i]->title) && preg_match('/style="|<headline>/', $row->$de[$i]->title) || isset($row->$de[$i]->content) && preg_match('/style="|<headline>/', $row->$de[$i]->content) )
+                <p class="text-danger">For optimal display (if already present in de), please use the following HTML tags in all languages for special objects: <b>&lt;span style="white-space: nowrap;"&gt;&lt;/span&gt; or &lt;headline&gt;</b>.</p>
                 @endif
 
                 @if ( isset($row->$de[$i]->title) && ! in_array( $row->$de[$i]->title, ['list'] ) && strlen(trim($row->$de[$i]->title)) > 2 )
@@ -77,8 +77,8 @@
                 @if ( mb_strtolower($name) === 'list' )
                   @for ($idx = 1; $idx <= 20; $idx++)
                     @if ( ! $row->$de[$i]->{'item_' . $idx} ) @break @endif
-                    @if ( preg_match('/style="|<br>|<headline>/', $row->$de[$i]->{'item_' . $idx}) )
-                      <p class="text-danger">For optimal display, please use the following HTML tags in all languages: <b>&lt;span style="white-space: nowrap;"&gt;&lt;/span&gt;, &lt;br&gt; or &lt;headline&gt;</b>.</p>
+                    @if ( preg_match('/style="|<headline>/', $row->$de[$i]->{'item_' . $idx}) )
+                      <p class="text-danger">For optimal display (if already present in de), please use the following HTML tags in all languages for special objects: <b>&lt;span style="white-space: nowrap;"&gt;&lt;/span&gt; or &lt;headline&gt;</b>.</p>
                     @endif
 
                     <h5>List item {{ $idx }}</h5>
@@ -122,7 +122,7 @@
     const formItem = Array.from(document.querySelectorAll('.form-item'));
 
     const init = () => {
-      formItem.forEach((form) => form.addEventListener('submit', setAjax));
+      // formItem.forEach((form) => form.addEventListener('submit', setAjax));
     };
 
     const setAjax = (e) => {

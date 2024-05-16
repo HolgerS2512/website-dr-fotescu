@@ -21,6 +21,7 @@ use App\Models\Page;
 use App\Models\Subpage;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\UploadedFile;
 
 final class TranslationController extends Controller
 {
@@ -153,8 +154,6 @@ final class TranslationController extends Controller
                     ->withInput();
             }
 
-            dd($request->all());
-
             $model = ucfirst($model);
 
             if ($name === 'Words') {
@@ -278,6 +277,10 @@ final class TranslationController extends Controller
         $this->persistValues = array_filter($requVal, function ($v) {
             return ! ($v === '_method' || $v === '_token');
         }, ARRAY_FILTER_USE_KEY);
+
+        $this->persistValues = array_map(function ($val) {
+            return (! $val instanceof UploadedFile) ? preg_replace('/\r\n/', '<br>', trim($val)) : $val;
+        }, $this->persistValues);
 
         $values = array_filter(array_flip($this->persistValues), function ($v) {
             return ! ($v === 'content_id' || $v === 'ranking');

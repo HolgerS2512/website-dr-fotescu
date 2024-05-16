@@ -186,8 +186,8 @@ final class ContentController extends Controller
     public function update(Request $request, $_, $id)
     {
         try {
-            $this->setValidateRules(array_filter($request->all()));
-            
+            $this->filterRequest(array_filter($request->all()));
+
             $credentials = Validator::make($request->all(), $this->validateRules);
 
             if ($credentials->fails()) {
@@ -437,7 +437,7 @@ final class ContentController extends Controller
      * @param array $requVal
      * @return void
      */
-    public function setValidateRules($requVal)
+    public function filterRequest($requVal)
     {
         $rule = [
             false => 'max:255',
