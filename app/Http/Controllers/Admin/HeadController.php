@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\HandleDB\SetAdminDatabaseData;
 use App\Http\Controllers\HandleHttp\GetPageUrlVars;
-use App\Models\Helpers\ImageConverter;
+use App\Models\Helpers\FileConverter;
 use App\Repositories\Admin\HandleLayoutRepository;
 use Exception;
 use Illuminate\Support\Facades\Validator;
@@ -128,7 +128,7 @@ final class HeadController extends Controller
                     ->withInput();
             }
 
-            $ic = new ImageConverter($request->image, 'uploads/images/' . $this->page->link . '/');
+            $ic = new FileConverter($request->image, 'uploads/images/' . $this->page->link . '/');
             $ic->move();
 
             // $manager = new ImageManager(new Driver());
@@ -138,7 +138,7 @@ final class HeadController extends Controller
 
             $subpage_id = null;
             $page_id = null;
-            if ( $this->page instanceof Subpage ) {
+            if ($this->page instanceof Subpage) {
                 $subpage_id = $this->page->id;
                 $page_id = $this->page->page()->first()->id;
             }
@@ -242,7 +242,7 @@ final class HeadController extends Controller
             }
 
             if (!empty($request->file('image'))) {
-                $ic = new ImageConverter($request->image, 'uploads/images/' . $this->page->link . '/');
+                $ic = new FileConverter($request->image, 'uploads/images/' . $this->page->link . '/');
 
                 if (File::exists($request->old_image)) {
                     File::delete($request->old_image);

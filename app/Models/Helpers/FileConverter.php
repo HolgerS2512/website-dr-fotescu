@@ -4,13 +4,14 @@ namespace App\Models\Helpers;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ImageConverter extends Model
+class FileConverter extends Model
 {
     public string $fileName;
     public string $saveUrl;
     public string $extension;
 
-    public function __construct(public $image, public $uploadLocation) {
+    public function __construct(public $image, public $uploadLocation)
+    {
         $this->setAttributes();
     }
 

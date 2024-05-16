@@ -21,6 +21,7 @@
           method="POST" 
           enctype="multipart/form-data"
           class="row update-form"
+          data-format="{{ $content->format }}"
           >
           @csrf
           @method('PUT')
@@ -82,7 +83,7 @@
                 </div>
                 <div class="mb-5">
                   <label class="form-label">Download display name</label>
-                  <input class="form-control" type="text" name="content.btn" value="{{ $content->btn }}">
+                  <input class="form-control" type="text" name="btn" value="{{ $content->btn }}">
                 </div>
 
                 <div class="mb-1 d-flex">
@@ -92,11 +93,11 @@
                 <div class="mb-3">
                   <input 
                   type="file" 
-                  class="form-control @error('content.url_link') is-invalid @enderror" 
-                  name="content.url_link" 
-                  id="content.url_link"
+                  class="form-control @error('url_link') is-invalid @enderror" 
+                  name="url_link" 
+                  id="url_link"
                 >
-                  @error('content.url_link')
+                  @error('url_link')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
@@ -121,7 +122,7 @@
                   />
                   <div class="my-3 input-group">
                     <label class="input-group-text bg-warning-subtle">Button link to the page:</label>
-                    <select class="form-select" name="content.url_link" style="max-width: 300px;">
+                    <select class="form-select" name="url_link" style="max-width: 300px;">
                       @foreach ($pages as $item)
                         <option 
                           value="{{ $item->id }}"{{ $item->id == $content->url_link ? ' selected' : '' }}
@@ -175,13 +176,15 @@
               <div class="mb-3">
                 <div class="my-3">
                   <label class="form-label">Title from existing translation (priority 2):</label>
-                  <select class="form-select" name="content.words_name">
+                  <select id="select-wordsname" class="form-select" name="words_name.de.list.{{ $deList->first()->id }}">
                     @foreach ($words as $item)
                       <option 
-                        value="{{ "words_name.$item->id" }}"{{ $item->name == $deList->first()->words_name ? ' selected' : '' }}
+                        value="{{ $item->name }}"{{ $item->name == $deList->first()->words_name ? ' selected' : '' }}
                       >{{ $item->en }}</option>
                     @endforeach
                   </select>
+                  <input type="hidden" name="words_name.en.list.{{ $enList->first()->id }}">
+                  <input type="hidden" name="words_name.ru.list.{{ $ruList->first()->id }}">
                 </div>
                   <x-helpers.title-group
                     :label="'Custom title (priority 1)'" 
@@ -196,7 +199,7 @@
                     <select class="form-select" name="url_link">
                       @foreach ($pages->where('any_pages', true) as $p)
                         <option 
-                          value="{{ "page.id.$p->id" }}"{{ $p->id == $content->url_link ? ' selected' : '' }}
+                          value="{{ $p->id }}"{{ $p->id == $content->url_link ? ' selected' : '' }}
                         >{{ $p->en }}</option>
                       @endforeach
                     </select>
@@ -229,7 +232,7 @@
                     :additive="'cont.'"
                   />
                   <label class="form-label">Map link (priority 1 otherwise company information)</label>
-                  <input class="form-control" type="text" name="content.url_link" value="{{ $content->url_link }}">
+                  <input class="form-control" type="text" name="url_link" value="{{ $content->url_link }}">
                 </div>
               @break
             @case('cross_list')
@@ -254,15 +257,15 @@
                       />
                     </div>
                   @endfor
-                  @for ($i = 1; $i <= 20; $i++)
+                  @for ($idx = 1; $idx <= 20; $idx++)
                       <x-helpers.item-group 
-                        :i="$i" 
-                        :deItem="$deList->first()->{'item_' . $i} ?? null" 
-                        :enItem="$enList->first()->{'item_' . $i} ?? null" 
-                        :ruItem="$ruList->first()->{'item_' . $i} ?? null" 
-                        :deId="$deList[$i]->id ?? null" 
-                        :enId="$enList[$i]->id ?? null" 
-                        :ruId="$ruList[$i]->id ?? null" 
+                        :i="$idx" 
+                        :deItem="$deList->first()->{'item_' . $idx} ?? null" 
+                        :enItem="$enList->first()->{'item_' . $idx} ?? null" 
+                        :ruItem="$ruList->first()->{'item_' . $idx} ?? null" 
+                        :deId="$deList->first()->id ?? null" 
+                        :enId="$enList->first()->id ?? null" 
+                        :ruId="$ruList->first()->id ?? null" 
                       />
                   @endfor
                 </div>
@@ -299,15 +302,15 @@
                     :ruContent="$ruList->first() ?? null" 
                     :additive="'list.'"
                   />
-                  @for ($i = 1; $i <= 20; $i++)
+                  @for ($idx = 1; $idx <= 20; $idx++)
                     <x-helpers.item-group 
-                      :i="$i" 
-                      :deItem="$deList->first()->{'item_' . $i} ?? null" 
-                      :enItem="$enList->first()->{'item_' . $i} ?? null" 
-                      :ruItem="$ruList->first()->{'item_' . $i} ?? null" 
-                      :deId="$deList[$i]->id ?? null" 
-                      :enId="$enList[$i]->id ?? null" 
-                      :ruId="$ruList[$i]->id ?? null" 
+                      :i="$idx" 
+                      :deItem="$deList->first()->{'item_' . $idx} ?? null" 
+                      :enItem="$enList->first()->{'item_' . $idx} ?? null" 
+                      :ruItem="$ruList->first()->{'item_' . $idx} ?? null" 
+                      :deId="$deList->first()->id ?? null" 
+                      :enId="$enList->first()->id ?? null" 
+                      :ruId="$ruList->first()->id ?? null" 
                     />
                   @endfor
                 </div>
@@ -358,6 +361,42 @@
                   </div>
                 </div>
                 </div>
+              @break
+            @case('strip')
+              <div class="mb-3">
+                <div class="mb-3" style="background: black">
+                  <label class="form-label d-block text-white ps-1">Strip image (png)</label>
+                  <img style="max-height:200px;" class="img-fluid" src="{{ url($deList->first()->image()->src) }}" >
+                  <input type="hidden" name="list.old_image" value="{{ $deList->first()->image()->id }}">
+                </div>
+                <div class="mb-5">
+                  <input 
+                    type="file" 
+                    class="change-img form-control @error('list.image') is-invalid @enderror" 
+                    name="list.image" 
+                    id="image"
+                  >
+                  @error('list.image')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                  @enderror
+                </div>
+                <h4 class="my-3">Enumeration:</h4>
+                @for ($i = 0; $i < $deList->count(); $i++) @php $ranking = $i + 1; @endphp
+                  @for ($idx = 1; $idx <= 5; $idx++)
+                    <x-helpers.item-group 
+                      :i="$idx" 
+                      :deItem="$deList[$i]->{'item_' . $idx} ?? null" 
+                      :enItem="$enList[$i]->{'item_' . $idx} ?? null" 
+                      :ruItem="$ruList[$i]->{'item_' . $idx} ?? null" 
+                      :deId="$deList[$i]->id ?? null" 
+                      :enId="$enList[$i]->id ?? null" 
+                      :ruId="$ruList[$i]->id ?? null" 
+                    />
+                  @endfor
+                @endfor
+              </div>
               @break
             @case('headline_image')
                 <div class="mb-3">
@@ -512,9 +551,9 @@
     }
 
     const checkFormat = (e) => {
-      const formatEl = e.currentTarget.querySelector('[name="format"]');
-      
-      if (formatEl.value === 'cards') {
+      const format = e.currentTarget.dataset.format;
+
+      if (format === 'cards') {
         e.preventDefault();
         alert('Function not available at the moment.');
       }
@@ -527,9 +566,19 @@
   (() => {
     'use strict'
     const inputImgItem = document.querySelectorAll('.change-img');
+    const selectEl = document.querySelector('#select-wordsname');
 
     const init = () => {
       inputImgItem.forEach((inE) => inE.addEventListener('change', showImg));
+      if (selectEl) {
+        fillHiddenTypes(selectEl);
+        selectEl.addEventListener('change', (e) => fillHiddenTypes(e.target));
+      }
+    }
+
+    const fillHiddenTypes = (el) => {
+      const hiddenItem = el.parentElement.querySelectorAll('[type="hidden"]');
+      hiddenItem.forEach((el) => el.value = el.value);
     }
 
     const showImg = (e) => {

@@ -7,7 +7,7 @@ use App\Http\Controllers\HandleDB\SetAdminDatabaseData;
 use App\Http\Controllers\HandleHttp\GetPageUrlVars;
 use App\Models\Content;
 use App\Models\Format;
-use App\Models\Helpers\ImageConverter;
+use App\Models\Helpers\FileConverter;
 use App\Repositories\Admin\HandleLayoutRepository;
 use Illuminate\Http\Request;
 use Exception;
@@ -186,7 +186,7 @@ final class ContentController extends Controller
     public function update(Request $request, $_, $id)
     {
         try {
-            $this->filterRequest(array_filter($request->all()));
+            $this->filterRequest($request->all());
 
             $credentials = Validator::make($request->all(), $this->validateRules);
 
@@ -195,30 +195,51 @@ final class ContentController extends Controller
                     ->withErrors($credentials->errors())
                     ->withInput();
             }
-
+            
             $VALUES = $this->buildValueContainer((int) $id);
+            // dd($VALUES);
 
             foreach ($VALUES as $model => $valueArr) {
                 foreach ($valueArr as $nowId => $values) {
 
-                    $record = ('\App\Models\\' . $model)::find($nowId);
+                    if (!empty($VALUES[$model][$nowId])) {
+                        $record = ('\App\Models\\' . $model)::find($nowId);
 
-                    if ($record instanceof Image) {
-                        $path = substr($record->src, 0, strripos($record->src, '/') + 1);
-                        $ic = new ImageConverter($values->image, $path);
-                        $ic->move();
+                        if ($record instanceof Image) {
+                            $path = substr($record->src, 0, strripos($record->src, '/') + 1);
+                            $ic = new FileConverter($values->image, $path);
+                            $ic->move();
 
-                        if ($record->src && File::exists($record->src)) {
-                            File::delete($record->src);
+                            if ($record->src && File::exists($record->src)) {
+                                File::delete($record->src);
+                            }
+
+                            $VALUES[$model][$nowId] = [
+                                'src' => $ic->saveUrl,
+                                'ext' => $ic->extension,
+                            ];
                         }
 
-                        $VALUES[$model][$nowId] = [
-                            'src' => $ic->saveUrl,
-                            'ext' => $ic->extension,
-                        ];
+                        if ($record instanceof Content) {
+
+                            foreach ($values as $src => $check) {
+                                if ($check instanceof UploadedFile) {
+                                    $path = substr($record->{$src}, 0, strripos($record->{$src}, '/') + 1);
+                                    $ic = new FileConverter($check, $path);
+                                    $ic->move();
+
+                                    if ($record->{$src} && File::exists($record->{$src})) {
+                                        File::delete($record->{$src});
+                                    }
+
+                                    $VALUES[$model][$nowId][$src] = $ic->saveUrl;
+                                }
+                            }
+                        }
+
+                        $VALUES[$model][$nowId] = array_merge($VALUES[$model][$nowId], ['updated_at' => Carbon::now()]);
+                        $record->update($VALUES[$model][$nowId]);
                     }
-                    $VALUES[$model][$nowId] = array_merge($VALUES[$model][$nowId], [ 'updated_at' => Carbon::now() ]);
-                    $record->update($VALUES[$model][$nowId]);
                 }
             }
 
@@ -449,25 +470,23 @@ final class ContentController extends Controller
         }, ARRAY_FILTER_USE_KEY);
 
         $this->persistValues = array_map(function ($val) {
-            return (! $val instanceof UploadedFile) ? preg_replace('/\r\n/', '<br>', trim($val)) : $val;
+            return (!$val instanceof UploadedFile) ? preg_replace('/\r\n/', '<br>', trim($val)) : $val;
         }, $this->persistValues);
 
         if (!array_key_exists('image', $this->persistValues)) unset($this->persistValues['old_image']);
         if (!array_key_exists('content_image', $this->persistValues)) unset($this->persistValues['content_old_image']);
+        if (!array_key_exists('list_image', $this->persistValues)) unset($this->persistValues['list_old_image']);
 
         foreach ($this->persistValues as $key => $_) {
 
-            if (!str_contains($key, 'image') && !str_contains($key, 'url_link') && !str_contains($key, 'btn')) {
-                $this->validateRules[$key] = "required|min:2|{$rule[str_contains($key, 'content')]}";
+            if (!str_contains($key, 'image') && !str_contains($key, 'btn')) {
+                $this->validateRules[$key] = "{$rule[str_contains($key, 'content')]}";
             }
             if (str_contains($key, 'image')) {
-                $this->validateRules[$key] = 'required|image|mimes:jpg,png,webp,jpeg';
+                $this->validateRules[$key] = 'required|image|mimes:jpg,svg,png,webp,jpeg';
             }
             if (str_contains($key, 'old_image')) {
                 $this->validateRules[$key] = 'required|numeric';
-            }
-            if (str_contains($key, 'url_link') || str_contains($key, 'btn')) {
-                $this->validateRules[$key] = 'required|min:1';
             }
         }
 
@@ -527,6 +546,11 @@ final class ContentController extends Controller
         if (array_key_exists('content_image', $vault) && array_key_exists('content_old_image', $vault)) {
             $result['Image'][intval($vault['content_old_image'])] = (object) ['image' => $vault['content_image']];
             unset($vault['content_old_image'], $vault['content_image']);
+        }
+
+        if (array_key_exists('list_image', $vault) && array_key_exists('list_old_image', $vault)) {
+            $result['Image'][intval($vault['list_old_image'])] = (object) ['image' => $vault['list_image']];
+            unset($vault['list_old_image'], $vault['list_image']);
         }
     }
 
@@ -600,6 +624,17 @@ final class ContentController extends Controller
                         }
                         unset($box[$key]);
                     }
+
+                    if (str_contains($newKey, 'words_name_')) {
+                        $cId = str_replace('words_name_', '', $newKey);
+
+                        if (array_key_exists($cId, $result[$model])) {
+                            $result[$model][$cId]['words_name'] = $v;
+                        } else {
+                            $result[$model][$cId] = ['words_name' => $v];
+                        }
+                        unset($box[$key]);
+                    }
                 }
             }
         }
@@ -614,8 +649,15 @@ final class ContentController extends Controller
     public function getBlankData(array $result): array
     {
         foreach ($result as $key => $value) {
+
             if (empty($value)) {
                 unset($result[$key]);
+            }
+
+            foreach ($value as $val) {
+                if (empty($val)) {
+                    unset($result[$key]);
+                }
             }
         }
 

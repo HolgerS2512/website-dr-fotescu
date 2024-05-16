@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HandleHttp\GetPageUrlVars;
 use App\Models\Content;
-use App\Models\Helpers\ImageConverter;
+use App\Models\Helpers\FileConverter;
 use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\Validator;
@@ -72,7 +72,7 @@ class PostController extends Controller
             }
 
             if ($request->image) {
-                $ic = new ImageConverter($request->image, 'uploads/images/posts/');
+                $ic = new FileConverter($request->image, 'uploads/images/posts/');
                 $ic->move();
 
                 $image = Image::create([
@@ -170,7 +170,7 @@ class PostController extends Controller
         try {
             $this->setStoreValues($request->all());
             $credentials = Validator::make($request->all(), $this->validateRules);
-            
+
             if ($credentials->fails()) {
                 return redirect()->back()
                     ->withErrors($credentials->errors())
@@ -200,7 +200,7 @@ class PostController extends Controller
             ]);
 
             if ($request->image) {
-                $ic = new ImageConverter($request->image, 'uploads/images/posts/');
+                $ic = new FileConverter($request->image, 'uploads/images/posts/');
                 $ic->move();
 
                 if ($request->old_image && File::exists($request->old_image)) {
