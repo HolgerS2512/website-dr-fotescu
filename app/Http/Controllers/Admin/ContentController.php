@@ -124,6 +124,8 @@ final class ContentController extends Controller
             return view('admin.content.create', [
                 'page' => $this->page,
                 'format' => Format::all(),
+                'words' => Word::all(),
+                'pages' => Page::all(),
             ]);
         } catch (Exception $e) {
 
@@ -195,7 +197,7 @@ final class ContentController extends Controller
                     ->withErrors($credentials->errors())
                     ->withInput();
             }
-            
+
             $VALUES = $this->buildValueContainer((int) $id);
             // dd($VALUES);
 
@@ -260,6 +262,87 @@ final class ContentController extends Controller
             'present' => true,
             'status' => false,
             'message' => GetLangMessage::languagePackage('en')->updateFalse,
+        ]);
+    }
+
+    /**
+     * Add new empty content or content list.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request $id
+     * @param  \Illuminate\Http\Request $new
+     * @return \Illuminate\Http\Response
+     */
+    public function add(Request $request, $_, $id, $new)
+    {
+        try {
+            foreach (GetPageUrlVars::getAllLangs() as $lang) {
+                $model = ('\App\Models\Lang\\' . strtoupper($lang) . "_$new")::where('content_id', $id)->get();
+                $add = new ('\App\Models\Lang\\' . strtoupper($lang) . "_$new");
+                $add->ranking = $model->count() + 1;
+                $add->content_id = $id;
+                $add->created_at = Carbon::now();
+                $add->save();
+            }
+
+            return redirect()->back()->with([
+                'present' => true,
+                'status' => true,
+                'message' => GetLangMessage::languagePackage('en')->updateTrue,
+            ]);
+        } catch (Exception $e) {
+            return redirect()->back()->with([
+                'present' => true,
+                'status' => false,
+                'message' => GetLangMessage::languagePackage('en')->updateFalse,
+            ]);
+        }
+
+        return redirect()->back()->with([
+            'present' => true,
+            'status' => false,
+            'message' => GetLangMessage::languagePackage('en')->updateFalse,
+        ]);
+    }
+
+    /**
+     * Add new empty content or content list.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request $id
+     * @param  \Illuminate\Http\Request $new
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteAdd(Request $request, $_, $new, $de, $en, $ru)
+    {
+        try {
+            $ids = [];
+            foreach (GetPageUrlVars::getAllLangs() as $lang) {
+                $ids[substr($$lang, 0, strpos($$lang, ':'))] = substr($$lang, strpos($$lang, ':') + 1);
+            }
+
+            foreach (GetPageUrlVars::getAllLangs() as $lang) {
+                $model = ('\App\Models\Lang\\' . strtoupper($lang) . "_$new")::find($ids[$lang]);
+                $model->delete();
+            }
+
+            return redirect()->back()->with([
+                'present' => true,
+                'status' => true,
+                'message' => GetLangMessage::languagePackage('en')->deleteConTrue,
+            ]);
+        } catch (Exception $e) {
+            return redirect()->back()->with([
+                'present' => true,
+                'status' => false,
+                'message' => GetLangMessage::languagePackage('en')->databaseError,
+            ]);
+        }
+
+        return redirect()->back()->with([
+            'present' => true,
+            'status' => false,
+            'message' => GetLangMessage::languagePackage('en')->databaseError,
         ]);
     }
 

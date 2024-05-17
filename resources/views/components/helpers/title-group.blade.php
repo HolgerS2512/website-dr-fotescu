@@ -1,4 +1,4 @@
-<label class="form-label">{{ $label ?? 'Title' }}</label>
+<label class="form-label{{ $classes ?? '' }}">{{ $label ?? 'Title' }}</label>
 <x-helpers.i-group :flag="'de'" 
   :name="'title.de.' . ($additive ?? '') . (isset($deContent) ? $deContent->id : $ranking . '.new')" 
   :value="old('title.de.' . ($additive ?? '') . $deContent->id) ?? $deContent->title" 

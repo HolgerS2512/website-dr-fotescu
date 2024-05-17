@@ -72,7 +72,7 @@
           @endif
           <ul class="z-2 square-list hl-img-list" {!! $aos::left(300) !!}>
             @for ( $i=1; $i < 20; $i++ )
-              @if ( is_null($row->{'item_' . $i}) ) @break @endif
+              @if ( empty($row->{'item_' . $i}) ) @break @endif
               <li {!! $aos::left(100 * $i) !!}>
                 <p>{{ $row->{'item_' . $i} }}</p>
               </li>

@@ -19,4 +19,14 @@ class Format extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * Called image for this instance
+     * 
+     * @return string $url
+     */
+    public function image(): string
+    {
+        return "img/formats/$this->name.jpg";
+    }
 }

@@ -13,3 +13,5 @@
   :name="'item.ru.' . $i . (isset($ruId) ? '.list.' . $ruId : '')" 
   :value="old('item.ru.' . $i . (isset($ruId) ? '.list.' . $ruId : '')) ?? $ruItem"  
 />
+
+<br>

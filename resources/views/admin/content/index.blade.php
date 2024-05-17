@@ -77,7 +77,7 @@
       const quest = formatStr === 'has_subpages' || formatStr === 'blog_posts';
       if (quest) {
         e.preventDefault();
-        alert('Editing is not permitted for special formats. Only create and delete possible.');
+        alert('Editing or deleting special formats is not permitted.');
       }
     }
 

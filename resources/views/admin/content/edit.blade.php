@@ -37,7 +37,7 @@
                 <img id="output-img" class="img-fluid" src="" style="max-height:200px;">
               @endif
             </div>
-            <div class="mb-5">
+            <div class="mb-3">
               <input 
                 type="file" 
                 class="change-img form-control @error('image') is-invalid @enderror" 
@@ -195,7 +195,7 @@
                     :additive="'list.'"
                   />
                   <div class="my-3">
-                    <label class="form-label">Linked main page (must have subpages).:</label>
+                    <label class="form-label">Linked main page (must have subpages):</label>
                     <select class="form-select" name="url_link">
                       @foreach ($pages->where('any_pages', true) as $p)
                         <option 
@@ -401,45 +401,77 @@
             @case('headline_image')
                 <div class="mb-3">
                   @for ($i=0; $i<$deContent->count(); $i++) @php $ranking = $i + 1; @endphp
-                    <x-helpers.title-group 
-                      :ranking="$ranking" 
-                      :deContent="$deContent[$i]" 
-                      :enContent="$enContent[$i] ?? null" 
-                      :ruContent="$ruContent[$i] ?? null"
-                      :additive="'cont.'" 
-                    />
-                    <x-helpers.content-group 
-                      :ranking="$ranking" 
-                      :deContent="$deContent[$i]" 
-                      :enContent="$enContent[$i] ?? null" 
-                      :ruContent="$ruContent[$i] ?? null"
-                      :additive="'cont.'"  
-                    />
+                    <div class="mb-3 pt-4 position-relative">
+                    <a href="{{ url("administration/content/$page->link/remove/add/Content/de:{$deContent[$i]->id}/en:{$enContent[$i]->id}/ru:{$ruContent[$i]->id}") }}" class="remove-content rm-add" onClick></a>
+                      <x-helpers.title-group 
+                        :ranking="$ranking" 
+                        :deContent="$deContent[$i]" 
+                        :enContent="$enContent[$i] ?? null" 
+                        :ruContent="$ruContent[$i] ?? null"
+                        :additive="'cont.'" 
+                      />
+                      <br>
+                      <x-helpers.content-group 
+                        :ranking="$ranking" 
+                        :deContent="$deContent[$i]" 
+                        :enContent="$enContent[$i] ?? null" 
+                        :ruContent="$ruContent[$i] ?? null"
+                        :additive="'cont.'"  
+                      />
+                    </div>
                   @endfor
                 <div class="mb-3">
-                  <h4 class="my-3">Enumeration:</h4>
+                  @if ($deList->count() >= 1)
+                  <h4 class="mt-5">Enumeration:</h4>
+                  @endif
                   @for ($i = 0; $i < $deList->count(); $i++) @php $ranking = $i + 1; @endphp
-                    <x-helpers.title-group 
-                      :ranking="$ranking" 
-                      :label="'List headline title'"
-                      :deContent="$deList[$i]" 
-                      :enContent="$enList[$i] ?? null" 
-                      :ruContent="$ruList[$i] ?? null" 
-                      :additive="'list.'"
-                    />
-                    @for ($idx = 1; $idx <= 20; $idx++)
-                      <x-helpers.item-group 
-                        :i="$idx" 
-                        :deItem="$deList[$i]->{'item_' . $idx} ?? null" 
-                        :enItem="$enList[$i]->{'item_' . $idx} ?? null" 
-                        :ruItem="$ruList[$i]->{'item_' . $idx} ?? null" 
-                        :deId="$deList[$i]->id ?? null" 
-                        :enId="$enList[$i]->id ?? null" 
-                        :ruId="$ruList[$i]->id ?? null" 
-                      />
+                    <div class="mb-3 pt-4 position-relative">
+                      <a href="{{ url("administration/content/$page->link/remove/add/List/de:{$deList[$i]->id}/en:{$enList[$i]->id}/ru:{$ruList[$i]->id}") }}" class="remove-content rm-add" onClick></a>
+                        <x-helpers.title-group 
+                          :ranking="$ranking" 
+                          :label="'List headline title'"
+                          :deContent="$deList[$i]" 
+                          :enContent="$enList[$i] ?? null" 
+                          :ruContent="$ruList[$i] ?? null" 
+                          :additive="'list.'"
+                          :classes="' h5'"
+                        />
+                        <br>
+                        @for ($idx = 1; $idx <= 20; $idx++)
+                          <x-helpers.item-group 
+                            :i="$idx" 
+                            :deItem="$deList[$i]->{'item_' . $idx} ?? null" 
+                            :enItem="$enList[$i]->{'item_' . $idx} ?? null" 
+                            :ruItem="$ruList[$i]->{'item_' . $idx} ?? null" 
+                            :deId="$deList[$i]->id ?? null" 
+                            :enId="$enList[$i]->id ?? null" 
+                            :ruId="$ruList[$i]->id ?? null" 
+                          />
+                        @endfor
+                      </div>
                     @endfor
-                  @endfor
-                  <div class="my-3">
+
+                  <div class="my-4 mb-5">
+                    <a 
+                      href="{{ url("administration/content/$page->link/add/$content->id/Content") }}" 
+                      class="btn btn-success text-white"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20">
+                        <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" fill="#FFF" />
+                      </svg> add content
+                    </a>
+
+                    <a 
+                      href="{{ url("administration/content/$page->link/add/$content->id/List") }}" 
+                      class="btn btn-success text-white ms-2"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20">
+                        <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" fill="#FFF" />
+                      </svg> add content list
+                    </a>
+                  </div>
+
+                  <div class="mb-3">
                     <label class="form-label">Page linking button (not duty):</label>
                     <select class="form-select" name="btn">
                       <option value="">Choose a link</option>
@@ -545,9 +577,14 @@
   (() => {
     'use strict'
     const formItem = document.querySelectorAll('.update-form');
+    const aRemoveContent = document.querySelectorAll('.rm-add');
+    const MSG = 'Are you sure you want to delete this content object and its contents?';
 
     const init = () => {
       formItem.forEach((formEl) => formEl.addEventListener('submit', checkFormat));
+      if (aRemoveContent){
+        aRemoveContent.forEach((a) => a.addEventListener('click', removeQuest));
+      }
     }
 
     const checkFormat = (e) => {
@@ -557,6 +594,10 @@
         e.preventDefault();
         alert('Function not available at the moment.');
       }
+    }
+
+    const removeQuest = (e) => {
+      if (!confirm(MSG)) e.preventDefault();
     }
 
     init();
