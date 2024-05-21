@@ -14,18 +14,18 @@
       <div class="card w-100">
         <div class="card-body position-relative">
           <h5 class="mb-4">Create new content block</h5>
-          
+
           <form 
             action="{{ url("administration/content/$page->link/store") }}" 
             method="POST" 
             enctype="multipart/form-data"
-            class="row"
+            class="row create-form needs-validation" novalidate
           >
           @csrf
             <div class="col-12">
               <div class="mb-4">
                 <img id="show-img" class="mw-100 mb-3" height="200" width="auto" src="" alt="">
-                <select required id="choose" class="form-select" aria-label="format">
+                <select id="choose" name="format" class="form-select" aria-label="format">
                   <option selected>Choose the format</option>
                   @foreach ($format as $item)
                     <option 
@@ -70,11 +70,11 @@
               <div class="mb-5">
                 <input 
                   type="file" 
-                  class="change-img form-control @error('list-image') is-invalid @enderror" 
-                  name="list-image" 
-                  id="list-image"
+                  class="change-img form-control @error('list_image') is-invalid @enderror" 
+                  name="list_image" 
+                  id="list_image"
                 >
-                @error('list-image')
+                @error('list_image')
                   <div class="invalid-feedback">
                       {{ $message }}
                   </div>
@@ -84,17 +84,17 @@
 
             <section id="content-img" class="col-12 blueprint" style="display:none;">
               <div class="mb-3">
-                <p class="form-label">Content image</p>
+                <p class="form-label">Subimage</p>
                 <img id="output-img" class="mw-100 mb-3" height="200" width="auto" src="">
               </div>
               <div class="mb-5">
                 <input 
                   type="file" 
-                  class="change-img form-control @error('content-image') is-invalid @enderror" 
-                  name="content-image" 
-                  id="content-image"
+                  class="change-img form-control @error('content_image') is-invalid @enderror" 
+                  name="content_image" 
+                  id="content_image"
                 >
-                @error('content-image')
+                @error('content_image')
                   <div class="invalid-feedback">
                       {{ $message }}
                   </div>
@@ -104,7 +104,7 @@
 
             <section id="title-content" class="col-12 blueprint" style="display:none;">
               <div class="mb-3">
-                <label class="form-label">Title</label>
+                <label class="form-label">Title (Custom priority 1)</label>
                 <x-helpers.i-group :flag="'de'" 
                   :name="'title.de.cont'" 
                   :value="old('title.de.cont')" 
@@ -144,7 +144,7 @@
 
             <section id="title-list" class="col-12 blueprint" style="display:none;">
               <div class="mb-3">
-                <label class="form-label">List title</label>
+                <label class="form-label">List title (Custom priority 1)</label>
                 <x-helpers.i-group :flag="'de'" 
                   :name="'title.de.list'" 
                   :value="old('title.de.list')" 
@@ -166,42 +166,39 @@
               </div>
             </section>
 
-            <section id="words" class="col-12 blueprint" style="display:none;">
+            <section id="words-list" class="col-12 blueprint" style="display:none;">
               <div class="my-3">
                 <label class="form-label">Title from existing translation (priority 2)</label>
-                <select required id="select-wordsname" class="form-select" name="words_name.de.list">
-                  <option selected>Choose a title</option>
+                <select id="select-wordsname" class="form-select" name="words_name.list">
+                  <option value="" selected>Choose a title</option>
                   @foreach ($words as $item)
                     <option 
                       value="{{ $item->name }}"
                     >{{ $item->en }}</option>
                   @endforeach
                 </select>
-                <input type="hidden" name="words_name.en.list">
-                <input type="hidden" name="words_name.ru.list">
               </div>
-              <div class="mb-3">
-                <label class="form-label">or customize (priority 1)</label>
-                <x-helpers.i-group :flag="'de'" 
-                  :name="'title.de.list'" 
-                  :value="old('title.de.list')" 
-                />
-                <x-helpers.i-group :flag="'en'" 
-                  :name="'title.en.list'" 
-                  :value="old('title.en.list')"
-                />
-                <x-helpers.i-group :flag="'ru'" 
-                  :name="'title.ru.list'" 
-                  :value="old('title.ru.list')" 
-                />
+            </section>
+
+            <section id="words" class="col-12 blueprint" style="display:none;">
+              <div class="my-3">
+                <label class="form-label">Title from existing translation (priority 2)</label>
+                <select id="select-wordsname" class="form-select" name="words_name.cont">
+                  <option value="" selected>Choose a title</option>
+                  @foreach ($words as $item)
+                    <option 
+                      value="{{ $item->name }}"
+                    >{{ $item->en }}</option>
+                  @endforeach
+                </select>
               </div>
             </section>
 
             <section id="subpage" class="col-12 blueprint" style="display:none;">
               <div class="my-3">
                 <label class="form-label">Linked main page (must have subpages)</label>
-                <select required class="form-select" name="url_link">
-                  <option>Choose a relationship</option>
+                <select class="form-select" name="subpage">
+                  <option  selected disabled value="">Choose a relationship</option>
                   @foreach ($pages->where('any_pages', true) as $p)
                     <option 
                       value="{{ $p->id }}"
@@ -214,8 +211,8 @@
             <section id="pagelist" class="col-12 blueprint" style="display:none;">
               <div class="my-3 input-group">
                 <label class="input-group-text bg-warning-subtle">Button relationship</label>
-                <select required class="form-select" name="url_link" style="max-width: 300px;">
-                  <option>Choose a page</option>
+                <select class="form-select" name="pagelist" style="max-width: 300px;">
+                  <option selected disabled value="">Choose a page</option>
                   @foreach ($pages as $item)
                     <option 
                       value="{{ $item->id }}"
@@ -225,21 +222,20 @@
               </div>
             </section>
 
-            <section id="btn-name" class="col-12 blueprint" style="display:none;">
+            <section id="btn" class="col-12 blueprint" style="display:none;">
               <div class="my-3 input-group">
                 <label class="input-group-text">Download display name</label>
-                <input class="form-control" type="text" name="btn" value="" required>
+                <input class="form-control" type="text" name="btn" value="">
               </div>
             </section>
 
-            <section id="upload" class="col-12 blueprint" style="display:none;">
+            <section id="file" class="col-12 blueprint" style="display:none;">
               <div class="my-3">
                 <label class="form-label ps-1">File upload</label>
                 <input 
                 type="file" 
                 class="form-control @error('file') is-invalid @enderror" 
                 name="file" 
-                required
               >
                 @error('file')
                   <div class="invalid-feedback">
@@ -254,7 +250,6 @@
                 <label class="form-label ps-1">Map iframe link (Only fill in if a destination other than your company.)</label>
                 <input 
                 type="text"
-                required 
                 class="form-control @error('url_link') is-invalid @enderror" 
                 name="url_link" 
               >
@@ -265,6 +260,98 @@
                 @enderror
               </div>
             </section>
+
+            {{-- <section id="extra-content" class="col-12 blueprint" style="display:none;">
+              <div class="mb-3">
+                <label class="form-label">Title</label>
+                <x-helpers.i-group :flag="'de'" 
+                  :name="'title.de.cont'" 
+                  :value="old('title.de.cont')" 
+                />
+                
+                <x-helpers.i-group :flag="'en'" 
+                  :name="'title.en.cont'" 
+                  :value="old('title.en.cont')"
+                />
+                
+                <x-helpers.i-group :flag="'ru'" 
+                  :name="'title.ru.cont'" 
+                  :value="old('title.ru.cont')" 
+                />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label mt-3">Content</label>
+                <x-helpers.t-group :flag="'de'" 
+                  :name="'content.de.cont'" 
+                  :value="old('content.de.cont')" 
+                />
+                
+                <x-helpers.t-group :flag="'en'" 
+                  :name="'content.en.cont'" 
+                  :value="old('content.en.cont')" 
+                />
+                
+                <x-helpers.t-group :flag="'ru'" 
+                  :name="'content.ru.cont'" 
+                  :value="old('content.ru.cont')" 
+                />
+              </div>
+            </section>
+
+            <section id="extra-list" class="col-12 blueprint" style="display:none;">
+              <div class="mb-3">
+                <label class="form-label">List title</label>
+                <x-helpers.i-group :flag="'de'" 
+                  :name="'title.de.list'" 
+                  :value="old('title.de.list')" 
+                />
+                <x-helpers.i-group :flag="'en'" 
+                  :name="'title.en.list'" 
+                  :value="old('title.en.list')"
+                />
+                <x-helpers.i-group :flag="'ru'" 
+                  :name="'title.ru.list'" 
+                  :value="old('title.ru.list')" 
+                />
+              </div>
+
+              <div class="mb-3">
+                <x-helpers.item-blank />
+              </div>
+            </section>
+
+            <section id="extra" class="my-4 mb-5 blueprint" style="display: none">
+              <button
+                type="button" 
+                data-add="content"
+                class="btn btn-success text-white add-extra"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20">
+                  <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" fill="#FFF" />
+                </svg> add content
+              </button>
+
+              <button
+                type="button" 
+                data-add="list"
+                class="btn btn-success text-white ms-2 add-extra"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20">
+                  <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" fill="#FFF" />
+                </svg> add content list
+              </button>
+            </section> --}}
+
+            <div class="d-flex justify-content-between">
+              <div class="mb-4 ms-3">
+                <a href="{{ url("/administration/content/$page->link") }}" class="mt-3 me-2 btn btn-danger">
+                  Back and discard
+                </a>
+                <button type="reset" class="px-5 mt-3 me-2 btn btn-dark reset-btn">Reset</button>
+                <button type="submit" class="px-5 mt-3 btn btn-primary">Save</button>
+              </div>
+            </div>
 
           </form>
   
@@ -315,11 +402,16 @@
     const showImg = document.querySelector('#show-img');
     const inputImgItem = document.querySelectorAll('.change-img');
     const blueprintItem = document.querySelectorAll('.blueprint');
+    const extraBtn = document.querySelectorAll('.add-extra');
+    const formEl = document.querySelector('.create-form');
+    const resetBtn = document.querySelector('.reset-btn');
 
     const init = () => {
       activateBlock(chooseEl);
       chooseEl.addEventListener('change', (e) => activateBlock(e.currentTarget));
       inputImgItem.forEach((inE) => inE.addEventListener('change', showInputImg));
+      extraBtn.forEach((btn) => btn.addEventListener('click', showExtraEl));
+      resetBtn.addEventListener('click', resetForm);
     }
 
     const activateBlock = (el) => {
@@ -365,14 +457,35 @@
     }
 
     const closeVisibleSec = () => {
-      blueprintItem.forEach((sec) => sec.style.display = 'none');
+      blueprintItem.forEach((sec) => {
+        sec.querySelectorAll('input').forEach((el) => el.value = "");
+        sec.querySelectorAll('textarea').forEach((el) => el.value = "");
+        sec.querySelectorAll('select').forEach((el) => el.value = "");
+        sec.style.display = 'none';
+      });
     }
 
     const setImage = (elVal) => {
-      const name = elVal.substring(0, elVal.indexOf('#'));
+      const name = '/' + elVal.substring(0, elVal.indexOf('#')) + '.jpg';
       if (showImg.src && name) {
-        showImg.src = `${URL}/${name}.jpg`;
+        showImg.src = `${URL}${name}`;
       }
+    }
+
+    const showExtraEl = (e) => {
+      const name = e.currentTarget.dataset.add;
+
+      blueprintItem.forEach((sec) => {
+        if (sec.id === `extra-${name}`) {
+          createNewEl(sec, e.currentTarget);
+        }
+      });
+    }
+
+    const createNewEl = (secEl, btnEl) => {
+      const cloneEl = secEl.cloneNode(true);
+      cloneEl.style.display = 'block';
+      formEl.insertBefore(cloneEl, btnEl.parentElement);
     }
 
     const showInputImg = (e) => {
@@ -386,6 +499,8 @@
 
       if (file) reader.readAsDataURL(file);
     }
+
+    const resetForm = () => window.location.reload();
 
     init();
   })()

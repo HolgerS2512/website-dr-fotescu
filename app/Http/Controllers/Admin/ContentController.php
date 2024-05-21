@@ -142,8 +142,203 @@ final class ContentController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $_)
     {
+        try {
+            // dump($request->all());
+            // dd($request->all());
+            $page_id = NULL;
+            $subpage_id = NULL;
+            $valiVals = [];
+            $requNew = [];
+
+            foreach ($request->all() as $key => $value) {
+                if ($value === null) {
+                    $valiVals[$key] = str_contains($key, 'content') ? 'max:4000' : 'max:255';
+                }
+            }
+
+            if ($this->page instanceof Page) {
+                $page_id = $this->page->id;
+            } else {
+                $page_id = $this->page->page_id;
+                $subpage_id = $this->page->id;
+            }
+
+            $vali = array_merge([
+                'image' => 'image|mimes:jpg,svg,png,webp,jpeg',
+                'content-image' => 'image|mimes:jpg,svg,png,webp,jpeg',
+                'list-image' => 'image|mimes:jpg,svg,png,webp,jpeg',
+                'file' => 'file|mimes:pdf',
+                'format' => 'required|min:10|max:80',
+                'btn' => 'max:255',
+                'url_link' => 'max:255',
+            ], $valiVals);
+
+            $credentials = Validator::make(array_filter($request->all()), $vali);
+
+            if ($credentials->fails()) {
+                return redirect()->back()
+                    ->withErrors($credentials->errors())
+                    ->withInput();
+            }
+
+            foreach ($request->all() as $key => $value) {
+                if ((str_contains($key, 'title') || str_contains($key, 'content')) && preg_match_all('/\r\n/', $value)) {
+                    $requNew[$key] = preg_replace('/\r\n/', '<br>', $value);
+                } else {
+                    $requNew[$key] = $value;
+                }
+            }
+
+            if ($request->image) {
+                $ic = new FileConverter($request->image, 'uploads/images/' . $this->page->link . '/');
+                $ic->move();
+                $image = new Image([
+                    'page_id' => $page_id,
+                    'subpage_id' => $subpage_id ?? NULL,
+                    'src' => $ic->saveUrl,
+                    'ext' => $ic->extension,
+                ]);
+                $image->save();
+            }
+
+            if ($request->content_image) {
+                $ic = new FileConverter($request->content_image, 'uploads/images/' . $this->page->link . '/');
+                $ic->move();
+                $content_image = new Image([
+                    'page_id' => $page_id,
+                    'subpage_id' => $subpage_id ?? NULL,
+                    'src' => $ic->saveUrl,
+                    'ext' => $ic->extension,
+                ]);
+                $content_image->save();
+            }
+
+            if ($request->list_image) {
+                $ic = new FileConverter($request->list_image, 'uploads/images/' . $this->page->link . '/');
+                $ic->move();
+                $list_image = new Image([
+                    'page_id' => $page_id,
+                    'subpage_id' => $subpage_id ?? NULL,
+                    'src' => $ic->saveUrl,
+                    'ext' => $ic->extension,
+                ]);
+                $list_image->save();
+            }
+
+            $url_link = $request->url_link;
+
+            if ($request->file) {
+                $ic = new FileConverter($request->file, 'download/');
+                $ic->move();
+                $url_link = $ic->saveUrl;
+            }
+
+            if ($request->pagelist) $url_link = $request->pagelist;
+            if ($request->subpage) $url_link = $request->subpage;
+
+            $newBlock = new Content([
+                'page_id' => $page_id,
+                'subpage_id' => $subpage_id ?? NULL,
+                'btn' => $request->btn ?? NULL,
+                'url_link' => $url_link ?? NULL,
+                'image_id' => $image->id ?? NULL,
+                'format' => substr($request->format, 0, strpos($request->format, '#')),
+                'created_at' => Carbon::now(),
+            ]);
+
+            $newBlock->setRanking();
+            $newBlock->save();
+
+            $subValues = [];
+            if (substr($request->format, 0, strpos($request->format, '#')) === 'buttons') {
+                $pages = Page::find($url_link);
+                $i = 1;
+                foreach ($pages->getSubpagesAttribute() as $k => $v) {
+                    $subValues['item_' . $i] = $v->link;
+                    ++$i;
+                }
+            }
+
+            // dump($newBlock);
+
+            foreach (GetPageUrlVars::getAllLangs() as $lang) {
+                if (
+                    array_key_exists("title_{$lang}_cont", array_filter($request->all()))
+                    || array_key_exists("content_{$lang}_cont", array_filter($request->all()))
+                ) {
+                    $newLangCon = new ('\App\Models\Lang\\' . strtoupper($lang) . "_Content")([
+                        'content_id' => $newBlock->id,
+                        'title' => $requNew['title_' . $lang . '_cont'] ?? null,
+                        'content' => $requNew['content_' . $lang . '_cont'] ?? null,
+                        'words_name' => $request->words_name_cont ?? null,
+                        'image_id' => $content_image->id ?? null,
+                        'created_at' => Carbon::now(),
+                    ]);
+                    $newLangCon->save();
+                    // dump($newLangCon);
+                }
+
+                if (
+                    array_key_exists("title_{$lang}_list", array_filter($request->all()))
+                    || array_key_exists("item_1_$lang", array_filter($request->all()))
+                    || array_key_exists('words_name_list', array_filter($request->all()))
+                    || substr($request->format, 0, strpos($request->format, '#')) === 'buttons'
+                ) {
+                    $newLangList = new ('\App\Models\Lang\\' . strtoupper($lang) . "_List")(array_merge([
+                        'content_id' => $newBlock->id,
+                        'title' => $requNew['title_' . $lang . '_list'] ?? null,
+                        'item_1' => $request->{"item_1_$lang"} ?? null,
+                        'item_2' => $request->{"item_2_$lang"} ?? null,
+                        'item_3' => $request->{"item_3_$lang"} ?? null,
+                        'item_4' => $request->{"item_4_$lang"} ?? null,
+                        'item_5' => $request->{"item_5_$lang"} ?? null,
+                        'item_6' => $request->{"item_6_$lang"} ?? null,
+                        'item_7' => $request->{"item_7_$lang"} ?? null,
+                        'item_8' => $request->{"item_8_$lang"} ?? null,
+                        'item_9' => $request->{"item_9_$lang"} ?? null,
+                        'item_10' => $request->{"item_10_$lang"} ?? null,
+                        'item_11' => $request->{"item_11_$lang"} ?? null,
+                        'item_12' => $request->{"item_12_$lang"} ?? null,
+                        'item_13' => $request->{"item_13_$lang"} ?? null,
+                        'item_14' => $request->{"item_14_$lang"} ?? null,
+                        'item_15' => $request->{"item_15_$lang"} ?? null,
+                        'item_16' => $request->{"item_16_$lang"} ?? null,
+                        'item_17' => $request->{"item_17_$lang"} ?? null,
+                        'item_18' => $request->{"item_18_$lang"} ?? null,
+                        'item_19' => $request->{"item_19_$lang"} ?? null,
+                        'item_20' => $request->{"item_20_$lang"} ?? null,
+                        'words_name' => $request->words_name_list ?? null,
+                        'image_id' => $list_image->id ?? null,
+                        'created_at' => Carbon::now(),
+                    ], $subValues));
+                    $newLangList->save();
+                    // dump($newLangList);
+                }
+            }
+
+            // dd('END');
+
+
+            return redirect('administration/content/' . $this->page->link)->with([
+                'present' => true,
+                'status' => true,
+                'message' => GetLangMessage::languagePackage('en')->createBlockTrue,
+            ]);
+        } catch (Exception $e) {
+            return redirect()->back()->with([
+                'present' => true,
+                'status' => false,
+                'message' => GetLangMessage::languagePackage('en')->createBlockFalse,
+            ]);
+        }
+
+        return redirect()->back()->with([
+            'present' => true,
+            'status' => false,
+            'message' => GetLangMessage::languagePackage('en')->createBlockFalse,
+        ]);
     }
 
     /**

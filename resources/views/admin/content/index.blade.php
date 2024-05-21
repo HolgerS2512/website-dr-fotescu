@@ -11,16 +11,18 @@
   <h1 class="special-admin-header">Edit {{ $page->en }} Content</h1>
   <div style="margin: 130px 0;" class="row">
 
-    <div class="col-12">
-      <a 
-        href="{{ url("administration/content/$page->link/create") }}" 
-        class="btn btn-success text-white m-3" style="padding: 1rem 2rem"
-        >
-        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20">
-          <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" fill="#FFF" />
-        </svg> New block
-      </a>
-    </div>
+    @if (!($page->link === 'imprint' || $page->link === 'privacy'))
+      <div class="col-12">
+        <a 
+          href="{{ url("administration/content/$page->link/create") }}" 
+          class="btn btn-success text-white m-3" style="padding: 1rem 2rem"
+          >
+          <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20">
+            <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" fill="#FFF" />
+          </svg> New block
+        </a>
+      </div>
+    @endif
 
     @foreach ($contents as $content)
       @if ($content->format !== 'post')

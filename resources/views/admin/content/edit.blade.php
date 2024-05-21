@@ -398,6 +398,30 @@
                 @endfor
               </div>
               @break
+            @case('imprint')
+              <div class="mb-3">
+                @for ($i=0; $i<$deContent->count(); $i++) @php $ranking = $i + 1; @endphp
+                <div class="mb-3 pt-4 position-relative">
+                <a href="{{ url("administration/content/$page->link/remove/add/Content/de:{$deContent[$i]->id}/en:{$enContent[$i]->id}/ru:{$ruContent[$i]->id}") }}" class="remove-content rm-add" onClick></a>
+                  <x-helpers.title-group 
+                    :ranking="$ranking" 
+                    :deContent="$deContent[$i]" 
+                    :enContent="$enContent[$i] ?? null" 
+                    :ruContent="$ruContent[$i] ?? null"
+                    :additive="'cont.'" 
+                  />
+                  <br>
+                  <x-helpers.content-group 
+                    :ranking="$ranking" 
+                    :deContent="$deContent[$i]" 
+                    :enContent="$enContent[$i] ?? null" 
+                    :ruContent="$ruContent[$i] ?? null"
+                    :additive="'cont.'"  
+                  />
+                </div>
+              @endfor
+              </div>
+              @break
             @case('headline_image')
                 <div class="mb-3">
                   @for ($i=0; $i<$deContent->count(); $i++) @php $ranking = $i + 1; @endphp
@@ -437,19 +461,19 @@
                           :classes="' h5'"
                         />
                         <br>
-                        @for ($idx = 1; $idx <= 20; $idx++)
-                          <x-helpers.item-group 
-                            :i="$idx" 
-                            :deItem="$deList[$i]->{'item_' . $idx} ?? null" 
-                            :enItem="$enList[$i]->{'item_' . $idx} ?? null" 
-                            :ruItem="$ruList[$i]->{'item_' . $idx} ?? null" 
-                            :deId="$deList[$i]->id ?? null" 
-                            :enId="$enList[$i]->id ?? null" 
-                            :ruId="$ruList[$i]->id ?? null" 
-                          />
-                        @endfor
-                      </div>
-                    @endfor
+                      @for ($idx = 1; $idx <= 20; $idx++)
+                        <x-helpers.item-group 
+                          :i="$idx" 
+                          :deItem="$deList[$i]->{'item_' . $idx} ?? null" 
+                          :enItem="$enList[$i]->{'item_' . $idx} ?? null" 
+                          :ruItem="$ruList[$i]->{'item_' . $idx} ?? null" 
+                          :deId="$deList[$i]->id ?? null" 
+                          :enId="$enList[$i]->id ?? null" 
+                          :ruId="$ruList[$i]->id ?? null" 
+                        />
+                      @endfor
+                    </div>
+                  @endfor
 
                   <div class="my-4 mb-5">
                     <a 

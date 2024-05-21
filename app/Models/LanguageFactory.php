@@ -30,6 +30,8 @@ class LanguageFactory extends Model
             'loginFalse' => 'Login failed!',
             'createPostTrue' => 'Blog post successfully created.',
             'createPostFalse' => 'Database error, created failed!',
+            'createBlockTrue' => 'Block successfully created.',
+            'createBlockFalse' => 'Database error, created block failed!',
             'uploadTrue' => 'Upload successfully.',
             'uploadFalse' => 'Database error, upload failed!',
             'updateTrue' => 'Update successfully.',
@@ -57,6 +59,7 @@ class LanguageFactory extends Model
     public $contactTrue, $contactFalse;
     public $loginTrue, $loginFalse;
     public $createPostTrue, $createPostFalse;
+    public $createBlockTrue, $createBlockFalse;
     public $uploadTrue, $uploadFalse;
     public $updateTrue, $updateFalse;
     public $deleteTrue, $deleteFalse;

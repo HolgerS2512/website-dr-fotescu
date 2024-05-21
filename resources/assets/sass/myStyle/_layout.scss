@@ -77,9 +77,10 @@ $wrapper-width: 1950px;
 
 .x-btn {
   width: 194px;
+  min-width: min-content;
   height: min-content;
   white-space: nowrap;
-  padding: 1.3rem 3rem;
+  padding: 1.3rem 1rem;
   font-weight: 700;
   font-size: 18px;
   text-decoration: none;

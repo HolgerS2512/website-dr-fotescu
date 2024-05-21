@@ -8,10 +8,10 @@
 
         <div class="col-xxl-6 order-xxl-1 overlap-box">
           <div class="overlap overlap-size" {!! $aos::left(0, 300) !!}>
-            <img loading="lazy" src="{{ $first->image()->src }}" alt="{{ $first->image()->getAlt() }}">
+            <img loading="lazy" src="{{ url($first->image()->src) }}" alt="{{ $first->image()->getAlt() }}">
           </div>
           <div class="overlap overlap-offset" {!! $aos::left(200, 200) !!}>
-            <img loading="lazy" src="{{ $second->first()->image()->src }}" alt="{{ $second->first()->image()->getAlt() }}">
+            <img loading="lazy" src="{{ url($second->first()->image()->src) }}" alt="{{ $second->first()->image()->getAlt() }}">
           </div>
         </div>
 

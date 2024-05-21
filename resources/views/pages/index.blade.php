@@ -148,6 +148,23 @@
         @case('blog_posts')
             <x-format.blog_posts :postMap="$content" :locale="$locale" :aos="$aos" />
           @break
+        @case('imprint')
+            <x-format.imprint 
+              :content="$content->{$locale}" 
+              :infos="$infos" 
+              :locale="$locale" 
+              :aos="$aos" 
+              :opening="$opening" 
+            />
+          @break
+        @case('policy')
+            <x-format.policy 
+              :content="$content->{$locale}" 
+              :infos="$infos" 
+              :locale="$locale" 
+              :aos="$aos" 
+            />
+          @break
         @default
       @endswitch
     @endforeach

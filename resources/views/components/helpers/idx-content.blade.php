@@ -22,7 +22,7 @@
           </div>
         </form>
 
-        @if ($content->format !== 'blog_posts' && $content->format !== 'has_subpages')
+        @if ($content->format !== 'blog_posts' && $content->format !== 'has_subpages' && $content->format !== 'imprint' && $content->format !== 'policy')
           <form
             action="{{ url("administration/content/$page->link/delete/$content->id") }}" 
             method="GET" >

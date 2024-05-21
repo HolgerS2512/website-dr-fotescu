@@ -153,4 +153,18 @@ class Content extends Model
     {
         return Post::where('content_id', $this->id)->firstOrFail();
     }
+
+    /**
+     * Get ranking for new instance
+     * 
+     * @return void
+     */
+    public function setRanking()
+    {
+        $counter = Content::where('page_id', $this->page_id);
+        if ($this->subpage_id) {
+            $counter = $counter->where('subpage_id', $this->subpage_id);
+        }
+        return $this->ranking = $counter->count() + 1;
+    }
 }

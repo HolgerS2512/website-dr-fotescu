@@ -11,9 +11,9 @@
           </h2>
 
           <div class="offset-md-2 col-md-10 offset-lg-2 col-lg-10 col-xxl-7 g-sm-0 pt-2">
-            @if (str_contains($row->content, '<p>'))
+            @if (str_contains($row->content, '<br>'))
               @php
-                $conItem = explode('<p>', $row->content);
+                $conItem = explode('<br>', $row->content);
               @endphp
               @foreach ($conItem as $item)
                 <p style="max-width: 1000px" {!! $aos::left(200 * $loop->index) !!}>{{ $item }}</p>
