@@ -144,6 +144,11 @@ final class ContentController extends Controller
      */
     public function store(Request $request, $_)
     {
+        
+
+        
+
+
         try {
             // dump($request->all());
             // dd($request->all());
@@ -228,6 +233,7 @@ final class ContentController extends Controller
             }
 
             $url_link = $request->url_link;
+            $btn = $request->btn;
 
             if ($request->file) {
                 $ic = new FileConverter($request->file, 'download/');
@@ -237,11 +243,12 @@ final class ContentController extends Controller
 
             if ($request->pagelist) $url_link = $request->pagelist;
             if ($request->subpage) $url_link = $request->subpage;
+            if ($request->btnlist) $btn = $request->btnlist;
 
             $newBlock = new Content([
                 'page_id' => $page_id,
                 'subpage_id' => $subpage_id ?? NULL,
-                'btn' => $request->btn ?? NULL,
+                'btn' => $btn ?? NULL,
                 'url_link' => $url_link ?? NULL,
                 'image_id' => $image->id ?? NULL,
                 'format' => substr($request->format, 0, strpos($request->format, '#')),
@@ -668,14 +675,14 @@ final class ContentController extends Controller
                 if (!empty($contents->toArray())) {
                     foreach ($contents as $content) {
                         if ($content) $content->delete();
-                        if ($content)  dump($content);
+                        // if ($content)  dump($content);
                     }
                 }
 
                 if (!empty($lists->toArray())) {
                     foreach ($lists as $list) {
                         if ($list) $list->delete();
-                        if ($list) dump($list);
+                        // if ($list) dump($list);
                     }
                 }
             }
@@ -709,21 +716,21 @@ final class ContentController extends Controller
             $rmContent->delete();
 
             if ($rmContent) {
-                return response()->json([
+                return back()->with([
                     'present' => true,
                     'status' => true,
                     'message' => GetLangMessage::languagePackage('en')->deleteConTrue,
                 ]);
             }
         } catch (Exception $e) {
-            return response()->json([
+            return back()->with([
                 'present' => true,
                 'status' => false,
                 'message' => GetLangMessage::languagePackage('en')->deleteConFalse,
             ]);
         }
 
-        return response()->json([
+        return back()->with([
             'present' => true,
             'status' => false,
             'message' => GetLangMessage::languagePackage('en')->deleteConFalse,

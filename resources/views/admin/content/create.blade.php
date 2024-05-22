@@ -222,6 +222,20 @@
               </div>
             </section>
 
+            <section id="btnlist" class="col-12 blueprint" style="display:none;">
+              <div class="my-3 input-group">
+                <label class="input-group-text bg-warning-subtle">Button relationship</label>
+                <select class="form-select" name="btnlist" style="max-width: 300px;">
+                  <option selected disabled value="">Choose a page</option>
+                  @foreach ($pages as $item)
+                    <option 
+                      value="{{ $item->id }}"
+                    >{{ $item->en }}</option>
+                  @endforeach
+                </select>
+              </div>
+            </section>
+
             <section id="btn" class="col-12 blueprint" style="display:none;">
               <div class="my-3 input-group">
                 <label class="input-group-text">Download display name</label>

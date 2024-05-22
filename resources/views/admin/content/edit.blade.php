@@ -422,6 +422,30 @@
               @endfor
               </div>
               @break
+            @case('policy')
+              <div class="mb-3">
+                @for ($i=0; $i<$deContent->count(); $i++) @php $ranking = $i + 1; @endphp
+                <div class="mb-3 pt-4 position-relative">
+                <a href="{{ url("administration/content/$page->link/remove/add/Content/de:{$deContent[$i]->id}/en:{$enContent[$i]->id}/ru:{$ruContent[$i]->id}") }}" class="remove-content rm-add" onClick></a>
+                  <x-helpers.title-group 
+                    :ranking="$ranking" 
+                    :deContent="$deContent[$i]" 
+                    :enContent="$enContent[$i] ?? null" 
+                    :ruContent="$ruContent[$i] ?? null"
+                    :additive="'cont.'" 
+                  />
+                  <br>
+                  <x-helpers.content-group 
+                    :ranking="$ranking" 
+                    :deContent="$deContent[$i]" 
+                    :enContent="$enContent[$i] ?? null" 
+                    :ruContent="$ruContent[$i] ?? null"
+                    :additive="'cont.'"  
+                  />
+                </div>
+              @endfor
+              </div>
+              @break
             @case('headline_image')
                 <div class="mb-3">
                   @for ($i=0; $i<$deContent->count(); $i++) @php $ranking = $i + 1; @endphp
