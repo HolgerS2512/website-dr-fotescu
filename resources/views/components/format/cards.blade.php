@@ -8,9 +8,9 @@
         <div class="info-card" {!! $aos::upLeft($i * 200, 300) !!}>
           <div>
 
-            <div class="d-flex mb-4">
+            <div class="d-flex mb-4 align-items-center">
               @isset ($content[$i]->image()->src)
-                <img src="{{ $content[$i]->image()->src }}" width="48" height="auto" alt="{{ $content[$i]->image()->getAlt() }}">
+                <img src="{{ $content[$i]->image()->src }}" width="48" height="48" alt="{{ $content[$i]->image()->getAlt() }}">
               @endif
               <span class="ms-2">
                 {{ $content[$i]->title }}

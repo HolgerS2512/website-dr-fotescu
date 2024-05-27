@@ -17,7 +17,8 @@
       <div class="offcanvas-body">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" href="{{ url('https://www.meinzahnarztdresden.de/') }}" target="_blank">Homepage</a>
+            @php $infos = \App\Models\Info::all()->first(); @endphp
+            <a class="nav-link" href="{{ url($infos->web) }}" target="_blank">Homepage</a>
           </li>
 
           <li class="nav-item link-placeholder">

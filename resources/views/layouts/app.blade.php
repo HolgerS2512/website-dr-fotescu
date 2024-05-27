@@ -80,12 +80,15 @@ if (app()->getLocale() !== 'de') {
             :infos="$infos"
         />
 
-@stack('scripts')
+        <x-cookie :path="$path" />
+
 <script type="text/javascript" src="{{ asset('assets/js/aos.js') }}"></script>
 <script type="text/javascript">
-    'use strict'
+    'use strict';
     let screen = window.screen.width;
     AOS.init({ offset: (screen === null || screen === undefined || screen > 991.998 ? 200 : 100) });
 </script>
+@stack('scripts')
+
     </body>
 </html>

@@ -13,7 +13,6 @@ use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Image;
-use App\Models\Lang\DE_Content;
 use App\Models\Lang\Word;
 use App\Models\Page;
 use App\Models\Publish;
@@ -144,11 +143,6 @@ final class ContentController extends Controller
      */
     public function store(Request $request, $_)
     {
-        
-
-        
-
-
         try {
             // dump($request->all());
             // dd($request->all());

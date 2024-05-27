@@ -117,6 +117,8 @@
                             class="brand" 
                             src="{{ asset('assets/img/logo-grey.png') }}" 
                             alt="logo-grey-zahnarzt-zahnarztpraxis-dr-fotescu-dresden"
+                            width="45"
+                            height="60"
                         >
                     </a>
                 </div>

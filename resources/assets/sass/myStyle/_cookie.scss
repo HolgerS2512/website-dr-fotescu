@@ -1,0 +1,73 @@
+.cookie {
+    z-index: 99999999;
+    background: rgba(0 0 0 / 50%);
+    opacity: 1;
+    display: block;
+
+    .row {
+        box-shadow: 0 0 20px rgba(0 0 0 / 50%);
+        background: white;
+    }
+
+    span {
+        font-size: 1.35rem;
+        font-weight: 700;
+    }
+
+    p {
+        font-size: .9rem;
+        font-family: inherit;
+        font-weight: inherit;
+    }
+
+    a {
+        color: $blueextradark;
+    
+        &:hover {
+            color: $bluedark;
+        }
+    }
+
+    #cookie-accept,
+    #cookie-reject {
+        height: 44px;
+        border-radius: 6px;
+        outline: none;
+        border: none;
+        font-size: 16px;
+        font-weight: 500;
+        color: white;
+    }
+
+    #cookie-accept {
+        background: $bluedark;
+
+        &:hover {
+            background: $blueextradark;
+        }
+    }
+
+    #cookie-reject {
+        background: rgb(16, 36, 51);
+
+        &:hover {
+            background: rgba(16, 36, 51, .8);
+        }
+    }
+}
+
+.cookie.fadeOut {
+    animation: 1.25s fadeCookie;
+}
+
+@keyframes fadeCookie {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+
+

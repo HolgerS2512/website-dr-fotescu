@@ -11,7 +11,7 @@
                         href="tel:{{ str_replace(' ', '', $infos->phone) }}" 
                         title="{{ str_replace(' ', '', $infos->phone) }}"
                     >
-                        <img class="phone-img" src="{{ asset('assets/svg/phone.svg') }}" alt="{{ 'mobile-' . __("messages.words.nav_title") . '-' . $infos->city . '-svg' }}">
+                        <img class="phone-img" src="{{ asset('assets/svg/phone.svg') }}" alt="{{ 'mobile-' . __("messages.words.nav_title") . '-' . $infos->city . '-svg' }}" width="32" height="36">
                         <span class="info-phone">&nbsp;{{ $infos->phone }}</span>
                     </a>
                 </li>
@@ -121,14 +121,6 @@
                     @endforeach
                 </ul>
             </div>
-
-            {{-- <ul style="height:100%;width: 70px;position:relative;">
-                <div style="position: absolute">
-                    <li class="ms-1">link </li>
-                <li class="ms-1 px-1 bg-primary text-white">active: ('{{ $active }}')</li>
-                <li class="ms-1">link</li>
-                </div>
-            </ul> --}}
         </div>
     </nav>
 </header>
