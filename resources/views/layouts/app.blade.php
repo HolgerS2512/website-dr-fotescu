@@ -33,6 +33,7 @@ if (app()->getLocale() !== 'de') {
         <meta property="og:locale" content="de_DE" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
+        <link rel="manifest" href="{{ asset('build/manifest.json') }}" />
         <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/icons/favicon-32x32.ico') }}">
         <link rel="icon" type="image/x-icon" href="{{ asset('assets/icons/favicon-16x16.ico') }}" sizes="16x16">
         <link rel="apple-touch-icon" type="image/X-UA-Compatible" href="{{ asset('assets/icons/apple-touch-icon-180x180.png') }}">
@@ -46,11 +47,11 @@ if (app()->getLocale() !== 'de') {
         @yield('title')
         
         @yield('link')
+        <link rel="stylesheet" href="{{ asset('build/assets/app-ed1a2a37.css') }}">
         
-        @vite('resources/assets/css/app.css')
-
-        @vite('resources/assets/js/app.js')
-        
+        <script type="module" src="{{ asset('build/assets/app-c4266921.js') }}"></script>
+        {{-- @vite('resources/assets/css/app.css') --}}
+        {{-- @vite('resources/assets/js/app.js') --}}
     </head>
 
     <body>

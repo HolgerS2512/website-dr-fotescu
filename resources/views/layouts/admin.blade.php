@@ -21,9 +21,10 @@
 
         @yield('title')
         
-        @vite('resources/assets/css/app.css')
-
-        @vite('resources/assets/js/app.js')
+        {{-- @vite('resources/assets/css/app.css') --}}
+        <link rel="stylesheet" href="{{ asset('build/assets/app-ed1a2a37.css') }}">
+        <script type="module" src="{{ asset('build/assets/app-c4266921.js') }}"></script>
+        {{-- @vite('resources/assets/js/app.js') --}}
         
     </head>
 
@@ -51,6 +52,8 @@
                 
             </div>
         </div>
+
+        <x-cookie :path="$path" />
 
 @auth
     <script>
