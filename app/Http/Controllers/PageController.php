@@ -191,7 +191,8 @@ final class PageController extends Controller
 
             $request['gender'] = $request['gender'] === 'd' ? '' : __("messages.words.gender_{$request['gender']}");
 
-            Mail::to($this->infos->mail)->send(new ContactMail($request, $this->base64Logo));
+            Mail::to('schatte-@gmx.de')->send(new ContactMail($request, $this->base64Logo));
+            // Mail::to($this->infos->mail)->send(new ContactMail($request, $this->base64Logo));
 
             Mail::to($request['email'])->send(new ContactFeedbackMail($request, $this->base64Logo));
 

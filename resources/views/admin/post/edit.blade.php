@@ -137,7 +137,7 @@
         </button>
       </div>
 
-      <div class="d-flex justify-content-between">
+      <div class="action-btns">
         <div class="mb-4">
           <a href="{{ route('dashboard') }}" class="mt-3 me-2 btn btn-danger">
             Back and discard

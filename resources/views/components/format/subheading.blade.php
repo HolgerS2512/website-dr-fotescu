@@ -2,7 +2,7 @@
 
 
 @foreach ($list as $row)
-<section class="gradient-blue py-5 subh-shadow mb-5">
+<section class="gradient-blue py-4 py-md-5 subh-shadow mb-5">
   <div class="wrapper pt-1">
     <div class="row">
       <div class="offset-md-2 col-md-10 d-flex d-md-block justify-content-center">

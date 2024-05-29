@@ -13,3 +13,27 @@
   position: $pos;
   inset: $top $right $bottom $left;
 }
+
+@mixin transition( $sec : 1.5s ) {
+  -webkit-transition: $sec;
+  -moz-transition: $sec;
+  -ms-transition: $sec;
+  -o-transition: $sec;
+  transition: $sec;
+}
+
+@mixin transform( $rotate : 0 ) {
+  -webkit-transform: rotate($rotate);
+  -moz-transform: rotate($rotate);
+  -ms-transform: rotate($rotate);
+  -o-transform: rotate($rotate);
+  transform: rotate($rotate);
+}
+
+@mixin opacity( $val : 0 ) {
+  -webkit-opacity: $val;
+  -moz-opacity: $val;
+  -ms-opacity: $val;
+  -o-opacity: $val;
+  opacity: $val;
+}

@@ -11,10 +11,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/home', fn () => redirect('/'));
+
 Route::get('/', [PageController::class, 'index']);
-
 Route::get('en', [PageController::class, 'index']);
-
 Route::get('ru', [PageController::class, 'index']);
 
 // Get Language var START

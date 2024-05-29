@@ -1,6 +1,9 @@
 @php
-    $path = str_replace(config('app.url'), '', url()->current());
+    $path = str_replace(config('app.url'), '', str_replace('www.', '', url()->current()));
     $active_link = $path ?: '/';
+    $pages = DB::table('pages')->orderBy('ranking')->get();
+    $subpages = DB::table('subpages')->orderBy('ranking')->get();
+    $posts = DB::table('posts')->orderBy('ranking')->get();
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -22,8 +25,8 @@
         @yield('title')
         
         {{-- @vite('resources/assets/css/app.css') --}}
-        <link rel="stylesheet" href="{{ asset('build/assets/app-ed1a2a37.css') }}">
-        <script type="module" src="{{ asset('build/assets/app-c4266921.js') }}"></script>
+        <link rel="stylesheet" href="{{ asset('assets/css/app-ed1a2a37.css') }}">
+        <script type="module" src="{{ asset('assets/js/app-c4266921.js') }}"></script>
         {{-- @vite('resources/assets/js/app.js') --}}
         
     </head>
@@ -34,7 +37,7 @@
         <div class="row g-0">
             @auth
                 <div class="special-col special-col-header m-0 p-0">
-                    <x-admin.aside />
+                    <x-admin.aside :pages="$pages" :subpages="$subpages" :posts="$posts" />
                 </div>
             @endauth
             

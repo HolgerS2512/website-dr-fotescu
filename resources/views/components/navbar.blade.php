@@ -101,7 +101,7 @@
                                         <ul class="x{{ $counter }}-ul{{ app()->getLocale() === 'ru' ? ' ru-menu' : '' }}">
                                             @foreach ($subpages as $sPage)
                                             @if ($sPage->page_id === $page->id)
-                                            <li class="x-list{{ $active === '/'.$sPage->weblink ? ' active' : '' }}">
+                                            <li class="x-list{{ $active === '/' . $sPage->weblink ? ' active' : '' }}">
                                                 <a 
                                                 href="{{ url((strlen($path) > 1 ? "$path/" : $path) . $sPage->weblink) }}" 
                                                 title="{{ $sPage->{$locale} }}"

@@ -1,0 +1,71 @@
+{
+  "resources/assets/css/app.css": {
+    "file": "assets/js/app-4ed993c7.js",
+    "isEntry": true,
+    "src": "resources/assets/css/app.css"
+  },
+  "resources/assets/fonts/opensans-bold-webfont.woff": {
+    "file": "assets/fonts/opensans-bold-webfont-fb365959.woff",
+    "src": "resources/assets/fonts/opensans-bold-webfont.woff"
+  },
+  "resources/assets/fonts/opensans-bold-webfont.woff2": {
+    "file": "assets/fonts/opensans-bold-webfont-c49b1b5f.woff2",
+    "src": "resources/assets/fonts/opensans-bold-webfont.woff2"
+  },
+  "resources/assets/fonts/opensans-light-webfont.woff": {
+    "file": "assets/fonts/opensans-light-webfont-1f06bc82.woff",
+    "src": "resources/assets/fonts/opensans-light-webfont.woff"
+  },
+  "resources/assets/fonts/opensans-light-webfont.woff2": {
+    "file": "assets/fonts/opensans-light-webfont-7ce3f54a.woff2",
+    "src": "resources/assets/fonts/opensans-light-webfont.woff2"
+  },
+  "resources/assets/fonts/opensans-medium-webfont.woff": {
+    "file": "assets/fonts/opensans-medium-webfont-29ce8a51.woff",
+    "src": "resources/assets/fonts/opensans-medium-webfont.woff"
+  },
+  "resources/assets/fonts/opensans-medium-webfont.woff2": {
+    "file": "assets/fonts/opensans-medium-webfont-8c38f7ba.woff2",
+    "src": "resources/assets/fonts/opensans-medium-webfont.woff2"
+  },
+  "resources/assets/fonts/opensans-regular-webfont.woff": {
+    "file": "assets/fonts/opensans-regular-webfont-bc307acc.woff",
+    "src": "resources/assets/fonts/opensans-regular-webfont.woff"
+  },
+  "resources/assets/fonts/opensans-regular-webfont.woff2": {
+    "file": "assets/fonts/opensans-regular-webfont-5c897a40.woff2",
+    "src": "resources/assets/fonts/opensans-regular-webfont.woff2"
+  },
+  "resources/assets/fonts/opensans-semibold-webfont.woff": {
+    "file": "assets/fonts/opensans-semibold-webfont-071d0566.woff",
+    "src": "resources/assets/fonts/opensans-semibold-webfont.woff"
+  },
+  "resources/assets/fonts/opensans-semibold-webfont.woff2": {
+    "file": "assets/fonts/opensans-semibold-webfont-21ed8383.woff2",
+    "src": "resources/assets/fonts/opensans-semibold-webfont.woff2"
+  },
+  "resources/assets/js/app.css": {
+    "file": "assets/css/app-ed1a2a37.css",
+    "src": "resources/assets/js/app.css"
+  },
+  "resources/assets/js/app.js": {
+    "assets": [
+      "assets/fonts/opensans-light-webfont-7ce3f54a.woff2",
+      "assets/fonts/opensans-light-webfont-1f06bc82.woff",
+      "assets/fonts/opensans-regular-webfont-5c897a40.woff2",
+      "assets/fonts/opensans-regular-webfont-bc307acc.woff",
+      "assets/fonts/opensans-medium-webfont-8c38f7ba.woff2",
+      "assets/fonts/opensans-medium-webfont-29ce8a51.woff",
+      "assets/fonts/opensans-semibold-webfont-21ed8383.woff2",
+      "assets/fonts/opensans-semibold-webfont-071d0566.woff",
+      "assets/fonts/opensans-bold-webfont-c49b1b5f.woff2",
+      "assets/fonts/opensans-bold-webfont-fb365959.woff"
+    ],
+    "css": [
+      "assets/css/app-ed1a2a37.css"
+    ],
+    "file": "assets/js/app-c4266921.js",
+    "isEntry": true,
+    "src": "resources/assets/js/app.js"
+  }
+}

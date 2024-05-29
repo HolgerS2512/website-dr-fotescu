@@ -34,9 +34,9 @@
     'use strict'
     const h1El = document.querySelectorAll('.header');
     const subH1El = document.querySelector('h1 > strong') || false;
-    const options = { rootMargin: '-150px' };
+    const options = { rootMargin: '0%' };
 
-    const init = () => {
+    const initSubHeading = () => {
       if (subH1El) {
         if (window.screen.width <= 299.9998) {
           subH1El.classList.add('scaling');
@@ -57,6 +57,6 @@
       }
     }
 
-    setTimeout(() => init(), 300);
+    setTimeout(() => initSubHeading(), 350);
   })()
 </script>

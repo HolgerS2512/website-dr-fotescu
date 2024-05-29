@@ -58,7 +58,7 @@
       text-decoration: none;
       padding: 1px 4px;
       margin: 0 2px;
-      transition: .2s;
+      @include transition(.2s);
     }
 
     a.active {
@@ -160,10 +160,10 @@
       left: 0;
       right: 0;
 
-      transition: $toggle-trans;
+      @include transition($toggle-trans);
 
       &:first-child {
-        transition: .01s ease-out;
+        @include transition(.01s ease-out);
       }
     }
   }
@@ -178,14 +178,14 @@
   
       &:nth-child(2),
       &:last-child {
-        transform: rotate(45deg);
+        @include transform(45deg);
         width: 80%;
         height: 3px;
         top: 1px;
       }
   
       &:last-child {
-        transform: rotate(-45deg);
+        @include transform(-45deg);
         top: -1px;
       }
     }
@@ -220,7 +220,7 @@
         padding: 0;
         display: block;
         overflow: scroll;
-        transition: $menu-trans linear .175s;
+        @include transition($menu-trans linear .175s);
         background-color: white;
         box-shadow: inset 0 -1px 5px black;
 
@@ -230,7 +230,7 @@
           height: 2px;
           width: 0;
           background-color: $bluelight;
-          transition: $menu-trans linear $toggle-trans;
+          @include transition($menu-trans linear $toggle-trans);
         }
 
         li {
@@ -255,7 +255,6 @@
       }
 
       .sub-menu {
-
         > ul {
           box-shadow: none;
           background-color: transparent;
@@ -263,7 +262,7 @@
         }
 
         .x-list {
-          background-color: white;
+          background-color: transparent;
           margin: 0;
           padding: $list75r 0;
           // position: relative;
@@ -272,7 +271,8 @@
 
           @for $i from 20 through 1 {
             &:nth-child(#{$i}) {
-              transition: all $toggle-trans linear calc($toggle-trans * #{$i} / 4);
+              @include opacity;
+              @include transition(all .75s ease-out calc($toggle-trans * (#{$i} / 3.5)));
             }
           }
         }
@@ -324,14 +324,14 @@
             }
 
             &::before {
-              transform: rotate(270deg);
-              transition: $menu-trans;
+              @include transform(270deg);
+              @include transition($menu-trans);
             }
           }
         }
   
         .x-point {
-          transition: $toggle-trans;
+          @include transition($toggle-trans);
         }
       }
   
@@ -341,7 +341,7 @@
         }
 
         span > span::before {
-          transform: rotate(0);
+          @include transform;
         }
       }
       .x-toggle-id:checked ~ .sub-menu {
@@ -354,7 +354,12 @@
         }
 
         > ul li.x-list {
-          background-color: $bluelight;
+          @for $i from 1 through 20 {
+            &:nth-child(#{$i}) {
+              background-color: $bluelight;
+              @include opacity(1);
+            }
+          }
         }
 
         > ul li.x-list.active {
@@ -436,7 +441,7 @@
           height: 2px;
           width: 0;
           background-color: $blue;
-          transition: $toggle-trans;
+          @include transition($toggle-trans);
         }
         &:hover::before {
           width: 100%;
@@ -485,7 +490,7 @@
         margin: 25px 0 0 0;
         border-top: 2px solid $blue;
         box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.15);
-        transition: $toggle-trans;
+        @include transition($toggle-trans);
         opacity: 0;
 
         li {
