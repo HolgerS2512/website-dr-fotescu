@@ -18,7 +18,7 @@ class ContactMail extends Mailable
      *
      * @return void
      */
-    public function __construct(protected $values, protected $base64) {}
+    public function __construct(protected $values, protected $base64, protected $mail) {}
 
     /**
      * Get the message envelope.
@@ -28,7 +28,7 @@ class ContactMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            from: new Address($this->values['email']),
+            from: new Address('support' . substr($this->mail, strpos($this->mail, '@')), 'MAILINGSYSTEM'),
             subject: $this->values['reference'],
         );
     }

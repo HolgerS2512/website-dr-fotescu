@@ -34,7 +34,8 @@
     'use strict'
     const h1El = document.querySelectorAll('.header');
     const subH1El = document.querySelector('h1 > strong') || false;
-    const options = { rootMargin: '0%' };
+    const setOpt = window.screen.width <= 767.9998 ? '0%' : '-150px';
+    const options = { rootMargin: setOpt };
 
     const initSubHeading = () => {
       if (subH1El) {

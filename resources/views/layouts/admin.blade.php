@@ -24,10 +24,10 @@
 
         @yield('title')
         
-        {{-- @vite('resources/assets/css/app.css') --}}
-        <link rel="stylesheet" href="{{ asset('assets/css/app-ed1a2a37.css') }}">
-        <script type="module" src="{{ asset('assets/js/app-c4266921.js') }}"></script>
-        {{-- @vite('resources/assets/js/app.js') --}}
+        @vite('resources/assets/css/app.css')
+        {{-- <link rel="stylesheet" href="{{ asset('assets/css/app-ed1a2a37.css') }}"> --}}
+        {{-- <script type="module" src="{{ asset('assets/js/app-c4266921.js') }}"></script> --}}
+        @vite('resources/assets/js/app.js')
         
     </head>
 

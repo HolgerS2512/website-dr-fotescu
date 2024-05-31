@@ -47,11 +47,11 @@ if (app()->getLocale() !== 'de') {
         @yield('title')
         
         @yield('link')
-        <link rel="stylesheet" href="{{ asset('assets/css/app-ed1a2a37.css') }}">
+        {{-- <link rel="stylesheet" href="{{ asset('assets/css/app-ed1a2a37.css') }}"> --}}
         
         
-        {{-- @vite('resources/assets/css/app.css') --}}
-        {{-- @vite('resources/assets/js/app.js') --}}
+        @vite('resources/assets/css/app.css')
+        @vite('resources/assets/js/app.js')
     </head>
 
     <body>
@@ -89,7 +89,7 @@ if (app()->getLocale() !== 'de') {
     let screen = window.screen.width;
     AOS.init({ offset: (screen === null || screen === undefined || screen > 991.998 ? 200 : 100) });
 </script>
-<script type="module" src="{{ asset('assets/js/app-c4266921.js') }}"></script>
+{{-- <script type="module" src="{{ asset('assets/js/app-c4266921.js') }}"></script> --}}
 @stack('scripts')
 
     </body>

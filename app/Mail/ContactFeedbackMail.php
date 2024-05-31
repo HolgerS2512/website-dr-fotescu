@@ -19,7 +19,7 @@ class ContactFeedbackMail extends Mailable
      *
      * @return void
      */
-    public function __construct(protected $values, protected $base64) {}
+    public function __construct(protected $values, protected $base64, protected $mail) {}
 
     /**
      * Get the message envelope.
@@ -29,7 +29,7 @@ class ContactFeedbackMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            from: new Address('support@MeinZahnarztDresden.de', 'Zahnarztpraxis Dr. Sebastian Fotescu'),
+            from: new Address('support' . substr($this->mail, strpos($this->mail, '@')), __('messages.words.main_title')),
             subject: 'Automatische Antwort | Automatic answer | автоматический ответ',
         );
     }

@@ -18,7 +18,7 @@ use Exception;
 use Illuminate\Support\Facades\Mail;
 use App\Traits\GetLangMessage;
 use Illuminate\Database\Eloquent\Collection;
-use Symfony\Component\Mime\Encoder\Base64Encoder;
+use Webklex\IMAP\Facades\Client;
 
 /**
  * Contains this methods and variables.
@@ -46,7 +46,7 @@ final class PageController extends Controller
     private string $currLanguage;
     private string $base64Logo;
     private bool $isBlogPost;
-    
+
     private \App\Models\Page|Subpage $currPage;
     private \App\Models\Post|NULL $currPost;
 
@@ -91,14 +91,13 @@ final class PageController extends Controller
 
         $this->currPage = $this->pages->where('weblink', "$this->currPageLink")->first() ?? $this->subpages->where('weblink', "$this->currPageLink")->first();
 
-        if ( ! is_null($this->currPage) ) {
+        if (!is_null($this->currPage)) {
 
             if ($this->currPage instanceof Page) {
-                
-              $this->contentItem = $this->currPage->contents()->whereNotNull('format')->where('subpage_id', null)->orderBy('ranking')->get()->load([$this->currLanguage, "{$this->currLanguage}List"]);
-            } else {
-              $this->contentItem = $this->currPage->contents()->whereNotNull('format')->whereNotNull('subpage_id')->orderBy('ranking')->get()->load([$this->currLanguage, "{$this->currLanguage}List"]);
 
+                $this->contentItem = $this->currPage->contents()->whereNotNull('format')->where('subpage_id', null)->orderBy('ranking')->get()->load([$this->currLanguage, "{$this->currLanguage}List"]);
+            } else {
+                $this->contentItem = $this->currPage->contents()->whereNotNull('format')->whereNotNull('subpage_id')->orderBy('ranking')->get()->load([$this->currLanguage, "{$this->currLanguage}List"]);
             }
         }
 
@@ -179,7 +178,7 @@ final class PageController extends Controller
                 'email' => 'required|email',
                 'phone' => 'required|regex:/(01)[0-9]*/',
                 'reference' => 'required|min:3|max:50',
-                'msg' => 'required|min:10|max:255',
+                'msg' => 'required|min:10|max:5000',
                 'terms' => 'accepted',
             ]);
 
@@ -191,10 +190,9 @@ final class PageController extends Controller
 
             $request['gender'] = $request['gender'] === 'd' ? '' : __("messages.words.gender_{$request['gender']}");
 
-            Mail::to('schatte-@gmx.de')->send(new ContactMail($request, $this->base64Logo));
-            // Mail::to($this->infos->mail)->send(new ContactMail($request, $this->base64Logo));
-
-            Mail::to($request['email'])->send(new ContactFeedbackMail($request, $this->base64Logo));
+            Mail::to($this->infos->mail)->send(new ContactMail($request, $this->base64Logo, $this->infos->mail));
+            
+            Mail::to($request->email)->send(new ContactFeedbackMail($request, $this->base64Logo, $this->infos->mail));
 
             return redirect()->back()->with([
                 'present' => true,

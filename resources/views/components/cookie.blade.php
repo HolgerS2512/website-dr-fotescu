@@ -1,5 +1,6 @@
 
-<div class="cookie position-fixed top-0 start-0 w-100 h-100">
+{{-- <div class="cookie position-fixed top-0 start-0 w-100 h-100"> --}}
+<div class="cookie position-fixed top-0 start-0 w-100 h-100 d-none">
   <div class="row w-100 trans-two g-0 pt-3 px-3 pb-4 pb-lg-3 position-absolute bottom-0 start-0">
       <div class="col-lg-9">
           <div class="d-flex align-items-center mb-1">
